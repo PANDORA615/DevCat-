@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DevCat Course v1",
+  "type": "object",
+  "required": ["id", "name", "version", "source", "revision", "review_status", "lessons"],
+  "properties": {
+    "id": {"enum": ["c", "cpp", "csharp", "python", "java", "javascript", "go", "sql"]},
+    "name": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "source": {"type": "string", "format": "uri"},
+    "revision": {"type": "integer", "minimum": 1},
+    "review_status": {"enum": ["draft", "automated_examples_only", "expert_reviewed"]},
+    "lessons": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["id", "title", "theory", "kind", "examples", "mistakes"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "theory": {"type": "string", "minLength": 80},
+          "kind": {"enum": ["arithmetic", "loop", "join", "filter"]},
+          "examples": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}},
+          "mistakes": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    }
+  }
+}

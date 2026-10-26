@@ -1,0 +1,41 @@
+{
+  "id": "javascript",
+  "name": "JavaScript",
+  "version": "ECMAScript / Node.js",
+  "subtitle": "От выражений к живым программам.",
+  "source": "https://nodejs.org/api/fs.html",
+  "lessons": [
+    {
+      "id": "javascript.basics",
+      "title": "Первая программа",
+      "theory": "Этот трек использует Node.js, а не браузер. let задаёт изменяемую переменную, const — неизменяемую привязку. Ввод: Number(require(\"fs\").readFileSync(0, \"utf8\").trim()). Преобразование в Number важно: + со строкой может склеить текст.",
+      "examples": [
+        "let age = 20;",
+        "console.log(age);"
+      ],
+      "mistakes": [
+        "prompt не определён в Node.js: это API браузера.",
+        "\"2\" + 3 даёт \"23\", а не 5: проверь преобразование строки."
+      ],
+      "kind": "arithmetic"
+    },
+    {
+      "id": "javascript.loops",
+      "title": "Циклы и накопитель",
+      "kind": "loop",
+      "theory": "Чтобы сложить последовательность, начни с total = 0. Цикл выполняет тело, пока условие истинно; i++ увеличивает счётчик после шага. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+      "examples": [
+        "for (let i = 1; i <= n; i++) {\n    total += i;\n}",
+        "N = 10 → 1 + 2 + … + 10 = 55"
+      ],
+      "mistakes": [
+        "Условие i < n пропускает N: это off-by-one.",
+        "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+      ]
+    }
+  ],
+  "revision": 1,
+  "review_status": "automated_examples_only",
+  "author": "DevCat",
+  "last_verified": "2026-10-26"
+}

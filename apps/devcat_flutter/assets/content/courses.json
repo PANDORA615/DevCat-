@@ -1,0 +1,330 @@
+[
+  {
+    "id": "c",
+    "name": "C",
+    "version": "C17",
+    "subtitle": "Управляй памятью. Понимай основу.",
+    "source": "https://en.cppreference.com/w/c",
+    "lessons": [
+      {
+        "id": "c.basics",
+        "title": "Первая программа",
+        "theory": "Программа начинается с main. int хранит целое число; переменную объявляют до использования. printf печатает, scanf читает и требует адрес &n. Проверяй результат scanf: это число успешно прочитанных значений.",
+        "examples": [
+          "int age = 20;",
+          "printf(\"%d\\n\", age);"
+        ],
+        "mistakes": [
+          "Пропущенная ; завершает не все операторы: читай первую ошибку компилятора.",
+          "scanf(\"%d\", n) вместо &n передаёт значение как адрес: это неопределённое поведение."
+        ],
+        "kind": "arithmetic"
+      },
+      {
+        "id": "c.loops",
+        "title": "Циклы и накопитель",
+        "kind": "loop",
+        "theory": "Чтобы сложить последовательность, начни с total = 0. Цикл выполняет тело, пока условие истинно; i++ увеличивает счётчик после шага. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+        "examples": [
+          "for (int i = 1; i <= n; i++) {\n    total += i;\n}",
+          "N = 10 → 1 + 2 + … + 10 = 55"
+        ],
+        "mistakes": [
+          "Условие i < n пропускает N: это off-by-one.",
+          "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "version": "C++20",
+    "subtitle": "От первых строк к уверенным решениям.",
+    "source": "https://en.cppreference.com/w/cpp",
+    "lessons": [
+      {
+        "id": "cpp.basics",
+        "title": "Первая программа",
+        "theory": "Тип определяет допустимые значения и операции. int age = 20 объявляет целое. Подключи <iostream>, чтобы использовать std::cin и std::cout. Оператор >> извлекает число, << выводит значение. std:: — пространство имён стандартной библиотеки. Для имени с пробелами используй std::string из <string> и std::getline(std::cin, name); затем прочитай возраст через std::cin >> age.",
+        "examples": [
+          "int age = 20;",
+          "std::cout << age << \"\\n\";"
+        ],
+        "mistakes": [
+          "Без #include <iostream> имена потоков неизвестны.",
+          "Забытый std:: приводит к ошибке поиска имени; это не ошибка типа."
+        ],
+        "kind": "arithmetic"
+      },
+      {
+        "id": "cpp.loops",
+        "title": "Циклы и накопитель",
+        "kind": "loop",
+        "theory": "Чтобы сложить последовательность, начни с total = 0. Цикл выполняет тело, пока условие истинно; i++ увеличивает счётчик после шага. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+        "examples": [
+          "for (int i = 1; i <= n; i++) {\n    total += i;\n}",
+          "N = 10 → 1 + 2 + … + 10 = 55"
+        ],
+        "mistakes": [
+          "Условие i < n пропускает N: это off-by-one.",
+          "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  },
+  {
+    "id": "csharp",
+    "name": "C#",
+    "version": ".NET 8",
+    "subtitle": "Чёткие типы, выразительный код.",
+    "source": "https://learn.microsoft.com/dotnet/csharp/",
+    "lessons": [
+      {
+        "id": "csharp.basics",
+        "title": "Первая программа",
+        "theory": "В .NET 8 можно писать top-level statements без явного класса Main. Console.ReadLine возвращает строку или null. int.Parse преобразует строку в целое, а Console.WriteLine выводит значение. Учебный контракт гарантирует корректный ввод; в приложении используй TryParse.",
+        "examples": [
+          "int age = 20;",
+          "Console.WriteLine(age);"
+        ],
+        "mistakes": [
+          "Console без using System требует полного имени System.Console.",
+          "int.Parse может выбросить FormatException: неверный ввод нужно обработать отдельно."
+        ],
+        "kind": "arithmetic"
+      },
+      {
+        "id": "csharp.loops",
+        "title": "Циклы и накопитель",
+        "kind": "loop",
+        "theory": "Чтобы сложить последовательность, начни с total = 0. Цикл выполняет тело, пока условие истинно; i++ увеличивает счётчик после шага. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+        "examples": [
+          "for (int i = 1; i <= n; i++) {\n    total += i;\n}",
+          "N = 10 → 1 + 2 + … + 10 = 55"
+        ],
+        "mistakes": [
+          "Условие i < n пропускает N: это off-by-one.",
+          "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "version": "Python 3",
+    "subtitle": "Маленькие шаги. Большие возможности.",
+    "source": "https://docs.python.org/3/tutorial/",
+    "lessons": [
+      {
+        "id": "python.basics",
+        "title": "Первая программа",
+        "theory": "Python использует отступы для блоков. input() возвращает строку, int(input()) читает целое число. Переменные связывают имена с объектами; объявлять тип заранее не нужно. print выводит результат и перевод строки.",
+        "examples": [
+          "age = 20",
+          "print(age)"
+        ],
+        "mistakes": [
+          "input() + 3 вызывает TypeError, потому что input возвращает строку.",
+          "Непоследовательные отступы вызывают IndentationError или меняют смысл программы."
+        ],
+        "kind": "arithmetic"
+      },
+      {
+        "id": "python.loops",
+        "title": "Циклы и накопитель",
+        "kind": "loop",
+        "theory": "Чтобы сложить последовательность, начни с total = 0. range не включает правую границу. Используй n + 1, чтобы обработать N. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+        "examples": [
+          "for i in range(1, n + 1):\n    total += i",
+          "N = 10 → 1 + 2 + … + 10 = 55"
+        ],
+        "mistakes": [
+          "Условие i < n пропускает N: это off-by-one.",
+          "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "version": "Java 21",
+    "subtitle": "Надёжные программы, шаг за шагом.",
+    "source": "https://dev.java/learn/",
+    "lessons": [
+      {
+        "id": "java.basics",
+        "title": "Первая программа",
+        "theory": "Точка входа — public static void main(String[] args). Публичный класс Main хранится в Main.java. Scanner(System.in).nextInt() читает число. System.out.println выводит значение и перевод строки. JDK включает javac, JVM выполняет байткод.",
+        "examples": [
+          "int age = 20;",
+          "System.out.println(age);"
+        ],
+        "mistakes": [
+          "Имя публичного класса должно совпадать с именем файла.",
+          "Scanner требует import java.util.Scanner; импорт не устанавливает сторонний пакет."
+        ],
+        "kind": "arithmetic"
+      },
+      {
+        "id": "java.loops",
+        "title": "Циклы и накопитель",
+        "kind": "loop",
+        "theory": "Чтобы сложить последовательность, начни с total = 0. Цикл выполняет тело, пока условие истинно; i++ увеличивает счётчик после шага. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+        "examples": [
+          "for (int i = 1; i <= n; i++) {\n    total += i;\n}",
+          "N = 10 → 1 + 2 + … + 10 = 55"
+        ],
+        "mistakes": [
+          "Условие i < n пропускает N: это off-by-one.",
+          "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "version": "ECMAScript / Node.js",
+    "subtitle": "От выражений к живым программам.",
+    "source": "https://nodejs.org/api/fs.html",
+    "lessons": [
+      {
+        "id": "javascript.basics",
+        "title": "Первая программа",
+        "theory": "Этот трек использует Node.js, а не браузер. let задаёт изменяемую переменную, const — неизменяемую привязку. Ввод: Number(require(\"fs\").readFileSync(0, \"utf8\").trim()). Преобразование в Number важно: + со строкой может склеить текст.",
+        "examples": [
+          "let age = 20;",
+          "console.log(age);"
+        ],
+        "mistakes": [
+          "prompt не определён в Node.js: это API браузера.",
+          "\"2\" + 3 даёт \"23\", а не 5: проверь преобразование строки."
+        ],
+        "kind": "arithmetic"
+      },
+      {
+        "id": "javascript.loops",
+        "title": "Циклы и накопитель",
+        "kind": "loop",
+        "theory": "Чтобы сложить последовательность, начни с total = 0. Цикл выполняет тело, пока условие истинно; i++ увеличивает счётчик после шага. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+        "examples": [
+          "for (let i = 1; i <= n; i++) {\n    total += i;\n}",
+          "N = 10 → 1 + 2 + … + 10 = 55"
+        ],
+        "mistakes": [
+          "Условие i < n пропускает N: это off-by-one.",
+          "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "version": "Go 1.22+",
+    "subtitle": "Простота, которая растёт вместе с тобой.",
+    "source": "https://go.dev/tour/",
+    "lessons": [
+      {
+        "id": "go.basics",
+        "title": "Первая программа",
+        "theory": "Файл начинается с package main. Импорт fmt даёт Scan и Println. func main() — точка входа. var n int объявляет целое, fmt.Scan(&n) заполняет переменную. Короткая форма total := 0 объявляет переменную внутри функции.",
+        "examples": [
+          "age := 20",
+          "fmt.Println(age)"
+        ],
+        "mistakes": [
+          "Неиспользуемая переменная или импорт — ошибка компиляции.",
+          "Scan(n) вместо Scan(&n) не передаёт указатель на переменную."
+        ],
+        "kind": "arithmetic"
+      },
+      {
+        "id": "go.loops",
+        "title": "Циклы и накопитель",
+        "kind": "loop",
+        "theory": "Чтобы сложить последовательность, начни с total = 0. В Go единственная конструкция цикла — for; условие включительно: i <= n. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+        "examples": [
+          "for i := 1; i <= n; i++ {\n    total += i\n}",
+          "N = 10 → 1 + 2 + … + 10 = 55"
+        ],
+        "mistakes": [
+          "Условие i < n пропускает N: это off-by-one.",
+          "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  },
+  {
+    "id": "sql",
+    "name": "SQL",
+    "version": "SQLite 3",
+    "subtitle": "Задавай данным правильные вопросы.",
+    "source": "https://www.sqlite.org/lang_select.html",
+    "lessons": [
+      {
+        "id": "sql.basics",
+        "title": "Таблицы и LEFT JOIN",
+        "theory": "SQL описывает желаемый результат. SELECT выбирает столбцы, FROM задаёт таблицу, WHERE фильтрует строки. LEFT JOIN сохраняет строки левой таблицы без совпадений справа. GROUP BY объединяет строки для агрегатов. COUNT(o.id) не считает NULL, COUNT(*) считает строки.",
+        "examples": [
+          "SELECT id, name FROM customers ORDER BY id;",
+          "SELECT COUNT(*) FROM orders WHERE amount >= 25;"
+        ],
+        "mistakes": [
+          "INNER JOIN теряет покупателей без заказов.",
+          "COUNT(*) после LEFT JOIN даёт 1 для строки без заказа; считай непустой ключ справа."
+        ],
+        "kind": "join"
+      },
+      {
+        "id": "sql.filters",
+        "title": "Фильтры и порядок",
+        "kind": "filter",
+        "theory": "WHERE фильтрует отдельные строки до группировки. >= включает границу. ORDER BY нужен, если порядок результата является частью контракта. Без ORDER BY порядок SQL не гарантирован.",
+        "examples": [
+          "SELECT id, amount FROM orders WHERE amount >= 25 ORDER BY id;",
+          "SELECT SUM(amount) FROM orders;"
+        ],
+        "mistakes": [
+          "> вместо >= теряет строку на границе.",
+          "Без ORDER BY движок не обязан возвращать строки по id."
+        ]
+      }
+    ],
+    "revision": 1,
+    "review_status": "automated_examples_only",
+    "author": "DevCat",
+    "last_verified": "2026-10-26"
+  }
+]

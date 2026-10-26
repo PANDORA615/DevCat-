@@ -1,0 +1,41 @@
+{
+  "id": "sql",
+  "name": "SQL",
+  "version": "SQLite 3",
+  "subtitle": "Задавай данным правильные вопросы.",
+  "source": "https://www.sqlite.org/lang_select.html",
+  "lessons": [
+    {
+      "id": "sql.basics",
+      "title": "Таблицы и LEFT JOIN",
+      "theory": "SQL описывает желаемый результат. SELECT выбирает столбцы, FROM задаёт таблицу, WHERE фильтрует строки. LEFT JOIN сохраняет строки левой таблицы без совпадений справа. GROUP BY объединяет строки для агрегатов. COUNT(o.id) не считает NULL, COUNT(*) считает строки.",
+      "examples": [
+        "SELECT id, name FROM customers ORDER BY id;",
+        "SELECT COUNT(*) FROM orders WHERE amount >= 25;"
+      ],
+      "mistakes": [
+        "INNER JOIN теряет покупателей без заказов.",
+        "COUNT(*) после LEFT JOIN даёт 1 для строки без заказа; считай непустой ключ справа."
+      ],
+      "kind": "join"
+    },
+    {
+      "id": "sql.filters",
+      "title": "Фильтры и порядок",
+      "kind": "filter",
+      "theory": "WHERE фильтрует отдельные строки до группировки. >= включает границу. ORDER BY нужен, если порядок результата является частью контракта. Без ORDER BY порядок SQL не гарантирован.",
+      "examples": [
+        "SELECT id, amount FROM orders WHERE amount >= 25 ORDER BY id;",
+        "SELECT SUM(amount) FROM orders;"
+      ],
+      "mistakes": [
+        "> вместо >= теряет строку на границе.",
+        "Без ORDER BY движок не обязан возвращать строки по id."
+      ]
+    }
+  ],
+  "revision": 1,
+  "review_status": "automated_examples_only",
+  "author": "DevCat",
+  "last_verified": "2026-10-26"
+}

@@ -1,0 +1,11 @@
+name: Pinned Flutter
+description: Flutter 3.47.8 from the upstream tag, with locked dependencies
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        git clone --depth 1 --branch 3.47.8 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+        echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+        "$RUNNER_TEMP/flutter/bin/flutter" --version
+        "$RUNNER_TEMP/flutter/bin/flutter" config --no-analytics

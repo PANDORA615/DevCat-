@@ -1,0 +1,41 @@
+{
+  "id": "java",
+  "name": "Java",
+  "version": "Java 21",
+  "subtitle": "Надёжные программы, шаг за шагом.",
+  "source": "https://dev.java/learn/",
+  "lessons": [
+    {
+      "id": "java.basics",
+      "title": "Первая программа",
+      "theory": "Точка входа — public static void main(String[] args). Публичный класс Main хранится в Main.java. Scanner(System.in).nextInt() читает число. System.out.println выводит значение и перевод строки. JDK включает javac, JVM выполняет байткод.",
+      "examples": [
+        "int age = 20;",
+        "System.out.println(age);"
+      ],
+      "mistakes": [
+        "Имя публичного класса должно совпадать с именем файла.",
+        "Scanner требует import java.util.Scanner; импорт не устанавливает сторонний пакет."
+      ],
+      "kind": "arithmetic"
+    },
+    {
+      "id": "java.loops",
+      "title": "Циклы и накопитель",
+      "kind": "loop",
+      "theory": "Чтобы сложить последовательность, начни с total = 0. Цикл выполняет тело, пока условие истинно; i++ увеличивает счётчик после шага. При N = 0 цикл не выполняется, накопитель остаётся нулевым. Для заданного диапазона N ≤ 1000 достаточно обычного целого; для больших данных учитывай переполнение.",
+      "examples": [
+        "for (int i = 1; i <= n; i++) {\n    total += i;\n}",
+        "N = 10 → 1 + 2 + … + 10 = 55"
+      ],
+      "mistakes": [
+        "Условие i < n пропускает N: это off-by-one.",
+        "Необнулённый накопитель или сброс total внутри цикла дают неверный результат."
+      ]
+    }
+  ],
+  "revision": 1,
+  "review_status": "automated_examples_only",
+  "author": "DevCat",
+  "last_verified": "2026-10-26"
+}
