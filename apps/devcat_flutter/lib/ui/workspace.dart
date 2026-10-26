@@ -479,13 +479,6 @@ class _WorkspacePageState extends State<WorkspacePage>
               ),
             ),
           ),
-        if (!compact && widget.store.setting('cat', true)) ...[
-          const SizedBox(height: 10),
-          CatMessage(
-            cat,
-            reducedMotion: MediaQuery.of(context).disableAnimations,
-          ),
-        ],
       ],
     );
     return Padding(
@@ -557,6 +550,13 @@ class _WorkspacePageState extends State<WorkspacePage>
 
   Widget _information(BuildContext context) => ListView(
     children: [
+      if (widget.store.setting('cat', true)) ...[
+        CatMessage(
+          cat,
+          reducedMotion: MediaQuery.of(context).disableAnimations,
+        ),
+        const SizedBox(height: 16),
+      ],
       if (widget.seed == 0 && widget.lesson != null) ...[
         SegmentedButton<int>(
           segments: const [

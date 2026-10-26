@@ -67,7 +67,7 @@ void main() {
 class MemoryStore extends AppStore {
   MemoryStore() : super(Directory('/tmp/devcat-widget-memory')) {
     device = 'widget-device';
-    settings = {'onboarded': true, 'sound': false, 'cat': false};
+    settings = {'onboarded': true, 'sound': false, 'cat': true};
   }
   @override
   Future<void> save() async {}

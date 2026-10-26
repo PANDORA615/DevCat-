@@ -69,7 +69,11 @@ cp -a "$stage/usr" %{buildroot}/
 /usr/share/licenses/devcat/LICENSE
 SPEC
 rpmbuild --define "_topdir $rpmdir" -bb "$rpmdir/SPECS/devcat.spec"
-cp "$rpmdir/RPMS/x86_64/"*.rpm "$dist/DevCat-$version-linux-x86_64.rpm"
+cp "$rpmdir/RPMS/x86_64/"*.rpm "$dist/DevCat-$version-linux-fedora-x86_64.rpm"
+# openSUSE uses different runtime package names from Fedora.
+sed -i 's/^Requires:.*/Requires: libgtk-3-0, libsecret-1-0, gstreamer, gstreamer-plugins-base, gstreamer-plugins-good/' "$rpmdir/SPECS/devcat.spec"
+rpmbuild --define "_topdir $rpmdir" -bb "$rpmdir/SPECS/devcat.spec"
+cp "$rpmdir/RPMS/x86_64/"*.rpm "$dist/DevCat-$version-linux-opensuse-x86_64.rpm"
 archroot="$dist/arch-root"
 mkdir -p "$archroot"
 cp -a "$stage/usr" "$archroot/"
