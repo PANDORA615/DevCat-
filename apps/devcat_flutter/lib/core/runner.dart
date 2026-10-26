@@ -123,9 +123,10 @@ class LocalRunner {
   Future<String?> _find(List<String> candidates) async {
     for (final exe in candidates) {
       try {
-        final result = await Process.run(exe, [
-          '--version',
-        ]).timeout(const Duration(seconds: 4));
+        final result = await Process.run(
+          exe,
+          p.basenameWithoutExtension(exe) == 'go' ? ['version'] : ['--version'],
+        ).timeout(const Duration(seconds: 4));
         if (result.exitCode == 0) return exe;
       } catch (_) {
         /* Try the next official toolchain. */
