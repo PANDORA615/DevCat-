@@ -665,6 +665,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                 : 'Эталон откроется в отдельном окне. Попробуй сначала три подсказки.',
           )) {
             if (!context.mounted) return;
+            widget.sounds.speak(CatMood.explaining);
             showDialog(
               context: context,
               builder: (context) => AlertDialog(

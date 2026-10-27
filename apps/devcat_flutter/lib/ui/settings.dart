@@ -71,6 +71,11 @@ class _SettingsPageState extends State<SettingsPage> {
     super.dispose();
   }
 
+  Future<void> _change(String key, dynamic value) {
+    if (value is bool) widget.sounds.cue(SoundCue.toggle);
+    return widget.store.set(key, value);
+  }
+
   Future<void> _sync() async {
     if (syncing) return;
     setState(() {
@@ -193,7 +198,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ChoiceChip(
                       label: Text(mode.value),
                       selected: store.setting('theme', 'system') == mode.key,
-                      onSelected: (_) => store.set('theme', mode.key),
+                      onSelected: (_) => _change('theme', mode.key),
                     ),
                 ],
               ),
@@ -216,7 +221,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       label: Text(c.value),
                       onPressed: () {
-                        store.set('seedColor', c.key);
+                        _change('seedColor', c.key);
                         hex.text = c.key.toRadixString(16).substring(2);
                       },
                     ),
@@ -236,7 +241,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onPressed: () {
                         final value = hex.text.replaceAll('#', '');
                         if (RegExp(r'^[0-9a-fA-F]{6}$').hasMatch(value)) {
-                          store.set(
+                          _change(
                             'seedColor',
                             0xff000000 | int.parse(value, radix: 16),
                           );
@@ -258,26 +263,26 @@ class _SettingsPageState extends State<SettingsPage> {
                   'Если система поддерживает динамическую палитру',
                 ),
                 value: store.setting('dynamicColor', false),
-                onChanged: (v) => store.set('dynamicColor', v),
+                onChanged: (v) => _change('dynamicColor', v),
               ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Повышенный контраст'),
                 value: store.setting('highContrast', false),
-                onChanged: (v) => store.set('highContrast', v),
+                onChanged: (v) => _change('highContrast', v),
               ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Уменьшить движение'),
                 subtitle: const Text('Мгновенные переходы и реплики кота'),
                 value: store.setting('reducedMotion', false),
-                onChanged: (v) => store.set('reducedMotion', v),
+                onChanged: (v) => _change('reducedMotion', v),
               ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Показывать кота-наставника'),
                 value: store.setting('cat', true),
-                onChanged: (v) => store.set('cat', v),
+                onChanged: (v) => _change('cat', v),
               ),
               const Divider(),
               DropdownButtonFormField<String>(
@@ -297,7 +302,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
                 onChanged: (v) {
-                  if (v != null) store.set('uiFont', v);
+                  if (v != null) _change('uiFont', v);
                 },
               ),
               const SizedBox(height: 14),
@@ -309,7 +314,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 min: .9,
                 max: 1.25,
                 divisions: 7,
-                onChanged: (v) => store.set('uiScale', v),
+                onChanged: (v) => _change('uiScale', v),
               ),
               Text(
                 'Округление карточек: ${store.setting<num>('cornerRadius', 28).round()}',
@@ -319,7 +324,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 min: 8,
                 max: 36,
                 divisions: 7,
-                onChanged: (v) => store.set('cornerRadius', v),
+                onChanged: (v) => _change('cornerRadius', v),
               ),
               Text(
                 'Текст лекций: ${store.setting<num>('readingSize', 18).round()}',
@@ -329,7 +334,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 min: 15,
                 max: 26,
                 divisions: 11,
-                onChanged: (v) => store.set('readingSize', v),
+                onChanged: (v) => _change('readingSize', v),
               ),
               Text(
                 'Межстрочный интервал лекций: ${store.setting<num>('readingHeight', 1.8).toStringAsFixed(1)}',
@@ -339,7 +344,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 min: 1.4,
                 max: 2.2,
                 divisions: 8,
-                onChanged: (v) => store.set('readingHeight', v),
+                onChanged: (v) => _change('readingHeight', v),
               ),
               Text(
                 'Ширина текста лекций: ${store.setting<num>('readingWidth', 800).round()}',
@@ -349,7 +354,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 min: 580,
                 max: 1000,
                 divisions: 7,
-                onChanged: (v) => store.set('readingWidth', v),
+                onChanged: (v) => _change('readingWidth', v),
               ),
               DropdownButtonFormField<String>(
                 isExpanded: true,
@@ -366,7 +371,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
                 onChanged: (v) {
-                  if (v != null) store.set('editorFont', v);
+                  if (v != null) _change('editorFont', v);
                 },
               ),
               const Divider(),
@@ -378,7 +383,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 min: 12,
                 max: 24,
                 divisions: 12,
-                onChanged: (v) => store.set('editorSize', v),
+                onChanged: (v) => _change('editorSize', v),
               ),
             ],
           ),
@@ -396,7 +401,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   '14 звуков из твоего архива: отдельные сигналы для навигации, действий, ошибок и результатов',
                 ),
                 value: store.setting('sound', true),
-                onChanged: (v) => store.set('sound', v),
+                onChanged: (v) => _change('sound', v),
               ),
               Row(
                 children: [
@@ -406,7 +411,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       value: store.setting<num>('volume', .22).toDouble(),
                       min: 0,
                       max: 1,
-                      onChanged: (v) => store.set('volume', v),
+                      onChanged: (v) => _change('volume', v),
                       onChangeEnd: (_) => widget.sounds.tap(),
                     ),
                   ),
@@ -420,14 +425,14 @@ class _SettingsPageState extends State<SettingsPage> {
                   'Разные голоса для объяснения, подсказки, поддержки и результата',
                 ),
                 value: store.setting('catVoice', true),
-                onChanged: (v) => store.set('catVoice', v),
+                onChanged: (v) => _change('catVoice', v),
               ),
               Text('Громкость голоса'),
               Slider(
                 value: store.setting<num>('voiceVolume', .18).toDouble(),
                 min: 0,
                 max: 1,
-                onChanged: (v) => store.set('voiceVolume', v),
+                onChanged: (v) => _change('voiceVolume', v),
                 onChangeEnd: (_) => widget.sounds.speak(CatMood.greeting),
               ),
               DropdownButtonFormField<String>(
@@ -457,7 +462,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
                 onChanged: (v) {
                   if (v != null) {
-                    store.set('voiceStyle', v);
+                    _change('voiceStyle', v);
                     widget.sounds.speak(CatMood.greeting);
                   }
                 },
@@ -705,7 +710,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         'Разрешить запуск?',
                         'Код выполняется с твоими правами. Сторонние программы могут читать и менять файлы.',
                       )) {
-                    await store.set('trustedLocalRun', v);
+                    await _change('trustedLocalRun', v);
                   }
                 },
               ),
