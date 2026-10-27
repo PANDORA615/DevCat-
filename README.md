@@ -7,6 +7,16 @@
 
 DevCat 0.1 — первый рабочий срез большого [ТЗ](docs/SPECIFICATION.ru.md). Уроки, генератор заданий, редактор и прогресс работают на устройстве без аккаунта. Облачный ИИ и обязательный backend не нужны. Русский интерфейс, Flutter Material 3, спокойные цвета, плавные переходы и собственные тихие звуки.
 
+## Как выглядит приложение
+
+Скриншоты запущенной Linux release-сборки. Иллюстрация выше — отдельный брендовый арт.
+
+![Главная DevCat](docs/screenshots/home.png)
+![Урок и настоящий локальный редактор](docs/screenshots/lesson.png)
+![Проверка решения реальными тестами](docs/screenshots/practice-passed.png)
+![Настройки внешнего вида](docs/screenshots/settings.png)
+![Тёмная тема, сохранённая после перезапуска](docs/screenshots/dark.png)
+
 ## Что работает
 
 - **Восемь языков:** C, C++, C#, Python, Java, JavaScript, Go, SQL. По два вводных урока с объяснениями, примерами, ошибками и ссылками на источники. Это вводные модули, а не полные профессиональные курсы.
@@ -26,7 +36,7 @@ DevCat 0.1 — первый рабочий срез большого [ТЗ](docs
 | Платформа | Файлы |
 |---|---|
 | Ubuntu / Debian / Mint / Pop!_OS | `.deb` · x86_64 |
-| Fedora / openSUSE / RPM-системы | `.rpm` · x86_64 |
+| Fedora / openSUSE | отдельные `fedora.rpm` / `opensuse.rpm` · x86_64 |
 | Arch / Manjaro | `.pkg.tar.zst` · x86_64 |
 | Другие Linux с glibc ≥ 2.35 | `.AppImage` или `.tar.gz` · x86_64 |
 | Windows 10 / 11 | `setup.exe` или portable `.zip` · x64 |
@@ -37,9 +47,9 @@ DevCat 0.1 — первый рабочий срез большого [ТЗ](docs
 # Debian / Ubuntu 22.04+
 sudo apt install ./DevCat-0.1.0-linux-amd64.deb
 # Fedora
-sudo dnf install ./DevCat-0.1.0-linux-x86_64.rpm
+sudo dnf install ./DevCat-0.1.0-linux-fedora-x86_64.rpm
 # openSUSE
-sudo zypper install ./DevCat-0.1.0-linux-x86_64.rpm
+sudo zypper install ./DevCat-0.1.0-linux-opensuse-x86_64.rpm
 # Arch / Manjaro
 sudo pacman -U ./DevCat-0.1.0-linux-x86_64.pkg.tar.zst
 # AppImage (GTK 3 / libsecret / GStreamer должны быть установлены)
@@ -76,6 +86,8 @@ Windows: запускайте `setup.exe` либо распакуйте ZIP це
 | Go | Go 1.22+ |
 | SQL | SQLite встроен |
 | Git | Git 2 |
+
+Если macOS-приложение из Finder не видит Homebrew-toolchain, запустите его из терминала: `/Applications/DevCat.app/Contents/MacOS/DevCat`. Тогда оно унаследует PATH вашей оболочки.
 
 Код запускается только после согласия, с правами пользователя. Это **не песочница для недоверенного кода**. Есть таймауты и лимит вывода, но нет полной изоляции файлов, памяти или дерева процессов. Toolchain не входят в установщики. Никакой автоматической установки зависимостей из интернета.
 

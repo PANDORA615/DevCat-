@@ -42,7 +42,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-audioplayers_android",
+      "SPDXID": "SPDXRef-audioplayers-android",
       "name": "audioplayers_android",
       "versionInfo": "5.3.0",
       "downloadLocation": "https://pub.dev/packages/audioplayers_android",
@@ -52,7 +52,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-audioplayers_darwin",
+      "SPDXID": "SPDXRef-audioplayers-darwin",
       "name": "audioplayers_darwin",
       "versionInfo": "6.5.0",
       "downloadLocation": "https://pub.dev/packages/audioplayers_darwin",
@@ -62,7 +62,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-audioplayers_linux",
+      "SPDXID": "SPDXRef-audioplayers-linux",
       "name": "audioplayers_linux",
       "versionInfo": "4.3.0",
       "downloadLocation": "https://pub.dev/packages/audioplayers_linux",
@@ -72,7 +72,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-audioplayers_platform_interface",
+      "SPDXID": "SPDXRef-audioplayers-platform-interface",
       "name": "audioplayers_platform_interface",
       "versionInfo": "7.2.0",
       "downloadLocation": "https://pub.dev/packages/audioplayers_platform_interface",
@@ -82,7 +82,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-audioplayers_web",
+      "SPDXID": "SPDXRef-audioplayers-web",
       "name": "audioplayers_web",
       "versionInfo": "5.3.0",
       "downloadLocation": "https://pub.dev/packages/audioplayers_web",
@@ -92,7 +92,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-audioplayers_windows",
+      "SPDXID": "SPDXRef-audioplayers-windows",
       "name": "audioplayers_windows",
       "versionInfo": "4.4.1",
       "downloadLocation": "https://pub.dev/packages/audioplayers_windows",
@@ -112,7 +112,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-boolean_selector",
+      "SPDXID": "SPDXRef-boolean-selector",
       "name": "boolean_selector",
       "versionInfo": "2.1.2",
       "downloadLocation": "https://pub.dev/packages/boolean_selector",
@@ -152,7 +152,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-code_assets",
+      "SPDXID": "SPDXRef-code-assets",
       "name": "code_assets",
       "versionInfo": "1.2.1",
       "downloadLocation": "https://pub.dev/packages/code_assets",
@@ -172,7 +172,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-cross_file",
+      "SPDXID": "SPDXRef-cross-file",
       "name": "cross_file",
       "versionInfo": "0.3.5+5",
       "downloadLocation": "https://pub.dev/packages/cross_file",
@@ -192,7 +192,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-dynamic_color",
+      "SPDXID": "SPDXRef-dynamic-color",
       "name": "dynamic_color",
       "versionInfo": "1.9.0",
       "downloadLocation": "https://pub.dev/packages/dynamic_color",
@@ -212,7 +212,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-fake_async",
+      "SPDXID": "SPDXRef-fake-async",
       "name": "fake_async",
       "versionInfo": "1.3.3",
       "downloadLocation": "https://pub.dev/packages/fake_async",
@@ -242,7 +242,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector",
+      "SPDXID": "SPDXRef-file-selector",
       "name": "file_selector",
       "versionInfo": "1.1.0",
       "downloadLocation": "https://pub.dev/packages/file_selector",
@@ -252,7 +252,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector_android",
+      "SPDXID": "SPDXRef-file-selector-android",
       "name": "file_selector_android",
       "versionInfo": "0.5.2+11",
       "downloadLocation": "https://pub.dev/packages/file_selector_android",
@@ -262,7 +262,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector_ios",
+      "SPDXID": "SPDXRef-file-selector-ios",
       "name": "file_selector_ios",
       "versionInfo": "0.5.3+7",
       "downloadLocation": "https://pub.dev/packages/file_selector_ios",
@@ -272,7 +272,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector_linux",
+      "SPDXID": "SPDXRef-file-selector-linux",
       "name": "file_selector_linux",
       "versionInfo": "0.9.4+1",
       "downloadLocation": "https://pub.dev/packages/file_selector_linux",
@@ -282,7 +282,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector_macos",
+      "SPDXID": "SPDXRef-file-selector-macos",
       "name": "file_selector_macos",
       "versionInfo": "0.9.5+2",
       "downloadLocation": "https://pub.dev/packages/file_selector_macos",
@@ -292,7 +292,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector_platform_interface",
+      "SPDXID": "SPDXRef-file-selector-platform-interface",
       "name": "file_selector_platform_interface",
       "versionInfo": "2.7.0",
       "downloadLocation": "https://pub.dev/packages/file_selector_platform_interface",
@@ -302,7 +302,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector_web",
+      "SPDXID": "SPDXRef-file-selector-web",
       "name": "file_selector_web",
       "versionInfo": "0.9.5",
       "downloadLocation": "https://pub.dev/packages/file_selector_web",
@@ -312,7 +312,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-file_selector_windows",
+      "SPDXID": "SPDXRef-file-selector-windows",
       "name": "file_selector_windows",
       "versionInfo": "0.9.3+6",
       "downloadLocation": "https://pub.dev/packages/file_selector_windows",
@@ -342,7 +342,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_code_editor",
+      "SPDXID": "SPDXRef-flutter-code-editor",
       "name": "flutter_code_editor",
       "versionInfo": "0.3.5",
       "downloadLocation": "https://pub.dev/packages/flutter_code_editor",
@@ -352,7 +352,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_highlight",
+      "SPDXID": "SPDXRef-flutter-highlight",
       "name": "flutter_highlight",
       "versionInfo": "0.7.0",
       "downloadLocation": "https://pub.dev/packages/flutter_highlight",
@@ -362,7 +362,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_lints",
+      "SPDXID": "SPDXRef-flutter-lints",
       "name": "flutter_lints",
       "versionInfo": "6.0.0",
       "downloadLocation": "https://pub.dev/packages/flutter_lints",
@@ -372,7 +372,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_localizations",
+      "SPDXID": "SPDXRef-flutter-localizations",
       "name": "flutter_localizations",
       "versionInfo": "0.0.0",
       "downloadLocation": "https://pub.dev/packages/flutter_localizations",
@@ -382,7 +382,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_secure_storage",
+      "SPDXID": "SPDXRef-flutter-secure-storage",
       "name": "flutter_secure_storage",
       "versionInfo": "9.2.4",
       "downloadLocation": "https://pub.dev/packages/flutter_secure_storage",
@@ -392,7 +392,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_secure_storage_linux",
+      "SPDXID": "SPDXRef-flutter-secure-storage-linux",
       "name": "flutter_secure_storage_linux",
       "versionInfo": "1.2.3",
       "downloadLocation": "https://pub.dev/packages/flutter_secure_storage_linux",
@@ -402,7 +402,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_secure_storage_macos",
+      "SPDXID": "SPDXRef-flutter-secure-storage-macos",
       "name": "flutter_secure_storage_macos",
       "versionInfo": "3.1.3",
       "downloadLocation": "https://pub.dev/packages/flutter_secure_storage_macos",
@@ -412,7 +412,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_secure_storage_platform_interface",
+      "SPDXID": "SPDXRef-flutter-secure-storage-platform-interface",
       "name": "flutter_secure_storage_platform_interface",
       "versionInfo": "1.1.2",
       "downloadLocation": "https://pub.dev/packages/flutter_secure_storage_platform_interface",
@@ -422,7 +422,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_secure_storage_web",
+      "SPDXID": "SPDXRef-flutter-secure-storage-web",
       "name": "flutter_secure_storage_web",
       "versionInfo": "1.2.1",
       "downloadLocation": "https://pub.dev/packages/flutter_secure_storage_web",
@@ -432,7 +432,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_secure_storage_windows",
+      "SPDXID": "SPDXRef-flutter-secure-storage-windows",
       "name": "flutter_secure_storage_windows",
       "versionInfo": "3.1.2",
       "downloadLocation": "https://pub.dev/packages/flutter_secure_storage_windows",
@@ -442,7 +442,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_test",
+      "SPDXID": "SPDXRef-flutter-test",
       "name": "flutter_test",
       "versionInfo": "0.0.0",
       "downloadLocation": "https://pub.dev/packages/flutter_test",
@@ -452,7 +452,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-flutter_web_plugins",
+      "SPDXID": "SPDXRef-flutter-web-plugins",
       "name": "flutter_web_plugins",
       "versionInfo": "0.0.0",
       "downloadLocation": "https://pub.dev/packages/flutter_web_plugins",
@@ -502,7 +502,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-http_parser",
+      "SPDXID": "SPDXRef-http-parser",
       "name": "http_parser",
       "versionInfo": "4.1.2",
       "downloadLocation": "https://pub.dev/packages/http_parser",
@@ -532,7 +532,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-jni_flutter",
+      "SPDXID": "SPDXRef-jni-flutter",
       "name": "jni_flutter",
       "versionInfo": "1.0.4+1",
       "downloadLocation": "https://pub.dev/packages/jni_flutter",
@@ -542,7 +542,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-jni_util",
+      "SPDXID": "SPDXRef-jni-util",
       "name": "jni_util",
       "versionInfo": "1.0.0",
       "downloadLocation": "https://pub.dev/packages/jni_util",
@@ -562,7 +562,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-json_annotation",
+      "SPDXID": "SPDXRef-json-annotation",
       "name": "json_annotation",
       "versionInfo": "4.12.0",
       "downloadLocation": "https://pub.dev/packages/json_annotation",
@@ -572,7 +572,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-leak_tracker",
+      "SPDXID": "SPDXRef-leak-tracker",
       "name": "leak_tracker",
       "versionInfo": "11.0.2",
       "downloadLocation": "https://pub.dev/packages/leak_tracker",
@@ -582,7 +582,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-leak_tracker_flutter_testing",
+      "SPDXID": "SPDXRef-leak-tracker-flutter-testing",
       "name": "leak_tracker_flutter_testing",
       "versionInfo": "3.0.10",
       "downloadLocation": "https://pub.dev/packages/leak_tracker_flutter_testing",
@@ -592,7 +592,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-leak_tracker_testing",
+      "SPDXID": "SPDXRef-leak-tracker-testing",
       "name": "leak_tracker_testing",
       "versionInfo": "3.0.2",
       "downloadLocation": "https://pub.dev/packages/leak_tracker_testing",
@@ -602,7 +602,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-linked_scroll_controller",
+      "SPDXID": "SPDXRef-linked-scroll-controller",
       "name": "linked_scroll_controller",
       "versionInfo": "0.2.0",
       "downloadLocation": "https://pub.dev/packages/linked_scroll_controller",
@@ -642,7 +642,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-material_color_utilities",
+      "SPDXID": "SPDXRef-material-color-utilities",
       "name": "material_color_utilities",
       "versionInfo": "0.13.0",
       "downloadLocation": "https://pub.dev/packages/material_color_utilities",
@@ -682,7 +682,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-objective_c",
+      "SPDXID": "SPDXRef-objective-c",
       "name": "objective_c",
       "versionInfo": "9.5.0",
       "downloadLocation": "https://pub.dev/packages/objective_c",
@@ -692,7 +692,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-package_config",
+      "SPDXID": "SPDXRef-package-config",
       "name": "package_config",
       "versionInfo": "3.0.0",
       "downloadLocation": "https://pub.dev/packages/package_config",
@@ -712,7 +712,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-path_provider",
+      "SPDXID": "SPDXRef-path-provider",
       "name": "path_provider",
       "versionInfo": "2.1.6",
       "downloadLocation": "https://pub.dev/packages/path_provider",
@@ -722,7 +722,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-path_provider_android",
+      "SPDXID": "SPDXRef-path-provider-android",
       "name": "path_provider_android",
       "versionInfo": "2.3.1",
       "downloadLocation": "https://pub.dev/packages/path_provider_android",
@@ -732,7 +732,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-path_provider_foundation",
+      "SPDXID": "SPDXRef-path-provider-foundation",
       "name": "path_provider_foundation",
       "versionInfo": "2.6.0",
       "downloadLocation": "https://pub.dev/packages/path_provider_foundation",
@@ -742,7 +742,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-path_provider_linux",
+      "SPDXID": "SPDXRef-path-provider-linux",
       "name": "path_provider_linux",
       "versionInfo": "2.2.2",
       "downloadLocation": "https://pub.dev/packages/path_provider_linux",
@@ -752,7 +752,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-path_provider_platform_interface",
+      "SPDXID": "SPDXRef-path-provider-platform-interface",
       "name": "path_provider_platform_interface",
       "versionInfo": "2.1.3",
       "downloadLocation": "https://pub.dev/packages/path_provider_platform_interface",
@@ -762,7 +762,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-path_provider_windows",
+      "SPDXID": "SPDXRef-path-provider-windows",
       "name": "path_provider_windows",
       "versionInfo": "2.3.0",
       "downloadLocation": "https://pub.dev/packages/path_provider_windows",
@@ -782,7 +782,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-plugin_platform_interface",
+      "SPDXID": "SPDXRef-plugin-platform-interface",
       "name": "plugin_platform_interface",
       "versionInfo": "2.1.8",
       "downloadLocation": "https://pub.dev/packages/plugin_platform_interface",
@@ -792,7 +792,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-pub_semver",
+      "SPDXID": "SPDXRef-pub-semver",
       "name": "pub_semver",
       "versionInfo": "2.2.1",
       "downloadLocation": "https://pub.dev/packages/pub_semver",
@@ -802,7 +802,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-record_use",
+      "SPDXID": "SPDXRef-record-use",
       "name": "record_use",
       "versionInfo": "0.6.0",
       "downloadLocation": "https://pub.dev/packages/record_use",
@@ -812,7 +812,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-screen_retriever",
+      "SPDXID": "SPDXRef-screen-retriever",
       "name": "screen_retriever",
       "versionInfo": "0.2.2",
       "downloadLocation": "https://pub.dev/packages/screen_retriever",
@@ -822,7 +822,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-screen_retriever_linux",
+      "SPDXID": "SPDXRef-screen-retriever-linux",
       "name": "screen_retriever_linux",
       "versionInfo": "0.2.2",
       "downloadLocation": "https://pub.dev/packages/screen_retriever_linux",
@@ -832,7 +832,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-screen_retriever_macos",
+      "SPDXID": "SPDXRef-screen-retriever-macos",
       "name": "screen_retriever_macos",
       "versionInfo": "0.2.2",
       "downloadLocation": "https://pub.dev/packages/screen_retriever_macos",
@@ -842,7 +842,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-screen_retriever_platform_interface",
+      "SPDXID": "SPDXRef-screen-retriever-platform-interface",
       "name": "screen_retriever_platform_interface",
       "versionInfo": "0.2.2",
       "downloadLocation": "https://pub.dev/packages/screen_retriever_platform_interface",
@@ -852,7 +852,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-screen_retriever_windows",
+      "SPDXID": "SPDXRef-screen-retriever-windows",
       "name": "screen_retriever_windows",
       "versionInfo": "0.2.2",
       "downloadLocation": "https://pub.dev/packages/screen_retriever_windows",
@@ -862,7 +862,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-scrollable_positioned_list",
+      "SPDXID": "SPDXRef-scrollable-positioned-list",
       "name": "scrollable_positioned_list",
       "versionInfo": "0.3.8",
       "downloadLocation": "https://pub.dev/packages/scrollable_positioned_list",
@@ -872,7 +872,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-share_plus",
+      "SPDXID": "SPDXRef-share-plus",
       "name": "share_plus",
       "versionInfo": "12.0.2",
       "downloadLocation": "https://pub.dev/packages/share_plus",
@@ -882,7 +882,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-share_plus_platform_interface",
+      "SPDXID": "SPDXRef-share-plus-platform-interface",
       "name": "share_plus_platform_interface",
       "versionInfo": "6.1.0",
       "downloadLocation": "https://pub.dev/packages/share_plus_platform_interface",
@@ -892,7 +892,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-sky_engine",
+      "SPDXID": "SPDXRef-sky-engine",
       "name": "sky_engine",
       "versionInfo": "0.0.0",
       "downloadLocation": "https://pub.dev/packages/sky_engine",
@@ -902,7 +902,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-source_span",
+      "SPDXID": "SPDXRef-source-span",
       "name": "source_span",
       "versionInfo": "1.10.2",
       "downloadLocation": "https://pub.dev/packages/source_span",
@@ -922,7 +922,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-sqlite3_flutter_libs",
+      "SPDXID": "SPDXRef-sqlite3-flutter-libs",
       "name": "sqlite3_flutter_libs",
       "versionInfo": "0.5.42",
       "downloadLocation": "https://pub.dev/packages/sqlite3_flutter_libs",
@@ -932,7 +932,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-stack_trace",
+      "SPDXID": "SPDXRef-stack-trace",
       "name": "stack_trace",
       "versionInfo": "1.12.2",
       "downloadLocation": "https://pub.dev/packages/stack_trace",
@@ -942,7 +942,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-stream_channel",
+      "SPDXID": "SPDXRef-stream-channel",
       "name": "stream_channel",
       "versionInfo": "2.1.4",
       "downloadLocation": "https://pub.dev/packages/stream_channel",
@@ -952,7 +952,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-string_scanner",
+      "SPDXID": "SPDXRef-string-scanner",
       "name": "string_scanner",
       "versionInfo": "1.4.1",
       "downloadLocation": "https://pub.dev/packages/string_scanner",
@@ -972,7 +972,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-term_glyph",
+      "SPDXID": "SPDXRef-term-glyph",
       "name": "term_glyph",
       "versionInfo": "1.2.2",
       "downloadLocation": "https://pub.dev/packages/term_glyph",
@@ -982,7 +982,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-test_api",
+      "SPDXID": "SPDXRef-test-api",
       "name": "test_api",
       "versionInfo": "0.7.12",
       "downloadLocation": "https://pub.dev/packages/test_api",
@@ -1002,7 +1002,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-typed_data",
+      "SPDXID": "SPDXRef-typed-data",
       "name": "typed_data",
       "versionInfo": "1.4.0",
       "downloadLocation": "https://pub.dev/packages/typed_data",
@@ -1012,7 +1012,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher",
+      "SPDXID": "SPDXRef-url-launcher",
       "name": "url_launcher",
       "versionInfo": "6.3.3",
       "downloadLocation": "https://pub.dev/packages/url_launcher",
@@ -1022,7 +1022,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher_android",
+      "SPDXID": "SPDXRef-url-launcher-android",
       "name": "url_launcher_android",
       "versionInfo": "6.3.33",
       "downloadLocation": "https://pub.dev/packages/url_launcher_android",
@@ -1032,7 +1032,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher_ios",
+      "SPDXID": "SPDXRef-url-launcher-ios",
       "name": "url_launcher_ios",
       "versionInfo": "6.4.2",
       "downloadLocation": "https://pub.dev/packages/url_launcher_ios",
@@ -1042,7 +1042,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher_linux",
+      "SPDXID": "SPDXRef-url-launcher-linux",
       "name": "url_launcher_linux",
       "versionInfo": "3.2.3",
       "downloadLocation": "https://pub.dev/packages/url_launcher_linux",
@@ -1052,7 +1052,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher_macos",
+      "SPDXID": "SPDXRef-url-launcher-macos",
       "name": "url_launcher_macos",
       "versionInfo": "3.2.6",
       "downloadLocation": "https://pub.dev/packages/url_launcher_macos",
@@ -1062,7 +1062,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher_platform_interface",
+      "SPDXID": "SPDXRef-url-launcher-platform-interface",
       "name": "url_launcher_platform_interface",
       "versionInfo": "2.3.2",
       "downloadLocation": "https://pub.dev/packages/url_launcher_platform_interface",
@@ -1072,7 +1072,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher_web",
+      "SPDXID": "SPDXRef-url-launcher-web",
       "name": "url_launcher_web",
       "versionInfo": "2.4.3",
       "downloadLocation": "https://pub.dev/packages/url_launcher_web",
@@ -1082,7 +1082,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-url_launcher_windows",
+      "SPDXID": "SPDXRef-url-launcher-windows",
       "name": "url_launcher_windows",
       "versionInfo": "3.1.6",
       "downloadLocation": "https://pub.dev/packages/url_launcher_windows",
@@ -1102,7 +1102,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-vector_math",
+      "SPDXID": "SPDXRef-vector-math",
       "name": "vector_math",
       "versionInfo": "2.4.0",
       "downloadLocation": "https://pub.dev/packages/vector_math",
@@ -1112,7 +1112,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-vm_service",
+      "SPDXID": "SPDXRef-vm-service",
       "name": "vm_service",
       "versionInfo": "15.4.0",
       "downloadLocation": "https://pub.dev/packages/vm_service",
@@ -1142,7 +1142,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-window_manager",
+      "SPDXID": "SPDXRef-window-manager",
       "name": "window_manager",
       "versionInfo": "0.5.2",
       "downloadLocation": "https://pub.dev/packages/window_manager",
@@ -1152,7 +1152,7 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-xdg_directories",
+      "SPDXID": "SPDXRef-xdg-directories",
       "name": "xdg_directories",
       "versionInfo": "1.1.0",
       "downloadLocation": "https://pub.dev/packages/xdg_directories",

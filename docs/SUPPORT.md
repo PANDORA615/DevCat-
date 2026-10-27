@@ -27,7 +27,7 @@
 - Linux x86_64: Ubuntu 22.04+, Debian 12+, актуальные Fedora/openSUSE/Arch с glibc ≥ 2.35. `deb`, `rpm`, Arch `pkg.tar.zst`, `AppImage`, `tar.gz`. GTK 3, libsecret и GStreamer — зависимости ОС, в том числе для AppImage; musl/Alpine и ARM Linux не заявлены.
 - Windows x64: Windows 10/11, portable ZIP и setup EXE. Для Flutter и плагинов может понадобиться Microsoft Visual C++ Redistributable 2015–2022 x64. Authenticode не настроен.
 - macOS: сборка Flutter Release, DMG и ZIP; архитектуры подтверждаются `lipo` в проверке релиза. Developer ID / notarization не настроены, поэтому Gatekeeper может потребовать ручное открытие через системные настройки.
-- Android: APK universal + arm64-v8a + armeabi-v7a + x86_64 и AAB. APK для прямой установки; AAB предназначен для магазина, а не установки касанием. Фактический minimum SDK задаёт Flutter/плагины. Магазин Google Play не настроен.
+- Android: APK universal + arm64-v8a + armeabi-v7a + x86_64 и AAB. APK для прямой установки; AAB предназначен для магазина, а не установки касанием. Минимум Android 7.0 (API 24), target API 36 для текущего Flutter. Магазин Google Play не настроен.
 
 Сборка пакета не доказывает проверку на реальном устройстве. Фактические результаты: [VALIDATION.md](VALIDATION.md).
 

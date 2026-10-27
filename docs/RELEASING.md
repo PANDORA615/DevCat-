@@ -29,3 +29,7 @@ Linux: сборка на Ubuntu 22.04 для glibc ≥2.35. Deb/RPM/Arch metadat
 3. Составить SHA256SUMS по фактическим файлам.
 4. Опубликовать prerelease с точными ограничениями и ссылкой на validation report.
 5. Не называть CI-сборку проверкой на реальных Windows/macOS/Android устройствах.
+
+Публичный сертификат текущего Android-ключа: [android-release-cert.pem](android-release-cert.pem). SHA-256: `F4412CFC2567A7B33248DF99777C0D104761DD2DDA3EE7DE8FE8BAC467098BCA`.
+
+Для локальной переподписи: `python3 scripts/sign_android.py INPUTS OUTPUT --keystore /private/devcat.jks --password-file /private/password.txt --build-tools /path/to/android/build-tools/36.0.0`. Скрипт выравнивает APK для страниц 16 КиБ, проверяет подпись и не выводит пароли.
