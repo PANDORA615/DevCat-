@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: android-runtime-${{ github.ref }}
+  group: android-runtime-device-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   android-offline:
@@ -42,7 +42,7 @@ jobs:
           key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
       - name: Package native loader and matching compiler image
         run: |
-          bash scripts/build_android_proot.sh "$ANDROID_SDK_ROOT/ndk/28.2.13676358" x86_64 apps/devcat_flutter/android/app/src/main/jniLibs/x86_64
+          bash scripts/build_android_proot.sh "$ANDROID_SDK_ROOT/ndk/28.2.13676358" x86_64 apps/devcat_flutter/android/app/src/main/jniLibs/x86_64 > android-native-build.log 2>&1 || { tail -80 android-native-build.log; exit 1; }
           mkdir -p apps/devcat_flutter/android/app/src/main/assets/runtime
           cp build/android-runtime-image/x86_64.* apps/devcat_flutter/android/app/src/main/assets/runtime/
       - name: Enable KVM for Android emulator
@@ -75,4 +75,5 @@ jobs:
           name: android-runtime-diagnostics
           path: |
             android-runtime-logcat.txt
+            android-native-build.log
             build/android-runtime-image/x86_64.json
