@@ -9,7 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  for (final size in [const Size(1280, 900), const Size(390, 844)]) {
+  for (final size in [
+    const Size(1280, 900),
+    const Size(390, 844),
+    const Size(390, 640),
+    const Size(844, 390),
+  ]) {
     testWidgets('Home → lesson and settings render at $size', (tester) async {
       tester.view.physicalSize = size;
       tester.view.devicePixelRatio = 1;
@@ -37,6 +42,8 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.text('Продолжить обучение'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Продолжить обучение'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
@@ -56,6 +63,13 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       expect(find.text('Устройся поудобнее.'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('Синхронизировать'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
       await tester.runAsync(store.flush);

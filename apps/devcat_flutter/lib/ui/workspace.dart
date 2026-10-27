@@ -481,7 +481,7 @@ class _WorkspacePageState extends State<WorkspacePage>
           ),
       ],
     );
-    return Padding(
+    final layout = Padding(
       padding: EdgeInsets.fromLTRB(compact ? 16 : 28, 8, compact ? 16 : 28, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -545,6 +545,17 @@ class _WorkspacePageState extends State<WorkspacePage>
           ),
         ],
       ),
+    );
+    return LayoutBuilder(
+      builder: (context, bounds) {
+        final minimum = compact ? 450.0 : 600.0;
+        if (bounds.maxHeight < minimum) {
+          return SingleChildScrollView(
+            child: SizedBox(height: minimum, child: layout),
+          );
+        }
+        return layout;
+      },
     );
   }
 

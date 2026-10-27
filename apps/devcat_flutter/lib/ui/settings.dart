@@ -158,7 +158,9 @@ class _SettingsPageState extends State<SettingsPage> {
       children: [
         Icon(icon, color: Theme.of(context).colorScheme.primary),
         const SizedBox(width: 12),
-        Text(title, style: Theme.of(context).textTheme.titleLarge),
+        Expanded(
+          child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+        ),
       ],
     ),
   );
