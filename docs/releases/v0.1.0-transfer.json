@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "tag": "v0.1.0",
+  "build_run": 40424035892,
+  "build_commit": "4717e843aa09de7ec6c60dad81c00d58330d48d0",
+  "files": [
+    {
+      "name": "DevCat-0.1.0-android-arm64-v8a.apk",
+      "size": 22666481,
+      "sha256": "27b8fff5b319ad04621116ea123e41ce051093486ce8eade7878b5a0eda3e78c",
+      "chunks": [
+        {
+          "sha": "e10389a992340fceb0f613f705a8bdac9b3fbca2",
+          "size": 4194304
+        },
+        {
+          "sha": "9f758fb2e5a2f95b50f1a1b566a922d865226f8d",
+          "size": 4194304
+        },
+        {
+          "sha": "11a1bb1a4b4a3d20d54721c884a36b5f7db7670c",
+          "size": 4194304
+        },
+        {
+          "sha": "139cbc8fd3ecc6f8828bc8d58c4993c0bff6dd6b",
+          "size": 4194304
+        },
+        {
+          "sha": "ba7a2c5e5b10bc0a9611222f7ff012bf27635907",
+          "size": 4194304
+        },
+        {
+          "sha": "5b269e4feeb2470d684bc173d7c6964515cf57d8",
+          "size": 1694961
+        }
+      ]
+    },
+    {
+      "name": "DevCat-0.1.0-android-armeabi-v7a.apk",
+      "size": 20274425,
+      "sha256": "fad1fa8910d91d31ce01a958b7225f3d16650b8aded3e298f758f928d6676c7d",
+      "chunks": [
+        {
+          "sha": "b6fbd7b3c92dbcc5a2ffdc07618d97301c75c096",
+          "size": 4194304
+        },
+        {
+          "sha": "98bf9cb98c2bd833b3d291dca16e2101db396e1b",
+          "size": 4194304
+        },
+        {
+          "sha": "b75acf6faf85a932e88b26ef2f2223284eef2932",
+          "size": 4194304
+        },
+        {
+          "sha": "7da7587ec9631a640a521c2d345679fe36637daa",
+          "size": 4194304
+        },
+        {
+          "sha": "4b220636224709974a86a5c7a1c1f70a62252959",
+          "size": 3497209
+        }
+      ]
+    },
+    {
+      "name": "DevCat-0.1.0-android-universal.apk",
+      "size": 62963501,
+      "sha256": "bcb2ce5418caf0f8b6cfc56d019de0a839f510bc3953bdb6eeebc986734848e1",
+      "chunks": [
+        {
+          "sha": "e10389a992340fceb0f613f705a8bdac9b3fbca2",
+          "size": 4194304
+        },
+        {
+          "sha": "9f758fb2e5a2f95b50f1a1b566a922d865226f8d",
+          "size": 4194304
+        },
+        {
+          "sha": "11a1bb1a4b4a3d20d54721c884a36b5f7db7670c",
+          "size": 4194304
+        },
+        {
+          "sha": "139cbc8fd3ecc6f8828bc8d58c4993c0bff6dd6b",
+          "size": 4194304
+        },
+        {
+          "sha": "ba7a2c5e5b10bc0a9611222f7ff012bf27635907",
+          "size": 4194304
+        },
+        {
+          "sha": "b7224fbf7e94225e55e00529a66c7f4dd68ac537",
+          "size": 4194304
+        },
+        {
+          "sha": "e6a8b1b61663a3abe1d0364771de224a75abcfa2",
+          "size": 4194304
+        },
+        {
+          "sha": "8ad6c39dfb6e57c123b19da10285f23a890f68e8",
+          "size": 4194304
+        },
+        {
+          "sha": "69a55b2a487be26e658e1bf786cce3f836866f5c",
+          "size": 4194304
+        },
+        {
+          "sha": "afdec5dbb896a6846bd2890e649e6eeb853e8b5f",
+          "size": 4194304
+        },
+        {
+          "sha": "f3c48c7ed5bd76b8528e13267db25e7da7f8c647",
+          "size": 4194304
+        },
+        {
+          "sha": "1ca7a33764b96392ca2f492c110a96eb536768de",
+          "size": 4194304
+        },
+        {
+          "sha": "af1c3eff5c0a9228de354a9d5209f44da0106261",
+          "size": 4194304
+        },
+        {
+          "sha": "139d9140e698105e1792a50af3276cceab08bc0e",
+          "size": 4194304
+        },
+        {
+          "sha": "31760dc2679e0647a1084c69be85df3898f7f87f",
+          "size": 4194304
+        },
+        {
+          "sha": "bb01afc402d99bfa316ad010ef3614a0953d921b",
+          "size": 48941
+        }
+      ]
+    },
+    {
+      "name": "DevCat-0.1.0-android-x86_64.apk",
+      "size": 24263909,
+      "sha256": "a89091195bef9896db77932ea1b73e8dd7a8c85a0e127dcb645273c2091f326a",
+      "chunks": [
+        {
+          "sha": "76535fa351f4f9fbcff230bf08bd59f9b89b273f",
+          "size": 4194304
+        },
+        {
+          "sha": "9fb965d9348ef24a84391afc71ee106917cc7f40",
+          "size": 4194304
+        },
+        {
+          "sha": "92ff805e8b5af2ed174eb85b383ccaf121ae0d67",
+          "size": 4194304
+        },
+        {
+          "sha": "88a7e7fccd703ad5c954fb7b1dca4a336613815a",
+          "size": 4194304
+        },
+        {
+          "sha": "b0ba4654138a513af359d34dac75c982926be115",
+          "size": 4194304
+        },
+        {
+          "sha": "ab106c1c48886bdd57504cc0ef578d2d0953dfd3",
+          "size": 3292389
+        }
+      ]
+    },
+    {
+      "name": "DevCat-0.1.0-android.aab",
+      "size": 58753779,
+      "sha256": "cb5fd081a55c085c7bd4ba268522627e8560aa48ba972f0b358f54b71c45c7eb",
+      "chunks": [
+        {
+          "sha": "19a0d32c581d98d3780e068cc7d91f4608a42b25",
+          "size": 4194304
+        },
+        {
+          "sha": "beedcee9b579d6f188afc0006f8c36a8f07915d1",
+          "size": 4194304
+        },
+        {
+          "sha": "ac3ebc52098ef3a8055916a319c32043afb1cbe6",
+          "size": 4194304
+        },
+        {
+          "sha": "7b98d5a4cda12e5c6175ebfd86346ea0cbd4742d",
+          "size": 4194304
+        },
+        {
+          "sha": "0820ad12c2d8d4a9aeca4d17b09b9726a2f61270",
+          "size": 4194304
+        },
+        {
+          "sha": "f7f9bc05ad9fb429dc5643218319f1866e11c025",
+          "size": 4194304
+        },
+        {
+          "sha": "5d7614a8f76d4d645c1b639ec18abfd5608b136d",
+          "size": 4194304
+        },
+        {
+          "sha": "0fcfc8ba721a4408d48e8559f28d9f6af9142db0",
+          "size": 4194304
+        },
+        {
+          "sha": "7e79fe075758bbf630fecb9e2701ae411a99cff8",
+          "size": 4194304
+        },
+        {
+          "sha": "cfdf5717f265aeffb5dc665a102c30c5202406b6",
+          "size": 4194304
+        },
+        {
+          "sha": "ce02b5ad137a67d0d0eabdd14269cd6f84c0c71b",
+          "size": 4194304
+        },
+        {
+          "sha": "3423da47641bc200e0074070d6dfb26c9eb4e678",
+          "size": 4194304
+        },
+        {
+          "sha": "dcf5eb23482c12daa0d8836fac0d48ee81a70dc7",
+          "size": 4194304
+        },
+        {
+          "sha": "138bfd12993aa96f9ec54229bd6985632d882e10",
+          "size": 4194304
+        },
+        {
+          "sha": "ffeebd34a9f5bee6ab7740a660a26cd9d1e8b2d9",
+          "size": 33523
+        }
+      ]
+    }
+  ]
+}

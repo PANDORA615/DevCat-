@@ -1,0 +1,49 @@
+name: Publish verified DevCat release
+on:
+  push:
+    branches: ['release-assets/**']
+    paths: ['docs/releases/*-transfer.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: publish-devcat-v0.1.0
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: devcat-linux
+          path: dist/release
+          run-id: 40424035892
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: devcat-windows
+          path: dist/release
+          run-id: 40424035892
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: devcat-macos
+          path: dist/release
+          run-id: 40424035892
+          github-token: ${{ github.token }}
+      - name: Reconstruct signed Android and verify every asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/publish_release.py docs/releases/v0.1.0-transfer.json dist/release
+      - name: Upload verified files and publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release edit v0.1.0 --target "$GITHUB_SHA" --notes-file docs/RELEASE_NOTES_0.1.0.md
+          gh release upload v0.1.0 dist/release/* --clobber
+          gh release edit v0.1.0 --draft=false --prerelease
