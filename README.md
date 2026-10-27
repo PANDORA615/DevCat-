@@ -13,9 +13,13 @@ DevCat 0.2 — локальное обучение программирован�
 
 ![Главная DevCat](docs/screenshots/home.png)
 ![Урок и настоящий локальный редактор](docs/screenshots/lesson.png)
+![Подробная теория, пример и схема](docs/screenshots/lecture-theory.png)
 ![Проверка решения реальными тестами](docs/screenshots/practice-passed.png)
+![Многофайловая DevCat IDE с результатом программы](docs/screenshots/ide.png)
 ![Настройки внешнего вида](docs/screenshots/settings.png)
-![Тёмная тема, сохранённая после перезапуска](docs/screenshots/dark.png)
+![Кастомизация чтения и шрифтов](docs/screenshots/customization.png)
+![Подключение устройств по временному QR-коду](docs/screenshots/sync.png)
+![Тёмная тема и логотип в выбранной палитре](docs/screenshots/dark.png)
 
 ## Что работает
 
