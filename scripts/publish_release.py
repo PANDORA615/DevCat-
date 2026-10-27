@@ -7,6 +7,7 @@ import base64
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -30,15 +31,17 @@ def api(path):
         return json.load(response)
 
 
-assert manifest['version'] == 1 and manifest['tag'] == 'v0.1.0'
-assert manifest['build_run'] == 40424035892
+assert manifest['version'] == 1
+assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', manifest['tag'])
+version = manifest['tag'][1:]
+assert isinstance(manifest['build_run'], int) and manifest['build_run'] > 0
 run = api(f"actions/runs/{manifest['build_run']}")
 assert run['conclusion'] == 'success' and run['head_sha'] == manifest['build_commit']
 subprocess.run(['git', 'diff', '--exit-code', manifest['build_commit'], 'HEAD', '--',
                 'apps/devcat_flutter', 'content'], check=True)
-expected_android = {f'DevCat-0.1.0-android-{abi}.apk' for abi in
+expected_android = {f'DevCat-{version}-android-{abi}.apk' for abi in
                     ['universal', 'arm64-v8a', 'armeabi-v7a', 'x86_64']}
-expected_android.add('DevCat-0.1.0-android.aab')
+expected_android.add(f'DevCat-{version}-android.aab')
 assert {item['name'] for item in manifest['files']} == expected_android
 for item in manifest['files']:
     assert Path(item['name']).name == item['name']
@@ -59,11 +62,11 @@ for item in manifest['files']:
     print(f"Reconstructed and verified {item['name']}", flush=True)
 
 for source, name in [
-    ('docs/SBOM.spdx.json', 'DevCat-0.1.0-SBOM.spdx.json'),
+    ('docs/SBOM.spdx.json', f'DevCat-{version}-SBOM.spdx.json'),
     ('docs/THIRD_PARTY_NOTICES.md', 'THIRD_PARTY_NOTICES.md'),
     ('docs/android-release-cert.pem', 'DevCat-Android-release-cert.pem'),
     ('LICENSE', 'LICENSE'),
-    ('docs/releases/v0.1.0-SHA256SUMS', 'SHA256SUMS'),
+    (f'docs/releases/v{version}-SHA256SUMS', 'SHA256SUMS'),
 ]:
     shutil.copyfile(source, output / name)
 expected = {'SHA256SUMS'}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../core/sound.dart';
 
 class Panel extends StatelessWidget {
   final Widget child;
@@ -13,7 +14,9 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Material(
     color: color ?? Theme.of(context).colorScheme.surfaceContainerLow,
-    borderRadius: BorderRadius.circular(28),
+    shape:
+        Theme.of(context).cardTheme.shape ??
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
     child: Padding(padding: padding, child: child),
   );
 }
@@ -124,17 +127,41 @@ class CatPortrait extends StatelessWidget {
 class CatMessage extends StatefulWidget {
   final String text;
   final bool reducedMotion;
-  const CatMessage(this.text, {super.key, this.reducedMotion = false});
+  final CatMood mood;
+  const CatMessage(
+    this.text, {
+    super.key,
+    this.reducedMotion = false,
+    this.mood = CatMood.explaining,
+  });
   @override
   State<CatMessage> createState() => _CatMessageState();
 }
 
 class _CatMessageState extends State<CatMessage> {
   bool skip = false;
+  String? _spoken;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _speak();
+  }
+
+  void _speak() {
+    if (_spoken == widget.text) return;
+    _spoken = widget.text;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) SoundScope.of(context)?.speak(widget.mood);
+    });
+  }
+
   @override
   void didUpdateWidget(CatMessage old) {
     super.didUpdateWidget(old);
-    if (old.text != widget.text) skip = false;
+    if (old.text != widget.text) {
+      skip = false;
+      _speak();
+    }
   }
 
   @override
@@ -182,7 +209,10 @@ class _CatMessageState extends State<CatMessage> {
           ),
         ),
         IconButton(
-          onPressed: () => setState(() => skip = true),
+          onPressed: () {
+            SoundScope.of(context)?.stopVoice();
+            setState(() => skip = true);
+          },
           icon: const Icon(Icons.fast_forward_rounded),
           tooltip: 'Показать реплику целиком',
         ),

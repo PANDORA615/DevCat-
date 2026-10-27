@@ -66,6 +66,9 @@ class _DevCatAppState extends State<DevCatApp> {
       final store = widget.store;
       sounds.enabled = store.setting('sound', true);
       sounds.volume = store.setting<num>('volume', .22).toDouble();
+      sounds.voiceEnabled = store.setting('catVoice', true);
+      sounds.voiceVolume = store.setting<num>('voiceVolume', .18).toDouble();
+      sounds.voiceStyle = store.setting('voiceStyle', 'auto');
       final seed = Color(store.setting('seedColor', 0xff416c57));
       return DynamicColorBuilder(
         builder: (light, dark) {
@@ -84,11 +87,36 @@ class _DevCatAppState extends State<DevCatApp> {
               useMaterial3: true,
               colorScheme: scheme,
               scaffoldBackgroundColor: scheme.surface,
-              fontFamily: Platform.isLinux ? 'DejaVu Sans' : null,
+              fontFamily: store.setting('uiFont', 'Nunito'),
+              textTheme: ThemeData(brightness: brightness).textTheme
+                  .apply(
+                    fontFamily: store.setting('uiFont', 'Nunito'),
+                    fontSizeFactor: store
+                        .setting<num>('uiScale', 1.0)
+                        .toDouble(),
+                  )
+                  .copyWith(
+                    bodyMedium: TextStyle(
+                      fontFamily: store.setting('uiFont', 'Nunito'),
+                      fontSize:
+                          14 * store.setting<num>('uiScale', 1.0).toDouble(),
+                      fontWeight: FontWeight.w600,
+                      height: 1.6,
+                    ),
+                    bodyLarge: TextStyle(
+                      fontFamily: store.setting('uiFont', 'Nunito'),
+                      fontSize:
+                          16 * store.setting<num>('uiScale', 1.0).toDouble(),
+                      fontWeight: FontWeight.w600,
+                      height: 1.6,
+                    ),
+                  ),
               cardTheme: CardThemeData(
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(26),
+                  borderRadius: BorderRadius.circular(
+                    store.setting<num>('cornerRadius', 28).toDouble(),
+                  ),
                 ),
               ),
               inputDecorationTheme: InputDecorationTheme(
@@ -137,7 +165,10 @@ class _DevCatAppState extends State<DevCatApp> {
                     store.setting('reducedMotion', false) ||
                     MediaQuery.of(context).disableAnimations,
               ),
-              child: Listener(onPointerUp: (_) => sounds.tap(), child: child!),
+              child: SoundScope(
+                sounds: sounds,
+                child: PointerSoundLayer(sounds: sounds, child: child!),
+              ),
             ),
             home: DevCatShell(
               store: store,

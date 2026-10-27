@@ -1,2 +1,4 @@
 # Preserve third-party license texts verbatim.
 docs/THIRD_PARTY_NOTICES.md -whitespace
+
+apps/devcat_flutter/assets/fonts/*-OFL.txt -whitespace

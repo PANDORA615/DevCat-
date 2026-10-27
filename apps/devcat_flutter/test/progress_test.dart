@@ -57,4 +57,19 @@ void main() {
       expect(recovered.storageWarning, isNotNull);
     },
   );
+  test(
+    'Version 0.1 cursor migrates to the corresponding lecture without relabelling old successes',
+    () {
+      final legacy = ProgressData();
+      legacy.cursor('python', 1, 0, 'old-device');
+      legacy.cursors['old-device']!.remove('contentRevision');
+      legacy.attempt('python.basics', 'python', true);
+      final upgraded = ProgressData.decode(legacy.encode());
+      expect(upgraded.latestCursor!['lesson'], 7);
+      expect(upgraded.latestCursor!['contentRevision'], 2);
+      expect(upgraded.solved, contains('python.basics'));
+      expect(upgraded.solved, isNot(contains('python.basics.v2')));
+      expect(ProgressData.decode(upgraded.encode()).latestCursor!['lesson'], 7);
+    },
+  );
 }

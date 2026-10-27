@@ -52,6 +52,8 @@ class _WorkspacePageState extends State<WorkspacePage>
       'Попробуй самостоятельно. Если застрянешь — начнём с маленькой подсказки.';
   int hint = 0, tab = 0;
   bool busy = false;
+  CatMood mood = CatMood.encouragement;
+  bool get manual => widget.seed == 0 && widget.lesson?.kind == 'review';
   String? failure;
   String get taskKey => widget.ide ? 'ide.$language' : task.id;
   @override
@@ -63,20 +65,29 @@ class _WorkspacePageState extends State<WorkspacePage>
   }
 
   void _configure() {
-    task = generateChallenge(
-      language,
-      seed: widget.seed,
-      kind: widget.lesson?.kind ?? 'loop',
-      lessonId: widget.ide
-          ? null
-          : widget.seed == 0
-          ? widget.lesson?.id
-          : null,
-    );
-    if (language == 'sql' &&
-        widget.lesson?.kind == 'filter' &&
-        widget.seed == 0) {
-      task = generateChallenge(language, seed: 11, lessonId: widget.lesson!.id);
+    task = widget.seed == 0 && widget.lesson?.challenge != null
+        ? widget.lesson!.challenge!
+        : generateChallenge(
+            language,
+            seed: widget.seed,
+            kind: widget.lesson?.kind ?? 'loop',
+            lessonId: widget.ide
+                ? null
+                : widget.seed == 0
+                ? widget.lesson?.id
+                : null,
+          );
+    if (manual) {
+      task = Challenge(
+        id: widget.lesson!.id,
+        language: language,
+        title: widget.lesson!.title,
+        prompt: widget.lesson!.assignment,
+        starter: generateChallenge(language).starter,
+        solution: widget.lesson!.examples.join('\n'),
+        hints: widget.lesson!.questions.take(3).toList(),
+        tests: const [],
+      );
     }
     final draft = widget.store.progress.draftsFor(taskKey);
     code = CodeController(
@@ -149,6 +160,7 @@ class _WorkspacePageState extends State<WorkspacePage>
 
   Future<void> _execute(bool check) async {
     if (busy || !await _permission() || !mounted) return;
+    widget.sounds.cue(SoundCue.open);
     await _save();
     if (!mounted) return;
     final source = code.fullText;
@@ -167,6 +179,7 @@ class _WorkspacePageState extends State<WorkspacePage>
         if (mounted) {
           setState(() {
             output = result.report;
+            mood = result.passed ? CatMood.celebration : CatMood.warning;
             cat = result.passed
                 ? 'Получилось! Все проверки пройдены. Сможешь объяснить, почему решение работает на границе диапазона?'
                 : explainDiagnostic(result.report);
@@ -178,6 +191,8 @@ class _WorkspacePageState extends State<WorkspacePage>
           setState(() {
             output =
                 '${result.output}${result.error.isNotEmpty ? '\n${result.error}' : ''}\n\nКод завершения: ${result.exitCode}';
+            mood = result.ok ? CatMood.encouragement : CatMood.warning;
+            widget.sounds.cue(result.ok ? SoundCue.save : SoundCue.error);
             cat = result.ok
                 ? 'Программа выполнилась. Теперь проверь, совпадает ли результат с условием.'
                 : explainDiagnostic(result.error);
@@ -390,7 +405,10 @@ class _WorkspacePageState extends State<WorkspacePage>
                 ),
                 padding: const EdgeInsets.all(12),
                 textStyle: TextStyle(
-                  fontFamily: widget.store.setting('editorFont', 'monospace'),
+                  fontFamily: widget.store.setting(
+                    'editorFont',
+                    'JetBrainsMono',
+                  ),
                   fontSize: widget.store
                       .setting<num>('editorSize', 14)
                       .toDouble(),
@@ -417,7 +435,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                 icon: const Icon(Icons.terminal_rounded),
                 tooltip: 'Ввод и результат',
               ),
-            if (!widget.ide)
+            if (!widget.ide && !manual)
               FilledButton.tonalIcon(
                 onPressed: busy ? null : () => _execute(true),
                 icon: const Icon(Icons.check_rounded),
@@ -435,6 +453,8 @@ class _WorkspacePageState extends State<WorkspacePage>
                     ? null
                     : () {
                         setState(() {
+                          widget.sounds.cue(SoundCue.hint);
+                          mood = CatMood.thinking;
                           cat = task.hints[hint.clamp(0, 2)];
                           hint = (hint + 1).clamp(0, 3);
                         });
@@ -565,6 +585,7 @@ class _WorkspacePageState extends State<WorkspacePage>
         CatMessage(
           cat,
           reducedMotion: MediaQuery.of(context).disableAnimations,
+          mood: mood,
         ),
         const SizedBox(height: 16),
       ],
@@ -608,6 +629,13 @@ class _WorkspacePageState extends State<WorkspacePage>
         ),
         const Divider(height: 30),
       ],
+      if (manual)
+        const Padding(
+          padding: EdgeInsets.only(bottom: 12),
+          child: Text(
+            'Проектная работа: проверь результат по критериям лекции. Автоматическая оценка здесь не выполняется.',
+          ),
+        ),
       Text(task.title, style: Theme.of(context).textTheme.titleLarge),
       const SizedBox(height: 12),
       Text(task.prompt, style: const TextStyle(height: 1.65)),
@@ -622,7 +650,7 @@ class _WorkspacePageState extends State<WorkspacePage>
         ),
       if (task.tests.isNotEmpty)
         Text(
-          'Пример: ${task.tests[2].input.trim()} → ${task.tests[2].expected}',
+          'Пример: ${task.tests.first.input.trim()} → ${task.tests.first.expected}',
           style: Theme.of(context).textTheme.titleSmall,
         ),
       const SizedBox(height: 16),
@@ -630,14 +658,16 @@ class _WorkspacePageState extends State<WorkspacePage>
         onPressed: () async {
           if (await confirm(
             context,
-            'Показать решение?',
-            'Эталон откроется в отдельном окне. Попробуй сначала три подсказки.',
+            manual ? 'Открыть пример?' : 'Показать решение?',
+            manual
+                ? 'Это учебный фрагмент для разбора, а не полная реализация проекта.'
+                : 'Эталон откроется в отдельном окне. Попробуй сначала три подсказки.',
           )) {
             if (!context.mounted) return;
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text('Эталонное решение'),
+                title: Text(manual ? 'Пример из лекции' : 'Эталонное решение'),
                 content: SingleChildScrollView(
                   child: SelectableText(
                     task.solution,
@@ -658,7 +688,7 @@ class _WorkspacePageState extends State<WorkspacePage>
           }
         },
         icon: const Icon(Icons.visibility_outlined),
-        label: const Text('Посмотреть решение'),
+        label: Text(manual ? 'Пример из лекции' : 'Посмотреть решение'),
       ),
       TextButton(
         onPressed: busy
@@ -677,7 +707,7 @@ class _WorkspacePageState extends State<WorkspacePage>
       ),
       if (widget.course != null)
         SelectableText(
-          'Источник: ${widget.course!.source}\nРевизия контента: 1 · вводный модуль',
+          'Источник: ${widget.course!.source}\nРевизия контента: 2 · ${manual ? 'проектная самопроверка' : 'автоматическая проверка'}',
           style: Theme.of(context).textTheme.bodySmall,
         ),
     ],

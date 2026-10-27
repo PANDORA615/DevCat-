@@ -1,0 +1,53 @@
+"""Real input/output practice. Reference programs are checked against cases in CI."""
+NAMES={'c':'C','cpp':'C++','csharp':'C#','python':'Python','java':'Java','javascript':'JavaScript','go':'Go','sql':'SQL'}
+# key, description, cases, C-like body, Python body, Go body, input mode
+TASKS = [
+('delivery','Прочитай целое N (0 ≤ N ≤ 1000). Стоимость равна N × 4 + 3. Выведи только стоимость.', [('0','3'),('1','7'),('10','43'),('999','3999')], 'int answer = n * 4 + 3;', 'answer = n * 4 + 3', 'answer := n * 4 + 3', 'n'),
+('remainder','Прочитай неотрицательное число секунд N ≤ 100000. Выведи остаток секунд после выделения полных минут.', [('0','0'),('59','59'),('60','0'),('61','1'),('135','15')], 'int answer = n % 60;', 'answer = n % 60', 'answer := n % 60', 'n'),
+('sign','Прочитай целое N от -10000 до 10000. Выведи -1 для отрицательного, 0 для нуля, 1 для положительного.', [('-8','-1'),('0','0'),('1','1'),('10000','1')], 'int answer = 0; if (n < 0) answer = -1; else if (n > 0) answer = 1;', 'answer = -1 if n < 0 else 1 if n > 0 else 0', 'answer := 0; if n < 0 { answer = -1 } else if n > 0 { answer = 1 }', 'n'),
+('range','Прочитай целое N от -1000 до 1000. Выведи 1, если 10 ≤ N ≤ 20, иначе 0.', [('9','0'),('10','1'),('20','1'),('21','0'),('-1','0')], 'int answer = 0; if (n >= 10 && n <= 20) answer = 1;', 'answer = int(10 <= n <= 20)', 'answer := 0; if n >= 10 && n <= 20 { answer = 1 }','n'),
+('sum','Прочитай N (0 ≤ N ≤ 1000). Найди сумму целых чисел от 1 до N включительно.', [('0','0'),('1','1'),('4','10'),('10','55'),('1000','500500')], 'int answer = 0; for (int i = 1; i <= n; i++) answer += i;', 'answer = 0\nfor i in range(1, n + 1):\n    answer += i', 'answer := 0; for i := 1; i <= n; i++ { answer += i }','n'),
+('multiples','Прочитай N (0 ≤ N ≤ 1000). Найди сумму чисел 1…N, кратных 3.', [('0','0'),('2','0'),('3','3'),('10','18'),('30','165')], 'int answer = 0; for (int i = 1; i <= n; i++) if (i % 3 == 0) answer += i;', 'answer = sum(i for i in range(1, n + 1) if i % 3 == 0)', 'answer := 0; for i := 1; i <= n; i++ { if i % 3 == 0 { answer += i } }','n'),
+('digits','Прочитай неотрицательное N ≤ 100000000. Выведи сумму его десятичных цифр.', [('0','0'),('7','7'),('105','6'),('99999','45'),('100000000','1')], 'int answer = 0; while (n > 0) { answer += n % 10; n /= 10; }', 'answer = 0\nwhile n > 0:\n    answer += n % 10\n    n //= 10', 'answer := 0; for n > 0 { answer += n % 10; n /= 10 }','n'),
+('factorial','Прочитай N (0 ≤ N ≤ 10). Найди N! — произведение целых 1…N. По определению 0! = 1.', [('0','1'),('1','1'),('5','120'),('10','3628800')], 'int answer = 1; for (int i = 2; i <= n; i++) answer *= i;', 'answer = 1\nfor i in range(2, n + 1):\n    answer *= i', 'answer := 1; for i := 2; i <= n; i++ { answer *= i }','n'),
+('prime','Прочитай N (0 ≤ N ≤ 100000). Выведи 1, если N простое, иначе 0. Числа 0 и 1 не простые.', [('0','0'),('1','0'),('2','1'),('9','0'),('97','1'),('100000','0')], 'int answer = n >= 2 ? 1 : 0; for (int d = 2; d * d <= n; d++) if (n % d == 0) { answer = 0; break; }', 'answer = int(n >= 2)\nd = 2\nwhile d * d <= n:\n    if n % d == 0:\n        answer = 0\n        break\n    d += 1', 'answer := 0; if n >= 2 { answer = 1 }; for d := 2; d*d <= n; d++ { if n % d == 0 { answer = 0; break } }','n'),
+('gcd','Прочитай A и B: два неотрицательных целых не больше 100000, не оба нулевые. Выведи их наибольший общий делитель.', [('0 7','7'),('18 12','6'),('7 13','1'),('100 100','100'),('9 0','9')], 'while (b != 0) { int r = a % b; a = b; b = r; } int answer = a;', 'while b:\n    a, b = b, a % b\nanswer = a', 'for b != 0 { a, b = b, a % b }; answer := a','ab'),
+('maximum','Прочитай N (1 ≤ N ≤ 100), затем N целых от -10000 до 10000. Выведи максимум.', [('1 -8','-8'),('3 -5 -2 -9','-2'),('4 7 7 1 0','7'),('2 0 9','9')], 'int answer = values[0]; for (int i = 1; i < n; i++) if (values[i] > answer) answer = values[i];', 'answer = values[0]\nfor value in values[1:]:\n    if value > answer:\n        answer = value', 'answer := values[0]; for _, value := range values[1:] { if value > answer { answer = value } }','array'),
+('positive','Прочитай N (0 ≤ N ≤ 100), затем N целых от -10000 до 10000. Найди сумму только положительных элементов.', [('0','0'),('3 -5 -2 -9','0'),('4 -1 2 0 5','7'),('1 8','8')], 'int answer = 0; for (int i = 0; i < n; i++) if (values[i] > 0) answer += values[i];', 'answer = sum(value for value in values if value > 0)', 'answer := 0; for _, value := range values { if value > 0 { answer += value } }','array'),
+('textdigits','Прочитай одну строку ASCII длиной до 100 символов (она может быть пустой). Посчитай символы-цифры 0…9. Перевод строки не считается данными.', [('\n','0'),('A12 B3','3'),('no digits','0'),('0009','4')], 'int answer = 0; for (int i = 0; text[i] != 0; i++) if (text[i] >= \'0\' && text[i] <= \'9\') answer++;', 'answer = sum(1 for ch in text if "0" <= ch <= "9")', 'answer := 0; for _, ch := range text { if ch >= \'0\' && ch <= \'9\' { answer++ } }','text'),
+]
+TOPIC_TASK={'basics':'delivery','variables':'delivery','expressions':'remainder','booleans':'range','branches':'sign','loops':'sum','nested':'multiples','strings':'textdigits','arrays':'maximum','functions':'digits','iteration':'positive','testing':'factorial','debugging':'prime','search':'gcd'}
+def program(lang,body,mode,starter=False):
+    if lang=='python':
+        read={'n':'n = int(input())','ab':'a, b = map(int, input().split())','array':'import sys\ndata = list(map(int, sys.stdin.read().split()))\nn = data[0]\nvalues = data[1:1 + n]','text':'import sys\ntext = sys.stdin.readline().rstrip("\\r\\n")'}[mode]
+        return read+'\n'+('# Напиши решение\n' if starter else body+'\nprint(answer)\n')
+    if lang=='go':
+        imports='"fmt"' if mode!='text' else '"fmt"; "bufio"; "os"'
+        read={'n':'var n int; fmt.Scan(&n)','ab':'var a, b int; fmt.Scan(&a, &b)','array':'var n int; fmt.Scan(&n); values := make([]int, n); for i := range values { fmt.Scan(&values[i]) }','text':'scanner := bufio.NewScanner(os.Stdin); scanner.Scan(); text := scanner.Text()'}[mode]
+        return f'package main\nimport ({imports})\nfunc main() {{\n    {read}\n    '+('// Напиши решение' if starter else body+'; fmt.Println(answer)')+'\n}\n'
+    if lang=='java':
+        read={'n':'int n = scanner.nextInt();','ab':'int a = scanner.nextInt(), b = scanner.nextInt();','array':'int n = scanner.nextInt(); int[] values = new int[n]; for (int i = 0; i < n; i++) values[i] = scanner.nextInt();','text':'String text = scanner.hasNextLine() ? scanner.nextLine() : "";'}[mode]
+        if mode=='text': body='int answer = 0; for (int i = 0; i < text.length(); i++) if (text.charAt(i) >= \'0\' && text.charAt(i) <= \'9\') answer++;'
+        return 'import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        '+read+'\n        '+('// Напиши решение' if starter else body+' System.out.println(answer);')+'\n    }\n}\n'
+    if lang=='csharp':
+        read={'n':'int n = int.Parse(Console.ReadLine()!);','ab':'var data = Console.In.ReadToEnd().Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries); int a = int.Parse(data[0]), b = int.Parse(data[1]);','array':'var data = Console.In.ReadToEnd().Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries); int n = int.Parse(data[0]); int[] values = new int[n]; for (int i = 0; i < n; i++) values[i] = int.Parse(data[i + 1]);','text':'string text = Console.ReadLine() ?? "";'}[mode]
+        if mode=='text': body='int answer = 0; foreach (char ch in text) if (ch >= \'0\' && ch <= \'9\') answer++;'
+        return 'using System;\n'+read+'\n'+('// Напиши решение\n' if starter else body+'\nConsole.WriteLine(answer);\n')
+    if lang=='javascript':
+        read={'n':'const n = Number(raw.trim());','ab':'let [a, b] = raw.trim().split(/\\s+/).map(Number);','array':'const data = raw.trim().split(/\\s+/).map(Number); const n = data[0]; const values = data.slice(1, 1 + n);','text':'const text = raw.replace(/\\r?\\n$/, "");'}[mode]
+        if mode=='n':read=read.replace('const n','let n')
+        body=body.replace('int ','let ').replace('n /= 10','n = Math.floor(n / 10)')
+        if mode=='text':body='let answer = 0; for (const ch of text) if (ch >= \'0\' && ch <= \'9\') answer++;'
+        return 'const raw = require("fs").readFileSync(0, "utf8");\n'+read+'\n'+('// Напиши решение\n' if starter else body+'\nconsole.log(answer);\n')
+    if lang=='cpp':
+        read={'n':'int n; std::cin >> n;','ab':'int a, b; std::cin >> a >> b;','array':'int n; std::cin >> n; std::vector<int> values(n); for (int& value : values) std::cin >> value;','text':'std::string text; std::getline(std::cin, text);'}[mode]
+        if mode=='text':body='int answer = 0; for (char ch : text) if (ch >= \'0\' && ch <= \'9\') answer++;'
+        return '#include <iostream>\n#include <vector>\n#include <string>\nint main() {\n    '+read+'\n    '+('// Напиши решение' if starter else body+' std::cout << answer << "\\n";')+'\n}\n'
+    read={'n':'int n; if (scanf("%d", &n) != 1) return 1;','ab':'int a, b; if (scanf("%d %d", &a, &b) != 2) return 1;','array':'int n; if (scanf("%d", &n) != 1) return 1; int values[100]; for (int i = 0; i < n; i++) if (scanf("%d", &values[i]) != 1) return 1;','text':'char text[128] = {0}; if (!fgets(text, sizeof text, stdin)) text[0] = 0;'}[mode]
+    return '#include <stdio.h>\nint main(void) {\n    '+read+'\n    '+('// Напиши решение' if starter else body+' printf("%d\\n", answer);')+'\n    return 0;\n}\n'
+def challenge(lang,topic,lesson_id):
+    key=TOPIC_TASK.get(topic)
+    if not key:return None
+    key,description,cases,cbody,pybody,gobody,mode=next(t for t in TASKS if t[0]==key)
+    body=pybody if lang=='python' else gobody if lang=='go' else cbody
+    return dict(id=lesson_id+'.v2',language=lang,title={'delivery':'Стоимость доставки','remainder':'Полные коробки и остаток','sign':'Знак числа','range':'Попадание в диапазон','sum':'Сумма последовательности','multiples':'Сумма кратных','digits':'Сумма цифр','factorial':'Факториал','prime':'Простое число','gcd':'Наибольший общий делитель','maximum':'Максимум массива','positive':'Сумма положительных','textdigits':'Цифры в тексте'}[key],prompt=description+'\nНе добавляй приглашений ввода. Решение проверяется на нескольких независимых входах, включая границы.',starter=program(lang,body,mode,True),solution=program(lang,body,mode),hints=['Сначала выпиши контракт и разберите самый маленький допустимый вход.','Проследи состояние данных вручную и сравни с примером в лекции.','Проверь границы и начальное значение. Если нужен разбор, открой эталон после самостоятельной попытки.'],tests=[dict(input=i+'\n',expected=o) for i,o in cases])

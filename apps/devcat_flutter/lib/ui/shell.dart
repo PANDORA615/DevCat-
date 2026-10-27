@@ -7,6 +7,8 @@ import 'widgets.dart';
 import 'workspace.dart';
 import 'settings.dart';
 import 'git_page.dart';
+import 'lecture.dart';
+import 'ide.dart';
 
 class DevCatShell extends StatefulWidget {
   final AppStore store;
@@ -24,13 +26,14 @@ class DevCatShell extends StatefulWidget {
 
 class _DevCatShellState extends State<DevCatShell> {
   int page = 0;
+  bool reading = true;
   late String language;
   int lesson = 0, seed = 0;
   static const labels = [
     'Главная',
     'Языки',
     'Git / GitHub',
-    'Мастерская',
+    'DevCat IDE',
     'Справочник',
     'Прогресс',
     'Настройки',
@@ -55,7 +58,10 @@ class _DevCatShellState extends State<DevCatShell> {
     language =
         cursor?['language'] ?? widget.store.setting('language', 'python');
     if (!languageNames.containsKey(language)) language = 'python';
-    lesson = (cursor?['lesson'] ?? 0).clamp(0, 1);
+    lesson = (cursor?['lesson'] ?? 0).clamp(
+      0,
+      widget.courses.firstWhere((c) => c.id == language).lessons.length - 1,
+    );
     seed = cursor?['seed'] ?? 0;
   }
 
@@ -70,7 +76,9 @@ class _DevCatShellState extends State<DevCatShell> {
       lesson = index ?? lesson;
       seed = generated ?? seed;
       page = 1;
+      reading = seed == 0;
     });
+    widget.sounds.cue(SoundCue.navigation);
     widget.store.cursor(language, lesson, seed);
   }
 
@@ -85,12 +93,11 @@ class _DevCatShellState extends State<DevCatShell> {
       0 => _home(context),
       1 => _courses(context),
       2 => GitPage(store: widget.store, sounds: widget.sounds),
-      3 => WorkspacePage(
+      3 => IdePage(
         key: const ValueKey('ide'),
         store: widget.store,
         language: language,
         sounds: widget.sounds,
-        ide: true,
       ),
       4 => ReferencePage(courses: widget.courses),
       5 => _progress(context),
@@ -204,7 +211,10 @@ class _DevCatShellState extends State<DevCatShell> {
                           borderRadius: BorderRadius.circular(30),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(30),
-                            onTap: () => setState(() => page = i),
+                            onTap: () {
+                              widget.sounds.cue(SoundCue.navigation);
+                              setState(() => page = i);
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 18,
@@ -267,8 +277,10 @@ class _DevCatShellState extends State<DevCatShell> {
                 5 => 3,
                 _ => 4,
               },
-              onDestinationSelected: (i) =>
-                  setState(() => page = [0, 1, 3, 5, 6][i]),
+              onDestinationSelected: (i) {
+                widget.sounds.cue(SoundCue.navigation);
+                setState(() => page = [0, 1, 3, 5, 6][i]);
+              },
               destinations: const [
                 NavigationDestination(
                   icon: Icon(Icons.home_outlined),
@@ -495,6 +507,7 @@ class _DevCatShellState extends State<DevCatShell> {
           const SizedBox(height: 24),
           CatMessage(
             'Не обязательно понимать всё сразу. Запусти код, посмотри на результат и попробуй ещё раз. Я рядом.',
+            mood: CatMood.greeting,
             reducedMotion: MediaQuery.of(context).disableAnimations,
           ),
         ],
@@ -571,7 +584,7 @@ class _DevCatShellState extends State<DevCatShell> {
             Text(c.subtitle, style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 16),
             Text(
-              '${c.version} · ${c.lessons.length} урока',
+              '${c.version} · ${c.lessons.length} лекций и практика',
               style: Theme.of(context).textTheme.labelSmall,
             ),
           ],
@@ -579,12 +592,71 @@ class _DevCatShellState extends State<DevCatShell> {
       ),
     ),
   );
+  Future<void> _directory() async {
+    String query = '';
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (sheet) => StatefulBuilder(
+        builder: (sheet, update) => SafeArea(
+          child: SizedBox(
+            height: MediaQuery.sizeOf(sheet).height * .85,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 14),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.search_rounded),
+                      labelText: '${course.name}: поиск по 40 лекциям',
+                    ),
+                    onChanged: (value) =>
+                        update(() => query = value.toLowerCase()),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: course.lessons.length,
+                    itemBuilder: (_, i) {
+                      final item = course.lessons[i];
+                      if (!'${item.title} ${item.chapter}'
+                          .toLowerCase()
+                          .contains(query)) {
+                        return const SizedBox.shrink();
+                      }
+                      return ListTile(
+                        selected: lesson == i,
+                        leading: CircleAvatar(child: Text('${i + 1}')),
+                        title: Text(item.title),
+                        subtitle: Text('${item.chapter} · ${item.minutes} мин'),
+                        trailing: Icon(
+                          item.challenge != null
+                              ? Icons.fact_check_outlined
+                              : Icons.construction_rounded,
+                        ),
+                        onTap: () {
+                          Navigator.pop(sheet);
+                          openCourse(language, index: i, generated: 0);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _courses(BuildContext context) => Column(
     children: [
-      if (MediaQuery.viewInsetsOf(context).bottom == 0)
+      if (MediaQuery.viewInsetsOf(context).bottom == 0) ...[
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.fromLTRB(28, 6, 28, 12),
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
           child: Row(
             children: [
               ...widget.courses.map(
@@ -599,33 +671,73 @@ class _DevCatShellState extends State<DevCatShell> {
               ),
               ActionChip(
                 label: const Text('Git / GitHub'),
-                avatar: const Icon(Icons.account_tree_rounded, size: 18),
                 onPressed: () => setState(() => page = 2),
-              ),
-              const SizedBox(width: 8),
-              ActionChip(
-                label: const Text('Справочник'),
-                onPressed: () => setState(() => page = 4),
               ),
             ],
           ),
         ),
-      if (MediaQuery.viewInsetsOf(context).bottom == 0)
         Padding(
-          padding: const EdgeInsets.fromLTRB(28, 0, 28, 12),
-          child: Wrap(
-            spacing: 8,
-            runSpacing: 8,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
             children: [
-              ...List.generate(
-                course.lessons.length,
-                (i) => ChoiceChip(
-                  label: Text('${i + 1}. ${course.lessons[i].title}'),
-                  selected: lesson == i && seed == 0,
-                  onSelected: (_) =>
-                      openCourse(language, index: i, generated: 0),
+              IconButton(
+                onPressed: lesson > 0
+                    ? () =>
+                          openCourse(language, index: lesson - 1, generated: 0)
+                    : null,
+                icon: const Icon(Icons.chevron_left_rounded),
+                tooltip: 'Предыдущая лекция',
+              ),
+              Expanded(
+                child: TextButton.icon(
+                  onPressed: _directory,
+                  icon: const Icon(Icons.menu_book_rounded),
+                  label: Text(
+                    '${lesson + 1}/${course.lessons.length}. ${course.lessons[lesson].title}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
+              IconButton(
+                onPressed: lesson + 1 < course.lessons.length
+                    ? () =>
+                          openCourse(language, index: lesson + 1, generated: 0)
+                    : null,
+                icon: const Icon(Icons.chevron_right_rounded),
+                tooltip: 'Следующая лекция',
+              ),
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+          child: Row(
+            children: [
+              SegmentedButton<bool>(
+                segments: const [
+                  ButtonSegment(
+                    value: true,
+                    icon: Icon(Icons.auto_stories_outlined),
+                    label: Text('Лекция'),
+                  ),
+                  ButtonSegment(
+                    value: false,
+                    icon: Icon(Icons.code_rounded),
+                    label: Text('Практика'),
+                  ),
+                ],
+                selected: {reading && seed == 0},
+                onSelectionChanged: (value) {
+                  widget.sounds.cue(SoundCue.navigation);
+                  setState(() {
+                    reading = value.first;
+                    if (reading) seed = 0;
+                  });
+                },
+              ),
+              const SizedBox(width: 12),
               ActionChip(
                 avatar: const Icon(Icons.auto_awesome_rounded, size: 18),
                 label: const Text('Задание от кота'),
@@ -638,16 +750,25 @@ class _DevCatShellState extends State<DevCatShell> {
             ],
           ),
         ),
+      ],
       Expanded(
-        child: WorkspacePage(
-          key: ValueKey('$language:$lesson:$seed'),
-          store: widget.store,
-          language: language,
-          sounds: widget.sounds,
-          course: course,
-          lesson: course.lessons[lesson],
-          seed: seed,
-        ),
+        child: reading && seed == 0
+            ? LectureView(
+                key: ValueKey('lecture:$language:$lesson'),
+                lesson: course.lessons[lesson],
+                course: course,
+                store: widget.store,
+                onPractice: () => setState(() => reading = false),
+              )
+            : WorkspacePage(
+                key: ValueKey('$language:$lesson:$seed'),
+                store: widget.store,
+                language: language,
+                sounds: widget.sounds,
+                course: course,
+                lesson: course.lessons[lesson],
+                seed: seed,
+              ),
       ),
     ],
   );
@@ -745,7 +866,7 @@ class _ReferencePageState extends State<ReferencePage> {
       children: [
         const PageHeading(
           'Знания под рукой.',
-          'Вводные заметки и типичные ошибки. Доступны без сети.',
+          'Лекции, примеры и типичные ошибки. Доступны без сети.',
           eyebrow: 'СПРАВОЧНИК',
         ),
         TextField(
@@ -767,35 +888,28 @@ class _ReferencePageState extends State<ReferencePage> {
               .map(
                 (l) => Padding(
                   padding: const EdgeInsets.only(bottom: 14),
-                  child: Panel(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${c.name} · ${c.version}',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          l.title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 14),
-                        Text(l.theory, style: const TextStyle(height: 1.6)),
-                        const SizedBox(height: 14),
-                        ...l.mistakes.map(
-                          (m) => Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Text('• $m'),
+                  child: ExpansionTile(
+                    title: Text('${c.name} · ${l.title}'),
+                    subtitle: Text(l.chapter),
+                    childrenPadding: const EdgeInsets.all(20),
+                    children: [
+                      SelectableText(
+                        l.theory,
+                        style: const TextStyle(height: 1.7),
+                      ),
+                      const SizedBox(height: 12),
+                      ...l.examples.map(
+                        (e) => SelectableText(
+                          e,
+                          style: const TextStyle(
+                            fontFamily: 'JetBrainsMono',
+                            height: 1.6,
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        SelectableText(
-                          'Источник: ${c.source}',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 12),
+                      SelectableText('Документация: ${c.source}'),
+                    ],
                   ),
                 ),
               ),

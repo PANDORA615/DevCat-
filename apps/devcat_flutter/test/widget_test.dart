@@ -47,6 +47,9 @@ void main() {
       await tester.tap(find.text('Продолжить обучение'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
+      expect(find.text('План занятия'), findsOneWidget);
+      await tester.tap(find.text('Практика'));
+      await tester.pumpAndSettle();
       expect(find.text('Проверить'), findsOneWidget);
       if (size.width < 960) {
         tester.view.viewInsets = const FakeViewPadding(bottom: 300);
@@ -64,10 +67,28 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(find.text('Устройся поудобнее.'), findsOneWidget);
       await tester.scrollUntilVisible(
+        find.text('Дополнительно: личное облако WebDAV'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(find.text('Дополнительно: личное облако WebDAV'));
+      await tester.pumpAndSettle();
+      await tester.scrollUntilVisible(
         find.text('Синхронизировать'),
         300,
         scrollable: find.byType(Scrollable).first,
       );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      await tester.tap(find.text(size.width > 960 ? 'DevCat IDE' : 'Код'));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.text('Запустить проект'), findsOneWidget);
+      if (size.width < 1100) {
+        await tester.tap(find.byTooltip('Файлы проекта'));
+        await tester.pumpAndSettle();
+      }
+      await tester.tap(find.text('README.md'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());

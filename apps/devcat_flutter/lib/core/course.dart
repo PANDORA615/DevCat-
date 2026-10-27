@@ -9,17 +9,48 @@ class Course {
       version = j['version'],
       subtitle = j['subtitle'],
       source = j['source'],
-      lessons = (j['lessons'] as List).map((x) => Lesson(x)).toList();
+      lessons = (j['lessons'] as List).map((x) => Lesson(x)).toList() {
+    final seen = <String>{};
+    coursePracticeBank[id] = lessons
+        .map((l) => l.challenge)
+        .whereType<Challenge>()
+        .where((task) => seen.add(task.solution))
+        .toList();
+  }
 }
 
 class Lesson {
-  final String id, title, theory, kind;
+  final String id,
+      title,
+      theory,
+      kind,
+      chapter,
+      assignment,
+      photo,
+      photoCaption;
+  final List<Map<String, dynamic>> sections;
+  final List<String> questions, checklist;
+  final Challenge? challenge;
+  final int minutes;
   final List<String> examples, mistakes;
   Lesson(Map<String, dynamic> j)
     : id = j['id'],
       title = j['title'],
       theory = j['theory'],
       kind = j['kind'],
+      chapter = j['chapter'] ?? 'Основы',
+      assignment = j['assignment'] ?? '',
+      photo = j['photo'] ?? '',
+      photoCaption = j['photoCaption'] ?? '',
+      sections = (j['sections'] as List? ?? [])
+          .map((x) => Map<String, dynamic>.from(x))
+          .toList(),
+      questions = List<String>.from(j['questions'] ?? []),
+      checklist = List<String>.from(j['checklist'] ?? []),
+      challenge = j['challenge'] == null
+          ? null
+          : Challenge.fromJson(Map<String, dynamic>.from(j['challenge'])),
+      minutes = j['minutes'] ?? 25,
       examples = List<String>.from(j['examples']),
       mistakes = List<String>.from(j['mistakes']);
 }
@@ -34,6 +65,18 @@ class Challenge {
   final List<String> hints;
   final List<Case> tests;
   final int seed;
+  factory Challenge.fromJson(Map<String, dynamic> j) => Challenge(
+    id: j['id'],
+    language: j['language'],
+    title: j['title'],
+    prompt: j['prompt'],
+    starter: j['starter'],
+    solution: j['solution'],
+    hints: List<String>.from(j['hints']),
+    tests: (j['tests'] as List)
+        .map((x) => Case(x['input'], x['expected']))
+        .toList(),
+  );
   const Challenge({
     required this.id,
     required this.language,
@@ -46,6 +89,8 @@ class Challenge {
     this.seed = 0,
   });
 }
+
+final Map<String, List<Challenge>> coursePracticeBank = {};
 
 const languageNames = {
   'c': 'C',
@@ -78,6 +123,10 @@ Challenge generateChallenge(
 }) {
   if (!languageNames.containsKey(language)) {
     throw ArgumentError('Генератор доступен только для восьми языков, не Git.');
+  }
+  final bank = coursePracticeBank[language];
+  if (seed > 0 && bank != null && bank.isNotEmpty) {
+    return _libraryChallenge(language, seed, bank);
   }
   if (language == 'cpp' && lessonId == 'cpp.basics') {
     return const Challenge(
@@ -234,5 +283,97 @@ Challenge _sql(int seed, int factor, String? lessonId) {
             'Заверши запрос ORDER BY id.',
           ],
     tests: const <Case>[],
+  );
+}
+
+Challenge _libraryChallenge(String language, int seed, List<Challenge> bank) {
+  final rng = Random(seed);
+  final chosen = bank[rng.nextInt(bank.length)];
+  var solution = chosen.solution, prompt = chosen.prompt;
+  var tests = [...chosen.tests];
+  void scalar(Iterable<int> values, int Function(int) expected) {
+    tests = values.toSet().map((n) => Case('$n\n', '${expected(n)}')).toList();
+  }
+
+  if (language != 'sql') {
+    final topic = chosen.id.split('.')[1];
+    if (topic == 'basics' || topic == 'variables') {
+      final factor = 2 + rng.nextInt(8), offset = rng.nextInt(20);
+      solution = solution.replaceAll('n * 4 + 3', 'n * $factor + $offset');
+      prompt = prompt.replaceAll('N × 4 + 3', 'N × $factor + $offset');
+      scalar([0, 1, 10, 1000, rng.nextInt(1001)], (n) => n * factor + offset);
+    } else if (topic == 'expressions') {
+      final capacity = 2 + rng.nextInt(99);
+      solution = solution.replaceAll('% 60', '% $capacity');
+      prompt =
+          'Прочитай число предметов N (0 ≤ N ≤ 100000). В полной коробке $capacity предметов. Выведи число оставшихся предметов после заполнения всех возможных полных коробок.';
+      scalar([
+        0,
+        capacity - 1,
+        capacity,
+        capacity + 1,
+        100000,
+      ], (n) => n % capacity);
+    } else if (topic == 'booleans') {
+      final lo = rng.nextInt(50), hi = 50 + rng.nextInt(50);
+      solution = solution.replaceAllMapped(
+        RegExp(r'\b(10|20)\b'),
+        (match) => match[1] == '10' ? '$lo' : '$hi',
+      );
+      prompt =
+          'Прочитай целое N от -1000 до 1000. Выведи 1, если $lo ≤ N ≤ $hi, иначе 0.';
+      scalar([
+        -1000,
+        lo - 1,
+        lo,
+        hi,
+        hi + 1,
+        1000,
+      ], (n) => n >= lo && n <= hi ? 1 : 0);
+    } else if (topic == 'nested') {
+      final divisor = 2 + rng.nextInt(8);
+      solution = solution.replaceAll('% 3', '% $divisor');
+      prompt = prompt.replaceAll('кратных 3', 'кратных $divisor');
+      scalar([0, 1, divisor, 1000, rng.nextInt(1001)], (n) {
+        final count = n ~/ divisor;
+        return divisor * count * (count + 1) ~/ 2;
+      });
+    } else if (topic == 'loops') {
+      scalar([
+        0,
+        1,
+        1000,
+        rng.nextInt(1001),
+        rng.nextInt(1001),
+      ], (n) => n * (n + 1) ~/ 2);
+    } else if (topic == 'strings') {
+      final sample = List.generate(
+        40,
+        (_) => 'abc XYZ0123456789'[rng.nextInt(16)],
+      ).join();
+      tests.add(
+        Case(
+          '$sample\n',
+          sample.codeUnits.where((c) => c >= 48 && c <= 57).length.toString(),
+        ),
+      );
+    }
+  } else if (chosen.id == 'sql.filters.v2') {
+    final threshold = 5 + rng.nextInt(70);
+    solution = solution.replaceAll('>= 25', '>= $threshold');
+    prompt =
+        'Выведи id и amount заказов с amount ≥ $threshold. Отсортируй по id.';
+  }
+  tests.shuffle(rng);
+  return Challenge(
+    id: '$language.generated.$seed',
+    language: language,
+    seed: seed,
+    title: chosen.title,
+    prompt: prompt,
+    starter: chosen.starter,
+    solution: solution,
+    hints: chosen.hints,
+    tests: tests,
   );
 }

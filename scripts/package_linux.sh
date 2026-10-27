@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
-version="${1:-0.1.0}"
+version="${1:-0.2.0}"
 arch=x86_64
 bundle="$root/apps/devcat_flutter/build/linux/x64/release/bundle"
 dist="$root/dist"
@@ -40,7 +40,7 @@ Architecture: amd64
 Maintainer: DevCat contributors <student@devcat.local>
 Depends: libgtk-3-0 (>= 3.22), libsecret-1-0, libgstreamer1.0-0, libgstreamer-plugins-base1.0-0, gstreamer1.0-plugins-good, libstdc++6
 Description: Offline programming workshop with a pixel cat mentor
- Introductory lessons, generated exercises, a local editor and progress sync.
+ Offline lectures, checked exercises, a multi-file IDE and encrypted device transfer.
 CONTROL
 dpkg-deb --root-owner-group --build "$stage" "$dist/DevCat-$version-linux-amd64.deb"
 rm -r "$stage/DEBIAN"

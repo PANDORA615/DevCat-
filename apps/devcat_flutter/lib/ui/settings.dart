@@ -9,6 +9,7 @@ import '../core/store.dart';
 import '../core/sync.dart';
 import 'transfer.dart';
 import 'widgets.dart';
+import 'nearby_page.dart';
 
 class SettingsPage extends StatefulWidget {
   final AppStore store;
@@ -279,6 +280,96 @@ class _SettingsPageState extends State<SettingsPage> {
                 onChanged: (v) => store.set('cat', v),
               ),
               const Divider(),
+              DropdownButtonFormField<String>(
+                isExpanded: true,
+                initialValue: store.setting('uiFont', 'Nunito'),
+                decoration: const InputDecoration(
+                  labelText: 'Шрифт интерфейса',
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'Nunito',
+                    child: Text('Nunito · округлый и мягкий'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Roboto',
+                    child: Text('Roboto · нейтральный'),
+                  ),
+                ],
+                onChanged: (v) {
+                  if (v != null) store.set('uiFont', v);
+                },
+              ),
+              const SizedBox(height: 14),
+              Text(
+                'Масштаб интерфейса: ${(store.setting<num>('uiScale', 1.0) * 100).round()}%',
+              ),
+              Slider(
+                value: store.setting<num>('uiScale', 1.0).toDouble(),
+                min: .9,
+                max: 1.25,
+                divisions: 7,
+                onChanged: (v) => store.set('uiScale', v),
+              ),
+              Text(
+                'Округление карточек: ${store.setting<num>('cornerRadius', 28).round()}',
+              ),
+              Slider(
+                value: store.setting<num>('cornerRadius', 28).toDouble(),
+                min: 8,
+                max: 36,
+                divisions: 7,
+                onChanged: (v) => store.set('cornerRadius', v),
+              ),
+              Text(
+                'Текст лекций: ${store.setting<num>('readingSize', 18).round()}',
+              ),
+              Slider(
+                value: store.setting<num>('readingSize', 18).toDouble(),
+                min: 15,
+                max: 26,
+                divisions: 11,
+                onChanged: (v) => store.set('readingSize', v),
+              ),
+              Text(
+                'Межстрочный интервал лекций: ${store.setting<num>('readingHeight', 1.8).toStringAsFixed(1)}',
+              ),
+              Slider(
+                value: store.setting<num>('readingHeight', 1.8).toDouble(),
+                min: 1.4,
+                max: 2.2,
+                divisions: 8,
+                onChanged: (v) => store.set('readingHeight', v),
+              ),
+              Text(
+                'Ширина текста лекций: ${store.setting<num>('readingWidth', 800).round()}',
+              ),
+              Slider(
+                value: store.setting<num>('readingWidth', 800).toDouble(),
+                min: 580,
+                max: 1000,
+                divisions: 7,
+                onChanged: (v) => store.set('readingWidth', v),
+              ),
+              DropdownButtonFormField<String>(
+                isExpanded: true,
+                initialValue: store.setting('editorFont', 'JetBrainsMono'),
+                decoration: const InputDecoration(labelText: 'Шрифт кода'),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'JetBrainsMono',
+                    child: Text('JetBrains Mono'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'monospace',
+                    child: Text('Системный моноширинный'),
+                  ),
+                ],
+                onChanged: (v) {
+                  if (v != null) store.set('editorFont', v);
+                },
+              ),
+              const Divider(),
               Text(
                 'Размер шрифта редактора: ${store.setting<num>('editorSize', 14).round()}',
               ),
@@ -302,7 +393,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Звуки касаний и результатов'),
                 subtitle: const Text(
-                  'Собственные мягкие сигналы без сторонних семплов',
+                  '14 звуков из твоего архива: отдельные сигналы для навигации, действий, ошибок и результатов',
                 ),
                 value: store.setting('sound', true),
                 onChanged: (v) => store.set('sound', v),
@@ -322,102 +413,187 @@ class _SettingsPageState extends State<SettingsPage> {
                   const Icon(Icons.volume_up_outlined),
                 ],
               ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Голос кота-наставника'),
+                subtitle: const Text(
+                  'Разные голоса для объяснения, подсказки, поддержки и результата',
+                ),
+                value: store.setting('catVoice', true),
+                onChanged: (v) => store.set('catVoice', v),
+              ),
+              Text('Громкость голоса'),
+              Slider(
+                value: store.setting<num>('voiceVolume', .18).toDouble(),
+                min: 0,
+                max: 1,
+                onChanged: (v) => store.set('voiceVolume', v),
+                onChangeEnd: (_) => widget.sounds.speak(CatMood.greeting),
+              ),
+              DropdownButtonFormField<String>(
+                isExpanded: true,
+                initialValue: store.setting('voiceStyle', 'auto'),
+                decoration: const InputDecoration(labelText: 'Характер голоса'),
+                items: [
+                  const DropdownMenuItem(
+                    value: 'auto',
+                    child: Text('По ситуации · все шесть голосов'),
+                  ),
+                  ...SoftSounds.voices.entries.map(
+                    (e) => DropdownMenuItem(
+                      value: e.value,
+                      child: Text(
+                        const {
+                          CatMood.greeting: 'Классический · приветствие',
+                          CatMood.encouragement: 'Мягкий · поддержка',
+                          CatMood.thinking: 'Робот · размышление',
+                          CatMood.warning: 'Низкий · предупреждение',
+                          CatMood.celebration: 'Волшебный · успех',
+                          CatMood.explaining: 'Радио · объяснение',
+                        }[e.key]!,
+                      ),
+                    ),
+                  ),
+                ],
+                onChanged: (v) {
+                  if (v != null) {
+                    store.set('voiceStyle', v);
+                    widget.sounds.speak(CatMood.greeting);
+                  }
+                },
+              ),
+              const SizedBox(height: 14),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: SoundCue.values
+                    .map(
+                      (cue) => OutlinedButton(
+                        onPressed: () => widget.sounds.cue(cue),
+                        child: Text(
+                          const {
+                            'tap': 'Нажатие',
+                            'navigation': 'Вкладка',
+                            'open': 'Открытие',
+                            'toggle': 'Переключатель',
+                            'save': 'Сохранение',
+                            'hint': 'Подсказка',
+                            'success': 'Успех',
+                            'error': 'Ошибка',
+                          }[cue.name]!,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
             ],
           ),
         ),
         const SizedBox(height: 18),
-        Panel(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _title(
-                context,
-                Icons.devices_rounded,
-                'Продолжить на другом устройстве',
-              ),
-              const Text(
-                'Подключи одну и ту же папку личного WebDAV (например, Nextcloud) на компьютере и телефоне. После занятия нажми «Синхронизировать», затем сделай это на другом устройстве. Нужны интернет и HTTPS. Отправляются прогресс, позиция курса и учебные черновики; пароль и настройки остаются на устройстве.',
-                style: TextStyle(height: 1.6),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: url,
-                keyboardType: TextInputType.url,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  labelText: 'HTTPS URL существующей папки WebDAV',
-                  hintText:
-                      'https://cloud.example/remote.php/dav/files/user/DevCat/',
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: user,
-                autocorrect: false,
-                decoration: const InputDecoration(labelText: 'Пользователь'),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  labelText: 'Пароль приложения WebDAV',
-                ),
-              ),
-              CheckboxListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Сохранить пароль в хранилище ключей ОС'),
-                value: savePassword,
-                onChanged: (v) => setState(() => savePassword = v ?? false),
-              ),
-              Wrap(
-                spacing: 12,
-                runSpacing: 10,
+        NearbyPanel(store: store, onSynced: widget.onSynced),
+        const SizedBox(height: 18),
+        ExpansionTile(
+          title: const Text('Дополнительно: личное облако WebDAV'),
+          subtitle: const Text('Для синхронизации через интернет'),
+          children: [
+            Panel(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  FilledButton.icon(
-                    onPressed: syncing ? null : _sync,
-                    icon: syncing
-                        ? const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Icon(Icons.sync_rounded),
-                    label: Text(
-                      syncing ? 'Синхронизация…' : 'Синхронизировать',
+                  _title(
+                    context,
+                    Icons.devices_rounded,
+                    'Продолжить на другом устройстве',
+                  ),
+                  const Text(
+                    'Подключи одну и ту же папку личного WebDAV (например, Nextcloud) на компьютере и телефоне. После занятия нажми «Синхронизировать», затем сделай это на другом устройстве. Нужны интернет и HTTPS. Отправляются прогресс, позиция курса и учебные черновики; пароль и настройки остаются на устройстве.',
+                    style: TextStyle(height: 1.6),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: url,
+                    keyboardType: TextInputType.url,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      labelText: 'HTTPS URL существующей папки WebDAV',
+                      hintText:
+                          'https://cloud.example/remote.php/dav/files/user/DevCat/',
                     ),
                   ),
-                  TextButton(
-                    onPressed: () async {
-                      try {
-                        await vault.delete(key: 'devcat.webdav');
-                        password.clear();
-                        setState(() => savePassword = false);
-                      } catch (e) {
-                        setState(() => status = 'Хранилище ключей: $e');
-                      }
-                    },
-                    child: const Text('Забыть пароль'),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: user,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      labelText: 'Пользователь',
+                    ),
                   ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: password,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      labelText: 'Пароль приложения WebDAV',
+                    ),
+                  ),
+                  CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Сохранить пароль в хранилище ключей ОС'),
+                    value: savePassword,
+                    onChanged: (v) => setState(() => savePassword = v ?? false),
+                  ),
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 10,
+                    children: [
+                      FilledButton.icon(
+                        onPressed: syncing ? null : _sync,
+                        icon: syncing
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Icon(Icons.sync_rounded),
+                        label: Text(
+                          syncing ? 'Синхронизация…' : 'Синхронизировать',
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          try {
+                            await vault.delete(key: 'devcat.webdav');
+                            password.clear();
+                            setState(() => savePassword = false);
+                          } catch (e) {
+                            setState(() => status = 'Хранилище ключей: $e');
+                          }
+                        },
+                        child: const Text('Забыть пароль'),
+                      ),
+                    ],
+                  ),
+                  if (store.settings['lastSync'] != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Text(
+                        'Последняя синхронизация: ${store.settings['lastSync']}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  if (status.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: SelectableText(status),
+                    ),
                 ],
               ),
-              if (store.settings['lastSync'] != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Text(
-                    'Последняя синхронизация: ${store.settings['lastSync']}',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
-              if (status.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: SelectableText(status),
-                ),
-            ],
-          ),
+            ),
+          ],
         ),
         const SizedBox(height: 18),
         Panel(
@@ -493,7 +669,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               _title(context, Icons.terminal_rounded, 'Среда исполнения'),
               const Text(
-                'SQLite встроен. На ПК остальные языки используют установленные системные компиляторы. Запуск работает с правами твоего пользователя; используй собственный код. Полноценная изоляция, LSP и отладчик пока не реализованы.',
+                'DevCat IDE поддерживает проекты с несколькими файлами и локальной сборкой. SQLite и база проекта встроены. На компьютере остальные языки используют установленные компиляторы; на Android они доступны для редактирования и обучения. Запуск выполняется с правами твоего пользователя. LSP и пошаговый отладчик пока не встроены.',
               ),
               const SizedBox(height: 12),
               OutlinedButton.icon(

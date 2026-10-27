@@ -4,11 +4,16 @@ on:
     branches: ['release-assets/**']
     paths: ['docs/releases/*-transfer.json']
   workflow_dispatch:
+    inputs:
+      manifest:
+        description: Reviewed transfer manifest
+        required: true
+        default: docs/releases/v0.2.0-transfer.json
 permissions:
   contents: write
   actions: read
 concurrency:
-  group: publish-devcat-v0.1.0
+  group: publish-devcat
   cancel-in-progress: false
 jobs:
   publish:
@@ -18,32 +23,55 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Read reviewed release metadata
+        id: plan
+        env:
+          INPUT_MANIFEST: ${{ inputs.manifest || 'docs/releases/v0.2.0-transfer.json' }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          path = Path(os.environ['INPUT_MANIFEST'])
+          assert path.parent == Path('docs/releases') and path.name.endswith('-transfer.json')
+          data = json.loads(path.read_text())
+          assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', data['tag'])
+          assert isinstance(data['build_run'], int) and data['build_run'] > 0
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f"manifest={path}\nbuild_run={data['build_run']}\ntag={data['tag']}\nversion={data['tag'][1:]}\n")
+          PY
       - uses: actions/download-artifact@v4
         with:
           name: devcat-linux
           path: dist/release
-          run-id: 40424035892
+          run-id: ${{ steps.plan.outputs.build_run }}
           github-token: ${{ github.token }}
       - uses: actions/download-artifact@v4
         with:
           name: devcat-windows
           path: dist/release
-          run-id: 40424035892
+          run-id: ${{ steps.plan.outputs.build_run }}
           github-token: ${{ github.token }}
       - uses: actions/download-artifact@v4
         with:
           name: devcat-macos
           path: dist/release
-          run-id: 40424035892
+          run-id: ${{ steps.plan.outputs.build_run }}
           github-token: ${{ github.token }}
       - name: Reconstruct signed Android and verify every asset
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/publish_release.py docs/releases/v0.1.0-transfer.json dist/release
+          RELEASE_MANIFEST: ${{ steps.plan.outputs.manifest }}
+        run: python3 scripts/publish_release.py "$RELEASE_MANIFEST" dist/release
       - name: Upload verified files and publish prerelease
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.plan.outputs.tag }}
+          RELEASE_VERSION: ${{ steps.plan.outputs.version }}
         run: |
-          gh release edit v0.1.0 --target "$GITHUB_SHA" --notes-file docs/RELEASE_NOTES_0.1.0.md
-          gh release upload v0.1.0 dist/release/* --clobber
-          gh release edit v0.1.0 --draft=false --prerelease
+          notes="docs/RELEASE_NOTES_${RELEASE_VERSION}.md"
+          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" --target "$GITHUB_SHA" --title "DevCat ${RELEASE_VERSION}" --draft --prerelease --notes-file "$notes"
+          fi
+          gh release edit "$RELEASE_TAG" --target "$GITHUB_SHA" --notes-file "$notes"
+          gh release upload "$RELEASE_TAG" dist/release/* --clobber
+          gh release edit "$RELEASE_TAG" --draft=false --prerelease

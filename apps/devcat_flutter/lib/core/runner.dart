@@ -7,6 +7,7 @@ import 'dart:isolate';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 import 'course.dart';
+import 'project.dart';
 
 class RunResult {
   final String output, error;
@@ -169,9 +170,11 @@ class LocalRunner {
   Future<({List<String> command, RunResult? error})> _prepare(
     String lang,
     String code,
-    Directory dir,
-  ) async {
-    final filename = fileNames[lang]!;
+    Directory dir, {
+    Map<String, String>? files,
+    String? entry,
+  }) async {
+    final filename = entry ?? fileNames[lang]!;
     await File(p.join(dir.path, filename)).writeAsString(code);
     Future<({List<String> command, RunResult? error})> compiled(
       String exe,
@@ -187,8 +190,12 @@ class LocalRunner {
       return (command: command, error: r.ok ? null : r);
     }
 
+    final buildDirectory = files == null
+        ? dir
+        : Directory(p.join(dir.path, '.devcat-build'));
+    await buildDirectory.create(recursive: true);
     final binary = p.join(
-      dir.path,
+      buildDirectory.path,
       Platform.isWindows ? 'program.exe' : 'program',
     );
     switch (lang) {
@@ -213,36 +220,93 @@ class LocalRunner {
             lang == 'c' ? '-std=c17' : '-std=c++20',
             '-Wall',
             '-Wextra',
-            filename,
+            ...?files?.keys.where(
+              (name) => name.endsWith(lang == 'c' ? '.c' : '.cpp'),
+            ),
+            if (files == null) filename,
             '-o',
             binary,
           ],
           [binary],
         );
       case 'java':
-        return compiled('javac', [filename], ['java', '-cp', dir.path, 'Main']);
-      case 'go':
-        await File(
-          p.join(dir.path, 'go.mod'),
-        ).writeAsString('module devcat.local/exercise\n\ngo 1.22\n');
-        return compiled('go', ['build', '-o', binary, filename], [binary]);
-      case 'csharp':
-        await File(p.join(dir.path, 'App.csproj')).writeAsString(
-          '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><Nullable>enable</Nullable></PropertyGroup></Project>',
+        final classes = files == null
+            ? dir.path
+            : p.join(buildDirectory.path, 'classes');
+        if (files != null) {
+          final target = Directory(classes);
+          if (await target.exists()) await target.delete(recursive: true);
+          await target.create(recursive: true);
+        }
+        return compiled(
+          'javac',
+          [
+            if (files != null) ...['-d', classes],
+            if (files == null)
+              filename
+            else
+              ...files.keys.where((name) => name.endsWith('.java')),
+          ],
+          ['java', '-cp', classes, 'Main'],
         );
-        await File(p.join(dir.path, 'NuGet.Config')).writeAsString(
+      case 'go':
+        if (files == null || !files.containsKey('go.mod')) {
+          await File(
+            p.join(dir.path, 'go.mod'),
+          ).writeAsString('module devcat.local/exercise\n\ngo 1.22\n');
+        }
+        return compiled(
+          'go',
+          [
+            'build',
+            '-o',
+            binary,
+            if (files == null)
+              filename
+            else
+              ...files.keys.where(
+                (name) => name.endsWith('.go') && !name.endsWith('_test.go'),
+              ),
+          ],
+          [binary],
+        );
+      case 'csharp':
+        final csproj = p.join(buildDirectory.path, 'App.csproj');
+        final include = files == null
+            ? ''
+            : '<EnableDefaultCompileItems>false</EnableDefaultCompileItems>';
+        final sources = files == null
+            ? ''
+            : '<ItemGroup>${files.keys.where((name) => name.endsWith('.cs')).map((name) => '<Compile Include="../${const HtmlEscape(HtmlEscapeMode.attribute).convert(name)}" />').join()}</ItemGroup>';
+        await File(csproj).writeAsString(
+          '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><Nullable>enable</Nullable>$include</PropertyGroup>$sources</Project>',
+        );
+        await File(p.join(buildDirectory.path, 'NuGet.Config')).writeAsString(
           '<configuration><packageSources><clear /></packageSources></configuration>',
         );
+        final output = p.join(buildDirectory.path, 'out');
         return compiled(
           'dotnet',
-          ['build', 'App.csproj', '-o', 'out', '--nologo'],
-          ['dotnet', p.join(dir.path, 'out', 'App.dll')],
+          ['build', csproj, '-o', output, '--nologo'],
+          ['dotnet', p.join(output, 'App.dll')],
         );
       case 'python':
         final exe = await _find(
           Platform.isWindows ? ['python', 'python3'] : ['python3', 'python'],
         );
-        return (command: [exe ?? 'python3', '-I', filename], error: null);
+        return (
+          command: files == null
+              ? [exe ?? 'python3', '-I', filename]
+              : [
+                  exe ?? 'python3',
+                  '-I',
+                  '-c',
+                  'import runpy,sys; sys.path.insert(0, sys.argv[1]); runpy.run_path(sys.argv[2], run_name="__main__")',
+                  dir.path,
+                  filename,
+                ],
+          error: null,
+        );
       case 'javascript':
         return (command: ['node', filename], error: null);
       default:
@@ -273,6 +337,59 @@ class LocalRunner {
     } finally {
       await dir.delete(recursive: true).catchError((_) => dir);
     }
+  }
+
+  Future<RunResult> runProject(
+    DevProject project,
+    Directory root,
+    String input,
+  ) async {
+    _cancelled = false;
+    final directory = await project.materialize(root);
+    if (project.language == 'sql') {
+      final port = ReceivePort();
+      final isolate = await Isolate.spawn(_projectSqlWorker, [
+        port.sendPort,
+        p.join(directory.path, 'project.sqlite'),
+        project.files[project.entry]!,
+      ]);
+      try {
+        final result =
+            await port.first.timeout(const Duration(seconds: 3)) as List;
+        return RunResult(result[0], result[1], result[1] == '' ? 0 : 1);
+      } on TimeoutException {
+        return const RunResult(
+          '',
+          'SQLite: превышен лимит 3 секунды.',
+          124,
+          timedOut: true,
+        );
+      } finally {
+        isolate.kill(priority: Isolate.immediate);
+        port.close();
+      }
+    }
+    if (!desktop) {
+      return const RunResult(
+        '',
+        'На Android встроен SQLite. Для других языков нужен локальный компилятор на компьютере; проект можно перенести через QR.',
+        126,
+      );
+    }
+    final prepared = await _prepare(
+      project.language,
+      project.files[project.entry]!,
+      directory,
+      files: project.files,
+      entry: project.entry,
+    );
+    if (prepared.error != null) return prepared.error!;
+    return process(
+      prepared.command.first,
+      prepared.command.skip(1).toList(),
+      cwd: directory.path,
+      input: input,
+    );
   }
 
   Future<CheckResult> check(Challenge task, String code) async {
@@ -480,4 +597,61 @@ String explainDiagnostic(String diagnostic) {
     return 'Проверка не состоялась: среда исполнения не найдена. Это не оценка твоего решения.';
   }
   return 'Посмотри на фактический вывод и первую диагностику. Если код выполняется, сравни границы цикла и формат вывода с контрактом задания.';
+}
+
+void _projectSqlWorker(List args) {
+  final port = args[0] as SendPort;
+  final db = sqlite3.open(args[1] as String);
+  NativeCallable<_SqlProgress>? progress;
+  try {
+    final code = args[2] as String;
+    if (RegExp(
+      r'\b(ATTACH|DETACH|load_extension|readfile|writefile)\b',
+      caseSensitive: false,
+    ).hasMatch(code)) {
+      throw const FormatException(
+        'В проекте не поддерживаются файловые расширения и ATTACH.',
+      );
+    }
+    final library = sqlite_open.open.openSqlite();
+    var operations = 0;
+    final watch = Stopwatch()..start();
+    progress = NativeCallable<_SqlProgress>.isolateLocal((Pointer<Void> _) {
+      operations += 1000;
+      return operations > 1000000 || watch.elapsedMilliseconds > 2000 ? 1 : 0;
+    }, exceptionalReturn: 1);
+    library.lookupFunction<_ProgressInstallNative, _ProgressInstallDart>(
+      'sqlite3_progress_handler',
+    )(db.handle.cast<Void>(), 1000, progress.nativeFunction, nullptr);
+    // One statement per run keeps the displayed result unambiguous.
+    final statement = db.prepare(code, checkNoTail: true);
+    try {
+      final cursor = statement.selectCursor();
+      final rows = <String>[];
+      var size = 0;
+      while (cursor.moveNext()) {
+        final row = cursor.current.values.join(' | ');
+        size += row.length;
+        if (rows.length >= 1000 || size > 65536) {
+          throw const FormatException(
+            'Результат превышает 1000 строк или 64 КиБ.',
+          );
+        }
+        rows.add(row);
+      }
+      port.send([
+        cursor.columnNames.isNotEmpty
+            ? '${cursor.columnNames.join(" | ")}\n${rows.join("\n")}'
+            : 'Готово. Изменено строк: ${db.updatedRows}. Данные сохранены в project.sqlite.',
+        '',
+      ]);
+    } finally {
+      statement.dispose();
+    }
+  } catch (e) {
+    port.send(['', 'SQLite: $e']);
+  } finally {
+    db.dispose();
+    progress?.close();
+  }
 }

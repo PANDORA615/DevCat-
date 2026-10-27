@@ -2,13 +2,13 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "DevCat-0.1.0",
-  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.1.0",
+  "name": "DevCat-0.2.0",
+  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.2.0",
   "creationInfo": {
     "creators": [
       "Tool: DevCat license_inventory.py"
     ],
-    "created": "2026-10-26T00:00:00Z"
+    "created": "2026-10-27T00:00:00Z"
   },
   "packages": [
     {
@@ -186,6 +186,16 @@
       "name": "crypto",
       "versionInfo": "3.0.8",
       "downloadLocation": "https://pub.dev/packages/crypto",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-cryptography",
+      "name": "cryptography",
+      "versionInfo": "2.9.0",
+      "downloadLocation": "https://pub.dev/packages/cryptography",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
@@ -672,6 +682,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-mobile-scanner",
+      "name": "mobile_scanner",
+      "versionInfo": "7.4.2",
+      "downloadLocation": "https://pub.dev/packages/mobile_scanner",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-mocktail",
       "name": "mocktail",
       "versionInfo": "1.0.5",
@@ -796,6 +816,26 @@
       "name": "pub_semver",
       "versionInfo": "2.2.1",
       "downloadLocation": "https://pub.dev/packages/pub_semver",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-qr",
+      "name": "qr",
+      "versionInfo": "3.0.2",
+      "downloadLocation": "https://pub.dev/packages/qr",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-qr-flutter",
+      "name": "qr_flutter",
+      "versionInfo": "4.1.0",
+      "downloadLocation": "https://pub.dev/packages/qr_flutter",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",

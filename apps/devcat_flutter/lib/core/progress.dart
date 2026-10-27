@@ -72,6 +72,16 @@ class ProgressData {
                 value['seed'] is! int)) {
           throw const FormatException('Неверная позиция.');
         }
+        if (key == 'cursors' && value['contentRevision'] == null) {
+          final oldIndex = value['lesson'] as int;
+          if (oldIndex == 0 || oldIndex == 1) {
+            value['lesson'] = value['language'] == 'sql'
+                ? (oldIndex == 0 ? 15 : 2)
+                : (oldIndex == 0 ? 0 : 7);
+            value['revision'] = (value['revision'] as int) + 1;
+          }
+          value['contentRevision'] = 2;
+        }
         out[e.key] = value;
       }
       return out;
@@ -147,6 +157,7 @@ class ProgressData {
   void cursor(String language, int lesson, int seed, String device) {
     cursors[device] = {
       'language': language,
+      'contentRevision': 2,
       'lesson': lesson,
       'seed': seed,
       'updated': DateTime.now().millisecondsSinceEpoch,
