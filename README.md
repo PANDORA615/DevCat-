@@ -68,7 +68,7 @@ chmod +x DevCat-0.2.0-linux-x86_64.AppImage
 
 Для AppImage/tar.gz на Ubuntu: `sudo apt install libgtk-3-0 libsecret-1-0 libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-plugins-good`. На Fedora: `sudo dnf install gtk3 libsecret gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good`. На Arch: `sudo pacman -S gtk3 libsecret gstreamer gst-plugins-base-libs gst-plugins-good`.
 
-Windows: запускайте `setup.exe` либо распакуйте ZIP целиком и откройте `devcat.exe`; папки `data` и DLL должны оставаться рядом. При необходимости установите официальный Microsoft Visual C++ Redistributable 2015–2022 x64. macOS: перенесите приложение из DMG в Applications. Desktop-сертификатов владельца нет: Windows может показать SmartScreen, macOS — Gatekeeper. AAB не устанавливается напрямую; для телефона используйте APK.
+Windows: запускайте `setup.exe` либо распакуйте ZIP целиком и откройте `devcat.exe`; папки `data` и DLL должны оставаться рядом. При необходимости установите официальный Microsoft Visual C++ Redistributable 2015–2022 x64. macOS: перенесите приложение из DMG в Applications. Desktop-сертификатов владельца нет: Windows может показать SmartScreen, macOS — Gatekeeper. AAB не устанавливается напрямую; для телефона используйте APK. Для обновления Android выбирайте тот же вариант, что был установлен раньше: universal → universal или соответствующая ABI → та же ABI.
 
 ## Продолжить на телефоне
 
@@ -89,7 +89,7 @@ QR содержит временный секрет: не публикуйте �
 |---|---|
 | C / C++ | Clang или GCC, C17 / C++20 |
 | C# | .NET 8 SDK |
-| Python | CPython 3 |
+| Python | CPython 3.10+ |
 | Java | JDK 21 с java и javac |
 | JavaScript | Node.js LTS |
 | Go | Go 1.22+ |

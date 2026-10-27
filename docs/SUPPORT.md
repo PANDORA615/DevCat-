@@ -39,7 +39,7 @@
 |---|---|
 | C / C++ | Clang или GCC в PATH, C17 / C++20 |
 | C# | .NET 8 SDK, а не только runtime |
-| Python | CPython 3 в PATH |
+| Python | CPython 3.10+ в PATH |
 | Java | JDK 21 с `java` и `javac` в PATH |
 | JavaScript | Node.js LTS |
 | Go | Go 1.22+ в PATH, без скачивания модулей |
