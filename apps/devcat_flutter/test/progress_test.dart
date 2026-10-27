@@ -72,4 +72,20 @@ void main() {
       expect(ProgressData.decode(upgraded.encode()).latestCursor!['lesson'], 7);
     },
   );
+  test(
+    'Missing settings use defaults in nullable Flutter property contexts',
+    () {
+      final store = AppStore(Directory('/tmp/devcat-settings-defaults'));
+      final String? font = store.setting('uiFont', 'Nunito');
+      final String? editor = store.setting('editorFont', 'JetBrainsMono');
+      expect(font, 'Nunito');
+      expect(editor, 'JetBrainsMono');
+      store.settings['uiFont'] = null;
+      final String? afterReset = store.setting('uiFont', 'Nunito');
+      expect(afterReset, 'Nunito');
+      store.settings['uiFont'] = 'Roboto';
+      final String? selected = store.setting('uiFont', 'Nunito');
+      expect(selected, 'Roboto');
+    },
+  );
 }

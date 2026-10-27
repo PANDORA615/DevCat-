@@ -46,8 +46,11 @@ class AppStore extends ChangeNotifier {
     }
   }
 
-  T setting<T>(String key, T fallback) =>
-      settings[key] is T ? settings[key] as T : fallback;
+  T setting<T>(String key, T fallback) {
+    final value = settings[key];
+    return value != null && value is T ? value : fallback;
+  }
+
   Future<void> set(String key, dynamic value) async {
     settings[key] = value;
     notifyListeners();
