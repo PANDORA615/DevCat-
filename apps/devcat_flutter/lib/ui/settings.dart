@@ -674,12 +674,15 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               _title(context, Icons.terminal_rounded, 'Среда исполнения'),
               const Text(
-                'DevCat IDE поддерживает проекты с несколькими файлами и локальной сборкой. SQLite и база проекта встроены. На компьютере остальные языки используют установленные компиляторы; на Android они доступны для редактирования и обучения. Запуск выполняется с правами твоего пользователя. LSP и пошаговый отладчик пока не встроены.',
+                'DevCat IDE поддерживает проекты с несколькими файлами и локальной сборкой. На Android SQLite, Python, JavaScript, Java, Go, C, C++ и C# исполняются на устройстве: среды входят в APK. При первом запуске они распаковываются в память приложения. На компьютере используются установленные компиляторы. Запускай собственный код. LSP и пошаговый отладчик пока не встроены.',
               ),
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: () async {
-                  setState(() => toolchains = 'Проверяю PATH…');
+                  setState(
+                    () => toolchains =
+                        'Подготавливаю и проверяю локальные среды…',
+                  );
                   final result = await LocalRunner().toolchains();
                   if (mounted) {
                     setState(

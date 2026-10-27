@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 import 'course.dart';
 import 'project.dart';
+import 'android_runtime.dart';
 
 class RunResult {
   final String output, error;
@@ -35,6 +36,7 @@ class LocalRunner {
   bool _cancelled = false;
   bool get desktop =>
       Platform.isLinux || Platform.isMacOS || Platform.isWindows;
+  bool get supported => desktop || Platform.isAndroid;
   void cancel() {
     _cancelled = true;
     _active?.kill(ProcessSignal.sigkill);
@@ -50,25 +52,30 @@ class LocalRunner {
     if (_cancelled) return const RunResult('', 'Отменено', 130);
     Process proc;
     try {
-      proc = await Process.start(
-        executable,
-        args,
-        workingDirectory: cwd,
-        environment: {
-          'DOTNET_CLI_TELEMETRY_OPTOUT': '1',
-          'GOTOOLCHAIN': 'local',
-          'GOPROXY': 'off',
-          'GOSUMDB': 'off',
-        },
-      );
-    } on ProcessException {
+      proc = Platform.isAndroid
+          ? await AndroidRuntime.start(executable, args, cwd: cwd)
+          : await Process.start(
+              executable,
+              args,
+              workingDirectory: cwd,
+              environment: {
+                'DOTNET_CLI_TELEMETRY_OPTOUT': '1',
+                'GOTOOLCHAIN': 'local',
+                'GOPROXY': 'off',
+                'GOSUMDB': 'off',
+              },
+            );
+    } catch (e) {
       return RunResult(
         '',
-        'Не удалось запустить $executable. Установи toolchain и добавь его в PATH; перезапусти DevCat.',
+        Platform.isAndroid
+            ? 'Не удалось подготовить локальную среду Android: $e'
+            : 'Не удалось запустить $executable. Установи toolchain и добавь его в PATH; перезапусти DevCat.',
         127,
       );
     }
     _active = proc;
+    if (_cancelled) proc.kill(ProcessSignal.sigkill);
     final out = <int>[], err = <int>[];
     var limited = false, expired = false;
     void collect(List<int> chunk, List<int> buffer) {
@@ -124,6 +131,23 @@ class LocalRunner {
   Future<String?> _find(List<String> candidates) async {
     for (final exe in candidates) {
       try {
+        if (Platform.isAndroid) {
+          final dir = await Directory.systemTemp.createTemp('devcat-probe-');
+          try {
+            final result = await process(
+              exe,
+              p.basenameWithoutExtension(exe) == 'go'
+                  ? ['version']
+                  : ['--version'],
+              cwd: dir.path,
+              timeout: const Duration(seconds: 15),
+            );
+            if (result.ok) return exe;
+          } finally {
+            await dir.delete(recursive: true);
+          }
+          continue;
+        }
         final result = await Process.run(
           exe,
           p.basenameWithoutExtension(exe) == 'go' ? ['version'] : ['--version'],
@@ -140,7 +164,7 @@ class LocalRunner {
     final result = <String, String>{
       'SQL': 'SQLite ${sqlite3.version.libVersion} (встроен)',
     };
-    if (!desktop) return result;
+    if (!supported) return result;
     for (final entry in <String, List<String>>{
       'C': ['clang', 'gcc'],
       'C++': ['clang++', 'g++'],
@@ -153,9 +177,25 @@ class LocalRunner {
       'Go': ['go'],
       'Git': ['git'],
     }.entries) {
+      if (Platform.isAndroid && entry.key == 'Git') continue;
       final exe = await _find(entry.value);
       if (exe == null) {
         result[entry.key] = 'Не установлен / отсутствует в PATH';
+        continue;
+      }
+      if (Platform.isAndroid) {
+        final dir = await Directory.systemTemp.createTemp('devcat-version-');
+        try {
+          final r = await process(
+            exe,
+            exe == 'go' ? ['version'] : ['--version'],
+            cwd: dir.path,
+            timeout: const Duration(seconds: 15),
+          );
+          result[entry.key] = '${r.output}${r.error}'.trim().split('\n').first;
+        } finally {
+          await dir.delete(recursive: true);
+        }
         continue;
       }
       final r = await Process.run(
@@ -185,7 +225,7 @@ class LocalRunner {
         exe,
         args,
         cwd: dir.path,
-        timeout: const Duration(seconds: 45),
+        timeout: Duration(seconds: Platform.isAndroid ? 120 : 45),
       );
       return (command: command, error: r.ok ? null : r);
     }
@@ -317,10 +357,10 @@ class LocalRunner {
   Future<RunResult> run(String lang, String code, String input) async {
     _cancelled = false;
     if (lang == 'sql') return _sqlRun(code);
-    if (!desktop) {
+    if (!supported) {
       return const RunResult(
         '',
-        'На Android локально исполняется SQLite. Для других языков в 0.1 доступны уроки, генерация и редактор; toolchain не встроен.',
+        'Локальное исполнение не поддерживается на этой платформе.',
         126,
       );
     }
@@ -369,10 +409,10 @@ class LocalRunner {
         port.close();
       }
     }
-    if (!desktop) {
+    if (!supported) {
       return const RunResult(
         '',
-        'На Android встроен SQLite. Для других языков нужен локальный компилятор на компьютере; проект можно перенести через QR.',
+        'Локальное исполнение не поддерживается на этой платформе.',
         126,
       );
     }
@@ -395,10 +435,11 @@ class LocalRunner {
   Future<CheckResult> check(Challenge task, String code) async {
     _cancelled = false;
     if (task.language == 'sql') return _checkSql(task, code);
-    if (!desktop) {
+    if (!supported) {
       return const CheckResult(
         false,
-        'Проверка этого языка на Android недоступна: компилятор не встроен. Черновик сохранён локально.',
+        'Проверка кода не поддерживается на этой платформе.',
+        evaluated: false,
       );
     }
     final dir = await Directory.systemTemp.createTemp('devcat-test-');

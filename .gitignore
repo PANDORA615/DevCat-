@@ -18,3 +18,5 @@ dist/
 **/release.jks
 __pycache__/
 *.pyc
+apps/devcat_flutter/android/app/src/main/assets/runtime/
+apps/devcat_flutter/android/app/src/main/jniLibs/

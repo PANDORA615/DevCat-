@@ -140,10 +140,9 @@ class _WorkspacePageState extends State<WorkspacePage>
 
   Future<bool> _permission() async {
     if (language == 'sql') return true;
-    if (!runner.desktop) {
+    if (!runner.supported) {
       setState(
-        () => output =
-            'На Android компилятор этого языка не встроен. Уроки, редактор и генератор работают локально; запускай SQLite или продолжи на ПК через синхронизацию.',
+        () => output = 'Исполнение кода на этой платформе не поддерживается.',
       );
       _showFeedback();
       return false;
@@ -152,7 +151,7 @@ class _WorkspacePageState extends State<WorkspacePage>
     final yes = await confirm(
       context,
       'Запустить локальный код?',
-      'Программа выполнится с правами твоего пользователя. Запускай только собственный код: это не изолированная песочница. Компилятор должен быть установлен на компьютере.',
+      'Программа выполнится локально с правами приложения. Запускай только собственный код: это не изолированная песочница. На Android компиляторы входят в APK; при первом запуске потребуется время и свободное место для их подготовки. На компьютере нужен установленный компилятор.',
     );
     if (yes) await widget.store.set('trustedLocalRun', true);
     return yes;
@@ -548,7 +547,7 @@ class _WorkspacePageState extends State<WorkspacePage>
             const Padding(
               padding: EdgeInsets.only(bottom: 12),
               child: Text(
-                'Редактор одного файла. Для запуска на ПК нужны локальные toolchain. На Android встроен SQLite.',
+                'Редактор одного файла. На Android среды исполнения входят в APK и работают без интернета. На ПК используются установленные компиляторы.',
                 style: TextStyle(fontSize: 12),
               ),
             ),
