@@ -1,7 +1,7 @@
 <p align="center"><img src="packages/cat_assets/devcat.png" width="100" alt="Иконка DevCat"></p>
 <h1 align="center">DevCat</h1>
 <p align="center">Немного кода. Много открытий.<br>Локальная мастерская программирования с пиксельным котом.</p>
-<p align="center"><a href="https://github.com/PANDORA615/DevCat-/releases">Скачать приложения</a> · <a href="docs/SUPPORT.md">Поддержка платформ</a> · <a href="IMPLEMENTATION_PLAN.md">План реализации</a></p>
+<p align="center"><a href="https://github.com/PANDORA615/DevCat-/releases/tag/v0.2.0">Скачать DevCat 0.2.0</a> · <a href="docs/SUPPORT.md">Поддержка платформ</a> · <a href="IMPLEMENTATION_PLAN.md">План реализации</a></p>
 
 ![DevCat — авторская иллюстрация, не скриншот интерфейса](docs/banner.png)
 
@@ -38,7 +38,7 @@ DevCat 0.2 — локальное обучение программирован�
 
 ## Скачать и установить
 
-Готовые файлы находятся в [GitHub Releases](https://github.com/PANDORA615/DevCat-/releases). Скачивайте пакет своей ОС; проверяйте `SHA256SUMS`.
+Готовые файлы находятся в [DevCat 0.2.0](https://github.com/PANDORA615/DevCat-/releases/tag/v0.2.0). Скачивайте пакет своей ОС; проверяйте `SHA256SUMS`.
 
 | Платформа | Файлы |
 |---|---|
