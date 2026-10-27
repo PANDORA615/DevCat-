@@ -122,11 +122,7 @@ class _DevCatShellState extends State<DevCatShell> {
                 if (!wide) ...[
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      'assets/branding/icon.png',
-                      width: 34,
-                      height: 34,
-                    ),
+                    child: DevCatLogo(size: 34),
                   ),
                   const SizedBox(width: 12),
                 ],
@@ -183,11 +179,7 @@ class _DevCatShellState extends State<DevCatShell> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(16),
-                            child: Image.asset(
-                              'assets/branding/icon.png',
-                              width: 44,
-                              height: 44,
-                            ),
+                            child: DevCatLogo(size: 44),
                           ),
                           const SizedBox(width: 12),
                           Expanded(

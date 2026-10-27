@@ -11,11 +11,12 @@ class Course {
       source = j['source'],
       lessons = (j['lessons'] as List).map((x) => Lesson(x)).toList() {
     final seen = <String>{};
-    coursePracticeBank[id] = lessons
-        .map((l) => l.challenge)
-        .whereType<Challenge>()
-        .where((task) => seen.add(task.solution))
-        .toList();
+    coursePracticeBank[id] = [
+      ...lessons.map((l) => l.challenge).whereType<Challenge>(),
+      ...((j['practiceBank'] as List?) ?? []).map(
+        (x) => Challenge.fromJson(Map<String, dynamic>.from(x)),
+      ),
+    ].where((task) => seen.add(task.solution)).toList();
   }
 }
 
@@ -297,7 +298,7 @@ Challenge _libraryChallenge(String language, int seed, List<Challenge> bank) {
 
   if (language != 'sql') {
     final topic = chosen.id.split('.')[1];
-    if (topic == 'basics' || topic == 'variables') {
+    if (topic == 'basics') {
       final factor = 2 + rng.nextInt(8), offset = rng.nextInt(20);
       solution = solution.replaceAll('n * 4 + 3', 'n * $factor + $offset');
       prompt = prompt.replaceAll('N × 4 + 3', 'N × $factor + $offset');
@@ -330,13 +331,12 @@ Challenge _libraryChallenge(String language, int seed, List<Challenge> bank) {
         hi + 1,
         1000,
       ], (n) => n >= lo && n <= hi ? 1 : 0);
+    } else if (topic == 'variables') {
+      scalar([3, 4, 10, 1000, 3 + rng.nextInt(998)], (n) => n - 2);
     } else if (topic == 'nested') {
-      final divisor = 2 + rng.nextInt(8);
-      solution = solution.replaceAll('% 3', '% $divisor');
-      prompt = prompt.replaceAll('кратных 3', 'кратных $divisor');
-      scalar([0, 1, divisor, 1000, rng.nextInt(1001)], (n) {
-        final count = n ~/ divisor;
-        return divisor * count * (count + 1) ~/ 2;
+      scalar([0, 1, 100, rng.nextInt(101)], (n) {
+        final sum = n * (n + 1) ~/ 2;
+        return sum * sum;
       });
     } else if (topic == 'loops') {
       scalar([

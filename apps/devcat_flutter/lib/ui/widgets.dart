@@ -1,6 +1,58 @@
 import 'package:flutter/material.dart';
 import '../core/sound.dart';
 
+/// Maps the original mint background to the theme while preserving black and white.
+/// The asset stays unchanged, so every palette uses the same cat silhouette.
+class DevCatLogo extends StatelessWidget {
+  final double size;
+  const DevCatLogo({super.key, this.size = 44});
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final background = scheme.brightness == Brightness.dark
+        ? Color.lerp(scheme.primaryContainer, scheme.primary, .75)!
+        : scheme.primaryContainer;
+    List<double> channel(double component) {
+      final shift = (component * 255 - 180) / 60;
+      return [1 - shift, shift, 0, 0, 0];
+    }
+
+    return Semantics(
+      label: 'Логотип DevCat',
+      image: true,
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(size * .28),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.matrix([
+              ...channel(background.r),
+              ...channel(background.g),
+              ...channel(background.b),
+              0,
+              0,
+              0,
+              1,
+              0,
+            ]),
+            child: OverflowBox(
+              maxWidth: size * 1.16,
+              maxHeight: size * 1.16,
+              child: Image.asset(
+                'assets/branding/icon.png',
+                width: size * 1.16,
+                height: size * 1.16,
+                excludeFromSemantics: true,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class Panel extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;

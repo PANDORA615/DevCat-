@@ -43,7 +43,7 @@ def foundation(lang,index,t):
       section('Зачем это нужно',model),
       section('Как это устроено в '+NAMES[lang],LANGUAGE_CONTEXT[lang],code=code),
       section('Разбираем выполнение по шагам',trace,diagram=diagram(slug)),
-      section('Практическая работа',assignment+'\n\nПеред кодом запиши вход и ожидаемый результат словами. Подготовь обычный пример и отдельный случай на границе. В процессе решения отмечай, какое значение хранится в каждой переменной и какое условие остаётся верным. После запуска сравни результат с ручным расчётом; совпадение только с одним примером ещё не доказывает правильность.'),
+      section('Практическая работа',('Автоматически проверяемая часть: '+lab['prompt']+'\n\nДополнительная самостоятельная работа: ' if lab else '')+assignment+'\n\nПеред кодом запиши вход и ожидаемый результат словами. Подготовь обычный пример и отдельный случай на границе. В процессе решения отмечай, какое значение хранится в каждой переменной и какое условие остаётся верным. После запуска сравни результат с ручным расчётом; совпадение только с одним примером ещё не доказывает правильность.'),
       section('Диагностика и типичные ловушки',failure),
       section('Закрепление без подсказок','Вернись к задаче после перерыва и напиши решение в новом файле, не подглядывая в образец. Измени одно требование: допустимый диапазон, формат ответа или способ получения данных. Объясни, какие части алгоритма сохраняются, а какие нужно пересмотреть. Сравни два решения по ясности имён, явности проверок и числу скрытых зависимостей.\n\nДля завершения работы нужно не только получить ответ, но и объяснить его. Кратко запиши, почему выбранное начальное состояние правильно, что происходит на каждом этапе и почему работа заканчивается. Если объяснение опирается на слова «так получилось», вернись к трассировке и найди недостающую связь.'),
     ]
@@ -60,7 +60,7 @@ def specialized(lang,index,t):
     return dict(id=f'{lang}.advanced.{index+1}',title=title,chapter='05 · Особенности языка' if index<13 else '06 · Самостоятельные проекты',kind='review',sections=sections,theory='\n\n'.join(s['text'] for s in sections),examples=[code],mistakes=['Не переноси фрагмент без проверки импортов, версии среды и контракта.','Не скрывай неуспешную операцию сообщением об успехе.'],questions=['Какую проблему решает эта возможность языка?','Какие условия и ограничения есть у примера?','Как ты проверишь обычный случай и отказ?'],assignment=assignment,challenge=None,photo='memory.png' if lang in ['c','cpp'] and index<5 else 'workbench.png',photoCaption='Сгенерированная учебная фотография DevCat: контекст самостоятельной работы.',checklist=['Минимальная версия работает по описанному контракту.','Ошибки и границы проверены отдельно.','Код разделён по ответственности, я могу объяснить решение.'],minutes=50 if index<13 else 120)
 def sql_lesson(index,t):
     slug,title,model,query,assignment=t
-    automatic=index<27 or index==29 or index==38
+    automatic=index<27
     sections=[
       section('Модель и смысл операции',model),
       section('Запрос и ожидаемая форма результата','Прежде чем читать SQL, определи, что означает одна строка ответа. Затем назови исходные таблицы, ключи связи, фильтры и порядок. В учебной базе customers(id, name) содержит покупателей, orders(id, customer_id, amount) — заказы, сумма измеряется целыми единицами. Первичный ключ покупателя не равен номеру строки после сортировки.\n\nПроследи запрос на трёх покупателях и трёх заказах: у первого два заказа, у второго один, у третьего ни одного. Имя не обязано быть уникальным. Проверка также использует независимый набор данных, поэтому константный ответ вместо запроса не считается решением.',code=query,diagram='relation'),
@@ -74,10 +74,22 @@ def main():
     courses=[]
     for lang,(version,subtitle,source) in META.items():
         lessons=[sql_lesson(i,t) for i,t in enumerate(SQL)] if lang=='sql' else [foundation(lang,i,t) for i,t in enumerate(FOUNDATIONS)]+[specialized(lang,i,t) for i,t in enumerate(SPECIAL[lang])]
-        course=dict(id=lang,name=NAMES[lang],version=version,subtitle=subtitle,source=source,lessons=lessons,revision=2,review_status='authored_with_executable_labs_and_manual_projects',author='DevCat',last_verified='2026-10-27')
+        extra=[challenge(lang,'generator',f'{lang}.generator.{key}',key) for key in ['gcd','multiples']] if lang!='sql' else []
+        course=dict(practiceBank=extra,id=lang,name=NAMES[lang],version=version,subtitle=subtitle,source=source,lessons=lessons,revision=2,review_status='authored_with_executable_labs_and_manual_projects',author='DevCat',last_verified='2026-10-27')
         courses.append(course)
         target=ROOT/'content'/lang;target.mkdir(exist_ok=True,parents=True)
         (target/'intro.json').write_text(json.dumps(course,ensure_ascii=False,indent=2)+'\n')
     (ROOT/'apps/devcat_flutter/assets/content/courses.json').write_text(json.dumps(courses,ensure_ascii=False,indent=2)+'\n')
+    lines=['# Программа курсов DevCat 0.2\n', 'Восемь направлений, по 40 лекций. Материалы, фотографии и схемы входят в офлайн-приложение. Заверши проекты, объясни решения и продолжай читать документацию.\n', '125 лабораторных проверяются автоматически; остальные работы — самостоятельная реализация с критериями. Проверка результата программы не оценивает автоматически качество тестов, стиль и объяснение. Для эталонов выполняется реальный запуск в CI; независимая экспертная редактура текста ещё нужна.\n']
+    for course in courses:
+        lines.append('\n## '+course['name']+' · '+course['version']+'\n')
+        current=None
+        for index,lesson in enumerate(course['lessons'],1):
+            if current!=lesson['chapter']:
+                current=lesson['chapter'];lines.append('\n### '+current+'\n')
+            assessment='автотесты' if lesson['challenge'] else 'самостоятельная работа'
+            lines.append(f"{index}. {lesson['title']} — {assessment}; ориентир {lesson['minutes']} мин с практикой.")
+        lines.append('\nДокументация: '+course['source']+'\n')
+    (ROOT/'docs/CURRICULUM.md').write_text('\n'.join(lines).rstrip()+'\n')
     print(f'{sum(len(c["lessons"]) for c in courses)} lectures; {sum(bool(l["challenge"]) for c in courses for l in c["lessons"])} checked laboratories; '+str(sum(len(l['theory'].split()) for c in courses for l in c['lessons']))+' lecture words')
 if __name__=='__main__':main()

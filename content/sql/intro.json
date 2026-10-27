@@ -1,4 +1,5 @@
 {
+  "practiceBank": [],
   "id": "sql",
   "name": "SQL",
   "version": "SQLite 3",
@@ -1897,7 +1898,7 @@
       "id": "sql.normalization",
       "title": "Нормализация и аномалии обновления",
       "chapter": "05 · Схема и изменения",
-      "kind": "authored",
+      "kind": "review",
       "sections": [
         {
           "heading": "Модель и смысл операции",
@@ -1936,20 +1937,7 @@
         "Какая независимая проверка отличит верный запрос от случайного совпадения?"
       ],
       "assignment": "Преобразуй плоскую таблицу заказов с повторяющимися покупателями в связанную схему и объясни зависимости.",
-      "challenge": {
-        "id": "sql.normalization.v2",
-        "language": "sql",
-        "title": "Нормализация и аномалии обновления",
-        "prompt": "Преобразуй плоскую таблицу заказов с повторяющимися покупателями в связанную схему и объясни зависимости.\nСхема: customers(id, name), orders(id, customer_id, amount). Выводи столбцы именно в указанном порядке. Проверка выполняется на двух наборах данных.",
-        "starter": "-- Напиши SELECT или WITH по условию\n",
-        "solution": "SELECT o.id, c.name FROM orders o JOIN customers c ON c.id = o.customer_id ORDER BY o.id;",
-        "hints": [
-          "Определи, что означает одна строка ответа.",
-          "Проследи фильтрацию, связь таблиц и обработку NULL на бумаге.",
-          "Проверь порядок столбцов и ORDER BY. Эталон доступен после самостоятельной попытки."
-        ],
-        "tests": []
-      },
+      "challenge": null,
       "photo": "data.png",
       "photoCaption": "Сгенерированная фотография картотеки: аналогия записей и связей, а не внутреннего хранения SQLite.",
       "checklist": [
@@ -2387,7 +2375,7 @@
       "id": "sql.project",
       "title": "Проект: аналитика магазина",
       "chapter": "06 · Надёжность и проекты",
-      "kind": "authored",
+      "kind": "review",
       "sections": [
         {
           "heading": "Модель и смысл операции",
@@ -2426,20 +2414,7 @@
         "Какая независимая проверка отличит верный запрос от случайного совпадения?"
       ],
       "assignment": "Собери восемь отчётов на собственной SQLite-базе. Для каждого напиши контракт, пример вручную, запрос и независимую проверку.",
-      "challenge": {
-        "id": "sql.project.v2",
-        "language": "sql",
-        "title": "Проект: аналитика магазина",
-        "prompt": "Собери восемь отчётов на собственной SQLite-базе. Для каждого напиши контракт, пример вручную, запрос и независимую проверку.\nСхема: customers(id, name), orders(id, customer_id, amount). Выводи столбцы именно в указанном порядке. Проверка выполняется на двух наборах данных.",
-        "starter": "-- Напиши SELECT или WITH по условию\n",
-        "solution": "WITH totals AS (SELECT customer_id, SUM(amount) AS total FROM orders GROUP BY customer_id) SELECT c.id, c.name, COALESCE(t.total, 0) AS total FROM customers c LEFT JOIN totals t ON t.customer_id = c.id ORDER BY total DESC, c.id;",
-        "hints": [
-          "Определи, что означает одна строка ответа.",
-          "Проследи фильтрацию, связь таблиц и обработку NULL на бумаге.",
-          "Проверь порядок столбцов и ORDER BY. Эталон доступен после самостоятельной попытки."
-        ],
-        "tests": []
-      },
+      "challenge": null,
       "photo": "data.png",
       "photoCaption": "Сгенерированная фотография картотеки: аналогия записей и связей, а не внутреннего хранения SQLite.",
       "checklist": [

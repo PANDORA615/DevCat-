@@ -84,4 +84,17 @@ void main() {
     },
     timeout: const Timeout(Duration(minutes: 3)),
   );
+  test(
+    'Debugging starts with a reproducible defect rather than an empty task',
+    () async {
+      final task = courses
+          .firstWhere((c) => c.id == 'python')
+          .lessons
+          .firstWhere((l) => l.id == 'python.debugging')
+          .challenge!;
+      final runner = LocalRunner();
+      expect((await runner.check(task, task.starter)).passed, isFalse);
+      expect((await runner.check(task, task.solution)).passed, isTrue);
+    },
+  );
 }
