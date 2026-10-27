@@ -25,7 +25,7 @@ jobs:
           log-accepted-android-sdk-licenses: false
       - name: Cache verified offline compiler image
         id: runtime-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: build/android-runtime-image
           key: android-runtime-x64-${{ hashFiles('scripts/build_android_rootfs.py', 'scripts/android_runtime_versions.json') }}
@@ -34,6 +34,12 @@ jobs:
         run: |
           mkdir -p build/android-runtime-image
           docker run --rm --mount type=bind,src="$PWD",dst=/src -w /src debian:bookworm-slim bash -lc 'apt-get update && apt-get install -y --no-install-recommends python3 ca-certificates && python3 scripts/build_android_rootfs.py x86_64 /src/build/android-runtime-image /tmp/runtime-work'
+      - name: Save verified image before device tests
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: build/android-runtime-image
+          key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
       - name: Package native loader and matching compiler image
         run: |
           bash scripts/build_android_proot.sh "$ANDROID_SDK_ROOT/ndk/28.2.13676358" x86_64 apps/devcat_flutter/android/app/src/main/jniLibs/x86_64
@@ -62,7 +68,7 @@ jobs:
             adb shell svc data disable
             cd apps/devcat_flutter && flutter test integration_test/android_runtime_test.dart -d emulator-5554 --reporter expanded --timeout 60m
       - if: always()
-        run: adb logcat -d -t 4000 > android-runtime-logcat.txt || true
+        run: timeout 20s adb logcat -d -t 4000 > android-runtime-logcat.txt || true
       - if: always()
         uses: actions/upload-artifact@v4
         with:

@@ -42,6 +42,20 @@ class LocalRunner {
     _active?.kill(ProcessSignal.sigkill);
   }
 
+  Future<RunResult?> _ready() async {
+    if (!Platform.isAndroid) return null;
+    try {
+      await AndroidRuntime.ensureInstalled();
+      return _cancelled ? const RunResult('', 'Отменено', 130) : null;
+    } catch (e) {
+      return RunResult(
+        '',
+        'Не удалось подготовить встроенные компиляторы: $e',
+        127,
+      );
+    }
+  }
+
   Future<RunResult> process(
     String executable,
     List<String> args, {
@@ -364,6 +378,8 @@ class LocalRunner {
         126,
       );
     }
+    final unavailable = await _ready();
+    if (unavailable != null) return unavailable;
     final dir = await Directory.systemTemp.createTemp('devcat-run-');
     try {
       final prepared = await _prepare(lang, code, dir);
@@ -416,6 +432,8 @@ class LocalRunner {
         126,
       );
     }
+    final unavailable = await _ready();
+    if (unavailable != null) return unavailable;
     final prepared = await _prepare(
       project.language,
       project.files[project.entry]!,
@@ -441,6 +459,10 @@ class LocalRunner {
         'Проверка кода не поддерживается на этой платформе.',
         evaluated: false,
       );
+    }
+    final unavailable = await _ready();
+    if (unavailable != null) {
+      return CheckResult(false, unavailable.error, evaluated: false);
     }
     final dir = await Directory.systemTemp.createTemp('devcat-test-');
     try {
