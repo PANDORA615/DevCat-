@@ -50,7 +50,7 @@ class _WorkspacePageState extends State<WorkspacePage>
   output = 'Результат появится здесь. Код не отправляется на сервер.',
   cat =
       'Попробуй самостоятельно. Если застрянешь — начнём с маленькой подсказки.';
-  int hint = 0, tab = 0;
+  int hint = 0, tab = 1;
   bool busy = false;
   CatMood mood = CatMood.encouragement;
   bool get manual => widget.seed == 0 && widget.lesson?.kind == 'review';
@@ -409,6 +409,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                     'editorFont',
                     'JetBrainsMono',
                   ),
+                  fontWeight: FontWeight.w500,
                   fontSize: widget.store
                       .setting<num>('editorSize', 14)
                       .toDouble(),
