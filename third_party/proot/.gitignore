@@ -13,13 +13,3 @@ public/
 src/.check_process_vm.res
 src/.check_seccomp_filter.res
 src/build.h
-src/care*
-src/loader*
-src/proot*
-test/*
-!test/*.sh.*
-!test/*.sh
-!test/*.c
-!test/*.py
-!test/*.mk
-!test/docker
