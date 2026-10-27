@@ -12,18 +12,11 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   testWidgets(
-    'All bundled Android languages execute and check real programs offline',
+    'All bundled Android toolchains are available without downloads',
     (tester) async {
       expect(Platform.isAndroid, isTrue);
       final installation = await AndroidRuntime.ensureInstalled();
       expect(installation['root'], isNotEmpty);
-      final courses =
-          (jsonDecode(
-                    await rootBundle.loadString('assets/content/courses.json'),
-                  )
-                  as List)
-              .map((data) => Course(data))
-              .toList();
       final runner = LocalRunner();
       final versions = await runner.toolchains();
       for (final name in languageNames.values) {
@@ -36,39 +29,61 @@ void main() {
         // Each language's version must come from its real local executable.
         debugPrint('ANDROID_TOOLCHAIN $name: ${versions[name]}');
       }
-      for (final course in courses) {
-        final seen = <String>{};
-        for (final lesson in course.lessons) {
-          final task = lesson.challenge;
-          if (task == null || !seen.add(task.solution)) continue;
-          final result = await runner.check(task, task.solution);
-          expect(result.evaluated, isTrue, reason: task.id);
-          expect(result.passed, isTrue, reason: '${task.id}: ${result.report}');
-          debugPrint('ANDROID_REFERENCE_PASS ${task.id}');
-        }
-        final generated = generateChallenge(course.id, seed: 73);
-        expect(
-          (await runner.check(generated, generated.solution)).passed,
-          isTrue,
-          reason: course.id,
-        );
-        if (course.id != 'sql') {
-          final reference = course.lessons
-              .map((l) => l.challenge)
-              .whereType<Challenge>()
-              .first;
-          final run = await runner.run(
-            course.id,
-            reference.solution,
-            reference.tests.first.input,
-          );
-          expect(run.ok, isTrue, reason: '${course.id}: ${run.error}');
-          expect(
-            LocalRunner.normalize(run.output),
-            LocalRunner.normalize(reference.tests.first.expected),
-          );
-        }
+    },
+    timeout: const Timeout(Duration(minutes: 5)),
+  );
+
+  for (final language in languageNames.keys) {
+    testWidgets('Android offline references and generated task: $language', (
+      tester,
+    ) async {
+      final courses =
+          (jsonDecode(
+                    await rootBundle.loadString('assets/content/courses.json'),
+                  )
+                  as List)
+              .map((data) => Course(data))
+              .toList();
+      final course = courses.firstWhere((course) => course.id == language);
+      final runner = LocalRunner();
+      final seen = <String>{};
+      for (final lesson in course.lessons) {
+        final task = lesson.challenge;
+        if (task == null || !seen.add(task.solution)) continue;
+        final result = await runner.check(task, task.solution);
+        expect(result.evaluated, isTrue, reason: task.id);
+        expect(result.passed, isTrue, reason: '${task.id}: ${result.report}');
+        debugPrint('ANDROID_REFERENCE_PASS ${task.id}');
       }
+      final generated = generateChallenge(course.id, seed: 73);
+      expect(
+        (await runner.check(generated, generated.solution)).passed,
+        isTrue,
+        reason: course.id,
+      );
+      if (course.id != 'sql') {
+        final reference = course.lessons
+            .map((l) => l.challenge)
+            .whereType<Challenge>()
+            .first;
+        final run = await runner.run(
+          course.id,
+          reference.solution,
+          reference.tests.first.input,
+        );
+        expect(run.ok, isTrue, reason: '${course.id}: ${run.error}');
+        expect(
+          LocalRunner.normalize(run.output),
+          LocalRunner.normalize(reference.tests.first.expected),
+        );
+      }
+    }, timeout: const Timeout(Duration(minutes: 12)));
+  }
+
+  testWidgets(
+    'Android handles diagnostics, timeouts, cancellation, Unicode and Java 21',
+    (tester) async {
+      final runner = LocalRunner();
       final failure = await runner.run(
         'python',
         'this is invalid python !',
@@ -100,6 +115,23 @@ void main() {
     },
     timeout: const Timeout(Duration(minutes: 45)),
   );
+
+  testWidgets('Android SQLite interrupts native queries and remains usable', (
+    tester,
+  ) async {
+    const forever =
+        'WITH RECURSIVE x(a) AS (VALUES(1) UNION ALL SELECT a+1 FROM x) SELECT sum(a) FROM x;';
+    final limited = await LocalRunner().run('sql', forever, '');
+    expect(limited.timedOut, isTrue, reason: limited.error);
+    final runner = LocalRunner();
+    final pending = runner.run('sql', forever, '');
+    await Future<void>.delayed(const Duration(milliseconds: 150));
+    runner.cancel();
+    expect((await pending).exitCode, 130);
+    final next = await runner.run('sql', 'SELECT 7 AS answer;', '');
+    expect(next.ok, isTrue, reason: next.error);
+    expect(next.output, contains('7'));
+  });
 
   testWidgets('Android IDE compiles multi-file projects and persists generated files', (
     tester,

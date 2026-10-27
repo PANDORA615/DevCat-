@@ -348,6 +348,77 @@ class LocalRunner {
           [binary],
         );
       case 'csharp':
+        if (Platform.isAndroid) {
+          // Compile with the bundled Roslyn and reference assemblies directly.
+          // MSBuild/NuGet and their IPC/build servers are unnecessary for these
+          // self-contained source projects and can stall under Android tracing.
+          final installed = await AndroidRuntime.ensureInstalled();
+          final dotnet = p.join(installed['root']!, 'opt/dotnet');
+          Future<Directory> versionDirectory(String name) async {
+            final versions = await Directory(p.join(dotnet, name))
+                .list()
+                .where(
+                  (entry) =>
+                      entry is Directory &&
+                      p.basename(entry.path).startsWith('8.0.'),
+                )
+                .cast<Directory>()
+                .toList();
+            versions.sort((a, b) => a.path.compareTo(b.path));
+            return versions.last;
+          }
+
+          final sdk = await versionDirectory('sdk');
+          final references = await versionDirectory(
+            'packs/Microsoft.NETCore.App.Ref',
+          );
+          String guest(String path) =>
+              '/opt/dotnet/${p.relative(path, from: dotnet)}';
+          final assemblies =
+              await Directory(p.join(references.path, 'ref/net8.0'))
+                  .list()
+                  .where(
+                    (entry) => entry is File && entry.path.endsWith('.dll'),
+                  )
+                  .toList();
+          assemblies.sort((a, b) => a.path.compareTo(b.path));
+          final output = Directory(p.join(buildDirectory.path, 'out'));
+          await output.create(recursive: true);
+          final dll = p.join(output.path, 'App.dll');
+          await File(
+            p.join(output.path, 'App.runtimeconfig.json'),
+          ).writeAsString(
+            jsonEncode({
+              'runtimeOptions': {
+                'tfm': 'net8.0',
+                'framework': {
+                  'name': 'Microsoft.NETCore.App',
+                  'version': '8.0.0',
+                },
+              },
+            }),
+          );
+          return compiled(
+            'dotnet',
+            [
+              guest(p.join(sdk.path, 'Roslyn/bincore/csc.dll')),
+              '-nologo',
+              '-noconfig',
+              '-nostdlib+',
+              '-target:exe',
+              '-langversion:12',
+              '-nullable:enable',
+              '-parallel-',
+              '-out:${AndroidRuntime.guestPath(dll, dir.path)}',
+              ...assemblies.map((assembly) => '-r:${guest(assembly.path)}'),
+              if (files == null)
+                filename
+              else
+                ...files.keys.where((name) => name.endsWith('.cs')),
+            ],
+            ['dotnet', dll],
+          );
+        }
         final csproj = p.join(buildDirectory.path, 'App.csproj');
         final include = files == null
             ? ''
@@ -364,14 +435,7 @@ class LocalRunner {
         final output = p.join(buildDirectory.path, 'out');
         return compiled(
           'dotnet',
-          [
-            'build',
-            csproj,
-            '-o',
-            output,
-            '--nologo',
-            if (Platform.isAndroid) '--disable-build-servers',
-          ],
+          ['build', csproj, '-o', output, '--nologo'],
           ['dotnet', p.join(output, 'App.dll')],
         );
       case 'python':
