@@ -23,6 +23,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Verify public APK reconstruction
+        run: python3 -m unittest discover -s scripts -p 'test_apk_release_patch.py' -v
       - name: Read reviewed release metadata
         id: plan
         env:
@@ -37,7 +39,7 @@ jobs:
           assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', data['tag'])
           assert isinstance(data['build_run'], int) and data['build_run'] > 0
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
-              out.write(f"manifest={path}\nbuild_run={data['build_run']}\ntag={data['tag']}\nversion={data['tag'][1:]}\n")
+              out.write(f"manifest={path}\nbuild_run={data['build_run']}\ntag={data['tag']}\nversion={data['tag'][1:]}\ntransfer_version={data['version']}\n")
           PY
       - uses: actions/download-artifact@v4
         with:
@@ -55,6 +57,27 @@ jobs:
         with:
           name: devcat-macos
           path: dist/release
+          run-id: ${{ steps.plan.outputs.build_run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        if: steps.plan.outputs.transfer_version == '3'
+        with:
+          name: devcat-android-build-inputs-arm64-v8a
+          path: dist/android-build-inputs
+          run-id: ${{ steps.plan.outputs.build_run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        if: steps.plan.outputs.transfer_version == '3'
+        with:
+          name: devcat-android-build-inputs-armeabi-v7a
+          path: dist/android-build-inputs
+          run-id: ${{ steps.plan.outputs.build_run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        if: steps.plan.outputs.transfer_version == '3'
+        with:
+          name: devcat-android-build-inputs-x86_64
+          path: dist/android-build-inputs
           run-id: ${{ steps.plan.outputs.build_run }}
           github-token: ${{ github.token }}
       - name: Reconstruct signed Android and verify every asset

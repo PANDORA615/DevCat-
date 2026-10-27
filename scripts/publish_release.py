@@ -12,6 +12,8 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
+from apk_release_patch import apply as apply_apk_patch
 import urllib.request
 
 manifest = json.loads(Path(sys.argv[1]).read_text())
@@ -31,7 +33,7 @@ def api(path):
         return json.load(response)
 
 
-assert manifest['version'] in (1, 2)
+assert manifest['version'] in (1, 2, 3)
 assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', manifest['tag'])
 version = manifest['tag'][1:]
 assert isinstance(manifest['build_run'], int) and manifest['build_run'] > 0
@@ -48,9 +50,9 @@ if manifest['version'] == 1:
 else:
     expected_android.add(f'DevCat-{version}-android-runtime-sources.tar')
 assert {item['name'] for item in manifest['files']} == expected_android
-for item in manifest['files']:
-    assert Path(item['name']).name == item['name']
-    destination = output / item['name']
+
+
+def reconstruct(item, destination):
     digest = hashlib.sha256()
     size = 0
     with destination.open('wb') as target:
@@ -64,6 +66,24 @@ for item in manifest['files']:
             digest.update(data)
             size += len(data)
     assert size == item['size'] and digest.hexdigest() == item['sha256']
+
+
+for item in manifest['files']:
+    assert Path(item['name']).name == item['name']
+    destination = output / item['name']
+    if manifest['version'] == 3 and item['name'].endswith('.apk'):
+        patch = item['patch']
+        assert patch['name'] == item['name'] + '.patch.json'
+        assert Path(item['base']['name']).name == item['base']['name']
+        with tempfile.TemporaryDirectory(prefix='devcat-public-signatures-') as folder:
+            patch_file = Path(folder) / patch['name']
+            reconstruct(patch, patch_file)
+            description = json.loads(patch_file.read_text())
+            assert description['base'] == item['base']
+            metadata = apply_apk_patch(Path('dist/android-build-inputs') / item['base']['name'], patch_file, destination)
+            assert metadata == {'name': item['name'], 'bytes': item['size'], 'sha256': item['sha256']}
+    else:
+        reconstruct(item, destination)
     print(f"Reconstructed and verified {item['name']}", flush=True)
 
 for source, name in [
@@ -74,7 +94,7 @@ for source, name in [
     (f'docs/releases/v{version}-SHA256SUMS', 'SHA256SUMS'),
 ]:
     shutil.copyfile(source, output / name)
-if manifest['version'] == 2:
+if manifest['version'] >= 2:
     shutil.copyfile(f'docs/releases/v{version}-Android-runtimes.json', output / f'DevCat-{version}-Android-runtimes.json')
 expected = {'SHA256SUMS'}
 for line in (output / 'SHA256SUMS').read_text().splitlines():
