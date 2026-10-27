@@ -9,6 +9,8 @@ import 'settings.dart';
 import 'git_page.dart';
 import 'lecture.dart';
 import 'ide.dart';
+import '../core/cat_chatter.dart';
+import 'companion.dart';
 
 class DevCatShell extends StatefulWidget {
   final AppStore store;
@@ -155,6 +157,33 @@ class _DevCatShellState extends State<DevCatShell> {
             child: KeyedSubtree(key: ValueKey(page), child: content),
           ),
         ),
+        if (widget.store.setting('cat', true))
+          CompanionBar(
+            key: const ValueKey('persistent-companion'),
+            sounds: widget.sounds,
+            autoTalk: widget.store.setting('catChatter', true),
+            interval: Duration(
+              seconds: widget.store
+                  .setting<num>('catChatterSeconds', 20)
+                  .toInt()
+                  .clamp(10, 120)
+                  .toInt(),
+            ),
+            compact: keyboard || MediaQuery.sizeOf(context).height < 550,
+            conversation: CompanionContext(
+              switch (page) {
+                0 => CompanionPlace.home,
+                1 => reading ? CompanionPlace.lesson : CompanionPlace.practice,
+                2 => CompanionPlace.git,
+                3 => CompanionPlace.ide,
+                4 => CompanionPlace.reference,
+                5 => CompanionPlace.progress,
+                _ => CompanionPlace.settings,
+              },
+              title: page == 1 ? course.lessons[lesson].title : '',
+              language: page == 1 ? language : '',
+            ),
+          ),
       ],
     );
     return Scaffold(

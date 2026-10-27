@@ -427,6 +427,50 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: store.setting('catVoice', true),
                 onChanged: (v) => _change('catVoice', v),
               ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Кот разговаривает сам'),
+                subtitle: const Text(
+                  'Регулярные реплики на всех вкладках: подсказки по теме и дружеская поддержка. Текст работает и с выключенным голосом.',
+                ),
+                value: store.setting('catChatter', true),
+                onChanged: (v) => _change('catChatter', v),
+              ),
+              DropdownButtonFormField<int>(
+                isExpanded: true,
+                initialValue:
+                    [
+                      10,
+                      20,
+                      45,
+                      90,
+                    ].contains(store.setting<int>('catChatterSeconds', 20))
+                    ? store.setting<int>('catChatterSeconds', 20)
+                    : 20,
+                decoration: const InputDecoration(labelText: 'Частота реплик'),
+                items: const [
+                  DropdownMenuItem(
+                    value: 10,
+                    child: Text('Очень часто · каждые 10 секунд'),
+                  ),
+                  DropdownMenuItem(
+                    value: 20,
+                    child: Text('Обычно · каждые 20 секунд'),
+                  ),
+                  DropdownMenuItem(
+                    value: 45,
+                    child: Text('Спокойно · каждые 45 секунд'),
+                  ),
+                  DropdownMenuItem(
+                    value: 90,
+                    child: Text('Изредка · каждые 90 секунд'),
+                  ),
+                ],
+                onChanged: (v) {
+                  if (v != null) _change('catChatterSeconds', v);
+                },
+              ),
+              const SizedBox(height: 14),
               Text('Громкость голоса'),
               Slider(
                 value: store.setting<num>('voiceVolume', .18).toDouble(),
@@ -674,7 +718,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               _title(context, Icons.terminal_rounded, 'Среда исполнения'),
               const Text(
-                'DevCat IDE поддерживает проекты с несколькими файлами и локальной сборкой. На Android SQLite, Python, JavaScript, Java, Go, C, C++ и C# исполняются на устройстве: среды входят в APK. При первом запуске они распаковываются в память приложения. На компьютере используются установленные компиляторы. Запускай собственный код. LSP и пошаговый отладчик пока не встроены.',
+                'DevCat IDE поддерживает проекты с несколькими файлами и локальной сборкой. На Android SQLite, Python, JavaScript, Java, Go, C, C++ и C# исполняются на устройстве: среды входят в APK. При первом запуске они распаковываются в хранилище приложения. На компьютере используются установленные компиляторы. Запускай собственный код. LSP и пошаговый отладчик пока не встроены.',
               ),
               const SizedBox(height: 12),
               OutlinedButton.icon(
@@ -722,7 +766,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         const SizedBox(height: 20),
         const Text(
-          'DevCat 0.2.0 · MIT · Без аналитики и облачного ИИ\n320 лекций, локальная IDE и перенос между устройствами. Ограничения — в README репозитория.',
+          'DevCat 0.2.1 · Исходники приложения: MIT · Без аналитики и облачного ИИ\n320 лекций, локальная IDE и перенос между устройствами. Ограничения — в README репозитория.',
           style: TextStyle(fontSize: 12, height: 1.6),
         ),
       ],

@@ -85,11 +85,18 @@ void main() {
       expect((await running).exitCode, 130);
       final after = await LocalRunner().run(
         'python',
-        'debugPrint("Привет, Android")',
+        'print("Привет, Android")',
         '',
       );
       expect(after.ok, isTrue, reason: after.error);
       expect(after.output.trim(), 'Привет, Android');
+      final virtualThread = await LocalRunner().run(
+        'java',
+        'public class Main { public static void main(String[] args) throws Exception { Thread worker = Thread.ofVirtual().start(() -> System.out.println("virtual")); worker.join(); } }',
+        '',
+      );
+      expect(virtualThread.ok, isTrue, reason: virtualThread.error);
+      expect(virtualThread.output.trim(), 'virtual');
     },
     timeout: const Timeout(Duration(minutes: 45)),
   );
@@ -131,7 +138,7 @@ void main() {
       },
       'python': {
         'main.py':
-            'from helper import add\nfrom pathlib import Path\ndebugPrint(add(2,3))\nPath("saved.txt").write_text("saved")\n',
+            'from helper import add\nfrom pathlib import Path\nprint(add(2,3))\nPath("saved.txt").write_text("saved")\n',
         'helper.py': 'def add(a,b):\n    return a+b\n',
       },
     };

@@ -21,6 +21,9 @@ class SoftSounds {
   double volume = .22, voiceVolume = .18;
   String voiceStyle = 'auto';
   DateTime _last = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime _lastVoice = DateTime.fromMillisecondsSinceEpoch(0);
+  bool get voiceBusy =>
+      DateTime.now().difference(_lastVoice) < const Duration(seconds: 3);
   static const cues = {
     SoundCue.tap: '01_Soft_Click',
     SoundCue.navigation: '02_Bubble',
@@ -55,6 +58,7 @@ class SoftSounds {
       cue(success ? SoundCue.success : SoundCue.error);
   void speak(CatMood mood) {
     if (!enabled || !voiceEnabled) return;
+    _lastVoice = DateTime.now();
     final selected = voiceStyle == 'auto'
         ? voices[mood]!
         : voices.values.firstWhere(

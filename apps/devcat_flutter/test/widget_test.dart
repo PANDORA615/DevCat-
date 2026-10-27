@@ -42,7 +42,11 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
-      await tester.ensureVisible(find.text('Продолжить обучение'));
+      await tester.scrollUntilVisible(
+        find.text('Продолжить обучение'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.pumpAndSettle();
       await tester.tap(find.text('Продолжить обучение'));
       await tester.pumpAndSettle();
@@ -70,6 +74,11 @@ void main() {
         find.text('Дополнительно: личное облако WebDAV'),
         300,
         scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Дополнительно: личное облако WebDAV').hitTestable(),
+        findsOneWidget,
       );
       await tester.tap(find.text('Дополнительно: личное облако WebDAV'));
       await tester.pumpAndSettle();

@@ -1,8 +1,7 @@
 name: Verify offline Android runtimes
 on:
-  push:
-    branches: [feature/android-local-runtimes]
   workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 concurrency:
@@ -28,7 +27,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: build/android-runtime-image
-          key: android-runtime-x64-${{ hashFiles('scripts/build_android_rootfs.py', 'scripts/android_runtime_versions.json') }}
+          key: android-runtime-x86_64-${{ hashFiles('scripts/build_android_rootfs.py', 'scripts/android_runtime_versions.json') }}
       - name: Build compiler image
         if: steps.runtime-cache.outputs.cache-hit != 'true'
         run: |

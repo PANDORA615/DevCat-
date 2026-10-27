@@ -14,7 +14,7 @@ Workflow `build.yml` создаёт проверенные desktop-пакеты 
 
 Текущая интеграция GitHub не имеет доступа к Actions Secrets (HTTP 403), поэтому они не создаются автоматически. Скрипт `android_signing_config.py` читает их без вывода значений; Gradle использует окружение. Не фиксируйте `release.jks`, `key.properties`, `owner-signing.enabled` или пароли в git.
 
-При отсутствии Secrets inputs подписываются временным debug-ключом среды и требуют переподписи постоянным ключом вне CI: APK — `apksigner`, AAB — `jarsigner`. Затем проверьте `apksigner verify --print-certs` и `jarsigner -verify`. Сертификат должен совпадать для universal APK и всех ABI. AAB не заменяет APK для прямой установки.
+При отсутствии Secrets inputs подписываются временным debug-ключом среды и требуют переподписи постоянным ключом вне CI: APK — `apksigner`. Затем проверьте `apksigner verify --print-certs`. Сертификат должен совпадать для всех ABI. В 0.2.1 выпускаются только три ABI APK; universal и AAB из 0.2.0 сохранены в историческом релизе.
 
 ## Desktop
 
@@ -44,4 +44,8 @@ Publisher проверяет исходный commit, успешность CI и
 
 Publisher принимает версионированный manifest `docs/releases/vX.Y.Z-transfer.json` с успешным build_run, точным build_commit и публичными подписанными Android-байтами. Workflow считывает номер CI из manifest, загружает native artifacts, сверяет исходники и все SHA256SUMS, затем публикует prerelease. Ключ и пароль остаются вне GitHub. Metadata 0.1 сохранены как история.
 
-При обновлении Android сохраняйте вариант APK: split ABI используют собственные versionCode (например, arm64 2002, universal 2 для 0.2.0). Для нового пользователя проще universal; для обновления — тот же вариант, что уже установлен.
+В 0.2.1 split APK используют versionCode arm64 2003, ARMv7 1003 и x86_64 4003. Они обновляют соответствующий split 0.2.0 (2002/1002/4002) и старый universal (2). Выбирайте ABI установленного приложения.
+
+Перед сборкой Android workflow создаёт ABI-образ из закреплённых архивов и подписанных Debian-репозиториев, собирает PRoot из vendored sources и проверяет x86_64 приложение на API 35 без Wi-Fi/мобильных данных. Затем матрица выпускает три APK с соответствующими образами. Размер и SHA каждого фактического CI-образа берутся из assets/runtime/*.json внутри APK, не из локальной сборки. `collect_android_sources.py` собирает точные исходники GPL-компонентов всех трёх образов.
+
+Manifest version 2 передаёт три подписанных APK и архив исходников; Android-runtimes.json добавляется из docs/releases. Вместе с десятью desktop-пакетами, SBOM, лицензиями, сертификатом и SHA256SUMS релиз содержит 20 файлов. Publisher сверяет исходники приложения, PRoot и скрипты сборки с успешным build commit.

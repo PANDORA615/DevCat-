@@ -2,3 +2,6 @@
 docs/THIRD_PARTY_NOTICES.md -whitespace
 
 apps/devcat_flutter/assets/fonts/*-OFL.txt -whitespace
+third_party/** linguist-vendored
+docs/ANDROID_RUNTIME_NOTICES.md -whitespace
+apps/devcat_flutter/assets/content/android-runtime-notices.txt -whitespace

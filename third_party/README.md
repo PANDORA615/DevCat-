@@ -6,6 +6,9 @@ PRoot is a separate GPL-2.0-or-later executable, not linked into Flutter.
 Android loader, seccomp and subprocess compatibility changes. Its source and
 COPYING are distributed here. DevCat's `DEVCAT_NATIVE_ONLY` build switch disables
 cross-bitness loaders: each Android ABI has its own native guest environment.
+The tracer also sets `PTRACE_O_EXITKILL`, so stopping it terminates traced child
+processes, including compiler subprocesses. The corresponding change is in
+`src/tracee/event.c`.
 
 `talloc/` is talloc 2.4.3 (LGPL-3.0-or-later), downloaded from
 https://download.samba.org/pub/talloc/talloc-2.4.3.tar.gz. The build uses the

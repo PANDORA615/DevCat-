@@ -21,6 +21,16 @@ Future<void> main() async {
       ], await rootBundle.loadString('assets/fonts/$name-OFL.txt'));
     }
   });
+  if (Platform.isAndroid) {
+    LicenseRegistry.addLicense(() async* {
+      yield LicenseEntryWithLineBreaks(
+        ['Встроенные среды исполнения Android'],
+        await rootBundle.loadString(
+          'assets/content/android-runtime-notices.txt',
+        ),
+      );
+    });
+  }
   final override = Platform.environment['DEVCAT_DATA_DIR'];
   final directory = override == null
       ? await getApplicationSupportDirectory()

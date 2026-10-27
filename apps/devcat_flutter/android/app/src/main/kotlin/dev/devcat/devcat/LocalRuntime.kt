@@ -1,7 +1,6 @@
 package dev.devcat.devcat
 
 import android.content.Context
-import android.os.Build
 import android.os.StatFs
 import android.system.Os
 import android.system.OsConstants

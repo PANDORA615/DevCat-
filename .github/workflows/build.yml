@@ -11,6 +11,8 @@ concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  android-device:
+    uses: ./.github/workflows/android-runtime.yml
   test:
     runs-on: ubuntu-22.04
     steps:
@@ -60,12 +62,12 @@ jobs:
       - working-directory: apps/devcat_flutter
         run: flutter build ${{ matrix.target }} --release
       - if: matrix.target == 'linux'
-        run: scripts/package_linux.sh 0.2.0
+        run: scripts/package_linux.sh 0.2.1
       - if: matrix.target == 'windows'
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force dist
-          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.2.0-windows-x64.zip
+          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.2.1-windows-x64.zip
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" scripts/windows.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - if: matrix.target == 'macos'
@@ -73,11 +75,11 @@ jobs:
           mkdir -p dist
           app=apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app
           codesign --force --deep --sign - "$app"
-          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.2.0-macos-universal.zip
+          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.2.1-macos-universal.zip
           mkdir -p /tmp/devcat-dmg
           ditto "$app" /tmp/devcat-dmg/DevCat.app
           ln -s /Applications /tmp/devcat-dmg/Applications
-          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.2.0-macos-universal.dmg
+          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.2.1-macos-universal.dmg
       - uses: actions/upload-artifact@v4
         with:
           name: devcat-${{ matrix.target }}
@@ -92,7 +94,17 @@ jobs:
             dist/*.dmg
           if-no-files-found: error
   android:
-    needs: test
+    needs: [test, android-device]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - abi: arm64-v8a
+            target: android-arm64
+          - abi: armeabi-v7a
+            target: android-arm
+          - abi: x86_64
+            target: android-x64
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -103,8 +115,28 @@ jobs:
       - uses: ./.github/actions/flutter
       - uses: android-actions/setup-android@v3
         with:
-          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0 ndk;28.2.13676358'
           log-accepted-android-sdk-licenses: false
+      - uses: actions/cache/restore@v4
+        id: runtime-cache
+        with:
+          path: build/android-runtime-image
+          key: android-runtime-${{ matrix.abi }}-${{ hashFiles('scripts/build_android_rootfs.py', 'scripts/android_runtime_versions.json') }}
+      - name: Build offline compiler image
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p build/android-runtime-image
+          docker run --rm --mount type=bind,src="$PWD",dst=/src -w /src debian:bookworm-slim bash -lc 'apt-get update && apt-get install -y --no-install-recommends python3 ca-certificates && python3 scripts/build_android_rootfs.py ${{ matrix.abi }} /src/build/android-runtime-image /tmp/runtime-work'
+      - uses: actions/cache/save@v4
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: build/android-runtime-image
+          key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
+      - name: Embed matching ABI runtime and native loader
+        run: |
+          bash scripts/build_android_proot.sh "$ANDROID_SDK_ROOT/ndk/28.2.13676358" "${{ matrix.abi }}" "apps/devcat_flutter/android/app/src/main/jniLibs/${{ matrix.abi }}"
+          mkdir -p apps/devcat_flutter/android/app/src/main/assets/runtime
+          cp build/android-runtime-image/${{ matrix.abi }}.* apps/devcat_flutter/android/app/src/main/assets/runtime/
       - name: Configure persistent signing when owner has installed secrets
         env:
           KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -117,16 +149,13 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           flutter pub get --enforce-lockfile
-          flutter build apk --release --split-per-abi
-          flutter build apk --release
-          flutter build appbundle --release
+          flutter build apk --release --split-per-abi --target-platform=${{ matrix.target }}
       - run: |
           mkdir -p dist/android-build-inputs
           cp apps/devcat_flutter/build/app/outputs/flutter-apk/*.apk dist/android-build-inputs/
-          cp apps/devcat_flutter/build/app/outputs/bundle/release/*.aab dist/android-build-inputs/
       - uses: actions/upload-artifact@v4
         with:
-          name: devcat-android-build-inputs
+          name: devcat-android-build-inputs-${{ matrix.abi }}
           path: dist/android-build-inputs/*
           if-no-files-found: error
 # Publication is separate from builds: Android inputs must be signed with the persistent owner key.

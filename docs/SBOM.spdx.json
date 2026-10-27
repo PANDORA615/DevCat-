@@ -2,8 +2,8 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "DevCat-0.2.0",
-  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.2.0",
+  "name": "DevCat-0.2.1",
+  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.2.1",
   "creationInfo": {
     "creators": [
       "Tool: DevCat license_inventory.py"
@@ -362,6 +362,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-flutter-driver",
+      "name": "flutter_driver",
+      "versionInfo": "0.0.0",
+      "downloadLocation": "https://pub.dev/packages/flutter_driver",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-flutter-highlight",
       "name": "flutter_highlight",
       "versionInfo": "0.7.0",
@@ -472,6 +482,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-fuchsia-remote-debug-protocol",
+      "name": "fuchsia_remote_debug_protocol",
+      "versionInfo": "0.0.0",
+      "downloadLocation": "https://pub.dev/packages/fuchsia_remote_debug_protocol",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-highlight",
       "name": "highlight",
       "versionInfo": "0.7.0",
@@ -516,6 +536,16 @@
       "name": "http_parser",
       "versionInfo": "4.1.2",
       "downloadLocation": "https://pub.dev/packages/http_parser",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-integration-test",
+      "name": "integration_test",
+      "versionInfo": "0.0.0",
+      "downloadLocation": "https://pub.dev/packages/integration_test",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
@@ -812,6 +842,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-process",
+      "name": "process",
+      "versionInfo": "5.0.6",
+      "downloadLocation": "https://pub.dev/packages/process",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-pub-semver",
       "name": "pub_semver",
       "versionInfo": "2.2.1",
@@ -1002,6 +1042,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-sync-http",
+      "name": "sync_http",
+      "versionInfo": "0.3.1",
+      "downloadLocation": "https://pub.dev/packages/sync_http",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-synchronized",
       "name": "synchronized",
       "versionInfo": "3.5.0",
@@ -1166,6 +1216,16 @@
       "name": "web",
       "versionInfo": "1.1.2",
       "downloadLocation": "https://pub.dev/packages/web",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-webdriver",
+      "name": "webdriver",
+      "versionInfo": "3.2.0",
+      "downloadLocation": "https://pub.dev/packages/webdriver",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",

@@ -8,7 +8,7 @@ on:
       manifest:
         description: Reviewed transfer manifest
         required: true
-        default: docs/releases/v0.2.0-transfer.json
+        default: docs/releases/v0.2.1-transfer.json
 permissions:
   contents: write
   actions: read
@@ -26,7 +26,7 @@ jobs:
       - name: Read reviewed release metadata
         id: plan
         env:
-          INPUT_MANIFEST: ${{ inputs.manifest || 'docs/releases/v0.2.0-transfer.json' }}
+          INPUT_MANIFEST: ${{ inputs.manifest || 'docs/releases/v0.2.1-transfer.json' }}
         run: |
           python3 - <<'PY'
           import json, os, re

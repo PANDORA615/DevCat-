@@ -33,6 +33,7 @@ class CheckResult {
 /// Executes the owner's code with the owner's privileges. Not a security sandbox.
 class LocalRunner {
   Process? _active;
+  void Function()? _interruptSql;
   bool _cancelled = false;
   bool get desktop =>
       Platform.isLinux || Platform.isMacOS || Platform.isWindows;
@@ -40,6 +41,7 @@ class LocalRunner {
   void cancel() {
     _cancelled = true;
     _active?.kill(ProcessSignal.sigkill);
+    _interruptSql?.call();
   }
 
   Future<RunResult?> _ready() async {
@@ -179,6 +181,11 @@ class LocalRunner {
       'SQL': 'SQLite ${sqlite3.version.libVersion} (встроен)',
     };
     if (!supported) return result;
+    final unavailable = await _ready();
+    if (unavailable != null) {
+      result['Среды Android'] = unavailable.error;
+      return result;
+    }
     for (final entry in <String, List<String>>{
       'C': ['clang', 'gcc'],
       'C++': ['clang++', 'g++'],
@@ -295,13 +302,29 @@ class LocalRunner {
         return compiled(
           'javac',
           [
+            if (Platform.isAndroid) ...[
+              '-J-Xmx256m',
+              '-J-XX:ActiveProcessorCount=2',
+              '-J-XX:-UsePerfData',
+            ],
             if (files != null) ...['-d', classes],
             if (files == null)
               filename
             else
               ...files.keys.where((name) => name.endsWith('.java')),
           ],
-          ['java', '-cp', classes, 'Main'],
+          [
+            'java',
+            if (Platform.isAndroid) ...[
+              '-Xms16m',
+              '-Xmx256m',
+              '-XX:ActiveProcessorCount=2',
+              '-XX:-UsePerfData',
+            ],
+            '-cp',
+            classes,
+            'Main',
+          ],
         );
       case 'go':
         if (files == null || !files.containsKey('go.mod')) {
@@ -341,7 +364,14 @@ class LocalRunner {
         final output = p.join(buildDirectory.path, 'out');
         return compiled(
           'dotnet',
-          ['build', csproj, '-o', output, '--nologo'],
+          [
+            'build',
+            csproj,
+            '-o',
+            output,
+            '--nologo',
+            if (Platform.isAndroid) '--disable-build-servers',
+          ],
           ['dotnet', p.join(output, 'App.dll')],
         );
       case 'python':
@@ -403,27 +433,19 @@ class LocalRunner {
     _cancelled = false;
     final directory = await project.materialize(root);
     if (project.language == 'sql') {
-      final port = ReceivePort();
-      final isolate = await Isolate.spawn(_projectSqlWorker, [
-        port.sendPort,
+      final result = await _sqlJob(_projectSqlWorker, [
         p.join(directory.path, 'project.sqlite'),
         project.files[project.entry]!,
       ]);
-      try {
-        final result =
-            await port.first.timeout(const Duration(seconds: 3)) as List;
-        return RunResult(result[0], result[1], result[1] == '' ? 0 : 1);
-      } on TimeoutException {
-        return const RunResult(
-          '',
-          'SQLite: превышен лимит 3 секунды.',
-          124,
-          timedOut: true,
-        );
-      } finally {
-        isolate.kill(priority: Isolate.immediate);
-        port.close();
-      }
+      return RunResult(
+        result.$1,
+        result.$2,
+        _cancelled
+            ? 130
+            : result.$2.isEmpty
+            ? 0
+            : 1,
+      );
     }
     if (!supported) {
       return const RunResult(
@@ -471,13 +493,19 @@ class LocalRunner {
         return CheckResult(
           false,
           '${prepared.error!.output}\n${prepared.error!.error}',
-          evaluated: prepared.error!.exitCode != 127,
+          evaluated: ![127, 130].contains(prepared.error!.exitCode),
         );
       }
       final report = <String>[];
       var passed = true;
       for (var i = 0; i < task.tests.length; i++) {
-        if (_cancelled) return const CheckResult(false, 'Проверка отменена.');
+        if (_cancelled) {
+          return const CheckResult(
+            false,
+            'Проверка отменена.',
+            evaluated: false,
+          );
+        }
         final test = task.tests[i];
         final r = await process(
           prepared.command.first,
@@ -485,6 +513,13 @@ class LocalRunner {
           cwd: dir.path,
           input: test.input,
         );
+        if (_cancelled) {
+          return const CheckResult(
+            false,
+            'Проверка отменена.',
+            evaluated: false,
+          );
+        }
         final correct = r.ok && normalize(r.output) == normalize(test.expected);
         passed &= correct;
         report.add(
@@ -503,14 +538,32 @@ class LocalRunner {
 
   Future<RunResult> _sqlRun(String code) async {
     final message = await _sqlIsolate(code, false, false);
-    return RunResult(message.$1, message.$2, message.$2.isEmpty ? 0 : 1);
+    final timedOut = message.$2.contains('превышен лимит');
+    return RunResult(
+      message.$1,
+      message.$2,
+      _cancelled
+          ? 130
+          : timedOut
+          ? 124
+          : message.$2.isEmpty
+          ? 0
+          : 1,
+      timedOut: timedOut,
+    );
   }
 
   Future<CheckResult> _checkSql(Challenge task, String code) async {
     final report = <String>[];
     for (final alternate in [false, true]) {
       final actual = await _sqlIsolate(code, true, alternate);
+      if (_cancelled) {
+        return const CheckResult(false, 'Проверка отменена.', evaluated: false);
+      }
       final expected = await _sqlIsolate(task.solution, true, alternate);
+      if (_cancelled) {
+        return const CheckResult(false, 'Проверка отменена.', evaluated: false);
+      }
       if (actual.$2.isNotEmpty) return CheckResult(false, actual.$2);
       final ok = actual.$1 == expected.$1;
       report.add(
@@ -521,54 +574,101 @@ class LocalRunner {
     return CheckResult(true, report.join('\n\n'));
   }
 
-  /// A separate isolate is killed on timeout, including recursive SQL queries.
+  /// SQL runs on another thread. sqlite3_interrupt is thread-safe and remains
+  /// available in mobile builds which omit sqlite3_progress_handler. A handshake
+  /// keeps the connection alive until the parent detaches its interrupt timer.
   Future<(String, String)> _sqlIsolate(
     String code,
     bool rowsOnly,
     bool alternate,
+  ) => _sqlJob(_sqlWorker, [code, rowsOnly, alternate]);
+
+  Future<(String, String)> _sqlJob(
+    void Function(List) worker,
+    List args,
   ) async {
     final port = ReceivePort();
-    final isolate = await Isolate.spawn(_sqlWorker, [
-      port.sendPort,
-      code,
-      rowsOnly,
-      alternate,
-    ]);
+    final result = Completer<(String, String)>();
+    final closed = Completer<void>();
+    SendPort? release;
+    int? address;
+    Timer? deadline;
+    String? interrupted;
+    void interrupt(String reason) {
+      if (address == null || result.isCompleted) return;
+      interrupted = reason;
+      sqlite_open.open
+          .openSqlite()
+          .lookupFunction<_SqlInterruptNative, _SqlInterruptDart>(
+            'sqlite3_interrupt',
+          )(Pointer<Void>.fromAddress(address!));
+    }
+
+    final subscription = port.listen((dynamic message) {
+      final data = message as List;
+      switch (data[0]) {
+        case 'ready':
+          address = data[1] as int;
+          release = data[2] as SendPort;
+          deadline = Timer(
+            const Duration(seconds: 2),
+            () => interrupt('SQLite: превышен лимит 2 секунды.'),
+          );
+          if (_cancelled) interrupt('Отменено.');
+        case 'result':
+          deadline?.cancel();
+          if (!result.isCompleted) {
+            result.complete((
+              data[1] as String,
+              interrupted ?? data[2] as String,
+            ));
+          }
+        case 'closed':
+          if (!closed.isCompleted) closed.complete();
+      }
+    });
+    final isolate = await Isolate.spawn(worker, [port.sendPort, ...args]);
+    _interruptSql = () => interrupt('Отменено.');
     try {
-      final result =
-          await port.first.timeout(const Duration(seconds: 3)) as List;
-      return (result[0] as String, result[1] as String);
+      return await result.future.timeout(const Duration(seconds: 3));
     } on TimeoutException {
       return ('', 'SQLite: превышен лимит 3 секунды.');
     } finally {
+      deadline?.cancel();
+      _interruptSql = null;
+      if (!result.isCompleted && address != null) {
+        interrupt('SQLite: проверка прервана.');
+        try {
+          await result.future.timeout(const Duration(seconds: 1));
+        } on TimeoutException {
+          /* Kill below. */
+        }
+      }
+      // Only now may the worker close its connection: no timer or cancel hook
+      // can call sqlite3_interrupt with a freed sqlite3*.
+      release?.send(null);
+      try {
+        await closed.future.timeout(const Duration(seconds: 1));
+      } on TimeoutException {
+        /* Kill below. */
+      }
       isolate.kill(priority: Isolate.immediate);
+      await subscription.cancel();
       port.close();
     }
   }
 }
 
-typedef _SqlProgress = Int32 Function(Pointer<Void>);
-typedef _ProgressInstallNative =
-    Void Function(
-      Pointer<Void>,
-      Int32,
-      Pointer<NativeFunction<_SqlProgress>>,
-      Pointer<Void>,
-    );
-typedef _ProgressInstallDart =
-    void Function(
-      Pointer<Void>,
-      int,
-      Pointer<NativeFunction<_SqlProgress>>,
-      Pointer<Void>,
-    );
+typedef _SqlInterruptNative = Void Function(Pointer<Void>);
+typedef _SqlInterruptDart = void Function(Pointer<Void>);
 typedef _SqlLimitNative = Int32 Function(Pointer<Void>, Int32, Int32);
 typedef _SqlLimitDart = int Function(Pointer<Void>, int, int);
 
-void _sqlWorker(List args) {
+void _sqlWorker(List args) async {
   final port = args[0] as SendPort;
   final db = sqlite3.openInMemory();
-  NativeCallable<_SqlProgress>? progress;
+  final release = ReceivePort();
+  port.send(['ready', db.handle.address, release.sendPort]);
   try {
     db.execute(sqlFixture);
     if (args[3] as bool) {
@@ -588,18 +688,6 @@ void _sqlWorker(List args) {
     limit(db.handle.cast<Void>(), 3, 128); // Expression depth.
     limit(db.handle.cast<Void>(), 4, 50); // Compound SELECT terms.
     limit(db.handle.cast<Void>(), 7, 0); // Attached databases.
-    var operations = 0;
-    final deadline = Stopwatch()..start();
-    progress = NativeCallable<_SqlProgress>.isolateLocal((Pointer<Void> _) {
-      operations += 1000;
-      return operations > 1000000 || deadline.elapsedMilliseconds > 2000
-          ? 1
-          : 0;
-    }, exceptionalReturn: 1);
-    library.lookupFunction<_ProgressInstallNative, _ProgressInstallDart>(
-      'sqlite3_progress_handler',
-    )(db.handle.cast<Void>(), 1000, progress.nativeFunction, nullptr);
-
     final code = args[1] as String;
     if (!RegExp(r'^\s*(SELECT|WITH)\b', caseSensitive: false).hasMatch(code) ||
         RegExp(
@@ -631,15 +719,17 @@ void _sqlWorker(List args) {
       if (output.length > 65536) {
         throw const FormatException('Результат превышает 64 КиБ.');
       }
-      port.send([output, '']);
+      port.send(['result', output, '']);
     } finally {
       statement.dispose();
     }
   } catch (e) {
-    port.send(['', 'SQLite: $e']);
+    port.send(['result', '', 'SQLite: $e']);
   } finally {
+    await release.first;
     db.dispose();
-    progress?.close();
+    release.close();
+    port.send(['closed']);
   }
 }
 
@@ -662,10 +752,11 @@ String explainDiagnostic(String diagnostic) {
   return 'Посмотри на фактический вывод и первую диагностику. Если код выполняется, сравни границы цикла и формат вывода с контрактом задания.';
 }
 
-void _projectSqlWorker(List args) {
+void _projectSqlWorker(List args) async {
   final port = args[0] as SendPort;
   final db = sqlite3.open(args[1] as String);
-  NativeCallable<_SqlProgress>? progress;
+  final release = ReceivePort();
+  port.send(['ready', db.handle.address, release.sendPort]);
   try {
     final code = args[2] as String;
     if (RegExp(
@@ -677,15 +768,12 @@ void _projectSqlWorker(List args) {
       );
     }
     final library = sqlite_open.open.openSqlite();
-    var operations = 0;
-    final watch = Stopwatch()..start();
-    progress = NativeCallable<_SqlProgress>.isolateLocal((Pointer<Void> _) {
-      operations += 1000;
-      return operations > 1000000 || watch.elapsedMilliseconds > 2000 ? 1 : 0;
-    }, exceptionalReturn: 1);
-    library.lookupFunction<_ProgressInstallNative, _ProgressInstallDart>(
-      'sqlite3_progress_handler',
-    )(db.handle.cast<Void>(), 1000, progress.nativeFunction, nullptr);
+    final limit = library.lookupFunction<_SqlLimitNative, _SqlLimitDart>(
+      'sqlite3_limit',
+    );
+    limit(db.handle.cast<Void>(), 0, 65536);
+    limit(db.handle.cast<Void>(), 1, 200000);
+    limit(db.handle.cast<Void>(), 7, 0);
     // One statement per run keeps the displayed result unambiguous.
     final statement = db.prepare(code, checkNoTail: true);
     try {
@@ -703,6 +791,7 @@ void _projectSqlWorker(List args) {
         rows.add(row);
       }
       port.send([
+        'result',
         cursor.columnNames.isNotEmpty
             ? '${cursor.columnNames.join(" | ")}\n${rows.join("\n")}'
             : 'Готово. Изменено строк: ${db.updatedRows}. Данные сохранены в project.sqlite.',
@@ -712,9 +801,11 @@ void _projectSqlWorker(List args) {
       statement.dispose();
     }
   } catch (e) {
-    port.send(['', 'SQLite: $e']);
+    port.send(['result', '', 'SQLite: $e']);
   } finally {
+    await release.first;
     db.dispose();
-    progress?.close();
+    release.close();
+    port.send(['closed']);
   }
 }

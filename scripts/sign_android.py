@@ -4,7 +4,7 @@ from pathlib import Path
 p=argparse.ArgumentParser()
 p.add_argument('inputs',type=Path);p.add_argument('output',type=Path)
 p.add_argument('--keystore',required=True,type=Path);p.add_argument('--password-file',required=True,type=Path)
-p.add_argument('--build-tools',required=True,type=Path);p.add_argument('--version',default='0.2.0');p.add_argument('--alias',default='devcat')
+p.add_argument('--build-tools',required=True,type=Path);p.add_argument('--version',default='0.2.1');p.add_argument('--alias',default='devcat')
 a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
 for apk in sorted(a.inputs.glob('*.apk')):
  abi=apk.name.removeprefix('app-').removesuffix('-release.apk') if apk.name!='app-release.apk' else 'universal'

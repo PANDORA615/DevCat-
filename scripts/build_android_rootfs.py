@@ -22,15 +22,24 @@ def run(*args):
 
 
 def download(item, path, algorithm):
-    if not path.exists():
-        with urllib.request.urlopen(item['url']) as source, path.open('wb') as out:
-            shutil.copyfileobj(source, out)
-    digest = hashlib.new(algorithm)
-    with path.open('rb') as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b''):
-            digest.update(block)
-    if digest.hexdigest().lower() != item[algorithm].lower():
+    def verified(candidate):
+        if not candidate.exists():
+            return False
+        digest = hashlib.new(algorithm)
+        with candidate.open('rb') as stream:
+            for block in iter(lambda: stream.read(1024 * 1024), b''):
+                digest.update(block)
+        return digest.hexdigest().lower() == item[algorithm].lower()
+
+    if verified(path):
+        return
+    partial = path.with_suffix(path.suffix + '.part')
+    with urllib.request.urlopen(item['url']) as source, partial.open('wb') as out:
+        shutil.copyfileobj(source, out)
+    if not verified(partial):
+        partial.unlink()
         raise RuntimeError(f'Hash mismatch: {path}')
+    partial.replace(path)
 
 
 def build(abi, output, work):
@@ -44,6 +53,10 @@ def build(abi, output, work):
     work.mkdir(parents=True, exist_ok=True)
     archives = work / 'debs'
     (archives / 'partial').mkdir(parents=True, exist_ok=True)
+    # A changed toolchain selection must not silently retain packages from an
+    # earlier image (for example a second, obsolete Java or Node runtime).
+    for package in archives.glob('*.deb'):
+        package.unlink()
     status = work / 'empty-status'
     status.touch()
     sources = work / 'sources.list'
@@ -64,7 +77,7 @@ def build(abi, output, work):
     run('apt-get', *options, 'update')
     run('apt-get', *options, '-y', '--download-only', '--no-install-recommends', 'install',
         'bash', 'coreutils', 'findutils', 'grep', 'sed', 'gcc', 'g++',
-        'python3', 'nodejs', 'openjdk-17-jdk-headless',
+        'python3', 'libfontconfig1', 'libfreetype6', 'libasound2',
         'libicu72', 'libssl3', 'libgssapi-krb5-2', 'zlib1g')
     root = work / 'root'
     if root.exists():
@@ -80,11 +93,30 @@ def build(abi, output, work):
     for folder in ('dev', 'proc', 'sys', 'tmp', 'root', 'work', 'opt/dotnet', 'var/tmp', 'etc'):
         (root / folder).mkdir(parents=True, exist_ok=True)
     # dpkg alternatives normally come from maintainer scripts, not .deb payloads.
-    java = next((root / 'usr/lib/jvm').glob('java-17-openjdk-*'))
+    java = root / 'opt/java'
+    javatar = work / 'java21.tar.gz'
+    javaarch = {'arm64-v8a': 'aarch64', 'armeabi-v7a': 'arm', 'x86_64': 'x64'}[abi]
+    download(config['java'][javaarch], javatar, 'sha256')
+    unpack = root / 'opt/java-unpack'
+    unpack.mkdir()
+    with tarfile.open(javatar) as archive:
+        archive.extractall(unpack, **({'filter': 'data'} if hasattr(tarfile, 'data_filter') else {}))
+    next(unpack.iterdir()).rename(java)
+    unpack.rmdir()
     for command in ('java', 'javac'):
         link = root / 'usr/bin' / command
         link.unlink(missing_ok=True)
         link.symlink_to(os.path.relpath(java / 'bin' / command, link.parent))
+    nodetar = work / 'node22.tar.xz'
+    nodearch = {'arm64-v8a': 'arm64', 'armeabi-v7a': 'armv7l', 'x86_64': 'x64'}[abi]
+    download(config['node'][nodearch], nodetar, 'sha256')
+    unpack = root / 'opt/node-unpack'
+    unpack.mkdir()
+    with tarfile.open(nodetar) as archive:
+        archive.extractall(unpack, **({'filter': 'data'} if hasattr(tarfile, 'data_filter') else {}))
+    next(unpack.iterdir()).rename(root / 'opt/node')
+    unpack.rmdir()
+    (root / 'usr/bin/node').symlink_to('/opt/node/bin/node')
     for name, command in [('dotnet', '/opt/dotnet/dotnet'), ('go', '/usr/local/go/bin/go')]:
         (root / 'usr/bin' / name).symlink_to(command)
     (root / 'etc/passwd').write_text('root:x:0:0:DevCat:/root:/bin/bash\n')
@@ -118,6 +150,7 @@ def build(abi, output, work):
     output.mkdir(parents=True, exist_ok=True)
     image = output / f'{abi}.zip'
     inventory = {'schema': 1, 'abi': abi, 'dotnet': config['dotnetVersion'],
+                 'java': config['javaVersion'], 'node': config['nodeVersion'],
                  'go': config['goVersion'], 'packages': packages,
                  'unpackedBytes': sum(x.stat().st_size for x in files)}
     with zipfile.ZipFile(image, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as archive:

@@ -28,5 +28,39 @@
       "url": "https://go.dev/dl/go1.27.3.linux-armv6l.tar.gz",
       "sha256": "d6f4e11dd7157030d7ac11c51c8f73201a2db932d593c3106b1da11cc32bfdf8"
     }
+  },
+  "nodeVersion": "v22.23.4",
+  "node": {
+    "x64": {
+      "url": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-x64.tar.xz",
+      "sha256": "1805bcd35e6815559bd2eb97db438d3fdb0eb3a5e6a977b7c1badca76337e9ce"
+    },
+    "arm64": {
+      "url": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-arm64.tar.xz",
+      "sha256": "6287aa46b6c375d816e63ae66d024fbbfd70404825aabdfdf898a970871d2f4b"
+    },
+    "armv7l": {
+      "url": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-armv7l.tar.xz",
+      "sha256": "c9057c6a3b8fbb9651ed115c1e96d4a7281b7b9c9ca89fa05865c98ed7ffd437"
+    }
+  },
+  "javaVersion": "Liberica 21.0.13.0.3+5",
+  "java": {
+    "x64": {
+      "url": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-linux-amd64.tar.gz",
+      "sha256": "f6bac5c836223d91525360bfbb2e422b39f8fcebedafbc1adda27945934926da"
+    },
+    "aarch64": {
+      "url": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-linux-aarch64.tar.gz",
+      "sha256": "2fa5260950afb827fb9619b05a28aecea5e7d14ac4117c6fda531a123546792b"
+    },
+    "arm": {
+      "url": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-linux-arm32-vfp-hflt.tar.gz",
+      "sha256": "fa8cb47d2fdd61d6ef65c567833ed0150db8a4344d065332aa07e96dca1c97dd"
+    }
+  },
+  "javaSources": {
+    "url": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-src.tar.gz",
+    "sha256": "00e90ed091274e69934c7b742a9554429de1481591a6da0a0e74ea85d6e6a1f9"
   }
 }

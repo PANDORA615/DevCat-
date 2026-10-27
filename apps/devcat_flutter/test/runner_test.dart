@@ -53,8 +53,31 @@ void main() {
       '',
     );
     expect(result.ok, false);
+    expect(result.timedOut, isTrue);
+    expect(result.error, contains('превышен лимит 2 секунды'));
     expect(watch.elapsed.inSeconds, lessThan(8));
+    final next = await LocalRunner().run('sql', 'SELECT 42 AS answer;', '');
+    expect(next.ok, isTrue);
+    expect(next.output, contains('42'));
   });
+  test(
+    'SQL cancellation interrupts native work and a new run still succeeds',
+    () async {
+      final runner = LocalRunner();
+      final pending = runner.run(
+        'sql',
+        'WITH RECURSIVE x(a) AS (VALUES(1) UNION ALL SELECT a+1 FROM x) SELECT sum(a) FROM x;',
+        '',
+      );
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      runner.cancel();
+      final cancelled = await pending;
+      expect(cancelled.exitCode, 130);
+      final next = await runner.run('sql', 'SELECT 7 AS answer;', '');
+      expect(next.ok, isTrue);
+      expect(next.output, contains('7'));
+    },
+  );
   test(
     'Real toolchains grade reference solutions and reject wrong output',
     () async {
