@@ -167,7 +167,7 @@ class LocalRunner {
         final result = await Process.run(
           exe,
           p.basenameWithoutExtension(exe) == 'go' ? ['version'] : ['--version'],
-        ).timeout(const Duration(seconds: 4));
+        ).timeout(const Duration(seconds: 15));
         if (result.exitCode == 0) return exe;
       } catch (_) {
         /* Try the next official toolchain. */

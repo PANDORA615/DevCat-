@@ -32,12 +32,14 @@ jobs:
         with:
           node-version: '22'
       - run: sudo apt-get update && sudo apt-get install -y clang libsqlite3-dev
+      - name: Initialize .NET before concurrent compiler tests
+        run: dotnet --version
       - working-directory: apps/devcat_flutter
         run: |
           flutter pub get --enforce-lockfile
           dart format --output=none --set-exit-if-changed lib test
           flutter analyze
-          DEVCAT_REQUIRE_ALL_TOOLCHAINS=true flutter test --reporter expanded
+          DEVCAT_REQUIRE_ALL_TOOLCHAINS=true flutter test --reporter expanded --concurrency=2
       - run: python3 scripts/write_content.py && git diff --exit-code -- content apps/devcat_flutter/assets/content
   desktop:
     needs: test
@@ -94,7 +96,7 @@ jobs:
             dist/*.dmg
           if-no-files-found: error
   android:
-    needs: [test, android-device]
+    needs: test
     strategy:
       fail-fast: false
       matrix:
