@@ -215,7 +215,7 @@ void main() {
         debugPrint('ANDROID_IDE_PASS ${item.key}');
       }
       final database = DevProject.create('sql', 'Transaction lecture');
-      database.files['main.sql'] = '''
+      database.files[database.entry] = '''
 CREATE TABLE parent(id INTEGER PRIMARY KEY, name TEXT);
 CREATE TABLE child(parent_id INTEGER REFERENCES parent(id));
 BEGIN;
@@ -227,14 +227,14 @@ SELECT name FROM parent;
       final script = await LocalRunner().runProject(database, root, '');
       expect(script.ok, isTrue, reason: script.error);
       expect(script.output, contains('Кот; книга'));
-      database.files['main.sql'] = '''
+      database.files[database.entry] = '''
 BEGIN;
 INSERT INTO parent VALUES(2, 'rollback');
 INSERT INTO child VALUES(99);
 COMMIT;
 ''';
       expect((await LocalRunner().runProject(database, root, '')).ok, isFalse);
-      database.files['main.sql'] = 'SELECT COUNT(*) AS count FROM parent;';
+      database.files[database.entry] = 'SELECT COUNT(*) AS count FROM parent;';
       final after = await LocalRunner().runProject(database, root, '');
       expect(after.ok, isTrue, reason: after.error);
       expect(after.output.trim().split('\n').last, '1');
