@@ -766,7 +766,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         const SizedBox(height: 20),
         const Text(
-          'DevCat 0.2.1 · Исходники приложения: MIT · Без аналитики и облачного ИИ\n320 лекций, локальная IDE и перенос между устройствами. Ограничения — в README репозитория.',
+          'DevCat 0.3.0 · Исходники приложения: MIT · Без аналитики и облачного ИИ\n384 подробные лекции, локальная IDE и перенос между устройствами. Ограничения — в README репозитория.',
           style: TextStyle(fontSize: 12, height: 1.6),
         ),
       ],

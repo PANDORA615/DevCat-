@@ -47,6 +47,72 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
   final scroll = ScrollController();
   final Set<int> checked = {};
   final Set<int> answers = {};
+  final Map<int, GlobalKey> sectionAnchors = {};
+
+  void _openSection(int index) {
+    final target = sectionAnchors[index]?.currentContext;
+    if (target == null) return;
+    SoundScope.of(context)?.cue(SoundCue.open);
+    Scrollable.ensureVisible(
+      target,
+      duration: Duration(
+        milliseconds: MediaQuery.of(context).disableAnimations ? 0 : 400,
+      ),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  Widget _dataTable(Map<String, dynamic> table, double size) {
+    final columns = List<String>.from(table['columns'] as List);
+    final rows = (table['rows'] as List).cast<List>();
+    if (columns.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              dataRowMinHeight: 48,
+              dataRowMaxHeight: double.infinity,
+              columnSpacing: 28,
+              columns: columns
+                  .map((name) => DataColumn(label: Text(name)))
+                  .toList(),
+              rows: rows
+                  .map(
+                    (row) => DataRow(
+                      cells: row
+                          .map(
+                            (value) => DataCell(
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
+                                child: Text(
+                                  value.toString(),
+                                  style: TextStyle(
+                                    fontFamily: 'JetBrainsMono',
+                                    fontSize: (size - 4).clamp(12, 20),
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          if (rows.isEmpty) const Text('Результат не содержит строк.'),
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -123,6 +189,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                     spacing: 12,
                     runSpacing: 8,
                     children: [
+                      StatusBadge(Icons.school_outlined, lesson.difficulty),
                       StatusBadge(
                         Icons.schedule_rounded,
                         '${lesson.minutes} мин с практикой',
@@ -170,20 +237,30 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 10),
-                        ...lesson.sections.map(
-                          (s) => Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
-                            child: Text('• ${s['heading']}'),
+                        ...lesson.sections.indexed.map(
+                          (entry) => Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton(
+                              onPressed: () => _openSection(entry.$1),
+                              child: Text(
+                                '${entry.$1 + 1}. ${entry.$2['heading']}',
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 26),
-                  ...lesson.sections.expand(
-                    (s) => [
+                  ...lesson.sections.indexed.expand((entry) {
+                    final s = entry.$2;
+                    return [
                       Text(
                         s['heading'],
+                        key: sectionAnchors.putIfAbsent(
+                          entry.$1,
+                          GlobalKey.new,
+                        ),
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(fontWeight: FontWeight.w800),
                       ),
@@ -219,9 +296,11 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           child: ConceptDiagram(s['diagram']),
                         ),
+                      if (s['table'] != null)
+                        _dataTable(Map<String, dynamic>.from(s['table']), size),
                       const SizedBox(height: 28),
-                    ],
-                  ),
+                    ];
+                  }),
                   Text(
                     'Вопросы для самопроверки',
                     style: Theme.of(context).textTheme.headlineSmall,
@@ -246,7 +325,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                             TextFormField(
                               initialValue:
                                   widget.store.progress
-                                          .draftsFor('answer.${lesson.id}.$i')
+                                          .draftsFor(lesson.answerDraftKey(i))
                                           .firstOrNull?['text']
                                       as String?,
                               maxLines: 3,
@@ -257,7 +336,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                               ),
                               onChanged: (text) {
                                 widget.store.draft(
-                                  'answer.${lesson.id}.$i',
+                                  lesson.answerDraftKey(i),
                                   text,
                                 );
                               },
@@ -273,13 +352,15 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                               },
                               child: Text(
                                 answers.contains(i)
-                                    ? 'Скрыть ориентир'
-                                    : 'Как проверить ответ',
+                                    ? 'Скрыть разбор'
+                                    : 'Показать разбор ответа',
                               ),
                             ),
                             if (answers.contains(i))
                               Text(
-                                'Найди относящийся к вопросу раздел лекции. Подтверди объяснение небольшим примером и случаем, где первоначальная догадка могла бы ошибиться.',
+                                i < lesson.answers.length
+                                    ? lesson.answers[i]
+                                    : 'Подтверди объяснение конкретным примером из лекции.',
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                           ],

@@ -838,38 +838,93 @@ void _projectSqlWorker(List args) async {
     limit(db.handle.cast<Void>(), 0, 65536);
     limit(db.handle.cast<Void>(), 1, 200000);
     limit(db.handle.cast<Void>(), 7, 0);
-    // One statement per run keeps the displayed result unambiguous.
-    final statement = db.prepare(code, checkNoTail: true);
-    try {
-      final cursor = statement.selectCursor();
-      final rows = <String>[];
-      var size = 0;
-      while (cursor.moveNext()) {
-        final row = cursor.current.values.join(' | ');
-        size += row.length;
-        if (rows.length >= 1000 || size > 65536) {
+    db.execute('PRAGMA foreign_keys = ON');
+    var remaining = code;
+    final results = <String>[];
+    var statements = 0, rowCount = 0, outputSize = 0;
+    while ((remaining = _withoutSqlTrivia(remaining)).isNotEmpty) {
+      if (++statements > 100) {
+        throw const FormatException(
+          'В одном запуске разрешено до 100 SQL-команд.',
+        );
+      }
+      // SQLite itself identifies the first complete statement, including
+      // strings, comments and trigger bodies. Preparing lazily allows DDL to
+      // create a table before the following statement refers to that table.
+      final statement = db.prepare(remaining, checkNoTail: false);
+      try {
+        if (statement.sql.isEmpty || !remaining.startsWith(statement.sql)) {
           throw const FormatException(
-            'Результат превышает 1000 строк или 64 КиБ.',
+            'Не удалось определить границу SQL-команды.',
           );
         }
-        rows.add(row);
-      }
-      port.send([
-        'result',
-        cursor.columnNames.isNotEmpty
+        remaining = remaining.substring(statement.sql.length);
+        final cursor = statement.selectCursor();
+        final rows = <String>[];
+        while (cursor.moveNext()) {
+          final row = cursor.current.values.join(' | ');
+          outputSize += row.length;
+          if (++rowCount > 1000 || outputSize > 65536) {
+            throw const FormatException(
+              'Результат превышает 1000 строк или 64 КиБ.',
+            );
+          }
+          rows.add(row);
+        }
+        final output = cursor.columnNames.isNotEmpty
             ? '${cursor.columnNames.join(" | ")}\n${rows.join("\n")}'
-            : 'Готово. Изменено строк: ${db.updatedRows}. Данные сохранены в project.sqlite.',
-        '',
-      ]);
-    } finally {
-      statement.dispose();
+            : 'Готово. Данные сохраняются в project.sqlite согласно границам транзакции.';
+        outputSize +=
+            output.length - rows.fold<int>(0, (sum, row) => sum + row.length);
+        if (outputSize > 65536) {
+          throw const FormatException('Вывод превышает 64 КиБ.');
+        }
+        results.add(output);
+      } finally {
+        statement.dispose();
+      }
     }
+    if (!db.autocommit) {
+      db.execute('ROLLBACK');
+      throw const FormatException(
+        'Сценарий оставил открытую транзакцию. Изменения откачены: добавь COMMIT или ROLLBACK в тот же запуск.',
+      );
+    }
+    port.send(['result', results.join('\n\n'), '']);
   } catch (e) {
-    port.send(['result', '', 'SQLite: $e']);
+    if (!db.autocommit) {
+      try {
+        db.execute('ROLLBACK');
+      } catch (_) {
+        /* Closing also rolls back. */
+      }
+    }
+    port.send([
+      'result',
+      '',
+      'SQLite: $e\nКоманды вне явной транзакции могли сохраниться. Для атомарного сценария используй BEGIN … COMMIT.',
+    ]);
   } finally {
     await release.first;
     db.dispose();
     release.close();
     port.send(['closed']);
+  }
+}
+
+String _withoutSqlTrivia(String source) {
+  var rest = source.trimLeft();
+  while (true) {
+    if (rest.startsWith('--')) {
+      final end = rest.indexOf('\n');
+      if (end < 0) return '';
+      rest = rest.substring(end + 1).trimLeft();
+    } else if (rest.startsWith('/*')) {
+      final end = rest.indexOf('*/', 2);
+      if (end < 0) return '';
+      rest = rest.substring(end + 2).trimLeft();
+    } else {
+      return rest;
+    }
   }
 }

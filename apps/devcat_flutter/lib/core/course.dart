@@ -28,11 +28,14 @@ class Lesson {
       chapter,
       assignment,
       photo,
-      photoCaption;
+      photoCaption,
+      difficulty;
   final List<Map<String, dynamic>> sections;
-  final List<String> questions, checklist;
+  final List<String> questions, checklist, answers;
+  final Map<String, dynamic>? runnableExample;
   final Challenge? challenge;
   final int minutes;
+  final int questionRevision;
   final List<String> examples, mistakes;
   Lesson(Map<String, dynamic> j)
     : id = j['id'],
@@ -43,6 +46,12 @@ class Lesson {
       assignment = j['assignment'] ?? '',
       photo = j['photo'] ?? '',
       photoCaption = j['photoCaption'] ?? '',
+      difficulty = j['difficulty'] ?? 'Лекция',
+      questionRevision = j['questionRevision'] ?? 1,
+      answers = List<String>.from(j['answers'] ?? []),
+      runnableExample = j['runnableExample'] == null
+          ? null
+          : Map<String, dynamic>.from(j['runnableExample']),
       sections = (j['sections'] as List? ?? [])
           .map((x) => Map<String, dynamic>.from(x))
           .toList(),
@@ -54,6 +63,10 @@ class Lesson {
       minutes = j['minutes'] ?? 25,
       examples = List<String>.from(j['examples']),
       mistakes = List<String>.from(j['mistakes']);
+
+  String answerDraftKey(int index) => questionRevision == 1
+      ? 'answer.$id.$index'
+      : 'answer.v$questionRevision.$id.$index';
 }
 
 class Case {

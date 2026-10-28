@@ -96,6 +96,8 @@ for source, name in [
     shutil.copyfile(source, output / name)
 if manifest['version'] >= 2:
     shutil.copyfile(f'docs/releases/v{version}-Android-runtimes.json', output / f'DevCat-{version}-Android-runtimes.json')
+if manifest.get('asset_count', 20) == 21:
+    shutil.copyfile('docs/DevCat-lectures.zip', output / f'DevCat-{version}-lectures.zip')
 expected = {'SHA256SUMS'}
 for line in (output / 'SHA256SUMS').read_text().splitlines():
     checksum, name = line.split('  ', 1)
@@ -103,5 +105,5 @@ for line in (output / 'SHA256SUMS').read_text().splitlines():
     assert hashlib.sha256((output / name).read_bytes()).hexdigest() == checksum, name
     expected.add(name)
 assert expected == {path.name for path in output.iterdir()}
-assert len(expected) == 20
-print('All 20 public release assets match the reviewed checksum record.', flush=True)
+assert len(expected) == manifest.get('asset_count', 20)
+print(f'All {len(expected)} public release assets match the reviewed checksum record.', flush=True)

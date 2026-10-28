@@ -1,7 +1,7 @@
 name: devcat
 description: Локальная мастерская программирования с котом-наставником.
 publish_to: none
-version: 0.2.1+3
+version: 0.3.0+4
 environment:
   sdk: '>=3.8.0 <4.0.0'
 dependencies:

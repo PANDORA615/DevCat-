@@ -1,0 +1,2069 @@
+{
+  "courses": {
+    "c": [
+      "c.basics",
+      "c.values",
+      "c.variables",
+      "c.expressions",
+      "c.input",
+      "c.booleans",
+      "c.branches",
+      "c.loops",
+      "c.nested",
+      "c.strings",
+      "c.arrays",
+      "c.functions",
+      "c.scope",
+      "c.collections",
+      "c.iteration",
+      "c.records",
+      "c.errors",
+      "c.files",
+      "c.json",
+      "c.modules",
+      "c.testing",
+      "c.debugging",
+      "c.complexity",
+      "c.search",
+      "c.advanced.1",
+      "c.advanced.2",
+      "c.advanced.3",
+      "c.advanced.4",
+      "c.advanced.5",
+      "c.advanced.6",
+      "c.advanced.7",
+      "c.advanced.8",
+      "c.advanced.9",
+      "c.advanced.10",
+      "c.advanced.11",
+      "c.advanced.12",
+      "c.advanced.13",
+      "c.advanced.14",
+      "c.advanced.15",
+      "c.advanced.16"
+    ],
+    "cpp": [
+      "cpp.basics",
+      "cpp.values",
+      "cpp.variables",
+      "cpp.expressions",
+      "cpp.input",
+      "cpp.booleans",
+      "cpp.branches",
+      "cpp.loops",
+      "cpp.nested",
+      "cpp.strings",
+      "cpp.arrays",
+      "cpp.functions",
+      "cpp.scope",
+      "cpp.collections",
+      "cpp.iteration",
+      "cpp.records",
+      "cpp.errors",
+      "cpp.files",
+      "cpp.json",
+      "cpp.modules",
+      "cpp.testing",
+      "cpp.debugging",
+      "cpp.complexity",
+      "cpp.search",
+      "cpp.advanced.1",
+      "cpp.advanced.2",
+      "cpp.advanced.3",
+      "cpp.advanced.4",
+      "cpp.advanced.5",
+      "cpp.advanced.6",
+      "cpp.advanced.7",
+      "cpp.advanced.8",
+      "cpp.advanced.9",
+      "cpp.advanced.10",
+      "cpp.advanced.11",
+      "cpp.advanced.12",
+      "cpp.advanced.13",
+      "cpp.advanced.14",
+      "cpp.advanced.15",
+      "cpp.advanced.16"
+    ],
+    "csharp": [
+      "csharp.basics",
+      "csharp.values",
+      "csharp.variables",
+      "csharp.expressions",
+      "csharp.input",
+      "csharp.booleans",
+      "csharp.branches",
+      "csharp.loops",
+      "csharp.nested",
+      "csharp.strings",
+      "csharp.arrays",
+      "csharp.functions",
+      "csharp.scope",
+      "csharp.collections",
+      "csharp.iteration",
+      "csharp.records",
+      "csharp.errors",
+      "csharp.files",
+      "csharp.json",
+      "csharp.modules",
+      "csharp.testing",
+      "csharp.debugging",
+      "csharp.complexity",
+      "csharp.search",
+      "csharp.advanced.1",
+      "csharp.advanced.2",
+      "csharp.advanced.3",
+      "csharp.advanced.4",
+      "csharp.advanced.5",
+      "csharp.advanced.6",
+      "csharp.advanced.7",
+      "csharp.advanced.8",
+      "csharp.advanced.9",
+      "csharp.advanced.10",
+      "csharp.advanced.11",
+      "csharp.advanced.12",
+      "csharp.advanced.13",
+      "csharp.advanced.14",
+      "csharp.advanced.15",
+      "csharp.advanced.16"
+    ],
+    "python": [
+      "python.basics",
+      "python.values",
+      "python.variables",
+      "python.expressions",
+      "python.input",
+      "python.booleans",
+      "python.branches",
+      "python.loops",
+      "python.nested",
+      "python.strings",
+      "python.arrays",
+      "python.functions",
+      "python.scope",
+      "python.collections",
+      "python.iteration",
+      "python.records",
+      "python.errors",
+      "python.files",
+      "python.json",
+      "python.modules",
+      "python.testing",
+      "python.debugging",
+      "python.complexity",
+      "python.search",
+      "python.advanced.1",
+      "python.advanced.2",
+      "python.advanced.3",
+      "python.advanced.4",
+      "python.advanced.5",
+      "python.advanced.6",
+      "python.advanced.7",
+      "python.advanced.8",
+      "python.advanced.9",
+      "python.advanced.10",
+      "python.advanced.11",
+      "python.advanced.12",
+      "python.advanced.13",
+      "python.advanced.14",
+      "python.advanced.15",
+      "python.advanced.16"
+    ],
+    "java": [
+      "java.basics",
+      "java.values",
+      "java.variables",
+      "java.expressions",
+      "java.input",
+      "java.booleans",
+      "java.branches",
+      "java.loops",
+      "java.nested",
+      "java.strings",
+      "java.arrays",
+      "java.functions",
+      "java.scope",
+      "java.collections",
+      "java.iteration",
+      "java.records",
+      "java.errors",
+      "java.files",
+      "java.json",
+      "java.modules",
+      "java.testing",
+      "java.debugging",
+      "java.complexity",
+      "java.search",
+      "java.advanced.1",
+      "java.advanced.2",
+      "java.advanced.3",
+      "java.advanced.4",
+      "java.advanced.5",
+      "java.advanced.6",
+      "java.advanced.7",
+      "java.advanced.8",
+      "java.advanced.9",
+      "java.advanced.10",
+      "java.advanced.11",
+      "java.advanced.12",
+      "java.advanced.13",
+      "java.advanced.14",
+      "java.advanced.15",
+      "java.advanced.16"
+    ],
+    "javascript": [
+      "javascript.basics",
+      "javascript.values",
+      "javascript.variables",
+      "javascript.expressions",
+      "javascript.input",
+      "javascript.booleans",
+      "javascript.branches",
+      "javascript.loops",
+      "javascript.nested",
+      "javascript.strings",
+      "javascript.arrays",
+      "javascript.functions",
+      "javascript.scope",
+      "javascript.collections",
+      "javascript.iteration",
+      "javascript.records",
+      "javascript.errors",
+      "javascript.files",
+      "javascript.json",
+      "javascript.modules",
+      "javascript.testing",
+      "javascript.debugging",
+      "javascript.complexity",
+      "javascript.search",
+      "javascript.advanced.1",
+      "javascript.advanced.2",
+      "javascript.advanced.3",
+      "javascript.advanced.4",
+      "javascript.advanced.5",
+      "javascript.advanced.6",
+      "javascript.advanced.7",
+      "javascript.advanced.8",
+      "javascript.advanced.9",
+      "javascript.advanced.10",
+      "javascript.advanced.11",
+      "javascript.advanced.12",
+      "javascript.advanced.13",
+      "javascript.advanced.14",
+      "javascript.advanced.15",
+      "javascript.advanced.16"
+    ],
+    "go": [
+      "go.basics",
+      "go.values",
+      "go.variables",
+      "go.expressions",
+      "go.input",
+      "go.booleans",
+      "go.branches",
+      "go.loops",
+      "go.nested",
+      "go.strings",
+      "go.arrays",
+      "go.functions",
+      "go.scope",
+      "go.collections",
+      "go.iteration",
+      "go.records",
+      "go.errors",
+      "go.files",
+      "go.json",
+      "go.modules",
+      "go.testing",
+      "go.debugging",
+      "go.complexity",
+      "go.search",
+      "go.advanced.1",
+      "go.advanced.2",
+      "go.advanced.3",
+      "go.advanced.4",
+      "go.advanced.5",
+      "go.advanced.6",
+      "go.advanced.7",
+      "go.advanced.8",
+      "go.advanced.9",
+      "go.advanced.10",
+      "go.advanced.11",
+      "go.advanced.12",
+      "go.advanced.13",
+      "go.advanced.14",
+      "go.advanced.15",
+      "go.advanced.16"
+    ],
+    "sql": [
+      "sql.basics",
+      "sql.projection",
+      "sql.filters",
+      "sql.logic",
+      "sql.null",
+      "sql.order",
+      "sql.limit",
+      "sql.distinct",
+      "sql.range",
+      "sql.like",
+      "sql.case",
+      "sql.aggregate",
+      "sql.group",
+      "sql.having",
+      "sql.inner",
+      "sql.left",
+      "sql.multiplicity",
+      "sql.subquery",
+      "sql.exists",
+      "sql.anti",
+      "sql.cte",
+      "sql.sets",
+      "sql.window",
+      "sql.ranking",
+      "sql.running",
+      "sql.lag",
+      "sql.recursive",
+      "sql.schema",
+      "sql.constraints",
+      "sql.normalization",
+      "sql.insert",
+      "sql.update",
+      "sql.transactions",
+      "sql.isolation",
+      "sql.indexes",
+      "sql.plan",
+      "sql.security",
+      "sql.migration",
+      "sql.project",
+      "sql.graduation"
+    ]
+  },
+  "challenges": {
+    "c.basics.v2": "d350a1d5a868d39eb5184f687679bf744675e10b9725b17d6b03a74606007c05",
+    "c.variables.v2": "e7d1e56a6d374184bfdbe0c0e27667b841aea7b7077b7a6e2a3f82788cdb4cd5",
+    "c.expressions.v2": "d3dc64655c56ff858175820a9a99ac4a97b5a156e472d13f6312c3cc55779312",
+    "c.booleans.v2": "8a32e353492ca494c44508e70541a17149fb981e39a6aef3314ef845ad865f1f",
+    "c.branches.v2": "662fe999908347331c8f803b08229d3ea0926e78c014d883405c210a87214a81",
+    "c.loops.v2": "5f9d409e7434011452d0df2897bc30b75e1198b4fbe559cf02ca60fef0b291f6",
+    "c.nested.v2": "eb9a04404a3d8370e49e4a6e6c1b68b588e88265beab2577be07f1cff7dfcc21",
+    "c.strings.v2": "90ab99c9d406fa993823a7f19f5dafb7e227cf4a0117e784aa2b31914a9ba884",
+    "c.arrays.v2": "40f47678ad2d4bd65e25be1cd22d392155a707197bd029f81ab3850ead6795c7",
+    "c.functions.v2": "82f1d677dde2f89bfdc71be617cfdeb8d9b01008aa5a293d27bb4f2798219ce6",
+    "c.iteration.v2": "cb4f0a846c7784add8d08442bf585c0283ede7cbf4a5b4b13db9366ef670169b",
+    "c.testing.v2": "187278f70352ecd96de906034e3112e036e6844c3743c56ab13c7cdbf50628ca",
+    "c.debugging.v2": "fe9b4cf8f4ac9b52bb90aad1730a576da1fbf44f4c4426283f5a8cae60169f58",
+    "c.search.v2": "b0d281c68ae63745f05bc7e8c264f2ea1986f9ee58dc08ea6e15196191f31113",
+    "cpp.basics.v2": "f2d61bd03e1bc85641671345cd4bcc67f59c71d6bb19b9bb7e25558a097655f2",
+    "cpp.variables.v2": "6b1b7b5a74db0e51d442c2e670c106cb64ce558e99866919fafa55bca765189b",
+    "cpp.expressions.v2": "6141bc1825e5a50d41faf02fe8aed938b7e7f65392bc11757fadf7d43ff034f5",
+    "cpp.booleans.v2": "3ae3c01444317edf91052a1fc9b88d6701d770e31b598b8d5a4eb679fbe3ff96",
+    "cpp.branches.v2": "c68751fa980692c2013d4dbf11a146093141c9f26f6f47d06df95d5c30b54ed4",
+    "cpp.loops.v2": "8180fc9204e23a4c27dcc7e0b291cb4fd000b12cb36b0ddf813130968975e1a5",
+    "cpp.nested.v2": "25ae2a495ad622ada6872d0c5e18cfd075bd464fee73d06ba132f758c749c189",
+    "cpp.strings.v2": "d89047302aface81a6c76acdf746783e932358ae0b3bd174e4a4219ae3c67097",
+    "cpp.arrays.v2": "8c1b154445bdbf36bc48476678f167b6cc64a0f72fb2a2c96152ccc1aa6da1c1",
+    "cpp.functions.v2": "f5a52119b6cc0f1056b4a055ffd8f2e35ff029b8f5b97772a245998110a71d63",
+    "cpp.iteration.v2": "d0b29b0447d8c0aecfec22dac226f1c3bed4ca57e39cb9cec60f02f43c88c99c",
+    "cpp.testing.v2": "0bcb5b55bea492ca1d32653db64e05f542ee892b4319cf9e64d277b73cef66d6",
+    "cpp.debugging.v2": "d161063cedeef5a4d3693f83062f7b84d6241bf884049ee09e6b886d320ff11c",
+    "cpp.search.v2": "f58668f7e32af388ae1f2a3c0e23b548e82924509e9367c20521f211f8cc642e",
+    "csharp.basics.v2": "ac892350ca1ad4385b6cdf1cb145ac8fa4aa05bc84ff5d9d79fb4a8328f9d5ef",
+    "csharp.variables.v2": "d0eeb2811cddbbe696c25558945f174d36fb4d048d158256dc37a16f5fbc359a",
+    "csharp.expressions.v2": "ab168a1d7d69d3040ff3b62eab3d5bc9bc893ce3190c4bf507505867f49dd770",
+    "csharp.booleans.v2": "b7ecbbdeac1dab5911536e1237a7ca236cb1836a48887912a09c6121f6f7551e",
+    "csharp.branches.v2": "9e84dc0929b519d943a2fc2994678ccc718ffc9c23ddefbce49bc4f8f8fd975f",
+    "csharp.loops.v2": "c3c2c856cdd665d52ada22abf2fa04551a5c67c1f0bd4315fbb64834d632d813",
+    "csharp.nested.v2": "bf760938f0d9771dd49d26bf41b9257d303e60460b1fbef77679d526a2c1fe90",
+    "csharp.strings.v2": "dd03c4e1fa52de92fd37cfe7476fee22bc35cff1541ff5fd34bf4376068e2c9d",
+    "csharp.arrays.v2": "63b69c346fff2c78133bb8f1e85f591a4c37de8fb8cabd7ce728ba88fdc9157e",
+    "csharp.functions.v2": "0d8e7b68cf069cd020e38c7ec6d872a143508609d7536c56b0117b9cc29a49c0",
+    "csharp.iteration.v2": "c6e2daa1681cb6f93e55ca43799073208e70854bc65abfe2e95f13ac94b76a4d",
+    "csharp.testing.v2": "48d0e64b0f4b4fc2ffca2a615a4b57010ada1951fa7abad8fba7643d92d0959d",
+    "csharp.debugging.v2": "ae664effcf6f33dbcc1908e845a869c8c992709c4f65fd777aef67b62e585273",
+    "csharp.search.v2": "b3f0af5cd6e47fe30f0a2d760f2d6a553c0e7fc73851f16a1b0e86717bd3ec7c",
+    "python.basics.v2": "661c9f58d3189b0e2449de545864f3aab7325ffcf7c4e8e561098b0336f535b6",
+    "python.variables.v2": "d59f9c0b82b1316fa9b2cef386834ea373cc6f0a293316d66fefae1123ca9116",
+    "python.expressions.v2": "b2b089dcbe233b87bd3176e35ff264ea7e6a9cf22168148c00d7d7d6615e674c",
+    "python.booleans.v2": "4ea6eebb8506fc3f1a7fa7c6e36495f65099b04156946a88872bcf262cc4c700",
+    "python.branches.v2": "909294e4b16c1d7ab391a56181697be412b2d199520ce1af049efb1d2e7af803",
+    "python.loops.v2": "7a6bf9f4cc38a8d9f424c2ba2e8dce5790ae3d0abea65f1b2de8997e3e206138",
+    "python.nested.v2": "026e938eabbfefb4b2d947b4582ab96f0a052bae6774ecc8f8f3fab5729693a9",
+    "python.strings.v2": "61b8f5ea15dfb7de3e03bec190c00647afbc4774fc99107bad6a9f2d71cf4a6c",
+    "python.arrays.v2": "393ff09bf2af0b0f73f652e0d227dcd0fed98e0a10b086ebf693bc7eeef94f70",
+    "python.functions.v2": "0c39df1b1b815c318a7823cb31f24d6edc1603229dbec41550fd232eab2a337c",
+    "python.iteration.v2": "5f7f237370fe4d1b156c5ca572f36dae9e4a73fd1338d1510a5a30dd4af4b23f",
+    "python.testing.v2": "f5d97d62e58aa88eebf76c3f1a40c5924facfd3fd2797809ecdf14fffd20dfa9",
+    "python.debugging.v2": "79e7b43baee5b4adb4b1216a359209782524cb3bb0aa195fdbd6960526cb1d70",
+    "python.search.v2": "ee2b24b4507c4e905ee584de079641bab5cc45b74a4e62b75286d6dd3b604152",
+    "java.basics.v2": "2d112595e10c42d07cec6e4ef2141acda24cfc9974d8d9d8ea0580414440ab63",
+    "java.variables.v2": "83befd0d59f7d56c47e0cff3430dcded862d514691b896c0e4fc559e57a48ede",
+    "java.expressions.v2": "67781a3e80192fb8747c7a32e06e414b184f7b0b55f8d35f7c3d218532b18c79",
+    "java.booleans.v2": "cee4311c99e6fb78ceb9f68391955aaea6c43d8f80de2c200cdffc0a7e2bb2c2",
+    "java.branches.v2": "b2ba6e111cc81d6ae5f399d528bce0e5630ba73a2ee0566afa186d7091a7b587",
+    "java.loops.v2": "48fb748b08be19e97bbf0cd34311a7fbc054d103a9e55b9e0ce7204c072c778e",
+    "java.nested.v2": "3dadd1e90419a93568bfcc510c7faaab30e8d3dd210ca075ad6fa4c236a42667",
+    "java.strings.v2": "75d36076bd2c3e96c8026d8e5f26f4e347f6c3d0e0bf5b49a95ccb8be56a12ae",
+    "java.arrays.v2": "3cad5888299fa8db328022d616fe06d3b4a390ff5f4bffea6fbe4cbbced2cbcb",
+    "java.functions.v2": "6497fd9fa4cb6cc81953e08bc8cf97dc14a329239c41f06c56d7310f117e9d7b",
+    "java.iteration.v2": "9073848ae72432bc794e01667b3226d036d5c1058233c08f0a9cc7aeae394b22",
+    "java.testing.v2": "e7372acd5d3a1ace10ed28c9afd130727d95950855106909a0582423d9e529ae",
+    "java.debugging.v2": "7ca76b77c745132da3eac0887ffb871ccb8035f1d117736acce870964144b840",
+    "java.search.v2": "326e1a043728723b1ccc6830e1e7239cc512ec523f751a0726c2ae155be3ca43",
+    "javascript.basics.v2": "3e8df7f078773bc31c25babbac5014b7bf01c8649c42c7242676debe4c61a954",
+    "javascript.variables.v2": "fdf5424880c6d1213c795f669e4283f6f65ca56801d73368b53d01199e5a881a",
+    "javascript.expressions.v2": "569525b9e44fbe0953373c774d21a7a7a1d792db4e37eaf642bd1d1ff71b480c",
+    "javascript.booleans.v2": "8456b00711411ba1ea468b7c1bf56c510a101e19f0bfeb1c3dbb60a890ba6fee",
+    "javascript.branches.v2": "e75c13eeff2e84605af1dffde44fb31f2dfd2991733c2ce2270afbd2c87a39c9",
+    "javascript.loops.v2": "f5ea37272a8b1b4934520125ba43e3b8ca450065d7096f1f9fa8d9c1ebfd116d",
+    "javascript.nested.v2": "f44aeb7039828ba10665439652705dfab7f7192e6d23a2db6bc9c7737820c533",
+    "javascript.strings.v2": "3d52206c19f53796480aac09b9a0c02d047a12b06f7fb60d965d40a205dc7019",
+    "javascript.arrays.v2": "7699f0787310287207a29557c62644f2ffc3ee420b09f569b7cb0abf071c044d",
+    "javascript.functions.v2": "7f1b39a8a9760459b533c4a382209af09ef735cae1cc88b8e0d3d100d5166434",
+    "javascript.iteration.v2": "71abc0003b2c82ea1181dbba6c31ce5f38e409bc59a1c71918b8c60c89a83e30",
+    "javascript.testing.v2": "80e5a752ed18c8d9637597279875fec5aea1ca8d399ef9fec6374fa264814218",
+    "javascript.debugging.v2": "020e3570d2dea52711ea0da47ae548cff18f904541208b1abb452f354a97365e",
+    "javascript.search.v2": "e4794c50d3a8827602fe5601ca6923d1e848b3ed7702d43f6a5b7f6690b46294",
+    "go.basics.v2": "d77726b9b1493f4d4785dc8ebe26623836c4e1b2a4f7f7d35c8d09757ada8ab8",
+    "go.variables.v2": "a8b740e0db97dec13813642c9a714ab69173924fe6a4a34ff8c20fdb0527d788",
+    "go.expressions.v2": "a2ea1098ca74419d3285b40da153ab92fb61fe4fca14097b157da2398f7c9a9d",
+    "go.booleans.v2": "d929487c6b037e191c177292f53a4f208143512f0636a2ef0e205c7ca863be93",
+    "go.branches.v2": "0c4ce38f82bb5445981b04f5f481ca1923e5aab3070d0c67dd30144016d38db0",
+    "go.loops.v2": "bc75ddeeb0acb26597f4a7d41d1eaceb3212475089bc50c16c4b8aa2de9804e3",
+    "go.nested.v2": "d2d8e81dc5146265acecea36257ebaf1c3f1bd044fe2cae1a79ad865641f6639",
+    "go.strings.v2": "dc0afa042f39ba46a454f69a364bf1cdd9ed804779c661f3ca5bde234abaaf5a",
+    "go.arrays.v2": "1c85d89e24c49b4cc9fa7807e590a5c600ad0a95e5a4e30ace9d5c00edece1dc",
+    "go.functions.v2": "494dbfdb3aa19a3e9223816d3ad9c68cbe279dd3bf01aa3369326bf16ed0250b",
+    "go.iteration.v2": "5cc9e204d316bbf93d5e26618ab776eb842a191aebc54d86f53a75682758b17d",
+    "go.testing.v2": "617690105e60f50ab74d69e5ebca938154e7113ad99b8c6041f7a74dda608a7f",
+    "go.debugging.v2": "4ec0841df365943f5a581338666b2c6b6177046a01f3b9bd659249b4095ac200",
+    "go.search.v2": "0cb5a0d070639638ac5b79ac0191ece17aa0e1547c2ab8b7002cf401d2d7bae0",
+    "sql.basics.v2": "88dbf4310052d59b99d411f1ce100c10d7fe7c395b6278cf4aaf71b9166a6896",
+    "sql.projection.v2": "5e35d906b491d01f1abf551a71c9b7c55f66424e0faf9665fe1056e54a7ad1cb",
+    "sql.filters.v2": "6d82a6d9d6f47fdda02b6963f9e462c56fe051eb1552a346877d2b1a07a80810",
+    "sql.logic.v2": "a526606dab888c6b32a3e6282b5fc9e65709a9bf436527258008b1d4e361fc9c",
+    "sql.null.v2": "fa41728226127e366ee01b65010adb5b24be1fffda88f43cb2b755c2e4a814f8",
+    "sql.order.v2": "d3dcc0982729c50c3ab0460f50711749315f6ff282cdeb929358fb405fd76001",
+    "sql.limit.v2": "5ddd9c7e5465348901f5fc80a5f0e3113df4e43fdf6fb446800aab7c64050ef8",
+    "sql.distinct.v2": "daa6cc77b72157c83896ba2a2e23eebf947e4e8b9541234eca8c949a2646bf93",
+    "sql.range.v2": "2450db9212d1e66e34ff09d0f5d1211523778e8f8b81ef6f2bcdc48afb904c99",
+    "sql.like.v2": "19c028da7942c8b8a6e20f4606d4b98426d44ad510d94c16df357b81e5584093",
+    "sql.case.v2": "69970c349a3c1205cff8f884c4798c5fb8d8e598b8a707c578dc2221ca7ad2b0",
+    "sql.aggregate.v2": "6fe6e8f011074b1cfb5e38a077e23c1a5651952e2d588abdd3b7b17806e5d4cb",
+    "sql.group.v2": "76bf21f827a5617da4f4a34d4a262fddaf584cbcc251b213a68bf09c30578a1d",
+    "sql.having.v2": "9d060eafeba2ea3833013dcd91b056cf8da55657365bad3c9d123ecbf0491556",
+    "sql.inner.v2": "4a60dbc25ce24006210f205c5d32dd6e0672a18cb7c804ba82dbdefbd0e5eb1e",
+    "sql.left.v2": "dd56cf94e52be99efc13f6b968db15182b5b7d6a46d9c718a35a878a72931dc5",
+    "sql.multiplicity.v2": "a000e95dbcd5ec0b4a0b900cd4b9d0583fc14d6a698883f5298372baf8ae0835",
+    "sql.subquery.v2": "eea293c7d05fd09fb41af635b2b69763fa39720b1d22c35d23b2cc70d8b6ff90",
+    "sql.exists.v2": "4300246e98938578b9a6413ffb3fd09b744dd8efd9831e0bdbfad37126309c22",
+    "sql.anti.v2": "4a47c25067e70ad6f93ea0fd936eb51296675e71ca4202d3e12552191027830b",
+    "sql.cte.v2": "87cd1b172c1ed92260b5636b952970110c7483ad58e2aa4d03ca23e7baec96dc",
+    "sql.sets.v2": "43b29c0a688e0ff54c4a98144d44de7adf79f80f4fb82383803fa12379e9deb3",
+    "sql.window.v2": "e6043fb5c21d8b46912c6db9ce32725f24eecbc2d7c3cf941acf3744508dacdb",
+    "sql.ranking.v2": "5a8760aaa3057aa1171dbb93b6bd431613c03ed29c0b1fe6a0b91a6800d9ad61",
+    "sql.running.v2": "1656284d7238963812026547973da65fa6b08404e2be73e293ad056d4d14600b",
+    "sql.lag.v2": "01ad13e2a67a16360d296115f9f522cdb73e04df531e309d8312a8a3cba9cf5a",
+    "sql.recursive.v2": "b89ca100bf7fb6807055c16e30fc98f36bf096e4a2883c5d54048f91bc92864f"
+  },
+  "questions": {
+    "c.basics": [
+      "Чем исходный файл отличается от процесса?",
+      "Что изменится, если сначала прибавить 3, а потом умножить?",
+      "Как отличить ожидание ввода от ошибки запуска?"
+    ],
+    "c.values": [
+      "Почему почтовый индекс бывает строкой?",
+      "Что ограничивает диапазон целого?",
+      "Когда нужно точное десятичное представление?"
+    ],
+    "c.variables": [
+      "Что читает правая часть присваивания?",
+      "Чем объявление отличается от изменения?",
+      "Почему полезно хранить единицы в имени?"
+    ],
+    "c.expressions": [
+      "Как восстановить исходное число по частному и остатку?",
+      "Где нужно округление вверх?",
+      "Почему увеличение типа результата иногда не спасает от переполнения?"
+    ],
+    "c.input": [
+      "Чем ошибка формата отличается от ошибки диапазона?",
+      "Когда нельзя читать только слово?",
+      "Что означает конец входного потока?"
+    ],
+    "c.booleans": [
+      "Какая часть может не вычисляться?",
+      "Чем закрытый диапазон отличается от открытого?",
+      "Как отрицать составное условие без потери смысла?"
+    ],
+    "c.branches": [
+      "Когда нужны отдельные if?",
+      "Почему порядок ветвей важен?",
+      "Как проверить полноту разбиения?"
+    ],
+    "c.loops": [
+      "Что означает накопитель перед шагом?",
+      "Почему стартовая сумма равна нулю?",
+      "Как доказать завершение цикла?"
+    ],
+    "c.nested": [
+      "Почему вложенные циклы дают произведение?",
+      "Как не считать пару дважды?",
+      "Где должен сбрасываться накопитель строки?"
+    ],
+    "c.strings": [
+      "Чем байт отличается от видимого символа?",
+      "Когда нужно ограничить алфавит задачи?",
+      "Почему длина строки зависит от представления?"
+    ],
+    "c.arrays": [
+      "Чем индекс отличается от значения?",
+      "Почему диапазон [0,n) удобен?",
+      "Как найти максимум отрицательного массива?"
+    ],
+    "c.functions": [
+      "Чем возврат отличается от печати?",
+      "Какие данные должны быть параметрами?",
+      "Как проверить функцию без консоли?"
+    ],
+    "c.scope": [
+      "Почему видимость не равна времени жизни?",
+      "Как появляется скрытая зависимость?",
+      "Что может сохранить замыкание?"
+    ],
+    "c.collections": [
+      "Когда нужен словарь, а когда множество?",
+      "Почему порядок вывода лучше задавать явно?",
+      "Что делать с отсутствующим ключом?"
+    ],
+    "c.iteration": [
+      "Когда вычисляется ленивый результат?",
+      "Чем filter отличается от map?",
+      "Можно ли безопасно менять коллекцию во время обхода?"
+    ],
+    "c.records": [
+      "Какие поля образуют одну сущность?",
+      "Где проверять инвариант?",
+      "Когда два объекта считаются одним и тем же?"
+    ],
+    "c.errors": [
+      "Где есть достаточно контекста для обработки?",
+      "Почему пустой catch опасен?",
+      "Как сохранить данные при неуспешной записи?"
+    ],
+    "c.files": [
+      "Откуда вычисляется относительный путь?",
+      "Когда нужен потоковый ввод?",
+      "Как избежать потери старых данных при сохранении?"
+    ],
+    "c.json": [
+      "Что JSON не умеет выражать напрямую?",
+      "Почему парсинг не равен валидации?",
+      "Зачем версия документа?"
+    ],
+    "c.modules": [
+      "Чем импорт отличается от установки?",
+      "В какую сторону направлять зависимости?",
+      "Что делает сборку воспроизводимой?"
+    ],
+    "c.testing": [
+      "Какой дефект ловит конкретный тест?",
+      "Чем свойство шире примера?",
+      "Почему важно воспроизводить случайный вход?"
+    ],
+    "c.debugging": [
+      "Как получить минимальный воспроизводимый пример?",
+      "Почему начинать с первой ошибки?",
+      "Что отличает проверяемую гипотезу от догадки?"
+    ],
+    "c.complexity": [
+      "Что считается размером входа?",
+      "Как скрытый обход меняет сложность?",
+      "Почему измерение одного запуска ненадёжно?"
+    ],
+    "c.search": [
+      "Почему нужна сортировка для двоичного поиска?",
+      "Что означает верхняя граница диапазона?",
+      "Зачем бывает нужна стабильная сортировка?"
+    ],
+    "c.advanced.1": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.2": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.3": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.4": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.5": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.6": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.7": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.8": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.9": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.10": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.11": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.12": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.13": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.14": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.15": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "c.advanced.16": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.basics": [
+      "Чем исходный файл отличается от процесса?",
+      "Что изменится, если сначала прибавить 3, а потом умножить?",
+      "Как отличить ожидание ввода от ошибки запуска?"
+    ],
+    "cpp.values": [
+      "Почему почтовый индекс бывает строкой?",
+      "Что ограничивает диапазон целого?",
+      "Когда нужно точное десятичное представление?"
+    ],
+    "cpp.variables": [
+      "Что читает правая часть присваивания?",
+      "Чем объявление отличается от изменения?",
+      "Почему полезно хранить единицы в имени?"
+    ],
+    "cpp.expressions": [
+      "Как восстановить исходное число по частному и остатку?",
+      "Где нужно округление вверх?",
+      "Почему увеличение типа результата иногда не спасает от переполнения?"
+    ],
+    "cpp.input": [
+      "Чем ошибка формата отличается от ошибки диапазона?",
+      "Когда нельзя читать только слово?",
+      "Что означает конец входного потока?"
+    ],
+    "cpp.booleans": [
+      "Какая часть может не вычисляться?",
+      "Чем закрытый диапазон отличается от открытого?",
+      "Как отрицать составное условие без потери смысла?"
+    ],
+    "cpp.branches": [
+      "Когда нужны отдельные if?",
+      "Почему порядок ветвей важен?",
+      "Как проверить полноту разбиения?"
+    ],
+    "cpp.loops": [
+      "Что означает накопитель перед шагом?",
+      "Почему стартовая сумма равна нулю?",
+      "Как доказать завершение цикла?"
+    ],
+    "cpp.nested": [
+      "Почему вложенные циклы дают произведение?",
+      "Как не считать пару дважды?",
+      "Где должен сбрасываться накопитель строки?"
+    ],
+    "cpp.strings": [
+      "Чем байт отличается от видимого символа?",
+      "Когда нужно ограничить алфавит задачи?",
+      "Почему длина строки зависит от представления?"
+    ],
+    "cpp.arrays": [
+      "Чем индекс отличается от значения?",
+      "Почему диапазон [0,n) удобен?",
+      "Как найти максимум отрицательного массива?"
+    ],
+    "cpp.functions": [
+      "Чем возврат отличается от печати?",
+      "Какие данные должны быть параметрами?",
+      "Как проверить функцию без консоли?"
+    ],
+    "cpp.scope": [
+      "Почему видимость не равна времени жизни?",
+      "Как появляется скрытая зависимость?",
+      "Что может сохранить замыкание?"
+    ],
+    "cpp.collections": [
+      "Когда нужен словарь, а когда множество?",
+      "Почему порядок вывода лучше задавать явно?",
+      "Что делать с отсутствующим ключом?"
+    ],
+    "cpp.iteration": [
+      "Когда вычисляется ленивый результат?",
+      "Чем filter отличается от map?",
+      "Можно ли безопасно менять коллекцию во время обхода?"
+    ],
+    "cpp.records": [
+      "Какие поля образуют одну сущность?",
+      "Где проверять инвариант?",
+      "Когда два объекта считаются одним и тем же?"
+    ],
+    "cpp.errors": [
+      "Где есть достаточно контекста для обработки?",
+      "Почему пустой catch опасен?",
+      "Как сохранить данные при неуспешной записи?"
+    ],
+    "cpp.files": [
+      "Откуда вычисляется относительный путь?",
+      "Когда нужен потоковый ввод?",
+      "Как избежать потери старых данных при сохранении?"
+    ],
+    "cpp.json": [
+      "Что JSON не умеет выражать напрямую?",
+      "Почему парсинг не равен валидации?",
+      "Зачем версия документа?"
+    ],
+    "cpp.modules": [
+      "Чем импорт отличается от установки?",
+      "В какую сторону направлять зависимости?",
+      "Что делает сборку воспроизводимой?"
+    ],
+    "cpp.testing": [
+      "Какой дефект ловит конкретный тест?",
+      "Чем свойство шире примера?",
+      "Почему важно воспроизводить случайный вход?"
+    ],
+    "cpp.debugging": [
+      "Как получить минимальный воспроизводимый пример?",
+      "Почему начинать с первой ошибки?",
+      "Что отличает проверяемую гипотезу от догадки?"
+    ],
+    "cpp.complexity": [
+      "Что считается размером входа?",
+      "Как скрытый обход меняет сложность?",
+      "Почему измерение одного запуска ненадёжно?"
+    ],
+    "cpp.search": [
+      "Почему нужна сортировка для двоичного поиска?",
+      "Что означает верхняя граница диапазона?",
+      "Зачем бывает нужна стабильная сортировка?"
+    ],
+    "cpp.advanced.1": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.2": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.3": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.4": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.5": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.6": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.7": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.8": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.9": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.10": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.11": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.12": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.13": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.14": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.15": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "cpp.advanced.16": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.basics": [
+      "Чем исходный файл отличается от процесса?",
+      "Что изменится, если сначала прибавить 3, а потом умножить?",
+      "Как отличить ожидание ввода от ошибки запуска?"
+    ],
+    "csharp.values": [
+      "Почему почтовый индекс бывает строкой?",
+      "Что ограничивает диапазон целого?",
+      "Когда нужно точное десятичное представление?"
+    ],
+    "csharp.variables": [
+      "Что читает правая часть присваивания?",
+      "Чем объявление отличается от изменения?",
+      "Почему полезно хранить единицы в имени?"
+    ],
+    "csharp.expressions": [
+      "Как восстановить исходное число по частному и остатку?",
+      "Где нужно округление вверх?",
+      "Почему увеличение типа результата иногда не спасает от переполнения?"
+    ],
+    "csharp.input": [
+      "Чем ошибка формата отличается от ошибки диапазона?",
+      "Когда нельзя читать только слово?",
+      "Что означает конец входного потока?"
+    ],
+    "csharp.booleans": [
+      "Какая часть может не вычисляться?",
+      "Чем закрытый диапазон отличается от открытого?",
+      "Как отрицать составное условие без потери смысла?"
+    ],
+    "csharp.branches": [
+      "Когда нужны отдельные if?",
+      "Почему порядок ветвей важен?",
+      "Как проверить полноту разбиения?"
+    ],
+    "csharp.loops": [
+      "Что означает накопитель перед шагом?",
+      "Почему стартовая сумма равна нулю?",
+      "Как доказать завершение цикла?"
+    ],
+    "csharp.nested": [
+      "Почему вложенные циклы дают произведение?",
+      "Как не считать пару дважды?",
+      "Где должен сбрасываться накопитель строки?"
+    ],
+    "csharp.strings": [
+      "Чем байт отличается от видимого символа?",
+      "Когда нужно ограничить алфавит задачи?",
+      "Почему длина строки зависит от представления?"
+    ],
+    "csharp.arrays": [
+      "Чем индекс отличается от значения?",
+      "Почему диапазон [0,n) удобен?",
+      "Как найти максимум отрицательного массива?"
+    ],
+    "csharp.functions": [
+      "Чем возврат отличается от печати?",
+      "Какие данные должны быть параметрами?",
+      "Как проверить функцию без консоли?"
+    ],
+    "csharp.scope": [
+      "Почему видимость не равна времени жизни?",
+      "Как появляется скрытая зависимость?",
+      "Что может сохранить замыкание?"
+    ],
+    "csharp.collections": [
+      "Когда нужен словарь, а когда множество?",
+      "Почему порядок вывода лучше задавать явно?",
+      "Что делать с отсутствующим ключом?"
+    ],
+    "csharp.iteration": [
+      "Когда вычисляется ленивый результат?",
+      "Чем filter отличается от map?",
+      "Можно ли безопасно менять коллекцию во время обхода?"
+    ],
+    "csharp.records": [
+      "Какие поля образуют одну сущность?",
+      "Где проверять инвариант?",
+      "Когда два объекта считаются одним и тем же?"
+    ],
+    "csharp.errors": [
+      "Где есть достаточно контекста для обработки?",
+      "Почему пустой catch опасен?",
+      "Как сохранить данные при неуспешной записи?"
+    ],
+    "csharp.files": [
+      "Откуда вычисляется относительный путь?",
+      "Когда нужен потоковый ввод?",
+      "Как избежать потери старых данных при сохранении?"
+    ],
+    "csharp.json": [
+      "Что JSON не умеет выражать напрямую?",
+      "Почему парсинг не равен валидации?",
+      "Зачем версия документа?"
+    ],
+    "csharp.modules": [
+      "Чем импорт отличается от установки?",
+      "В какую сторону направлять зависимости?",
+      "Что делает сборку воспроизводимой?"
+    ],
+    "csharp.testing": [
+      "Какой дефект ловит конкретный тест?",
+      "Чем свойство шире примера?",
+      "Почему важно воспроизводить случайный вход?"
+    ],
+    "csharp.debugging": [
+      "Как получить минимальный воспроизводимый пример?",
+      "Почему начинать с первой ошибки?",
+      "Что отличает проверяемую гипотезу от догадки?"
+    ],
+    "csharp.complexity": [
+      "Что считается размером входа?",
+      "Как скрытый обход меняет сложность?",
+      "Почему измерение одного запуска ненадёжно?"
+    ],
+    "csharp.search": [
+      "Почему нужна сортировка для двоичного поиска?",
+      "Что означает верхняя граница диапазона?",
+      "Зачем бывает нужна стабильная сортировка?"
+    ],
+    "csharp.advanced.1": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.2": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.3": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.4": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.5": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.6": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.7": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.8": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.9": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.10": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.11": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.12": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.13": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.14": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.15": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "csharp.advanced.16": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.basics": [
+      "Чем исходный файл отличается от процесса?",
+      "Что изменится, если сначала прибавить 3, а потом умножить?",
+      "Как отличить ожидание ввода от ошибки запуска?"
+    ],
+    "python.values": [
+      "Почему почтовый индекс бывает строкой?",
+      "Что ограничивает диапазон целого?",
+      "Когда нужно точное десятичное представление?"
+    ],
+    "python.variables": [
+      "Что читает правая часть присваивания?",
+      "Чем объявление отличается от изменения?",
+      "Почему полезно хранить единицы в имени?"
+    ],
+    "python.expressions": [
+      "Как восстановить исходное число по частному и остатку?",
+      "Где нужно округление вверх?",
+      "Почему увеличение типа результата иногда не спасает от переполнения?"
+    ],
+    "python.input": [
+      "Чем ошибка формата отличается от ошибки диапазона?",
+      "Когда нельзя читать только слово?",
+      "Что означает конец входного потока?"
+    ],
+    "python.booleans": [
+      "Какая часть может не вычисляться?",
+      "Чем закрытый диапазон отличается от открытого?",
+      "Как отрицать составное условие без потери смысла?"
+    ],
+    "python.branches": [
+      "Когда нужны отдельные if?",
+      "Почему порядок ветвей важен?",
+      "Как проверить полноту разбиения?"
+    ],
+    "python.loops": [
+      "Что означает накопитель перед шагом?",
+      "Почему стартовая сумма равна нулю?",
+      "Как доказать завершение цикла?"
+    ],
+    "python.nested": [
+      "Почему вложенные циклы дают произведение?",
+      "Как не считать пару дважды?",
+      "Где должен сбрасываться накопитель строки?"
+    ],
+    "python.strings": [
+      "Чем байт отличается от видимого символа?",
+      "Когда нужно ограничить алфавит задачи?",
+      "Почему длина строки зависит от представления?"
+    ],
+    "python.arrays": [
+      "Чем индекс отличается от значения?",
+      "Почему диапазон [0,n) удобен?",
+      "Как найти максимум отрицательного массива?"
+    ],
+    "python.functions": [
+      "Чем возврат отличается от печати?",
+      "Какие данные должны быть параметрами?",
+      "Как проверить функцию без консоли?"
+    ],
+    "python.scope": [
+      "Почему видимость не равна времени жизни?",
+      "Как появляется скрытая зависимость?",
+      "Что может сохранить замыкание?"
+    ],
+    "python.collections": [
+      "Когда нужен словарь, а когда множество?",
+      "Почему порядок вывода лучше задавать явно?",
+      "Что делать с отсутствующим ключом?"
+    ],
+    "python.iteration": [
+      "Когда вычисляется ленивый результат?",
+      "Чем filter отличается от map?",
+      "Можно ли безопасно менять коллекцию во время обхода?"
+    ],
+    "python.records": [
+      "Какие поля образуют одну сущность?",
+      "Где проверять инвариант?",
+      "Когда два объекта считаются одним и тем же?"
+    ],
+    "python.errors": [
+      "Где есть достаточно контекста для обработки?",
+      "Почему пустой catch опасен?",
+      "Как сохранить данные при неуспешной записи?"
+    ],
+    "python.files": [
+      "Откуда вычисляется относительный путь?",
+      "Когда нужен потоковый ввод?",
+      "Как избежать потери старых данных при сохранении?"
+    ],
+    "python.json": [
+      "Что JSON не умеет выражать напрямую?",
+      "Почему парсинг не равен валидации?",
+      "Зачем версия документа?"
+    ],
+    "python.modules": [
+      "Чем импорт отличается от установки?",
+      "В какую сторону направлять зависимости?",
+      "Что делает сборку воспроизводимой?"
+    ],
+    "python.testing": [
+      "Какой дефект ловит конкретный тест?",
+      "Чем свойство шире примера?",
+      "Почему важно воспроизводить случайный вход?"
+    ],
+    "python.debugging": [
+      "Как получить минимальный воспроизводимый пример?",
+      "Почему начинать с первой ошибки?",
+      "Что отличает проверяемую гипотезу от догадки?"
+    ],
+    "python.complexity": [
+      "Что считается размером входа?",
+      "Как скрытый обход меняет сложность?",
+      "Почему измерение одного запуска ненадёжно?"
+    ],
+    "python.search": [
+      "Почему нужна сортировка для двоичного поиска?",
+      "Что означает верхняя граница диапазона?",
+      "Зачем бывает нужна стабильная сортировка?"
+    ],
+    "python.advanced.1": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.2": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.3": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.4": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.5": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.6": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.7": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.8": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.9": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.10": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.11": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.12": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.13": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.14": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.15": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "python.advanced.16": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.basics": [
+      "Чем исходный файл отличается от процесса?",
+      "Что изменится, если сначала прибавить 3, а потом умножить?",
+      "Как отличить ожидание ввода от ошибки запуска?"
+    ],
+    "java.values": [
+      "Почему почтовый индекс бывает строкой?",
+      "Что ограничивает диапазон целого?",
+      "Когда нужно точное десятичное представление?"
+    ],
+    "java.variables": [
+      "Что читает правая часть присваивания?",
+      "Чем объявление отличается от изменения?",
+      "Почему полезно хранить единицы в имени?"
+    ],
+    "java.expressions": [
+      "Как восстановить исходное число по частному и остатку?",
+      "Где нужно округление вверх?",
+      "Почему увеличение типа результата иногда не спасает от переполнения?"
+    ],
+    "java.input": [
+      "Чем ошибка формата отличается от ошибки диапазона?",
+      "Когда нельзя читать только слово?",
+      "Что означает конец входного потока?"
+    ],
+    "java.booleans": [
+      "Какая часть может не вычисляться?",
+      "Чем закрытый диапазон отличается от открытого?",
+      "Как отрицать составное условие без потери смысла?"
+    ],
+    "java.branches": [
+      "Когда нужны отдельные if?",
+      "Почему порядок ветвей важен?",
+      "Как проверить полноту разбиения?"
+    ],
+    "java.loops": [
+      "Что означает накопитель перед шагом?",
+      "Почему стартовая сумма равна нулю?",
+      "Как доказать завершение цикла?"
+    ],
+    "java.nested": [
+      "Почему вложенные циклы дают произведение?",
+      "Как не считать пару дважды?",
+      "Где должен сбрасываться накопитель строки?"
+    ],
+    "java.strings": [
+      "Чем байт отличается от видимого символа?",
+      "Когда нужно ограничить алфавит задачи?",
+      "Почему длина строки зависит от представления?"
+    ],
+    "java.arrays": [
+      "Чем индекс отличается от значения?",
+      "Почему диапазон [0,n) удобен?",
+      "Как найти максимум отрицательного массива?"
+    ],
+    "java.functions": [
+      "Чем возврат отличается от печати?",
+      "Какие данные должны быть параметрами?",
+      "Как проверить функцию без консоли?"
+    ],
+    "java.scope": [
+      "Почему видимость не равна времени жизни?",
+      "Как появляется скрытая зависимость?",
+      "Что может сохранить замыкание?"
+    ],
+    "java.collections": [
+      "Когда нужен словарь, а когда множество?",
+      "Почему порядок вывода лучше задавать явно?",
+      "Что делать с отсутствующим ключом?"
+    ],
+    "java.iteration": [
+      "Когда вычисляется ленивый результат?",
+      "Чем filter отличается от map?",
+      "Можно ли безопасно менять коллекцию во время обхода?"
+    ],
+    "java.records": [
+      "Какие поля образуют одну сущность?",
+      "Где проверять инвариант?",
+      "Когда два объекта считаются одним и тем же?"
+    ],
+    "java.errors": [
+      "Где есть достаточно контекста для обработки?",
+      "Почему пустой catch опасен?",
+      "Как сохранить данные при неуспешной записи?"
+    ],
+    "java.files": [
+      "Откуда вычисляется относительный путь?",
+      "Когда нужен потоковый ввод?",
+      "Как избежать потери старых данных при сохранении?"
+    ],
+    "java.json": [
+      "Что JSON не умеет выражать напрямую?",
+      "Почему парсинг не равен валидации?",
+      "Зачем версия документа?"
+    ],
+    "java.modules": [
+      "Чем импорт отличается от установки?",
+      "В какую сторону направлять зависимости?",
+      "Что делает сборку воспроизводимой?"
+    ],
+    "java.testing": [
+      "Какой дефект ловит конкретный тест?",
+      "Чем свойство шире примера?",
+      "Почему важно воспроизводить случайный вход?"
+    ],
+    "java.debugging": [
+      "Как получить минимальный воспроизводимый пример?",
+      "Почему начинать с первой ошибки?",
+      "Что отличает проверяемую гипотезу от догадки?"
+    ],
+    "java.complexity": [
+      "Что считается размером входа?",
+      "Как скрытый обход меняет сложность?",
+      "Почему измерение одного запуска ненадёжно?"
+    ],
+    "java.search": [
+      "Почему нужна сортировка для двоичного поиска?",
+      "Что означает верхняя граница диапазона?",
+      "Зачем бывает нужна стабильная сортировка?"
+    ],
+    "java.advanced.1": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.2": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.3": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.4": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.5": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.6": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.7": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.8": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.9": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.10": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.11": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.12": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.13": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.14": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.15": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "java.advanced.16": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.basics": [
+      "Чем исходный файл отличается от процесса?",
+      "Что изменится, если сначала прибавить 3, а потом умножить?",
+      "Как отличить ожидание ввода от ошибки запуска?"
+    ],
+    "javascript.values": [
+      "Почему почтовый индекс бывает строкой?",
+      "Что ограничивает диапазон целого?",
+      "Когда нужно точное десятичное представление?"
+    ],
+    "javascript.variables": [
+      "Что читает правая часть присваивания?",
+      "Чем объявление отличается от изменения?",
+      "Почему полезно хранить единицы в имени?"
+    ],
+    "javascript.expressions": [
+      "Как восстановить исходное число по частному и остатку?",
+      "Где нужно округление вверх?",
+      "Почему увеличение типа результата иногда не спасает от переполнения?"
+    ],
+    "javascript.input": [
+      "Чем ошибка формата отличается от ошибки диапазона?",
+      "Когда нельзя читать только слово?",
+      "Что означает конец входного потока?"
+    ],
+    "javascript.booleans": [
+      "Какая часть может не вычисляться?",
+      "Чем закрытый диапазон отличается от открытого?",
+      "Как отрицать составное условие без потери смысла?"
+    ],
+    "javascript.branches": [
+      "Когда нужны отдельные if?",
+      "Почему порядок ветвей важен?",
+      "Как проверить полноту разбиения?"
+    ],
+    "javascript.loops": [
+      "Что означает накопитель перед шагом?",
+      "Почему стартовая сумма равна нулю?",
+      "Как доказать завершение цикла?"
+    ],
+    "javascript.nested": [
+      "Почему вложенные циклы дают произведение?",
+      "Как не считать пару дважды?",
+      "Где должен сбрасываться накопитель строки?"
+    ],
+    "javascript.strings": [
+      "Чем байт отличается от видимого символа?",
+      "Когда нужно ограничить алфавит задачи?",
+      "Почему длина строки зависит от представления?"
+    ],
+    "javascript.arrays": [
+      "Чем индекс отличается от значения?",
+      "Почему диапазон [0,n) удобен?",
+      "Как найти максимум отрицательного массива?"
+    ],
+    "javascript.functions": [
+      "Чем возврат отличается от печати?",
+      "Какие данные должны быть параметрами?",
+      "Как проверить функцию без консоли?"
+    ],
+    "javascript.scope": [
+      "Почему видимость не равна времени жизни?",
+      "Как появляется скрытая зависимость?",
+      "Что может сохранить замыкание?"
+    ],
+    "javascript.collections": [
+      "Когда нужен словарь, а когда множество?",
+      "Почему порядок вывода лучше задавать явно?",
+      "Что делать с отсутствующим ключом?"
+    ],
+    "javascript.iteration": [
+      "Когда вычисляется ленивый результат?",
+      "Чем filter отличается от map?",
+      "Можно ли безопасно менять коллекцию во время обхода?"
+    ],
+    "javascript.records": [
+      "Какие поля образуют одну сущность?",
+      "Где проверять инвариант?",
+      "Когда два объекта считаются одним и тем же?"
+    ],
+    "javascript.errors": [
+      "Где есть достаточно контекста для обработки?",
+      "Почему пустой catch опасен?",
+      "Как сохранить данные при неуспешной записи?"
+    ],
+    "javascript.files": [
+      "Откуда вычисляется относительный путь?",
+      "Когда нужен потоковый ввод?",
+      "Как избежать потери старых данных при сохранении?"
+    ],
+    "javascript.json": [
+      "Что JSON не умеет выражать напрямую?",
+      "Почему парсинг не равен валидации?",
+      "Зачем версия документа?"
+    ],
+    "javascript.modules": [
+      "Чем импорт отличается от установки?",
+      "В какую сторону направлять зависимости?",
+      "Что делает сборку воспроизводимой?"
+    ],
+    "javascript.testing": [
+      "Какой дефект ловит конкретный тест?",
+      "Чем свойство шире примера?",
+      "Почему важно воспроизводить случайный вход?"
+    ],
+    "javascript.debugging": [
+      "Как получить минимальный воспроизводимый пример?",
+      "Почему начинать с первой ошибки?",
+      "Что отличает проверяемую гипотезу от догадки?"
+    ],
+    "javascript.complexity": [
+      "Что считается размером входа?",
+      "Как скрытый обход меняет сложность?",
+      "Почему измерение одного запуска ненадёжно?"
+    ],
+    "javascript.search": [
+      "Почему нужна сортировка для двоичного поиска?",
+      "Что означает верхняя граница диапазона?",
+      "Зачем бывает нужна стабильная сортировка?"
+    ],
+    "javascript.advanced.1": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.2": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.3": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.4": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.5": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.6": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.7": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.8": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.9": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.10": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.11": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.12": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.13": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.14": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.15": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "javascript.advanced.16": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.basics": [
+      "Чем исходный файл отличается от процесса?",
+      "Что изменится, если сначала прибавить 3, а потом умножить?",
+      "Как отличить ожидание ввода от ошибки запуска?"
+    ],
+    "go.values": [
+      "Почему почтовый индекс бывает строкой?",
+      "Что ограничивает диапазон целого?",
+      "Когда нужно точное десятичное представление?"
+    ],
+    "go.variables": [
+      "Что читает правая часть присваивания?",
+      "Чем объявление отличается от изменения?",
+      "Почему полезно хранить единицы в имени?"
+    ],
+    "go.expressions": [
+      "Как восстановить исходное число по частному и остатку?",
+      "Где нужно округление вверх?",
+      "Почему увеличение типа результата иногда не спасает от переполнения?"
+    ],
+    "go.input": [
+      "Чем ошибка формата отличается от ошибки диапазона?",
+      "Когда нельзя читать только слово?",
+      "Что означает конец входного потока?"
+    ],
+    "go.booleans": [
+      "Какая часть может не вычисляться?",
+      "Чем закрытый диапазон отличается от открытого?",
+      "Как отрицать составное условие без потери смысла?"
+    ],
+    "go.branches": [
+      "Когда нужны отдельные if?",
+      "Почему порядок ветвей важен?",
+      "Как проверить полноту разбиения?"
+    ],
+    "go.loops": [
+      "Что означает накопитель перед шагом?",
+      "Почему стартовая сумма равна нулю?",
+      "Как доказать завершение цикла?"
+    ],
+    "go.nested": [
+      "Почему вложенные циклы дают произведение?",
+      "Как не считать пару дважды?",
+      "Где должен сбрасываться накопитель строки?"
+    ],
+    "go.strings": [
+      "Чем байт отличается от видимого символа?",
+      "Когда нужно ограничить алфавит задачи?",
+      "Почему длина строки зависит от представления?"
+    ],
+    "go.arrays": [
+      "Чем индекс отличается от значения?",
+      "Почему диапазон [0,n) удобен?",
+      "Как найти максимум отрицательного массива?"
+    ],
+    "go.functions": [
+      "Чем возврат отличается от печати?",
+      "Какие данные должны быть параметрами?",
+      "Как проверить функцию без консоли?"
+    ],
+    "go.scope": [
+      "Почему видимость не равна времени жизни?",
+      "Как появляется скрытая зависимость?",
+      "Что может сохранить замыкание?"
+    ],
+    "go.collections": [
+      "Когда нужен словарь, а когда множество?",
+      "Почему порядок вывода лучше задавать явно?",
+      "Что делать с отсутствующим ключом?"
+    ],
+    "go.iteration": [
+      "Когда вычисляется ленивый результат?",
+      "Чем filter отличается от map?",
+      "Можно ли безопасно менять коллекцию во время обхода?"
+    ],
+    "go.records": [
+      "Какие поля образуют одну сущность?",
+      "Где проверять инвариант?",
+      "Когда два объекта считаются одним и тем же?"
+    ],
+    "go.errors": [
+      "Где есть достаточно контекста для обработки?",
+      "Почему пустой catch опасен?",
+      "Как сохранить данные при неуспешной записи?"
+    ],
+    "go.files": [
+      "Откуда вычисляется относительный путь?",
+      "Когда нужен потоковый ввод?",
+      "Как избежать потери старых данных при сохранении?"
+    ],
+    "go.json": [
+      "Что JSON не умеет выражать напрямую?",
+      "Почему парсинг не равен валидации?",
+      "Зачем версия документа?"
+    ],
+    "go.modules": [
+      "Чем импорт отличается от установки?",
+      "В какую сторону направлять зависимости?",
+      "Что делает сборку воспроизводимой?"
+    ],
+    "go.testing": [
+      "Какой дефект ловит конкретный тест?",
+      "Чем свойство шире примера?",
+      "Почему важно воспроизводить случайный вход?"
+    ],
+    "go.debugging": [
+      "Как получить минимальный воспроизводимый пример?",
+      "Почему начинать с первой ошибки?",
+      "Что отличает проверяемую гипотезу от догадки?"
+    ],
+    "go.complexity": [
+      "Что считается размером входа?",
+      "Как скрытый обход меняет сложность?",
+      "Почему измерение одного запуска ненадёжно?"
+    ],
+    "go.search": [
+      "Почему нужна сортировка для двоичного поиска?",
+      "Что означает верхняя граница диапазона?",
+      "Зачем бывает нужна стабильная сортировка?"
+    ],
+    "go.advanced.1": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.2": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.3": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.4": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.5": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.6": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.7": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.8": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.9": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.10": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.11": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.12": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.13": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.14": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.15": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "go.advanced.16": [
+      "Какую проблему решает эта возможность языка?",
+      "Какие условия и ограничения есть у примера?",
+      "Как ты проверишь обычный случай и отказ?"
+    ],
+    "sql.basics": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.projection": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.filters": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.logic": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.null": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.order": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.limit": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.distinct": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.range": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.like": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.case": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.aggregate": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.group": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.having": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.inner": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.left": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.multiplicity": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.subquery": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.exists": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.anti": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.cte": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.sets": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.window": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.ranking": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.running": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.lag": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.recursive": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.schema": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.constraints": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.normalization": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.insert": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.update": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.transactions": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.isolation": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.indexes": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.plan": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.security": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.migration": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.project": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ],
+    "sql.graduation": [
+      "Что означает одна строка результата?",
+      "Как поведёт себя запрос на пустых данных и NULL?",
+      "Какая независимая проверка отличит верный запрос от случайного совпадения?"
+    ]
+  }
+}

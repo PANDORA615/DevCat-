@@ -15,7 +15,7 @@ void main() {
       expect(courses.length, 8);
       final ids = <String>{};
       for (final course in courses) {
-        expect(course.lessons.length, 40, reason: course.id);
+        expect(course.lessons.length, 48, reason: course.id);
         for (final lesson in course.lessons) {
           expect(ids.add(lesson.id), isTrue);
           expect(
@@ -37,6 +37,35 @@ void main() {
         }
       }
     },
+  );
+  test(
+    'Every complete workshop program executes its documented examples',
+    () async {
+      for (final course in courses) {
+        for (final lesson in course.lessons) {
+          final example = lesson.runnableExample;
+          if (example == null) continue;
+          for (final raw in example['tests'] as List) {
+            final sample = Map<String, dynamic>.from(raw);
+            final result = await LocalRunner().run(
+              course.id,
+              example['code'] as String,
+              sample['input'] as String,
+            );
+            expect(result.ok, isTrue, reason: '${lesson.id}: ${result.error}');
+            final output = course.id == 'sql'
+                ? result.output.split('\n').skip(1).join('\n')
+                : result.output;
+            expect(
+              LocalRunner.normalize(output),
+              LocalRunner.normalize(sample['expected'] as String),
+              reason: lesson.id,
+            );
+          }
+        }
+      }
+    },
+    timeout: const Timeout(Duration(minutes: 12)),
   );
   test(
     'Every unique authored reference passes real independent input checks',

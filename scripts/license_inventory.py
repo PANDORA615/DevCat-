@@ -22,4 +22,4 @@ for font in ['Nunito', 'JetBrainsMono']:
  notices.append(f'\n## {font} font — SIL Open Font License\n\n```text\n{text}\n```\n')
 notices.append('\n' + (root/'docs/ANDROID_RUNTIME_NOTICES.md').read_text())
 (root/'docs/THIRD_PARTY_NOTICES.md').write_text(''.join(notices))
-(root/'docs/SBOM.spdx.json').write_text(json.dumps({'spdxVersion':'SPDX-2.3','dataLicense':'CC0-1.0','SPDXID':'SPDXRef-DOCUMENT','name':'DevCat-0.2.1','documentNamespace':'https://github.com/PANDORA615/DevCat-/sbom/0.2.1','creationInfo':{'creators':['Tool: DevCat license_inventory.py'],'created':'2026-10-27T00:00:00Z'},'packages':packages},indent=2)+'\n')
+(root/'docs/SBOM.spdx.json').write_text(json.dumps({'spdxVersion':'SPDX-2.3','dataLicense':'CC0-1.0','SPDXID':'SPDXRef-DOCUMENT','name':'DevCat-0.3.0','documentNamespace':'https://github.com/PANDORA615/DevCat-/sbom/0.3.0','creationInfo':{'creators':['Tool: DevCat license_inventory.py'],'created':'2026-10-28T00:00:00Z'},'packages':packages},indent=2)+'\n')

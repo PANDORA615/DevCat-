@@ -55,6 +55,28 @@ void main() {
         expect(result.passed, isTrue, reason: '${task.id}: ${result.report}');
         debugPrint('ANDROID_REFERENCE_PASS ${task.id}');
       }
+      for (final lesson in course.lessons) {
+        final example = lesson.runnableExample;
+        if (example == null) continue;
+        for (final raw in example['tests'] as List) {
+          final sample = Map<String, dynamic>.from(raw);
+          final result = await runner.run(
+            course.id,
+            example['code'] as String,
+            sample['input'] as String,
+          );
+          expect(result.ok, isTrue, reason: '${lesson.id}: ${result.error}');
+          final output = course.id == 'sql'
+              ? result.output.split('\n').skip(1).join('\n')
+              : result.output;
+          expect(
+            LocalRunner.normalize(output),
+            LocalRunner.normalize(sample['expected'] as String),
+            reason: lesson.id,
+          );
+        }
+        debugPrint('ANDROID_WORKSHOP_PASS ${lesson.id}');
+      }
       final generated = generateChallenge(course.id, seed: 73);
       expect(
         (await runner.check(generated, generated.solution)).passed,
@@ -192,6 +214,31 @@ void main() {
         }
         debugPrint('ANDROID_IDE_PASS ${item.key}');
       }
+      final database = DevProject.create('sql', 'Transaction lecture');
+      database.files['main.sql'] = '''
+CREATE TABLE parent(id INTEGER PRIMARY KEY, name TEXT);
+CREATE TABLE child(parent_id INTEGER REFERENCES parent(id));
+BEGIN;
+INSERT INTO parent VALUES(1, 'Кот; книга');
+INSERT INTO child VALUES(1);
+COMMIT;
+SELECT name FROM parent;
+''';
+      final script = await LocalRunner().runProject(database, root, '');
+      expect(script.ok, isTrue, reason: script.error);
+      expect(script.output, contains('Кот; книга'));
+      database.files['main.sql'] = '''
+BEGIN;
+INSERT INTO parent VALUES(2, 'rollback');
+INSERT INTO child VALUES(99);
+COMMIT;
+''';
+      expect((await LocalRunner().runProject(database, root, '')).ok, isFalse);
+      database.files['main.sql'] = 'SELECT COUNT(*) AS count FROM parent;';
+      final after = await LocalRunner().runProject(database, root, '');
+      expect(after.ok, isTrue, reason: after.error);
+      expect(after.output.trim().split('\n').last, '1');
+      debugPrint('ANDROID_SQL_TRANSACTION_PASS');
     } finally {
       await root.delete(recursive: true);
     }

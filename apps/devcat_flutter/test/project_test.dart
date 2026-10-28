@@ -157,4 +157,74 @@ void main() {
       }
     },
   );
+  test(
+    'SQL scripts preserve Unicode, quoted semicolons and trigger bodies',
+    () async {
+      final root = await Directory.systemTemp.createTemp('devcat-sql-script-');
+      final project = DevProject.create('sql', 'Script');
+      final runner = LocalRunner();
+      try {
+        project.files[project.entry] = """
+        CREATE TABLE books(id INTEGER PRIMARY KEY, title TEXT NOT NULL);
+        CREATE TABLE audit(book_id INTEGER);
+        CREATE TRIGGER remember AFTER INSERT ON books BEGIN
+          INSERT INTO audit VALUES(new.id);
+        END;
+        BEGIN;
+        INSERT INTO books VALUES(1, 'Кот; книга');
+        COMMIT;
+        SELECT title FROM books;
+        -- trailing comment; not a statement
+      """;
+        final result = await runner.runProject(project, root, '');
+        expect(result.ok, isTrue, reason: result.error);
+        expect(result.output, contains('Кот; книга'));
+        project.files[project.entry] = 'SELECT COUNT(*) FROM audit;';
+        final audit = await runner.runProject(project, root, '');
+        expect(audit.ok, isTrue, reason: audit.error);
+        expect(audit.output.trim(), endsWith('1'));
+      } finally {
+        await root.delete(recursive: true);
+      }
+    },
+  );
+  test('SQL foreign keys and explicit rollback work across project runs', () async {
+    final root = await Directory.systemTemp.createTemp(
+      'devcat-sql-transaction-',
+    );
+    final project = DevProject.create('sql', 'Transaction');
+    final runner = LocalRunner();
+    Future<RunResult> run(String source) {
+      project.files[project.entry] = source;
+      return runner.runProject(project, root, '');
+    }
+
+    try {
+      expect(
+        (await run(
+          'CREATE TABLE parent(id INTEGER PRIMARY KEY); CREATE TABLE child(id INTEGER PRIMARY KEY, parent_id INTEGER REFERENCES parent(id)); INSERT INTO parent VALUES(1);',
+        )).ok,
+        isTrue,
+      );
+      final failure = await run(
+        'BEGIN; INSERT INTO parent VALUES(2); INSERT INTO child VALUES(1,999); COMMIT;',
+      );
+      expect(failure.ok, isFalse);
+      expect(failure.error, contains('FOREIGN KEY'));
+      expect(
+        (await run('SELECT COUNT(*) FROM parent;')).output.trim(),
+        endsWith('1'),
+      );
+      expect((await run('INSERT INTO child VALUES(1,999);')).ok, isFalse);
+      final unfinished = await run('BEGIN; INSERT INTO parent VALUES(2);');
+      expect(unfinished.ok, isFalse);
+      expect(unfinished.error, contains('открытую транзакцию'));
+      expect(
+        (await run('SELECT COUNT(*) FROM parent;')).output.trim(),
+        endsWith('1'),
+      );
+    } finally {
+      await root.delete(recursive: true);
+    }
+  });
 }

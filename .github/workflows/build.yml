@@ -40,7 +40,7 @@ jobs:
           dart format --output=none --set-exit-if-changed lib test
           flutter analyze
           DEVCAT_REQUIRE_ALL_TOOLCHAINS=true flutter test --reporter expanded --concurrency=2
-      - run: python3 scripts/write_content.py && git diff --exit-code -- content apps/devcat_flutter/assets/content
+      - run: python3 scripts/write_content.py && python3 -m unittest discover -s scripts -p 'test_*.py' -v && git diff --exit-code -- content apps/devcat_flutter/assets/content docs/textbooks docs/DevCat-lectures.zip
   desktop:
     needs: test
     strategy:
@@ -64,12 +64,12 @@ jobs:
       - working-directory: apps/devcat_flutter
         run: flutter build ${{ matrix.target }} --release
       - if: matrix.target == 'linux'
-        run: scripts/package_linux.sh 0.2.1
+        run: scripts/package_linux.sh 0.3.0
       - if: matrix.target == 'windows'
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force dist
-          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.2.1-windows-x64.zip
+          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.3.0-windows-x64.zip
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" scripts/windows.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - if: matrix.target == 'macos'
@@ -77,11 +77,11 @@ jobs:
           mkdir -p dist
           app=apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app
           codesign --force --deep --sign - "$app"
-          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.2.1-macos-universal.zip
+          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.3.0-macos-universal.zip
           mkdir -p /tmp/devcat-dmg
           ditto "$app" /tmp/devcat-dmg/DevCat.app
           ln -s /Applications /tmp/devcat-dmg/Applications
-          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.2.1-macos-universal.dmg
+          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.3.0-macos-universal.dmg
       - uses: actions/upload-artifact@v4
         with:
           name: devcat-${{ matrix.target }}
