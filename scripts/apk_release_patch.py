@@ -16,8 +16,11 @@ BLOCK = 1024 * 1024
 
 
 def digest(path):
+    result = hashlib.sha256()
     with Path(path).open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+        for block in iter(lambda: stream.read(BLOCK), b''):
+            result.update(block)
+    return result.hexdigest()
 
 
 def region_hash(stream, offset, length):
