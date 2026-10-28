@@ -630,7 +630,8 @@ class _DevCatShellState extends State<DevCatShell> {
                   child: TextField(
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.search_rounded),
-                      labelText: '${course.name}: поиск по 40 лекциям',
+                      labelText:
+                          '${course.name}: поиск по ${course.lessons.length} лекциям',
                     ),
                     onChanged: (value) =>
                         update(() => query = value.toLowerCase()),
