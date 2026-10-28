@@ -1,0 +1,35 @@
+[
+  {
+    "name": "DevCat-0.2.1-android-arm64-v8a.apk",
+    "abi": "arm64-v8a",
+    "versionCode": 2003,
+    "bytes": 645370333,
+    "sha256": "189cb74e7abfef635dabe13ade701f37a3174f42651847718e71dad5ae110465",
+    "certificateSHA256": "f4412cfc2567a7b33248df99777c0d104761dd2dda3ee7de8fe8bac467098bca",
+    "copiedBytes": 645282632,
+    "literalBytes": 87701,
+    "patchBytes": 130692
+  },
+  {
+    "name": "DevCat-0.2.1-android-armeabi-v7a.apk",
+    "abi": "armeabi-v7a",
+    "versionCode": 1003,
+    "bytes": 599228915,
+    "sha256": "23e7b4eb816d13f9f60875d7240834794f40d9c2f71377e8b5b0e84ad40bc6c4",
+    "certificateSHA256": "f4412cfc2567a7b33248df99777c0d104761dd2dda3ee7de8fe8bac467098bca",
+    "copiedBytes": 599144517,
+    "literalBytes": 84398,
+    "patchBytes": 126304
+  },
+  {
+    "name": "DevCat-0.2.1-android-x86_64.apk",
+    "abi": "x86_64",
+    "versionCode": 4003,
+    "bytes": 664674748,
+    "sha256": "84723c96d07796740a60e2df41722343b6f4501d7bc94d818bb9510f722266bd",
+    "certificateSHA256": "f4412cfc2567a7b33248df99777c0d104761dd2dda3ee7de8fe8bac467098bca",
+    "copiedBytes": 664587952,
+    "literalBytes": 86796,
+    "patchBytes": 129474
+  }
+]
