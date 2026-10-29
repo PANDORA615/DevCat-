@@ -33,6 +33,8 @@ class Lesson {
   final List<Map<String, dynamic>> sections;
   final List<String> questions, checklist, answers;
   final Map<String, dynamic>? runnableExample;
+  final Map<String, dynamic> learning;
+  final Map<String, String> webExample;
   final Challenge? challenge;
   final int minutes;
   final int questionRevision;
@@ -49,6 +51,8 @@ class Lesson {
       difficulty = j['difficulty'] ?? 'Лекция',
       questionRevision = j['questionRevision'] ?? 1,
       answers = List<String>.from(j['answers'] ?? []),
+      learning = Map<String, dynamic>.from(j['learning'] ?? {}),
+      webExample = Map<String, String>.from(j['webExample'] ?? {}),
       runnableExample = j['runnableExample'] == null
           ? null
           : Map<String, dynamic>.from(j['runnableExample']),
@@ -67,6 +71,13 @@ class Lesson {
   String answerDraftKey(int index) => questionRevision == 1
       ? 'answer.$id.$index'
       : 'answer.v$questionRevision.$id.$index';
+
+  String get assessmentLabel => switch (learning['assessment']) {
+    'tests' => 'Задача с автопроверкой',
+    'experiment' => 'Опыт с примером',
+    'project' => 'Самостоятельный проект',
+    _ => challenge != null ? 'Задача с автопроверкой' : 'Практическая работа',
+  };
 }
 
 class Case {

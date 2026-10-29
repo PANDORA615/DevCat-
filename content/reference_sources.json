@@ -1,0 +1,317 @@
+{
+  "c": [
+    {
+      "id": "c.primary",
+      "title": "Beej’s Guide to C Programming",
+      "url": "https://beej.us/guide/bgc/html/index.html",
+      "checked": "2026-10-29",
+      "sha256": "ce85783712501ed398b5a78ffcb81f389b105d8e8309f13f46fb3825057f65dc",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "c.notes",
+      "title": "C Notes for Professionals",
+      "url": "https://books.goalkicker.com/CBook/CNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "4d9133ac6d74b412f2484aca91c482ca66b8d46ed7f94a317740fa34cebd9b36",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "c.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/CBook/",
+        "https://beej.us/guide/bgc/",
+        "https://gustedt.gitlabpages.inria.fr/modern-c/"
+      ]
+    },
+    {
+      "id": "c.official",
+      "title": "Официальная документация C",
+      "url": "https://en.cppreference.com/w/c",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "cpp": [
+    {
+      "id": "cpp.primary",
+      "title": "LearnCpp: variables and functions",
+      "url": "https://www.learncpp.com/cpp-tutorial/variable-assignment-and-initialization/",
+      "checked": "2026-10-29",
+      "sha256": "d4d901c17ca3dca579bffcb21eef6573f441f99c08900a8903311157b5b26b12",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "cpp.notes",
+      "title": "CPP Notes for Professionals",
+      "url": "https://books.goalkicker.com/CPlusPlusBook/CPlusPlusNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "7b53f43eae83ef1260f02f6a492fdda498e71e4dff81b7b9306652d5d4e65918",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "cpp.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/CPlusPlusBook/",
+        "https://greenteapress.com/wp/think-c/",
+        "https://www.learncpp.com/"
+      ]
+    },
+    {
+      "id": "cpp.official",
+      "title": "Официальная документация C++",
+      "url": "https://en.cppreference.com/w/cpp",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "csharp": [
+    {
+      "id": "csharp.primary",
+      "title": "Rob Miles: C# Yellow Book",
+      "url": "https://www.robmiles.com/s/CSharp-Book-2019-Refresh.pdf",
+      "checked": "2026-10-29",
+      "sha256": "c5925c004010a0c1cf9e910ef70f0bf1fcb4445d767b3aab5b8192e12369e57c",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "csharp.notes",
+      "title": "CSHARP Notes for Professionals",
+      "url": "https://books.goalkicker.com/CSharpBook/CSharpNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "2b793af721886499deae29827b5b6423e263d80c1be1c786dc595af183d90b09",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "csharp.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/CSharpBook/",
+        "https://www.robmiles.com/c-yellow-book",
+        "https://learn.microsoft.com/ru-ru/dotnet/csharp/tour-of-csharp/"
+      ]
+    },
+    {
+      "id": "csharp.official",
+      "title": "Официальная документация C#",
+      "url": "https://learn.microsoft.com/dotnet/csharp/",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "python": [
+    {
+      "id": "python.primary",
+      "title": "Python for Everybody: Variables",
+      "url": "https://www.py4e.com/html3/02-variables",
+      "checked": "2026-10-29",
+      "sha256": "a9b6ace77c5b76d365281029c6f204883b9f74359019f98e11006d33d03748f3",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "python.notes",
+      "title": "PYTHON Notes for Professionals",
+      "url": "https://books.goalkicker.com/PythonBook/PythonNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "f5e2868ad977858fa0fa3eb123282f15a06f6eb4dd2b7c3a883e1dd1e138f61f",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "python.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/PythonBook/",
+        "https://www.py4e.com/book",
+        "https://greenteapress.com/wp/think-python/",
+        "https://automatetheboringstuff.com/3e/"
+      ]
+    },
+    {
+      "id": "python.official",
+      "title": "Официальная документация Python",
+      "url": "https://docs.python.org/3/tutorial/",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "java": [
+    {
+      "id": "java.primary",
+      "title": "Javanotes: A First Java Program",
+      "url": "https://davidjeck.github.io/javanotes/c2/s1.html",
+      "checked": "2026-10-29",
+      "sha256": "f47526a7d18020c18cfd07911d64ea1d407d8303482b45e09bddc410f94bca6e",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "java.notes",
+      "title": "JAVA Notes for Professionals",
+      "url": "https://books.goalkicker.com/JavaBook/JavaNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "8751bee1658e8b2a247311eb9179625a4216b62f76d4b21545fb68e495dba706",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "java.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/JavaBook/",
+        "https://davidjeck.github.io/javanotes/"
+      ]
+    },
+    {
+      "id": "java.official",
+      "title": "Официальная документация Java",
+      "url": "https://dev.java/learn/",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "javascript": [
+    {
+      "id": "javascript.primary",
+      "title": "Eloquent JavaScript: Program Structure",
+      "url": "https://eloquentjavascript.net/02_program_structure.html",
+      "checked": "2026-10-29",
+      "sha256": "6ebcb475d9f41143dbcedcf6acb99d385f7e9ec91558690d5d0405282d088ca8",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "javascript.notes",
+      "title": "JAVASCRIPT Notes for Professionals",
+      "url": "https://books.goalkicker.com/JavaScriptBook/JavaScriptNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "2f16a53d0254b2fa13963c82e0043662e2a0eead8b1eefcd6fcf9d776ec6eabc",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "javascript.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/JavaScriptBook/",
+        "https://eloquentjavascript.net/",
+        "https://learn.javascript.ru/",
+        "https://github.com/getify/You-Dont-Know-JS"
+      ]
+    },
+    {
+      "id": "javascript.official",
+      "title": "Официальная документация JavaScript",
+      "url": "https://developer.mozilla.org/docs/Web/JavaScript",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "go": [
+    {
+      "id": "go.primary",
+      "title": "Go 101 — содержание учебника и выбранные главы",
+      "url": "https://go101.org/article/101.html",
+      "checked": "2026-10-29",
+      "sha256": "55a14c470e65fdf7e510aefa1e83238c4e95d67b8aa42446e48bbb1f1418e7a2",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "go.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://go101.org/article/101.html",
+        "https://go.dev/tour/",
+        "https://go.dev/learn/"
+      ]
+    },
+    {
+      "id": "go.official",
+      "title": "Официальная документация Go",
+      "url": "https://go.dev/doc/",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "sql": [
+    {
+      "id": "sql.primary",
+      "title": "SQL Notes for Professionals",
+      "url": "https://books.goalkicker.com/SQLBook/SQLNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "fa21602b40fdf6ff2674bdf5f75e32d2af61d2910d9d8718ebe72aca25c009d1",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "sql.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/SQLBook/",
+        "https://www.freesqlbook.com/",
+        "https://www.sqlmaxx.com/"
+      ]
+    },
+    {
+      "id": "sql.official",
+      "title": "Официальная документация SQL",
+      "url": "https://www.sqlite.org/lang.html",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "html": [
+    {
+      "id": "html.primary",
+      "title": "MDN: Basic HTML syntax",
+      "url": "https://developer.mozilla.org/ru/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax",
+      "checked": "2026-10-29",
+      "sha256": "d241a1a4874209161a658eba1b86a88ec1401607668eab35fad81e6e6e01800c",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "html.notes",
+      "title": "HTML Notes for Professionals",
+      "url": "https://books.goalkicker.com/HTML5Book/HTML5NotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "e95f7a2a2052b9bc6a3fd85fa018f0d22c76cd8f8a5021c8762c93e45e6b46f5",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "html.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/HTML5Book/",
+        "https://developer.mozilla.org/ru/docs/Learn_web_development",
+        "https://www.freecodecamp.org/learn/2022/responsive-web-design/"
+      ]
+    },
+    {
+      "id": "html.official",
+      "title": "Официальная документация HTML",
+      "url": "https://developer.mozilla.org/ru/docs/Web/HTML",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ],
+  "css": [
+    {
+      "id": "css.primary",
+      "title": "Learn CSS: Box Model",
+      "url": "https://web.dev/learn/css/box-model",
+      "checked": "2026-10-29",
+      "sha256": "60365a074ffd99842bcb0e2272ec725a44763d414eff5cb67fdc42d317fe63bc",
+      "scope": "Оглавление и выбранные разделы; самостоятельное объяснение DevCat на русском."
+    },
+    {
+      "id": "css.notes",
+      "title": "CSS Notes for Professionals",
+      "url": "https://books.goalkicker.com/CSSBook/CSSNotesForProfessionals.pdf",
+      "checked": "2026-10-29",
+      "sha256": "0a6d98338be34feac590f9dcf7d3d6902e7b800542b98ed7c8e0c12b72ba992f",
+      "scope": "Справочные главы; устаревшие сведения о версиях не перенесены в курс."
+    },
+    {
+      "id": "css.submitted",
+      "title": "Ссылки из архива пользователя",
+      "links": [
+        "https://books.goalkicker.com/CSSBook/",
+        "https://web.dev/learn/css",
+        "https://www.freecodecamp.org/learn/2022/responsive-web-design/"
+      ]
+    },
+    {
+      "id": "css.official",
+      "title": "Официальная документация CSS",
+      "url": "https://developer.mozilla.org/ru/docs/Web/CSS",
+      "scope": "Версии и точный договор стандартных средств."
+    }
+  ]
+}

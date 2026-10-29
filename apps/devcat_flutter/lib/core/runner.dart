@@ -302,6 +302,8 @@ class LocalRunner {
         return compiled(
           'javac',
           [
+            '-encoding',
+            'UTF-8',
             if (Platform.isAndroid) ...[
               '-J-Xmx256m',
               '-J-XX:ActiveProcessorCount=2',
@@ -315,6 +317,9 @@ class LocalRunner {
           ],
           [
             'java',
+            '-Dfile.encoding=UTF-8',
+            '-Dstdout.encoding=UTF-8',
+            '-Dstderr.encoding=UTF-8',
             if (Platform.isAndroid) ...[
               '-Xms16m',
               '-Xmx256m',

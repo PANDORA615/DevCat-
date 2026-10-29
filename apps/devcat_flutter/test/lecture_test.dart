@@ -76,9 +76,13 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
+        await tester.ensureVisible(find.text('План занятия'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('План занятия'));
+        await tester.pumpAndSettle();
         final contents = find.widgetWithText(
           TextButton,
-          '5. Реальный результат приведённого запроса',
+          '${lesson.sections.indexWhere((s) => s['heading'] == 'Реальный результат приведённого запроса') + 1}. Реальный результат приведённого запроса',
         );
         await tester.ensureVisible(contents);
         await tester.pumpAndSettle();

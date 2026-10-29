@@ -78,9 +78,9 @@ def export(courses):
                 if section.get('image'):
                     files['assets/'+section['image']]=(ROOT/'apps/devcat_flutter/assets/content'/section['image']).read_bytes()
     # Fixed entry timestamps and order make regeneration byte-reproducible.
-    with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_STORED) as target:
+    with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as target:
         for name,data in sorted(files.items()):
-            entry=zipfile.ZipInfo(name,date_time=(2026,10,28,0,0,0));entry.compress_type=zipfile.ZIP_STORED;entry.external_attr=0o100644<<16
-            target.writestr(entry,data)
+            entry=zipfile.ZipInfo(name,date_time=(2026,10,29,0,0,0));entry.compress_type=zipfile.ZIP_DEFLATED;entry.external_attr=0o100644<<16
+            target.writestr(entry,data,compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
     (folder/'README.md').write_text('# Подробные учебники DevCat\n\n[Скачать HTML и Markdown одним архивом](../DevCat-lectures.zip). После распаковки открой index.html.\n\n'+'\n'.join('- ['+c['name']+']('+c['id']+'.md) — '+str(len(c['lessons']))+' занятий.' for c in courses)+'\n')
     print('Exported offline HTML and Markdown textbooks:',archive.stat().st_size,'archive bytes')

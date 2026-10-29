@@ -8,6 +8,7 @@ import 'workspace.dart';
 import 'settings.dart';
 import 'git_page.dart';
 import 'lecture.dart';
+import 'course_route.dart';
 import 'ide.dart';
 import '../core/cat_chatter.dart';
 import 'companion.dart';
@@ -622,86 +623,48 @@ class _DevCatShellState extends State<DevCatShell> {
     ),
   );
   Future<void> _directory() async {
-    String query = '';
-    await showModalBottomSheet<void>(
+    final selected = await showModalBottomSheet<int>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      builder: (sheet) => StatefulBuilder(
-        builder: (sheet, update) => SafeArea(
-          child: SizedBox(
-            height: MediaQuery.sizeOf(sheet).height * .85,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 14),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search_rounded),
-                      labelText:
-                          '${course.name}: поиск по ${course.lessons.length} лекциям',
-                    ),
-                    onChanged: (value) =>
-                        update(() => query = value.toLowerCase()),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: course.lessons.length,
-                    itemBuilder: (_, i) {
-                      final item = course.lessons[i];
-                      if (!'${item.title} ${item.chapter}'
-                          .toLowerCase()
-                          .contains(query)) {
-                        return const SizedBox.shrink();
-                      }
-                      return ListTile(
-                        selected: lesson == i,
-                        leading: CircleAvatar(child: Text('${i + 1}')),
-                        title: Text(item.title),
-                        subtitle: Text('${item.chapter} · ${item.minutes} мин'),
-                        trailing: Icon(
-                          item.challenge != null
-                              ? Icons.fact_check_outlined
-                              : Icons.construction_rounded,
-                        ),
-                        onTap: () {
-                          Navigator.pop(sheet);
-                          openCourse(language, index: i, generated: 0);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      builder: (_) => CourseRouteSheet(
+        course: course,
+        store: widget.store,
+        current: lesson,
       ),
     );
+    if (selected != null && mounted) {
+      openCourse(language, index: selected, generated: 0);
+    }
   }
 
   Widget _courses(BuildContext context) => Column(
     children: [
       if (MediaQuery.viewInsetsOf(context).bottom == 0) ...[
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+        Padding(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
           child: Row(
             children: [
-              ...widget.courses.map(
-                (c) => Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: ChoiceChip(
-                    label: Text(c.name),
-                    selected: language == c.id,
-                    onSelected: (_) => openCourse(c.id),
-                  ),
+              Expanded(
+                child: DropdownButton<String>(
+                  value: language,
+                  isExpanded: true,
+                  items: widget.courses
+                      .map(
+                        (c) =>
+                            DropdownMenuItem(value: c.id, child: Text(c.name)),
+                      )
+                      .toList(),
+                  onChanged: (id) {
+                    if (id != null) openCourse(id, generated: 0);
+                  },
                 ),
               ),
-              ActionChip(
-                label: const Text('Git / GitHub'),
-                onPressed: () => setState(() => page = 2),
+              const SizedBox(width: 16),
+              OutlinedButton.icon(
+                onPressed: _directory,
+                icon: const Icon(Icons.route_outlined),
+                label: const Text('План курса'),
               ),
             ],
           ),
@@ -768,10 +731,10 @@ class _DevCatShellState extends State<DevCatShell> {
                 },
               ),
               const SizedBox(width: 12),
-              if (language != 'html' && language != 'css')
+              if (lesson >= 32 && language != 'html' && language != 'css')
                 ActionChip(
                   avatar: const Icon(Icons.auto_awesome_rounded, size: 18),
-                  label: const Text('Задание от кота'),
+                  label: const Text('Тренировка по всему курсу'),
                   onPressed: () => openCourse(
                     language,
                     index: lesson,
@@ -785,9 +748,11 @@ class _DevCatShellState extends State<DevCatShell> {
       Expanded(
         child: (language == 'html' || language == 'css') && !reading
             ? IdePage(
+                key: ValueKey('web-lesson:$language:$lesson'),
                 store: widget.store,
                 sounds: widget.sounds,
                 language: language,
+                lesson: course.lessons[lesson],
               )
             : reading && seed == 0
             ? LectureView(
@@ -796,6 +761,13 @@ class _DevCatShellState extends State<DevCatShell> {
                 course: course,
                 store: widget.store,
                 onPractice: () => setState(() => reading = false),
+                onNext: () {
+                  if (lesson + 1 < course.lessons.length) {
+                    openCourse(language, index: lesson + 1, generated: 0);
+                  } else {
+                    _directory();
+                  }
+                },
               )
             : WorkspacePage(
                 key: ValueKey('$language:$lesson:$seed'),

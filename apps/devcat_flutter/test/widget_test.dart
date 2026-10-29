@@ -20,6 +20,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
+      addTearDown(tester.view.resetViewInsets);
       final store = MemoryStore();
       late List<Course> courses;
       await tester.runAsync(() async {
@@ -54,6 +55,11 @@ void main() {
       expect(find.text('План занятия'), findsOneWidget);
       await tester.tap(find.text('Практика'));
       await tester.pumpAndSettle();
+      if (size.width < 760) {
+        expect(find.text('Условие'), findsOneWidget);
+        await tester.tap(find.text('Редактор'));
+        await tester.pumpAndSettle();
+      }
       expect(find.text('Запустить'), findsOneWidget);
       if (size.width < 960) {
         tester.view.viewInsets = const FakeViewPadding(bottom: 300);

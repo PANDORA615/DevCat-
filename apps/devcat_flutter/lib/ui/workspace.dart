@@ -50,7 +50,7 @@ class _WorkspacePageState extends State<WorkspacePage>
   output = 'Результат появится здесь. Код не отправляется на сервер.',
   cat =
       'Попробуй самостоятельно. Если застрянешь — начнём с маленькой подсказки.';
-  int hint = 0, tab = 1;
+  int hint = 0, tab = 1, compactPane = 0;
   bool busy = false;
   CatMood mood = CatMood.encouragement;
   bool get manual => widget.seed == 0 && widget.lesson?.kind == 'review';
@@ -91,6 +91,8 @@ class _WorkspacePageState extends State<WorkspacePage>
         tests: const [],
       );
     }
+    final cases = sampleCases;
+    input.text = cases.isEmpty ? '' : cases.first.input;
     final draft = widget.store.progress.draftsFor(taskKey);
     code = CodeController(
       text: draft.isNotEmpty ? draft.first['text'] : task.starter,
@@ -105,6 +107,15 @@ class _WorkspacePageState extends State<WorkspacePage>
       },
     );
     code.addListener(_changed);
+  }
+
+  List<Case> get sampleCases {
+    if (task.tests.isNotEmpty) return task.tests;
+    final examples = widget.lesson?.runnableExample?['tests'] as List?;
+    return [
+      for (final item in examples ?? [])
+        Case(item['input'] as String, item['expected'] as String),
+    ];
   }
 
   void _changed() {
@@ -205,10 +216,16 @@ class _WorkspacePageState extends State<WorkspacePage>
     } finally {
       if (mounted) setState(() => busy = false);
     }
-    if (mounted && MediaQuery.sizeOf(context).width < 760) _showFeedback();
+    if (mounted && MediaQuery.sizeOf(context).width < 760) {
+      setState(() => compactPane = 2);
+    }
   }
 
   void _showFeedback() {
+    if (MediaQuery.sizeOf(context).width < 760) {
+      setState(() => compactPane = 2);
+      return;
+    }
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -233,7 +250,9 @@ class _WorkspacePageState extends State<WorkspacePage>
                 if (language != 'sql')
                   TextField(
                     controller: input,
-                    decoration: const InputDecoration(labelText: 'stdin'),
+                    decoration: const InputDecoration(
+                      labelText: 'Данные для программы',
+                    ),
                     maxLines: 2,
                   ),
                 const SizedBox(height: 16),
@@ -323,27 +342,29 @@ class _WorkspacePageState extends State<WorkspacePage>
                 'Автосохранение · локально',
                 style: TextStyle(fontSize: 11),
               ),
-              IconButton(
-                onPressed: busy ? null : _import,
-                icon: const Icon(Icons.file_open_outlined),
-                tooltip: 'Импортировать файл',
-              ),
-              IconButton(
-                onPressed: () async {
-                  try {
-                    await exportText(
-                      context,
-                      widget.store.directory,
-                      fileNames[language]!,
-                      code.fullText,
-                    );
-                  } catch (e) {
-                    if (mounted) setState(() => failure = '$e');
-                  }
-                },
-                icon: const Icon(Icons.save_alt_rounded),
-                tooltip: 'Экспортировать код',
-              ),
+              if (!compact || widget.ide)
+                IconButton(
+                  onPressed: busy ? null : _import,
+                  icon: const Icon(Icons.file_open_outlined),
+                  tooltip: 'Импортировать файл',
+                ),
+              if (!compact || widget.ide)
+                IconButton(
+                  onPressed: () async {
+                    try {
+                      await exportText(
+                        context,
+                        widget.store.directory,
+                        fileNames[language]!,
+                        code.fullText,
+                      );
+                    } catch (e) {
+                      if (mounted) setState(() => failure = '$e');
+                    }
+                  },
+                  icon: const Icon(Icons.save_alt_rounded),
+                  tooltip: 'Экспортировать код',
+                ),
               if (drafts.length > 1)
                 PopupMenuButton<Map<String, dynamic>>(
                   tooltip: 'Черновики с устройств',
@@ -432,7 +453,7 @@ class _WorkspacePageState extends State<WorkspacePage>
               icon: const Icon(Icons.play_arrow_rounded),
               label: const Text('Запустить'),
             ),
-            if (compact)
+            if (compact && widget.ide)
               IconButton(
                 onPressed: _showFeedback,
                 icon: const Icon(Icons.terminal_rounded),
@@ -471,16 +492,16 @@ class _WorkspacePageState extends State<WorkspacePage>
           ],
         ),
         const SizedBox(height: 10),
-        if (!compact && language != 'sql')
+        if (language != 'sql')
           SizedBox(
-            height: 52,
+            height: compact ? 80 : 52,
             child: TextField(
               controller: input,
               decoration: const InputDecoration(
-                labelText: 'Стандартный ввод (stdin)',
+                labelText: 'Данные для программы (вход)',
                 isDense: true,
               ),
-              maxLines: 1,
+              maxLines: compact ? 2 : 1,
             ),
           ),
         const SizedBox(height: 8),
@@ -554,8 +575,24 @@ class _WorkspacePageState extends State<WorkspacePage>
                 style: TextStyle(fontSize: 12),
               ),
             ),
+          if (compact && !widget.ide) ...[
+            SegmentedButton<int>(
+              segments: const [
+                ButtonSegment(value: 0, label: Text('Условие')),
+                ButtonSegment(value: 1, label: Text('Редактор')),
+                ButtonSegment(value: 2, label: Text('Результат')),
+              ],
+              selected: {compactPane},
+              onSelectionChanged: (v) => setState(() => compactPane = v.first),
+            ),
+            const SizedBox(height: 12),
+          ],
           Expanded(
-            child: compact || widget.ide
+            child: compact && !widget.ide && compactPane == 0
+                ? info
+                : compact && !widget.ide && compactPane == 2
+                ? _results(context)
+                : compact || widget.ide
                 ? editor
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -571,7 +608,7 @@ class _WorkspacePageState extends State<WorkspacePage>
     );
     return LayoutBuilder(
       builder: (context, bounds) {
-        final minimum = compact ? 450.0 : 600.0;
+        final minimum = compact ? 650.0 : 600.0;
         if (bounds.maxHeight < minimum) {
           return SingleChildScrollView(
             child: SizedBox(height: minimum, child: layout),
@@ -582,9 +619,29 @@ class _WorkspacePageState extends State<WorkspacePage>
     );
   }
 
+  Widget _results(BuildContext context) => ListView(
+    children: [
+      Text('Результат запуска', style: Theme.of(context).textTheme.titleLarge),
+      const SizedBox(height: 12),
+      SelectableText(
+        output,
+        style: const TextStyle(fontFamily: 'JetBrainsMono', height: 1.6),
+      ),
+      const SizedBox(height: 16),
+      Text(cat, style: const TextStyle(height: 1.6)),
+      const SizedBox(height: 16),
+      FilledButton.tonalIcon(
+        onPressed: () => setState(() => compactPane = 1),
+        icon: const Icon(Icons.edit_outlined),
+        label: const Text('Вернуться к коду'),
+      ),
+    ],
+  );
+
   Widget _information(BuildContext context) => ListView(
     children: [
-      if (widget.store.setting('cat', true)) ...[
+      if (widget.store.setting('cat', true) &&
+          widget.lesson?.learning.isNotEmpty != true) ...[
         CatMessage(
           cat,
           reducedMotion: MediaQuery.of(context).disableAnimations,
@@ -592,7 +649,9 @@ class _WorkspacePageState extends State<WorkspacePage>
         ),
         const SizedBox(height: 16),
       ],
-      if (widget.seed == 0 && widget.lesson != null) ...[
+      if (widget.seed == 0 &&
+          widget.lesson != null &&
+          widget.lesson!.learning.isEmpty) ...[
         SegmentedButton<int>(
           segments: const [
             ButtonSegment(value: 0, label: Text('Теория')),
@@ -633,24 +692,109 @@ class _WorkspacePageState extends State<WorkspacePage>
         const Divider(height: 30),
       ],
       if (manual)
-        const Padding(
-          padding: EdgeInsets.only(bottom: 12),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
           child: Text(
-            'Проектная работа: проверь результат по критериям лекции. Автоматическая оценка здесь не выполняется.',
+            widget.lesson?.learning['assessment'] == 'experiment'
+                ? 'Это опыт: запусти готовый пример и сравни результат. Кнопка автопроверки здесь не требуется.'
+                : 'Самостоятельный проект: проверь результат по критериям урока. Автоматическая оценка здесь не выполняется.',
           ),
         ),
       Text(task.title, style: Theme.of(context).textTheme.titleLarge),
       const SizedBox(height: 12),
       Text(task.prompt, style: const TextStyle(height: 1.65)),
-      const SizedBox(height: 16),
-      if (language == 'sql')
-        Panel(
-          padding: const EdgeInsets.all(14),
-          child: SelectableText(
-            sqlFixture,
-            style: const TextStyle(fontSize: 11, fontFamily: 'monospace'),
+      if (widget.lesson?.learning['practiceExplanation']
+          case final String explanation) ...[
+        const SizedBox(height: 14),
+        Text(
+          'Как понять условие',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+        Text(explanation, style: const TextStyle(height: 1.65)),
+      ],
+      if (widget.lesson?.learning['practicePreview']
+          case final Map preview) ...[
+        const SizedBox(height: 14),
+        Text(
+          'Ожидаемый результат на учебной базе',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            columns: [
+              for (final column in preview['columns'] as List)
+                DataColumn(label: Text(column as String)),
+            ],
+            rows: [
+              for (final row in preview['rows'] as List)
+                DataRow(
+                  cells: [
+                    for (final value in row as List)
+                      DataCell(Text(value as String)),
+                  ],
+                ),
+            ],
           ),
         ),
+        const Text(
+          'Автопроверка использует ещё один набор данных. Запрос должен получить ответ из таблиц, а не напечатать эти значения как константы.',
+        ),
+      ],
+      const SizedBox(height: 16),
+      if (language == 'sql' && widget.lesson?.id.contains('.zero.') != true)
+        ExpansionTile(
+          title: const Text('Таблицы учебной базы'),
+          subtitle: const Text(
+            'Открой, чтобы проверить исходные данные запроса',
+          ),
+          children: [
+            SelectableText(
+              sqlFixture,
+              style: const TextStyle(fontSize: 12, fontFamily: 'JetBrainsMono'),
+            ),
+          ],
+        ),
+      for (final example in sampleCases.take(2)) ...[
+        Text('Пример запуска', style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 8),
+        Panel(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Данные для программы'),
+              SelectableText(
+                example.input.isEmpty ? 'Ввод не требуется' : example.input,
+                style: const TextStyle(fontFamily: 'JetBrainsMono'),
+              ),
+              const SizedBox(height: 10),
+              const Text('Ожидаемый результат'),
+              SelectableText(
+                example.expected,
+                style: const TextStyle(fontFamily: 'JetBrainsMono'),
+              ),
+            ],
+          ),
+        ),
+        if (language != 'sql')
+          TextButton(
+            onPressed: () => setState(() {
+              input.text = example.input;
+              compactPane = 1;
+            }),
+            child: const Text('Подставить этот вход и открыть код'),
+          ),
+        const SizedBox(height: 12),
+      ],
+      if (MediaQuery.sizeOf(context).width < 760 && !widget.ide)
+        FilledButton.icon(
+          onPressed: () => setState(() => compactPane = 1),
+          icon: const Icon(Icons.code_rounded),
+          label: const Text('Условие понятно — открыть код'),
+        ),
+      const SizedBox(height: 12),
       if (task.tests.isNotEmpty)
         Text(
           'Пример: ${task.tests.first.input.trim()} → ${task.tests.first.expected}',
@@ -711,7 +855,7 @@ class _WorkspacePageState extends State<WorkspacePage>
       ),
       if (widget.course != null)
         SelectableText(
-          'Источник: ${widget.course!.source}\nРевизия контента: 2 · ${manual ? 'проектная самопроверка' : 'автоматическая проверка'}',
+          'Дополнительное чтение: ${widget.course!.source}\n${manual ? 'Сравни результат с критерием урока.' : 'Кнопка «Проверить» запустит решение на нескольких входах.'}',
           style: Theme.of(context).textTheme.bodySmall,
         ),
     ],

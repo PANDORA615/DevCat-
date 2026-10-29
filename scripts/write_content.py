@@ -15,6 +15,7 @@ from beginner_course import lessons as beginner_lessons
 from web_courses import course as web_course
 from git_course import course as git_course
 from learning_visuals import enrich as visual_enrich
+from plain_notebook import rewrite as rewrite_notebook
 ROOT=Path(__file__).resolve().parents[1]
 META={
 'c':('C17','Память, алгоритмы и надёжные локальные программы.','https://en.cppreference.com/w/c'),
@@ -89,11 +90,11 @@ def main():
         lessons = beginner_lessons(lang) + lessons
         extra=[challenge(lang,'generator',f'{lang}.generator.{key}',key) for key in ['gcd','multiples']] if lang!='sql' else []
         course=dict(practiceBank=extra,id=lang,name=NAMES[lang],version=version,subtitle=subtitle,source=source,lessons=lessons,revision=4,review_status='authored_with_executable_labs_and_manual_projects',author='DevCat',last_verified='2026-10-28')
-        course = visual_enrich(course)
+        course = visual_enrich(rewrite_notebook(course))
         courses.append(course)
         target=ROOT/'content'/lang;target.mkdir(exist_ok=True,parents=True)
         (target/'intro.json').write_text(json.dumps(course,ensure_ascii=False,indent=2)+'\n')
-    courses += [visual_enrich(web_course('html')), visual_enrich(web_course('css'))]
+    courses += [visual_enrich(rewrite_notebook(web_course('html'))), visual_enrich(rewrite_notebook(web_course('css')))]
     for course in courses:
         if course['id'] in ['html','css']:
             for lesson in course['lessons']:
@@ -106,18 +107,22 @@ def main():
             target=ROOT/'content'/course['id'];target.mkdir(exist_ok=True)
             (target/'intro.json').write_text(json.dumps(course,ensure_ascii=False,indent=2)+'\n')
     (ROOT/'apps/devcat_flutter/assets/content/courses.json').write_text(json.dumps(courses,ensure_ascii=False,indent=2)+'\n')
-    lines=['# Подробные курсы DevCat 0.4\n', 'Десять направлений с вводным маршрутом для новичка: основы, особенности языка, проекты и восемь подробных разборов сложных задач. Материалы, фотографии и схемы входят в офлайн-приложение. Заверши проекты, объясни решения и продолжай читать документацию.\n', '125 лабораторных проверяются автоматически; остальные работы — самостоятельная реализация с критериями. Проверка результата программы не оценивает автоматически качество тестов, стиль и объяснение. Для эталонов выполняется реальный запуск в CI; независимая экспертная редактура текста ещё нужна.\n']
+    lines=['# Подробные курсы DevCat 0.5\n', 'Десять направлений с вводным маршрутом для новичка: основы, особенности языка, проекты и восемь подробных разборов сложных задач. Материалы, фотографии и схемы входят в офлайн-приложение. Заверши проекты, объясни решения и продолжай читать документацию.\n', '125 лабораторных проверяются автоматически; остальные работы — самостоятельная реализация с критериями. Проверка результата программы не оценивает автоматически качество тестов, стиль и объяснение. Для эталонов выполняется реальный запуск в CI; независимая экспертная редактура текста ещё нужна.\n']
     for course in courses:
         lines.append('\n## '+course['name']+' · '+course['version']+'\n')
         current=None
         for index,lesson in enumerate(course['lessons'],1):
             if current!=lesson['chapter']:
                 current=lesson['chapter'];lines.append('\n### '+current+'\n')
-            assessment='автотесты' if lesson['challenge'] else 'самостоятельная работа'
+            assessment={'tests':'автотесты','experiment':'опыт с образцом','project':'самостоятельный проект'}[lesson['learning']['assessment']]
             lines.append(f"{index}. {lesson['title']} — {assessment}; ориентир {lesson['minutes']} мин с практикой.")
         lines.append('\nДокументация: '+course['source']+'\n')
-    git = visual_enrich(git_course())
+    git = visual_enrich(rewrite_notebook(git_course()))
     (ROOT/'apps/devcat_flutter/assets/content/git_course.json').write_text(json.dumps(git,ensure_ascii=False,indent=2)+'\n')
+    used_images={s['image'] for c in courses+[git] for l in c['lessons'] for s in l['sections'] if s.get('image')}
+    for image in (ROOT/'apps/devcat_flutter/assets/content').glob('steps-*.png'):
+        if image.name not in used_images:
+            image.unlink()
     export(courses+[git])
     (ROOT/'docs/CURRICULUM.md').write_text('\n'.join(lines).rstrip()+'\n')
     print(f'{sum(len(c["lessons"]) for c in courses)} lectures; {sum(bool(l["challenge"]) for c in courses for l in c["lessons"])} checked laboratories; '+str(sum(len(l['theory'].split()) for c in courses for l in c['lessons']))+' lecture words')

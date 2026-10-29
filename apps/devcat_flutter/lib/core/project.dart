@@ -16,6 +16,24 @@ class DevProject {
     required this.entry,
     required this.files,
   });
+  factory DevProject.forLesson(String language, Lesson lesson) {
+    final id = lesson.learning['projectId'];
+    if (id is! String ||
+        !RegExp(r'^[a-f0-9]{32}$').hasMatch(id) ||
+        lesson.webExample.isEmpty) {
+      throw const FormatException('У урока нет подготовленного веб-проекта.');
+    }
+    return DevProject(
+      id: id,
+      name: 'Урок · ${lesson.title}',
+      language: language,
+      entry: 'index.html',
+      files: {
+        ...lesson.webExample,
+        'README.md': '# ${lesson.title}\n\n${lesson.assignment}\n',
+      },
+    );
+  }
   factory DevProject.create(String language, String name) => DevProject(
     id: newId(),
     name: name,

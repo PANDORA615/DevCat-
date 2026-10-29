@@ -68,7 +68,7 @@ def png(title,boxes):
 def enrich(course):
  for lesson in course['lessons']:
   parts=lesson['id'].split('.');slug=parts[1] if len(parts)>1 else ''
-  if slug in GLOSSARY and '.zero.' not in lesson['id']:
+  if course.get('teachingRevision',0)<1 and slug in GLOSSARY and '.zero.' not in lesson['id']:
    lesson['sections'].insert(0,{'heading':'Сначала разберём новые слова','text':GLOSSARY[slug]+'\n\nЕсли пока трудно отличить код, ввод и результат, начни с раздела «С полного нуля» этого курса. Там каждое действие рассматривается отдельно. Не нужно понимать незнакомый термин до того, как увидел его работу.'})
   enriched=[]
   for section in lesson['sections']:
@@ -81,7 +81,8 @@ def enrich(course):
     section['image']=png('Читаем пример: '+lesson['title'],['Исходник: изучаем запись, а не готовый вывод',*['\n'.join(f'{j+1}: {lines[j]}' for j in range(i,min(i+6,len(lines)))) for i in range(0,len(lines),6)]])
     section['imageCaption']='Нумерация строк исходника. Порядок строк на схеме не является трассировкой циклов или ветвлений.'
     enriched.append(section)
-    enriched.append({'heading':'Разметка записи: как прочитать этот пример','text':line_notes(course['id'],code)+'\n\nОбъяснение строки показывает её роль в записи. Чтобы проследить выполнение ветки или цикла, используй конкретный вход и таблицу состояния: при выполнении одна строка может повториться несколько раз или не выполниться вовсе.'})
+    if course.get('teachingRevision',0)<1:
+     enriched.append({'heading':'Разметка записи: как прочитать этот пример','text':line_notes(course['id'],code)+'\n\nОбъяснение строки показывает её роль в записи. Чтобы проследить выполнение ветки или цикла, используй конкретный вход и таблицу состояния: при выполнении одна строка может повториться несколько раз или не выполниться вовсе.'})
    else:enriched.append(section)
   # A meaningful visual for non-code topics shows the actual stated assignment.
   if not any(s.get('image') for s in enriched):

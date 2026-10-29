@@ -26,11 +26,13 @@ class IdePage extends StatefulWidget {
   final AppStore store;
   final SoftSounds sounds;
   final String language;
+  final Lesson? lesson;
   const IdePage({
     super.key,
     required this.store,
     required this.sounds,
     required this.language,
+    this.lesson,
   });
   @override
   State<IdePage> createState() => _IdePageState();
@@ -47,7 +49,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
       search = TextEditingController(),
       replacement = TextEditingController();
   Timer? debounce;
-  bool busy = false, find = false;
+  bool busy = false, find = false, lessonOpened = false;
   String? warning;
   List<Map<String, dynamic>> get versions =>
       widget.store.progress.drafts.values
@@ -92,7 +94,12 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     final saved = projects;
-    project = widget.language == 'html' || widget.language == 'css'
+    project = widget.lesson != null
+        ? saved
+                  .where((p) => p.id == widget.lesson!.learning['projectId'])
+                  .firstOrNull ??
+              DevProject.forLesson(widget.language, widget.lesson!)
+        : widget.language == 'html' || widget.language == 'css'
         ? saved.where((p) => p.language == widget.language).firstOrNull ??
               DevProject.create(widget.language, 'Мой первый сайт')
         : saved.isEmpty
@@ -100,7 +107,12 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
               ? _fromLegacy(legacyDrafts.first)
               : DevProject.create(widget.language, 'Мой первый проект'))
         : saved.first;
-    active = project.entry;
+    active =
+        widget.lesson != null &&
+            widget.language == 'css' &&
+            project.files.containsKey('style.css')
+        ? 'style.css'
+        : project.entry;
     tabs.add(active);
     _controller();
   }
@@ -596,6 +608,35 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   );
   @override
   Widget build(BuildContext context) {
+    if (widget.lesson != null && !lessonOpened) {
+      final lesson = widget.lesson!;
+      return ListView(
+        padding: const EdgeInsets.all(24),
+        children: [
+          Text(
+            'Практика · ${lesson.title}',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 16),
+          Text(lesson.assignment, style: const TextStyle(height: 1.7)),
+          const SizedBox(height: 16),
+          Text(
+            'Файлы именно этого урока: ${lesson.webExample.keys.join(', ')}. Изменения сохраняются в отдельном учебном проекте.',
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            '1. Открой файлы.\n2. Выполни одно указанное изменение.\n3. Нажми «Запустить проект».\n4. Сравни страницу в браузере, затем вернись к исходнику.',
+            style: TextStyle(height: 1.8),
+          ),
+          const SizedBox(height: 20),
+          FilledButton.icon(
+            onPressed: () => setState(() => lessonOpened = true),
+            icon: const Icon(Icons.folder_open_rounded),
+            label: const Text('Открыть файлы этого урока'),
+          ),
+        ],
+      );
+    }
     final scheme = Theme.of(context).colorScheme;
     final wide = MediaQuery.sizeOf(context).width >= 1100;
     final editor = Column(
@@ -778,6 +819,11 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
                   tooltip: 'Файлы проекта',
                 ),
               Text(project.name, style: Theme.of(context).textTheme.titleLarge),
+              if (widget.lesson != null)
+                TextButton(
+                  onPressed: () => setState(() => lessonOpened = false),
+                  child: const Text('Условие урока'),
+                ),
               PopupMenuButton<DevProject>(
                 enabled: !busy,
                 tooltip: 'Открыть проект',

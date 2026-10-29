@@ -39,6 +39,8 @@ jobs:
         with:
           path: build/android-runtime-image
           key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
+      - name: Compact the same offline image used in the universal APK
+        run: python3 scripts/compact_android_image.py build/android-runtime-image
       - name: Package native loader and matching compiler image
         run: |
           bash scripts/build_android_proot.sh "$ANDROID_SDK_ROOT/ndk/28.2.13676358" x86_64 apps/devcat_flutter/android/app/src/main/jniLibs/x86_64 > android-native-build.log 2>&1 || { tail -80 android-native-build.log; exit 1; }

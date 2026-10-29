@@ -12,12 +12,14 @@ class LectureView extends StatefulWidget {
   final Course course;
   final AppStore store;
   final VoidCallback onPractice;
+  final VoidCallback? onNext;
   const LectureView({
     super.key,
     required this.lesson,
     required this.course,
     required this.store,
     required this.onPractice,
+    this.onNext,
   });
   @override
   State<LectureView> createState() => _LectureViewState();
@@ -33,7 +35,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
   void _savePosition() {
     if (scroll.hasClients) {
       widget.store
-          .draft('reading.${widget.lesson.id}', scroll.offset.toString())
+          .draft(_readingKey, scroll.offset.toString())
           .catchError((_) {});
     }
   }
@@ -47,6 +49,9 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
   }
 
   final scroll = ScrollController();
+  String get _readingKey => widget.lesson.questionRevision >= 5
+      ? 'reading.v5.${widget.lesson.id}'
+      : 'reading.${widget.lesson.id}';
   final Set<int> checked = {};
   final Set<int> answers = {};
   final Map<int, GlobalKey> sectionAnchors = {};
@@ -129,9 +134,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
         if (index != null) checked.add(index);
       }
     }
-    final saved = widget.store.progress.draftsFor(
-      'reading.${widget.lesson.id}',
-    );
+    final saved = widget.store.progress.draftsFor(_readingKey);
     if (saved.isNotEmpty) {
       final value = double.tryParse(saved.first['text']);
       if (value != null) {
@@ -151,7 +154,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
     scroll.removeListener(_positionChanged);
     if (scroll.hasClients) {
       widget.store
-          .draft('reading.${widget.lesson.id}', scroll.offset.toString())
+          .draft(_readingKey, scroll.offset.toString())
           .catchError((_) {});
     }
     scroll.dispose();
@@ -204,9 +207,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                         lesson.challenge != null
                             ? Icons.fact_check_outlined
                             : Icons.construction_rounded,
-                        lesson.challenge != null
-                            ? 'Тесты на код'
-                            : 'Проектная работа',
+                        lesson.assessmentLabel,
                       ),
                     ],
                   ),
@@ -225,16 +226,46 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                     label: const Text('Не понял — разобрать с котом'),
                   ),
                   const SizedBox(height: 24),
-                  if (lesson.photo.isNotEmpty) ...[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(24),
-                      child: Image.asset(
-                        'assets/content/${lesson.photo}',
-                        height: 240,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                  if (lesson.learning.isNotEmpty)
+                    Panel(
+                      padding: const EdgeInsets.all(18),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            lesson.learning['goal'] as String,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 12),
+                          const Text(
+                            '1. Прочитай объяснение\n2. Разбери пример\n3. Повтори небольшой опыт\n4. Перейди к самостоятельной работе',
+                            style: TextStyle(height: 1.7),
+                          ),
+                          const SizedBox(height: 10),
+                          TextButton.icon(
+                            onPressed: widget.onPractice,
+                            icon: const Icon(Icons.play_arrow_rounded),
+                            label: const Text('Открыть опыт и условие'),
+                          ),
+                        ],
                       ),
+                    ),
+                  const SizedBox(height: 20),
+                  if (lesson.photo.isNotEmpty) ...[
+                    ExpansionTile(
+                      title: const Text('Учебная иллюстрация'),
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(24),
+                          child: Image.asset(
+                            'assets/content/${lesson.photo}',
+                            height: 160,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -244,15 +275,10 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                     const SizedBox(height: 24),
                   ],
                   Panel(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.all(8),
+                    child: ExpansionTile(
+                      title: const Text('План занятия'),
                       children: [
-                        Text(
-                          'План занятия',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 10),
                         ...lesson.sections.indexed.map(
                           (entry) => Align(
                             alignment: Alignment.centerLeft,
@@ -464,6 +490,20 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                           : 'Открыть практическую работу',
                     ),
                   ),
+                  if (widget.onNext != null) ...[
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        await widget.store.draft(
+                          'learned.${lesson.id}',
+                          'read',
+                        );
+                        if (mounted) widget.onNext!();
+                      },
+                      icon: const Icon(Icons.arrow_forward_rounded),
+                      label: const Text('Отметить прочитанным и идти дальше'),
+                    ),
+                  ],
                   const SizedBox(height: 18),
                   SelectableText(
                     'Документация: ${widget.course.source}',
