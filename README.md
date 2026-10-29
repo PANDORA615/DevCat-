@@ -9,7 +9,10 @@
 DevCat работает на Linux, Windows, macOS и Android. Учебные материалы, иллюстрации, задания, проекты и прогресс доступны без аккаунта и обязательного сервера. Для работы с самим GitHub нужен интернет.
 
 ![Настольная главная без белой подложки вокруг кота](docs/screenshots/home-transparent-v04.png)
-![Начало курса Go с полного нуля](docs/screenshots/beginner-go-v04.png)
+![Новый план курса с модулями и поиском](docs/screenshots/course-route-v05.png)
+![Цель занятия и последовательность шагов](docs/screenshots/guided-lecture-v05.png)
+![Практика начинается с условия и примера результата — узкое окно Linux](docs/screenshots/guided-practice-v05.png)
+![IDE открывает файлы выбранного HTML-урока](docs/screenshots/web-lesson-v05.png)
 
 ## Обучение с нуля
 
