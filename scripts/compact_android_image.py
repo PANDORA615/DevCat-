@@ -86,7 +86,12 @@ def compact(folder):
         temporary.replace(image)
         metadata.update(inventory, bytes=image.stat().st_size, sha256=checksum(image),
                         originalCompressedBytes=before)
-        metadata_file.write_text(json.dumps(metadata, indent=2) + '\n')
+        # A freshly built Docker image leaves root-owned, read-only-for-runner
+        # metadata in this writable output directory. Replace it atomically,
+        # just as we replace the image, rather than opening that inode to write.
+        temporary_metadata = metadata_file.with_suffix('.compact.json')
+        temporary_metadata.write_text(json.dumps(metadata, indent=2) + '\n')
+        temporary_metadata.replace(metadata_file)
         print(metadata['abi'], before, '->', metadata['bytes'], 'bytes; all execution components retained', flush=True)
 
 
