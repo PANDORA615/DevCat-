@@ -1,0 +1,13 @@
+[
+  {
+    "name": "DevCat-0.4.0-android-universal.apk",
+    "abi": "universal",
+    "versionCode": 5005,
+    "bytes": 1908746083,
+    "sha256": "1805a3109456daeab1781ca9ace00ba61fe1b45112b500fbd0eae00c27793335",
+    "certificateSHA256": "f4412cfc2567a7b33248df99777c0d104761dd2dda3ee7de8fe8bac467098bca",
+    "copiedBytes": 1908414279,
+    "literalBytes": 331804,
+    "patchBytes": 487970
+  }
+]
