@@ -116,7 +116,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
         'js' => javascript,
         'go' => go,
         'sql' => sql,
-        'html' => xml,
+        'html' || 'svg' => xml,
         'css' => css,
         _ => null,
       },

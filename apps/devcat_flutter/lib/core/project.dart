@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'course.dart';
+import 'web_sample_assets.dart';
 import 'progress.dart';
 
 class DevProject {
@@ -21,6 +22,7 @@ class DevProject {
     language: language,
     entry: fileNames[language]!,
     files: {
+      if (language == 'html' || language == 'css') 'cat.svg': webSampleCat,
       if (language == 'html' || language == 'css')
         'style.css':
             'body { font-family: system-ui; line-height: 1.7; padding: 24px; }\n.card { background: #ddf3e5; padding: 20px; border-radius: 16px; }\n',
