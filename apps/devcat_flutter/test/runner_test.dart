@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Generator is deterministic, parameterized, excludes Git', () {
-    for (final lang in languageNames.keys) {
+    for (final lang in executableLanguages) {
       final a = generateChallenge(lang, seed: 426);
       final b = generateChallenge(lang, seed: 426);
       expect(a.prompt, b.prompt);
@@ -83,7 +83,9 @@ void main() {
     () async {
       final runner = LocalRunner();
       final chains = await runner.toolchains();
-      for (final entry in languageNames.entries.where((e) => e.key != 'sql')) {
+      for (final entry in languageNames.entries.where(
+        (e) => executableLanguages.contains(e.key) && e.key != 'sql',
+      )) {
         if (chains[entry.value]!.startsWith('Не установлен')) {
           expect(
             Platform.environment['DEVCAT_REQUIRE_ALL_TOOLCHAINS'],

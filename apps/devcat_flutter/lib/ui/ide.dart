@@ -16,6 +16,10 @@ import '../core/store.dart';
 import '../core/sound.dart';
 import '../core/runner.dart';
 import 'widgets.dart';
+import '../core/web_preview.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:highlight/languages/xml.dart';
+import 'package:highlight/languages/css.dart';
 import 'transfer.dart';
 
 class IdePage extends StatefulWidget {
@@ -34,6 +38,7 @@ class IdePage extends StatefulWidget {
 
 class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   final runner = LocalRunner();
+  final preview = WebPreview();
   late DevProject project;
   late CodeController code;
   String active = '', output = 'Вывод программы появится здесь.', filter = '';
@@ -87,7 +92,10 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     final saved = projects;
-    project = saved.isEmpty
+    project = widget.language == 'html' || widget.language == 'css'
+        ? saved.where((p) => p.language == widget.language).firstOrNull ??
+              DevProject.create(widget.language, 'Мой первый сайт')
+        : saved.isEmpty
         ? (legacyDrafts.isNotEmpty
               ? _fromLegacy(legacyDrafts.first)
               : DevProject.create(widget.language, 'Мой первый проект'))
@@ -108,6 +116,8 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
         'js' => javascript,
         'go' => go,
         'sql' => sql,
+        'html' => xml,
+        'css' => css,
         _ => null,
       },
     );
@@ -139,6 +149,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    preview.close();
     debounce?.cancel();
     widget.store
         .draft('project.${project.id}', project.encode())
@@ -440,6 +451,28 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
 
   Future<void> _run() async {
     if (busy) return;
+    if (project.language == 'html' || project.language == 'css') {
+      await _save();
+      if (warning != null) return;
+      try {
+        final directory = await project.materialize(widget.store.directory);
+        final uri = await preview.open(project);
+        if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+          throw StateError(
+            'Браузер не открылся. Адрес можно скопировать ниже.',
+          );
+        }
+        if (mounted) {
+          setState(
+            () => output =
+                'Файлы сайта: ${directory.path}\nПредпросмотр: $uri\nСохрани изменения и обнови страницу браузера. Файлы обслуживаются только на этом устройстве.',
+          );
+        }
+      } catch (e) {
+        if (mounted) setState(() => output = 'Предпросмотр: $e');
+      }
+      return;
+    }
     if (project.language != 'sql' &&
         !widget.store.setting('trustedLocalRun', false)) {
       final yes = await confirm(

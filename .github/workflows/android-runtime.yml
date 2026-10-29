@@ -51,6 +51,13 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - working-directory: apps/devcat_flutter
         run: flutter pub get --enforce-lockfile
+      - name: Download emulator image with bounded retries
+        run: |
+          for attempt in 1 2 3; do
+            sdkmanager --install 'system-images;android-35;default;x86_64' && break
+            sleep 10
+          done
+          test -f "$ANDROID_SDK_ROOT/system-images/android-35/default/x86_64/package.xml"
       - name: Execute from real Android app process with networking disabled
         uses: reactivecircus/android-emulator-runner@v2
         with:

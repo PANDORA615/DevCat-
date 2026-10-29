@@ -83,7 +83,9 @@ class _WorkspacePageState extends State<WorkspacePage>
         language: language,
         title: widget.lesson!.title,
         prompt: widget.lesson!.assignment,
-        starter: generateChallenge(language).starter,
+        starter: widget.lesson!.examples.isNotEmpty
+            ? widget.lesson!.examples.first
+            : generateChallenge(language).starter,
         solution: widget.lesson!.examples.join('\n'),
         hints: widget.lesson!.questions.take(3).toList(),
         tests: const [],
@@ -295,6 +297,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                 DropdownButton<String>(
                   value: language,
                   items: languageNames.entries
+                      .where((e) => e.key != 'html' && e.key != 'css')
                       .map(
                         (e) => DropdownMenuItem(
                           value: e.key,

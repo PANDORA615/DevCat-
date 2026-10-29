@@ -12,8 +12,10 @@ class DetailedContentTest(unittest.TestCase):
         courses=json.loads((ROOT/'apps/devcat_flutter/assets/content/courses.json').read_text())
         current={}
         for course in courses:
-            self.assertEqual([l['id'] for l in course['lessons'][:40]],old['courses'][course['id']])
-            self.assertEqual(len(course['lessons']),48)
+            if course['id'] in old['courses']:
+                self.assertEqual([l['id'] for l in course['lessons'][8:48]],old['courses'][course['id']])
+                self.assertEqual(len(course['lessons']),56)
+            else:self.assertEqual(len(course['lessons']),24)
             for lesson in course['lessons']:
                 if lesson['id'] in old['questions'] and lesson['questions'] != old['questions'][lesson['id']]:
                     self.assertGreater(lesson.get('questionRevision',1),1)
@@ -30,11 +32,11 @@ class DetailedContentTest(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'docs/DevCat-lectures.zip') as archive:
             self.assertIsNone(archive.testzip())
             names=archive.namelist()
-            self.assertEqual(len([n for n in names if n.endswith('.html')]),9)
-            self.assertEqual(len([n for n in names if n.endswith('.md')]),8)
+            self.assertEqual(len([n for n in names if n.endswith('.html')]),12)
+            self.assertEqual(len([n for n in names if n.endswith('.md')]),11)
             for language in ['c','cpp','csharp','python','java','javascript','go','sql']:
                 html=archive.read(language+'.html').decode()
-                self.assertEqual(html.count('<section aria-labelledby='),48)
+                self.assertEqual(html.count('<section aria-labelledby='),56)
                 self.assertIn('id="lesson-48"',html)
                 self.assertIn('<details>',html)
                 self.assertNotIn('<script',html)

@@ -21,7 +21,12 @@ class DevProject {
     language: language,
     entry: fileNames[language]!,
     files: {
-      fileNames[language]!: language == 'sql'
+      if (language == 'html' || language == 'css')
+        'style.css':
+            'body { font-family: system-ui; line-height: 1.7; padding: 24px; }\n.card { background: #ddf3e5; padding: 20px; border-radius: 16px; }\n',
+      fileNames[language]!: language == 'html' || language == 'css'
+          ? '<!doctype html>\n<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><title>Моя страница</title></head><body><main class="card"><h1>Привет!</h1><p>Моя первая страница.</p></main></body></html>'
+          : language == 'sql'
           ? '-- Своя SQLite-база проекта, данные сохраняются между запусками.\nCREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, text TEXT NOT NULL);\n'
           : generateChallenge(language, kind: 'arithmetic').starter,
       'README.md':

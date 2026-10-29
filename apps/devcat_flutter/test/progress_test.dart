@@ -65,11 +65,14 @@ void main() {
       legacy.cursors['old-device']!.remove('contentRevision');
       legacy.attempt('python.basics', 'python', true);
       final upgraded = ProgressData.decode(legacy.encode());
-      expect(upgraded.latestCursor!['lesson'], 7);
-      expect(upgraded.latestCursor!['contentRevision'], 2);
+      expect(upgraded.latestCursor!['lesson'], 15);
+      expect(upgraded.latestCursor!['contentRevision'], 4);
       expect(upgraded.solved, contains('python.basics'));
       expect(upgraded.solved, isNot(contains('python.basics.v2')));
-      expect(ProgressData.decode(upgraded.encode()).latestCursor!['lesson'], 7);
+      expect(
+        ProgressData.decode(upgraded.encode()).latestCursor!['lesson'],
+        15,
+      );
     },
   );
   test(

@@ -3,17 +3,26 @@ import 'package:flutter/material.dart';
 import '../core/cat_chatter.dart';
 import '../core/sound.dart';
 import 'widgets.dart';
+import '../core/course.dart';
+import '../core/store.dart';
+import 'tutor_page.dart';
 
 class CompanionBar extends StatefulWidget {
   final CompanionContext conversation;
   final SoftSounds sounds;
   final bool autoTalk, compact;
   final Duration interval;
+  final List<Course> courses;
+  final AppStore? store;
+  final String? lessonId;
   const CompanionBar({
     super.key,
     required this.conversation,
     required this.sounds,
     this.autoTalk = true,
+    this.courses = const [],
+    this.store,
+    this.lessonId,
     this.compact = false,
     this.interval = const Duration(seconds: 20),
   });
@@ -28,6 +37,7 @@ class _CompanionBarState extends State<CompanionBar>
   late CatLine line;
   Timer? timer;
   bool foreground = true;
+  String? speech;
 
   @override
   void initState() {
@@ -44,6 +54,7 @@ class _CompanionBarState extends State<CompanionBar>
     line = deck.next(widget.conversation);
     history.add(line);
     if (history.length > 30) history.removeAt(0);
+    speech = speak ? line.text : null;
     if (speak) widget.sounds.speak(line.mood);
   }
 
@@ -132,7 +143,11 @@ class _CompanionBarState extends State<CompanionBar>
         ),
         child: Row(
           children: [
-            CatPortrait(size: widget.compact ? 30 : 42),
+            CatPortrait(
+              size: widget.compact ? 36 : 62,
+              mood: line.mood,
+              speech: speech,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: InkWell(
@@ -172,6 +187,23 @@ class _CompanionBarState extends State<CompanionBar>
                 ),
               ),
             ),
+            if (widget.store != null && widget.courses.isNotEmpty)
+              IconButton(
+                tooltip: 'Спросить кота',
+                icon: const Icon(Icons.help_outline_rounded),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => TutorPage(
+                      courses: widget.courses,
+                      store: widget.store!,
+                      language: widget.conversation.language.isEmpty
+                          ? null
+                          : widget.conversation.language,
+                      lessonId: widget.lessonId,
+                    ),
+                  ),
+                ),
+              ),
             IconButton(
               tooltip: 'Ещё реплика',
               onPressed: () {

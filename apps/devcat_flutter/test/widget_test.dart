@@ -54,7 +54,7 @@ void main() {
       expect(find.text('План занятия'), findsOneWidget);
       await tester.tap(find.text('Практика'));
       await tester.pumpAndSettle();
-      expect(find.text('Проверить'), findsOneWidget);
+      expect(find.text('Запустить'), findsOneWidget);
       if (size.width < 960) {
         tester.view.viewInsets = const FakeViewPadding(bottom: 300);
         await tester.pumpAndSettle();

@@ -39,6 +39,32 @@ class CatChatter {
     }
     if (_bag.isEmpty) {
       _bag.addAll(_lines(context)..shuffle(random));
+      final priority = _bag
+          .where(
+            (l) =>
+                (context.title.isNotEmpty &&
+                    l.text.contains('«${context.title}»')) ||
+                (context.language.isNotEmpty &&
+                    l.text.contains(switch (context.language) {
+                      'python' => 'Python',
+                      'go' => 'Go',
+                      'java' => 'Java',
+                      'csharp' => 'C#',
+                      'cpp' => 'C++',
+                      'sql' => 'SQL',
+                      'javascript' => 'JavaScript',
+                      'html' => 'HTML',
+                      'css' => 'CSS',
+                      _ => 'В C ',
+                    })) ||
+                (context.place == CompanionPlace.ide &&
+                    l.text.contains('сохрани проект')),
+          )
+          .toList();
+      for (final item in priority) {
+        _bag.remove(item);
+      }
+      _bag.addAll(priority);
       if (_bag.length > 1 && _bag.last.text == _last) {
         final first = _bag.first;
         _bag[0] = _bag.last;
@@ -108,6 +134,78 @@ class CatChatter {
     const CatLine(
       'Удобное имя переменной иногда объясняет код лучше длинного комментария.',
       CatMood.explaining,
+    ),
+    const CatLine(
+      'Давай начнём с самого начала: где данные, какое действие и где результат.',
+      CatMood.greeting,
+    ),
+    const CatLine(
+      'Можно спросить меня «что означает эта строка» — разберём её отдельно.',
+      CatMood.explaining,
+    ),
+    const CatLine(
+      'Не нужно знать английские термины заранее. Дадим каждому простое объяснение.',
+      CatMood.thinking,
+    ),
+    const CatLine(
+      'Я рядом. Сегодня достаточно понять одно действие и проверить его на примере.',
+      CatMood.encouragement,
+    ),
+    const CatLine(
+      'Если чтение утомило, давай попробуем маленький опыт в редакторе.',
+      CatMood.celebration,
+    ),
+    const CatLine(
+      'Новый термин — не экзамен. Сначала увидим, что он означает в работе.',
+      CatMood.warning,
+    ),
+    const CatLine(
+      'Видишь две похожие записи? Изменим одну и сравним результат.',
+      CatMood.greeting,
+    ),
+    const CatLine(
+      'Мур. Хороший вопрос — «почему именно так?».',
+      CatMood.explaining,
+    ),
+    const CatLine(
+      'Ошибки не измеряют способности. Они показывают, где проверить предположение.',
+      CatMood.thinking,
+    ),
+    const CatLine(
+      'Я могу повторить объяснение столько раз, сколько нужно.',
+      CatMood.encouragement,
+    ),
+    const CatLine(
+      'Книга большая, но идти будем маленькими шагами.',
+      CatMood.celebration,
+    ),
+    const CatLine(
+      'Попробуй сначала предсказать одну строку вывода. Потом проверим вместе.',
+      CatMood.warning,
+    ),
+    const CatLine(
+      'Пауза — тоже часть учёбы. Я подожду тебя рядом с учебником.',
+      CatMood.greeting,
+    ),
+    const CatLine(
+      'Код можно читать как историю: сначала произошло одно, потом другое.',
+      CatMood.explaining,
+    ),
+    const CatLine(
+      'Не запоминай символы вслепую. Назови действие, которое они обозначают.',
+      CatMood.thinking,
+    ),
+    const CatLine(
+      'Для HTML результат виден на странице, а для CSS важно сравнить до и после.',
+      CatMood.encouragement,
+    ),
+    const CatLine(
+      'В Go := создаёт переменную, а = меняет уже объявленную. Это разные шаги.',
+      CatMood.celebration,
+    ),
+    const CatLine(
+      'Git сохраняет историю на устройстве; GitHub помогает работать с удалённым репозиторием.',
+      CatMood.warning,
     ),
     ...switch (context.place) {
       CompanionPlace.home => [

@@ -1,4 +1,9 @@
 import 'dart:io';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../core/course.dart';
+import 'lecture.dart';
 import 'package:flutter/material.dart';
 import '../core/git_lab.dart';
 import '../core/store.dart';
@@ -18,18 +23,41 @@ class _GitPageState extends State<GitPage> {
   late final GitLab lab;
   String output = 'Локальный учебный репозиторий. README.md уже создан.\n';
   bool busy = false;
+  final readme = TextEditingController();
+  String fileMessage = '';
+  Future<void> _loadReadme() async {
+    await lab.initialize();
+    final text = await File('${lab.directory.path}/README.md').readAsString();
+    if (mounted) setState(() => readme.text = text);
+  }
+
+  Future<void> _saveReadme() async {
+    try {
+      await File('${lab.directory.path}/README.md').writeAsString(readme.text);
+      if (mounted) {
+        setState(
+          () => fileMessage =
+              'README.md сохранён в рабочей папке. Теперь сравни git diff.',
+        );
+      }
+    } catch (e) {
+      if (mounted) setState(() => fileMessage = 'Не удалось сохранить: $e');
+    }
+  }
+
   bool get supported =>
       Platform.isLinux || Platform.isWindows || Platform.isMacOS;
   @override
   void initState() {
     super.initState();
     lab = GitLab(Directory('${widget.store.directory.path}/git-lab'));
-    if (supported) lab.initialize();
+    if (supported) _loadReadme();
   }
 
   @override
   void dispose() {
     command.dispose();
+    readme.dispose();
     lab.runner.cancel();
     super.dispose();
   }
@@ -62,6 +90,40 @@ class _GitPageState extends State<GitPage> {
         'Git хранит историю. GitHub помогает делиться ею.',
         eyebrow: 'ОТДЕЛЬНЫЙ УЧЕБНЫЙ ТРЕК',
       ),
+      FutureBuilder<String>(
+        future: rootBundle.loadString('assets/content/git_course.json'),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return const LinearProgressIndicator();
+          final course = Course(jsonDecode(snapshot.data!));
+          return ExpansionTile(
+            title: const Text('Полный курс Git и GitHub с нуля'),
+            subtitle: const Text(
+              '20 занятий · Git на ПК · GitHub на ПК и телефоне',
+            ),
+            children: course.lessons
+                .map(
+                  (lesson) => ListTile(
+                    title: Text(lesson.title),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => Scaffold(
+                          appBar: AppBar(title: Text(lesson.title)),
+                          body: LectureView(
+                            lesson: lesson,
+                            course: course,
+                            store: widget.store,
+                            onPractice: () => Navigator.pop(context),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+          );
+        },
+      ),
+      const SizedBox(height: 18),
       Panel(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,11 +155,42 @@ class _GitPageState extends State<GitPage> {
           ],
         ),
       ),
+      TextButton.icon(
+        onPressed: () => launchUrl(
+          Uri.parse('https://github.com/PANDORA615/DevCat-'),
+          mode: LaunchMode.externalApplication,
+        ),
+        icon: const Icon(Icons.open_in_browser),
+        label: const Text('Открыть пример репозитория на GitHub'),
+      ),
+      if (supported)
+        Panel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text('Редактор README.md учебного репозитория'),
+              const SizedBox(height: 12),
+              TextField(
+                controller: readme,
+                minLines: 3,
+                maxLines: 8,
+                decoration: const InputDecoration(
+                  labelText: 'Содержимое README.md',
+                ),
+              ),
+              TextButton(
+                onPressed: busy ? null : _saveReadme,
+                child: const Text('Сохранить файл перед git add'),
+              ),
+              if (fileMessage.isNotEmpty) Text(fileMessage),
+            ],
+          ),
+        ),
       const SizedBox(height: 18),
       if (!supported)
         const Panel(
           child: Text(
-            'На Android доступна теория Git. Настоящая локальная Git-лаборатория в релизе 0.1 работает на ПК; симулятор не подменяет реальные команды.',
+            'Git-команды выполняем на компьютере. Практику GitHub из полного курса можно выполнять в браузере компьютера или телефона под своим аккаунтом.',
           ),
         ),
       if (supported)
@@ -175,7 +268,7 @@ class _GitPageState extends State<GitPage> {
               ),
               const SizedBox(height: 14),
               const Text(
-                'Доступны только локальные учебные команды. Подключение GitHub OAuth, push и PR в 0.1 не реализованы.',
+                'Здесь выполняются локальные команды Git. Практика GitHub, push и PR описана в полном курсе: браузер и обычный терминал собственного проекта.',
                 style: TextStyle(fontSize: 12),
               ),
             ],

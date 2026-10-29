@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        abi: [arm64-v8a, armeabi-v7a, x86_64]
+        abi: [universal]
     env:
       SOURCE_RUN: ${{ inputs.build_run || '40601191818' }}
       SOURCE_COMMIT: ${{ inputs.build_commit || 'd43bb71edd260fdc83e074dad360efc13bd1039d' }}
@@ -45,7 +45,7 @@ jobs:
               return json.loads(subprocess.check_output(['gh', 'api', f'repos/{repository}/{path}']))
           assert api(f'actions/runs/{run}')['head_sha'] == expected
           name = 'devcat-android-build-inputs-' + os.environ['SOURCE_ABI']
-          for attempt in range(60):
+          for attempt in range(120):
               if any(a['name'] == name for a in api(f'actions/runs/{run}/artifacts')['artifacts']):
                   break
               time.sleep(15)
@@ -66,12 +66,12 @@ jobs:
           files = list(Path('input').glob('*.apk'))
           assert len(files) == 1
           apk = files[0]
-          assert apk.name == f"app-{os.environ['SOURCE_ABI']}-release.apk"
+          assert apk.name == 'app-release.apk'
           output = Path('transfer'); output.mkdir()
           manifest = {'buildRun': int(os.environ['SOURCE_RUN']), 'buildCommit': os.environ['SOURCE_COMMIT'], 'name': apk.name, 'bytes': apk.stat().st_size, 'parts': []}
           total = hashlib.sha256()
           with apk.open('rb') as source:
-              for index in range(3):
+              for index in range(8):
                   name = apk.name + f'.part{index}'
                   digest = hashlib.sha256(); size = 0
                   with (output / name).open('wb') as target:
@@ -79,31 +79,78 @@ jobs:
                           block = source.read(min(1024 * 1024, 256 * 1024 * 1024 - size))
                           if not block: break
                           target.write(block); digest.update(block); total.update(block); size += len(block)
-                  assert size > 0
+                  if not size:
+                      (output / name).unlink()
+                      break
                   manifest['parts'].append({'name': name, 'bytes': size, 'sha256': digest.hexdigest()})
-              assert not source.read(1), 'Unexpected APK size above 768 MiB'
+              assert not source.read(1), 'Unexpected APK size above 2 GiB'
           assert sum(p['bytes'] for p in manifest['parts']) == manifest['bytes']
           manifest['sha256'] = total.hexdigest()
           (output / (apk.name + '.parts.json')).write_text(json.dumps(manifest, indent=2) + '\n')
           print(apk.name, manifest['bytes'], manifest['sha256'])
           PY
       - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part0') != ''
         with:
-          name: devcat-apk-${{ matrix.abi }}-part0
+          name: devcat-apk-universal-part0
           path: |
             transfer/*.part0
             transfer/*.parts.json
           compression-level: 0
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part1') != ''
         with:
-          name: devcat-apk-${{ matrix.abi }}-part1
-          path: transfer/*.part1
+          name: devcat-apk-universal-part1
+          path: |
+            transfer/*.part1
           compression-level: 0
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part2') != ''
         with:
-          name: devcat-apk-${{ matrix.abi }}-part2
-          path: transfer/*.part2
+          name: devcat-apk-universal-part2
+          path: |
+            transfer/*.part2
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part3') != ''
+        with:
+          name: devcat-apk-universal-part3
+          path: |
+            transfer/*.part3
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part4') != ''
+        with:
+          name: devcat-apk-universal-part4
+          path: |
+            transfer/*.part4
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part5') != ''
+        with:
+          name: devcat-apk-universal-part5
+          path: |
+            transfer/*.part5
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part6') != ''
+        with:
+          name: devcat-apk-universal-part6
+          path: |
+            transfer/*.part6
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('transfer/*.part7') != ''
+        with:
+          name: devcat-apk-universal-part7
+          path: |
+            transfer/*.part7
           compression-level: 0
           if-no-files-found: error

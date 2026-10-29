@@ -8,7 +8,7 @@ on:
       manifest:
         description: Reviewed transfer manifest
         required: true
-        default: docs/releases/v0.3.0-transfer.json
+        default: docs/releases/v0.4.0-transfer.json
 permissions:
   contents: write
   actions: read
@@ -28,7 +28,7 @@ jobs:
       - name: Read reviewed release metadata
         id: plan
         env:
-          INPUT_MANIFEST: ${{ inputs.manifest || 'docs/releases/v0.3.0-transfer.json' }}
+          INPUT_MANIFEST: ${{ inputs.manifest || 'docs/releases/v0.4.0-transfer.json' }}
         run: |
           python3 - <<'PY'
           import json, os, re
@@ -77,6 +77,13 @@ jobs:
         if: steps.plan.outputs.transfer_version == '3'
         with:
           name: devcat-android-build-inputs-x86_64
+          path: dist/android-build-inputs
+          run-id: ${{ steps.plan.outputs.build_run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        if: steps.plan.outputs.transfer_version == '4'
+        with:
+          name: devcat-android-build-inputs-universal
           path: dist/android-build-inputs
           run-id: ${{ steps.plan.outputs.build_run }}
           github-token: ${{ github.token }}

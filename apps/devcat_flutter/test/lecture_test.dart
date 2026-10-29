@@ -60,9 +60,9 @@ void main() {
         final course = Course(
           (jsonDecode(File('assets/content/courses.json').readAsStringSync())
                   as List)
-              .last,
+              .firstWhere((c) => c['id'] == 'sql'),
         );
-        final lesson = course.lessons.first;
+        final lesson = course.lessons.firstWhere((l) => l.id == 'sql.basics');
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -78,7 +78,7 @@ void main() {
         await tester.pumpAndSettle();
         final contents = find.widgetWithText(
           TextButton,
-          '4. Реальный результат приведённого запроса',
+          '5. Реальный результат приведённого запроса',
         );
         await tester.ensureVisible(contents);
         await tester.pumpAndSettle();

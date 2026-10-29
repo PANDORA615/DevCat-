@@ -1,4 +1,4 @@
-#define AppVersion "0.3.0"
+#define AppVersion "0.4.0"
 [Setup]
 AppId={{655B3A52-8BFC-45F6-A4DD-54F88CF7064F}
 AppName=DevCat

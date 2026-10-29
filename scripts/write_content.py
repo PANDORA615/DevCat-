@@ -11,6 +11,10 @@ from practice_bank import NAMES, challenge
 from lecture_depth import enrich_foundation, enrich_advanced, enrich_sql
 from workshops import build_workshops
 from export_books import export
+from beginner_course import lessons as beginner_lessons
+from web_courses import course as web_course
+from git_course import course as git_course
+from learning_visuals import enrich as visual_enrich
 ROOT=Path(__file__).resolve().parents[1]
 META={
 'c':('C17','Память, алгоритмы и надёжные локальные программы.','https://en.cppreference.com/w/c'),
@@ -82,13 +86,27 @@ def main():
         else:
             lessons = [enrich_foundation(lang, FOUNDATIONS[i][0], lesson) if i < len(FOUNDATIONS) else enrich_advanced(lang, i-len(FOUNDATIONS), lesson) for i, lesson in enumerate(lessons)]
         lessons += build_workshops(lang)
+        lessons = beginner_lessons(lang) + lessons
         extra=[challenge(lang,'generator',f'{lang}.generator.{key}',key) for key in ['gcd','multiples']] if lang!='sql' else []
-        course=dict(practiceBank=extra,id=lang,name=NAMES[lang],version=version,subtitle=subtitle,source=source,lessons=lessons,revision=3,review_status='authored_with_executable_labs_and_manual_projects',author='DevCat',last_verified='2026-10-28')
+        course=dict(practiceBank=extra,id=lang,name=NAMES[lang],version=version,subtitle=subtitle,source=source,lessons=lessons,revision=4,review_status='authored_with_executable_labs_and_manual_projects',author='DevCat',last_verified='2026-10-28')
+        course = visual_enrich(course)
         courses.append(course)
         target=ROOT/'content'/lang;target.mkdir(exist_ok=True,parents=True)
         (target/'intro.json').write_text(json.dumps(course,ensure_ascii=False,indent=2)+'\n')
+    courses += [visual_enrich(web_course('html')), visual_enrich(web_course('css'))]
+    for course in courses:
+        if course['id'] in ['html','css']:
+            for lesson in course['lessons']:
+                for label in ['desktop','phone']:
+                    image=lesson['id']+'-'+label+'.png'
+                    if (ROOT/'apps/devcat_flutter/assets/content'/image).exists():
+                        lesson['sections'].insert(3,dict(heading='Результат в браузере: '+label,text='Настоящий снимок Chromium при ширине '+('390px' if label=='phone' else '1080px')+'. Внешним изображениям нужны соответствующие локальные файлы.',image=image,imageCaption='Реальный браузерный рендеринг приведённого исходника.'))
+    for course in courses:
+        if course['id'] in ['html','css']:
+            target=ROOT/'content'/course['id'];target.mkdir(exist_ok=True)
+            (target/'intro.json').write_text(json.dumps(course,ensure_ascii=False,indent=2)+'\n')
     (ROOT/'apps/devcat_flutter/assets/content/courses.json').write_text(json.dumps(courses,ensure_ascii=False,indent=2)+'\n')
-    lines=['# Подробные курсы DevCat 0.3\n', 'Восемь направлений, по 48 лекций: основы, особенности языка, проекты и восемь подробных разборов сложных задач. Материалы, фотографии и схемы входят в офлайн-приложение. Заверши проекты, объясни решения и продолжай читать документацию.\n', '125 лабораторных проверяются автоматически; остальные работы — самостоятельная реализация с критериями. Проверка результата программы не оценивает автоматически качество тестов, стиль и объяснение. Для эталонов выполняется реальный запуск в CI; независимая экспертная редактура текста ещё нужна.\n']
+    lines=['# Подробные курсы DevCat 0.4\n', 'Десять направлений с вводным маршрутом для новичка: основы, особенности языка, проекты и восемь подробных разборов сложных задач. Материалы, фотографии и схемы входят в офлайн-приложение. Заверши проекты, объясни решения и продолжай читать документацию.\n', '125 лабораторных проверяются автоматически; остальные работы — самостоятельная реализация с критериями. Проверка результата программы не оценивает автоматически качество тестов, стиль и объяснение. Для эталонов выполняется реальный запуск в CI; независимая экспертная редактура текста ещё нужна.\n']
     for course in courses:
         lines.append('\n## '+course['name']+' · '+course['version']+'\n')
         current=None
@@ -98,7 +116,9 @@ def main():
             assessment='автотесты' if lesson['challenge'] else 'самостоятельная работа'
             lines.append(f"{index}. {lesson['title']} — {assessment}; ориентир {lesson['minutes']} мин с практикой.")
         lines.append('\nДокументация: '+course['source']+'\n')
-    export(courses)
+    git = visual_enrich(git_course())
+    (ROOT/'apps/devcat_flutter/assets/content/git_course.json').write_text(json.dumps(git,ensure_ascii=False,indent=2)+'\n')
+    export(courses+[git])
     (ROOT/'docs/CURRICULUM.md').write_text('\n'.join(lines).rstrip()+'\n')
     print(f'{sum(len(c["lessons"]) for c in courses)} lectures; {sum(bool(l["challenge"]) for c in courses for l in c["lessons"])} checked laboratories; '+str(sum(len(l['theory'].split()) for c in courses for l in c['lessons']))+' lecture words')
 if __name__=='__main__':main()

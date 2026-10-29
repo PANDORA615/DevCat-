@@ -14,7 +14,7 @@ def paragraphs(text):
 
 
 def html_book(course):
-    parts=['<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(course['name'])+' — подробный курс DevCat</title><style>'+CSS+'</style><main>', '<h1>'+escape(course['name'])+' · '+escape(course['version'])+'</h1>', '<p>48 занятий: основы, особенности языка, проекты и подробные разборы сложных задач. Материалы доступны без интернета. Код примеров и таблицы совпадают с содержимым приложения DevCat.</p>', '<nav aria-label="Оглавление">']
+    parts=['<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(course['name'])+' — подробный курс DevCat</title><style>'+CSS+'</style><main>', '<h1>'+escape(course['name'])+' · '+escape(course['version'])+'</h1>', '<p>'+str(len(course['lessons']))+' занятий: основы, особенности языка, проекты и подробные разборы сложных задач. Материалы доступны без интернета. Код примеров и таблицы совпадают с содержимым приложения DevCat.</p>', '<nav aria-label="Оглавление">']
     for i,lesson in enumerate(course['lessons'],1):parts.append(f'<a href="#lesson-{i}">{i}. {escape(lesson["title"])}</a>')
     parts.append('</nav>')
     for i,lesson in enumerate(course['lessons'],1):
@@ -23,6 +23,7 @@ def html_book(course):
             parts.append('<figure><img loading=\"lazy\" src=\"assets/'+escape(lesson['photo'],quote=True)+'\" alt=\"Учебная фотография DevCat\"><figcaption><small>'+escape(lesson['photoCaption'])+'</small></figcaption></figure>')
         for section in lesson['sections']:
             parts += ['<h3>'+escape(section['heading'])+'</h3>', paragraphs(section.get('text',''))]
+            if section.get('image'):parts.append('<figure><img loading="lazy" src="assets/'+escape(section['image'],quote=True)+'" alt="'+escape(section.get('imageCaption','Пошаговая схема'),quote=True)+'"><figcaption>'+escape(section.get('imageCaption',''))+'</figcaption></figure>')
             if section.get('code'):parts.append('<pre><code>'+escape(section['code'])+'</code></pre>')
             if section.get('table'):
                 table=section['table'];parts.append('<div class="table"><table><thead><tr>'+''.join('<th scope="col">'+escape(c)+'</th>' for c in table['columns'])+'</tr></thead><tbody>')
@@ -36,7 +37,7 @@ def html_book(course):
 
 
 def markdown_book(course):
-    lines=['# '+course['name']+' · подробный курс DevCat', '',course['version'], '', '48 занятий. Код, результаты и разборы совпадают с офлайн-приложением.', '']
+    lines=['# '+course['name']+' · подробный курс DevCat', '',course['version'], '', str(len(course['lessons']))+' занятий. Код, результаты и разборы совпадают с офлайн-приложением.', '']
     for i,lesson in enumerate(course['lessons'],1):lines.append(f'{i}. [{lesson["title"]}](#lesson-{i})')
     for i,lesson in enumerate(course['lessons'],1):
         lines += ['',f'<a id="lesson-{i}"></a>','',f'## {i}. {lesson["title"]}','',lesson['chapter']+' · '+lesson['difficulty'],'']
@@ -63,18 +64,23 @@ def export(courses):
         # HTML in the ZIP is self-contained with its accompanying assets.
         files[course['id']+'.html']=html.encode()
         files[course['id']+'.md']=md.encode()
-    index='<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Учебники DevCat</title><style>'+CSS+'</style><main><h1>Подробные курсы DevCat</h1><p>Открой любой курс. Интернет для чтения не нужен. Печать в PDF доступна через браузер. Контрольные ответы раскрываются нажатием.</p><nav>'+''.join('<a href="'+c['id']+'.html">'+escape(c['name'])+' — 48 занятий</a>' for c in courses)+'</nav><p>Учебные фотографии созданы для DevCat и служат контекстом; реальные данные и вычисления приведены в таблицах.</p></main></html>'
+    index='<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Учебники DevCat</title><style>'+CSS+'</style><main><h1>Подробные курсы DevCat</h1><p>Открой любой курс. Интернет для чтения не нужен. Печать в PDF доступна через браузер. Контрольные ответы раскрываются нажатием.</p><nav>'+''.join('<a href="'+c['id']+'.html">'+escape(c['name'])+' — '+str(len(c['lessons']))+' занятий</a>' for c in courses)+'</nav><p>Учебные фотографии созданы для DevCat и служат контекстом; реальные данные и вычисления приведены в таблицах.</p></main></html>'
     files['index.html']=index.encode()
     files['LICENSE.txt']=(ROOT/'LICENSE').read_bytes()
-    files['README.txt']='Распакуй весь архив в одну папку и открой index.html. Внутри 8 HTML-учебников и 8 Markdown-версий. Файлы assets должны оставаться рядом. Можно печатать HTML в PDF. Практические проекты требуют самостоятельной реализации; количество прочитанных страниц не является автоматической оценкой навыка.\n'.encode()
+    files['README.txt']='Распакуй весь архив в одну папку и открой index.html. Внутри 11 HTML-учебников и 11 Markdown-версий. Файлы assets должны оставаться рядом. Можно печатать HTML в PDF. Практические проекты требуют самостоятельной реализации; количество прочитанных страниц не является автоматической оценкой навыка.\n'.encode()
     for name in ['Nunito.ttf','Nunito-OFL.txt','JetBrainsMono.ttf','JetBrainsMono-OFL.txt']:
         files['assets/'+name]=(ROOT/'apps/devcat_flutter/assets/fonts'/name).read_bytes()
     for name in ['memory.png','data.png','debug.png','workbench.png']:
         files['assets/'+name]=(ROOT/'apps/devcat_flutter/assets/content'/name).read_bytes()
+    for course in courses:
+        for lesson in course['lessons']:
+            for section in lesson['sections']:
+                if section.get('image'):
+                    files['assets/'+section['image']]=(ROOT/'apps/devcat_flutter/assets/content'/section['image']).read_bytes()
     # Fixed entry timestamps and order make regeneration byte-reproducible.
     with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_STORED) as target:
         for name,data in sorted(files.items()):
             entry=zipfile.ZipInfo(name,date_time=(2026,10,28,0,0,0));entry.compress_type=zipfile.ZIP_STORED;entry.external_attr=0o100644<<16
             target.writestr(entry,data)
-    (folder/'README.md').write_text('# Подробные учебники DevCat\n\n[Скачать HTML и Markdown одним архивом](../DevCat-lectures.zip). После распаковки открой index.html.\n\n'+'\n'.join('- ['+c['name']+']('+c['id']+'.md) — 48 занятий.' for c in courses)+'\n')
-    print('Exported 8 HTML textbooks and 8 Markdown books:',archive.stat().st_size,'archive bytes')
+    (folder/'README.md').write_text('# Подробные учебники DevCat\n\n[Скачать HTML и Markdown одним архивом](../DevCat-lectures.zip). После распаковки открой index.html.\n\n'+'\n'.join('- ['+c['name']+']('+c['id']+'.md) — '+str(len(c['lessons']))+' занятий.' for c in courses)+'\n')
+    print('Exported offline HTML and Markdown textbooks:',archive.stat().st_size,'archive bytes')

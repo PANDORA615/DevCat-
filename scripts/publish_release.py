@@ -33,7 +33,7 @@ def api(path):
         return json.load(response)
 
 
-assert manifest['version'] in (1, 2, 3)
+assert manifest['version'] in (1, 2, 3, 4)
 assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', manifest['tag'])
 version = manifest['tag'][1:]
 assert isinstance(manifest['build_run'], int) and manifest['build_run'] > 0
@@ -44,7 +44,7 @@ subprocess.run(['git', 'diff', '--exit-code', manifest['build_commit'], 'HEAD', 
                 'scripts/build_android_proot.sh', 'scripts/build_android_rootfs.py',
                 'scripts/android_runtime_versions.json'], check=True)
 expected_android = {f'DevCat-{version}-android-{abi}.apk' for abi in
-                    (['universal', 'arm64-v8a', 'armeabi-v7a', 'x86_64'] if manifest['version'] == 1 else ['arm64-v8a', 'armeabi-v7a', 'x86_64'])}
+                    (['universal', 'arm64-v8a', 'armeabi-v7a', 'x86_64'] if manifest['version'] == 1 else ['universal'] if manifest['version'] == 4 else ['arm64-v8a', 'armeabi-v7a', 'x86_64'])}
 if manifest['version'] == 1:
     expected_android.add(f'DevCat-{version}-android.aab')
 else:
@@ -71,7 +71,7 @@ def reconstruct(item, destination):
 for item in manifest['files']:
     assert Path(item['name']).name == item['name']
     destination = output / item['name']
-    if manifest['version'] == 3 and item['name'].endswith('.apk'):
+    if manifest['version'] in (3, 4) and item['name'].endswith('.apk'):
         patch = item['patch']
         assert patch['name'] == item['name'] + '.patch.json'
         assert Path(item['base']['name']).name == item['base']['name']
@@ -96,7 +96,7 @@ for source, name in [
     shutil.copyfile(source, output / name)
 if manifest['version'] >= 2:
     shutil.copyfile(f'docs/releases/v{version}-Android-runtimes.json', output / f'DevCat-{version}-Android-runtimes.json')
-if manifest.get('asset_count', 20) == 21:
+if manifest.get('asset_count', 20) in (19, 21):
     shutil.copyfile('docs/DevCat-lectures.zip', output / f'DevCat-{version}-lectures.zip')
 expected = {'SHA256SUMS'}
 for line in (output / 'SHA256SUMS').read_text().splitlines():

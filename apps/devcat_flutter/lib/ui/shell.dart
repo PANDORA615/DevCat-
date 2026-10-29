@@ -160,6 +160,9 @@ class _DevCatShellState extends State<DevCatShell> {
         if (widget.store.setting('cat', true))
           CompanionBar(
             key: const ValueKey('persistent-companion'),
+            courses: widget.courses,
+            store: widget.store,
+            lessonId: page == 1 ? course.lessons[lesson].id : null,
             sounds: widget.sounds,
             autoTalk: widget.store.setting('catChatter', true),
             interval: Duration(
@@ -760,21 +763,28 @@ class _DevCatShellState extends State<DevCatShell> {
                 },
               ),
               const SizedBox(width: 12),
-              ActionChip(
-                avatar: const Icon(Icons.auto_awesome_rounded, size: 18),
-                label: const Text('Задание от кота'),
-                onPressed: () => openCourse(
-                  language,
-                  index: lesson,
-                  generated: 1 + Random.secure().nextInt(1000000000),
+              if (language != 'html' && language != 'css')
+                ActionChip(
+                  avatar: const Icon(Icons.auto_awesome_rounded, size: 18),
+                  label: const Text('Задание от кота'),
+                  onPressed: () => openCourse(
+                    language,
+                    index: lesson,
+                    generated: 1 + Random.secure().nextInt(1000000000),
+                  ),
                 ),
-              ),
             ],
           ),
         ),
       ],
       Expanded(
-        child: reading && seed == 0
+        child: (language == 'html' || language == 'css') && !reading
+            ? IdePage(
+                store: widget.store,
+                sounds: widget.sounds,
+                language: language,
+              )
+            : reading && seed == 0
             ? LectureView(
                 key: ValueKey('lecture:$language:$lesson'),
                 lesson: course.lessons[lesson],

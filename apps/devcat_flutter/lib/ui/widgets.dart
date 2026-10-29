@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../core/sound.dart';
+import 'cat_actor.dart';
 
 /// Maps the original mint background to the theme while preserving black and white.
 /// The asset stays unchanged, so every palette uses the same cat silhouette.
@@ -37,12 +38,12 @@ class DevCatLogo extends StatelessWidget {
               0,
             ]),
             child: OverflowBox(
-              maxWidth: size * 1.16,
-              maxHeight: size * 1.16,
+              maxWidth: size,
+              maxHeight: size,
               child: Image.asset(
                 'assets/branding/icon.png',
-                width: size * 1.16,
-                height: size * 1.16,
+                width: size,
+                height: size,
                 excludeFromSemantics: true,
               ),
             ),
@@ -150,30 +151,17 @@ class StatusBadge extends StatelessWidget {
 
 class CatPortrait extends StatelessWidget {
   final double size;
-  const CatPortrait({super.key, this.size = 150});
+  final CatMood mood;
+  final String? speech;
+  const CatPortrait({
+    super.key,
+    this.size = 150,
+    this.mood = CatMood.greeting,
+    this.speech,
+  });
   @override
-  Widget build(BuildContext context) => Semantics(
-    label: 'Чёрный пиксельный кот DevCat',
-    image: true,
-    child: SizedBox(
-      width: size,
-      height: size * .8,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: OverflowBox(
-          maxWidth: size * 1.5,
-          maxHeight: size * 1.5,
-          child: Image.asset(
-            'assets/branding/cat_original.jpg',
-            width: size * 1.5,
-            height: size * 1.5,
-            filterQuality: FilterQuality.none,
-            excludeFromSemantics: true,
-          ),
-        ),
-      ),
-    ),
-  );
+  Widget build(BuildContext context) =>
+      CatActor(size: size, mood: mood, speech: speech);
 }
 
 class CatMessage extends StatefulWidget {

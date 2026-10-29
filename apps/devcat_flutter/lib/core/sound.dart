@@ -20,6 +20,7 @@ class SoftSounds {
   int generation = 0;
   double volume = .22, voiceVolume = .18;
   String voiceStyle = 'auto';
+  int _tapVariant = 0, _voiceVariant = 0;
   DateTime _last = DateTime.fromMillisecondsSinceEpoch(0);
   DateTime _lastVoice = DateTime.fromMillisecondsSinceEpoch(0);
   bool get voiceBusy =>
@@ -51,7 +52,17 @@ class SoftSounds {
       return;
     }
     _last = now;
-    unawaited(_play('effect', cues[cue]!, volume));
+    unawaited(
+      _play(
+        'effect',
+        cue == SoundCue.tap
+            ? (_tapVariant++ % 7 == 0
+                  ? cues[cue]!
+                  : 'companion_tyk_${_tapVariant % 6}')
+            : cues[cue]!,
+        volume,
+      ),
+    );
   }
 
   Future<void> result(bool success) async =>
@@ -60,7 +71,9 @@ class SoftSounds {
     if (!enabled || !voiceEnabled) return;
     _lastVoice = DateTime.now();
     final selected = voiceStyle == 'auto'
-        ? voices[mood]!
+        ? (_voiceVariant++ % 3 == 0
+              ? voices[mood]!
+              : 'companion_voice_${mood.index}')
         : voices.values.firstWhere(
             (v) => v == voiceStyle,
             orElse: () => voices[mood]!,

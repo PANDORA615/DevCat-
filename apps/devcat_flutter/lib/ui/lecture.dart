@@ -4,6 +4,8 @@ import '../core/course.dart';
 import '../core/store.dart';
 import '../core/sound.dart';
 import 'widgets.dart';
+import 'lesson_visual.dart';
+import 'tutor_page.dart';
 
 class LectureView extends StatefulWidget {
   final Lesson lesson;
@@ -208,6 +210,20 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                       ),
                     ],
                   ),
+                  TextButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => TutorPage(
+                          courses: [widget.course],
+                          store: widget.store,
+                          language: widget.course.id,
+                          lessonId: lesson.id,
+                        ),
+                      ),
+                    ),
+                    icon: const Icon(Icons.chat_rounded),
+                    label: const Text('Не понял — разобрать с котом'),
+                  ),
                   const SizedBox(height: 24),
                   if (lesson.photo.isNotEmpty) ...[
                     ClipRRect(
@@ -295,6 +311,48 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           child: ConceptDiagram(s['diagram']),
+                        ),
+                      if (s['visual'] != null)
+                        LessonVisual(Map<String, dynamic>.from(s['visual'])),
+                      if (s['image'] != null)
+                        InkWell(
+                          onTap: () => showDialog<void>(
+                            context: context,
+                            builder: (_) => Dialog.fullscreen(
+                              child: Scaffold(
+                                appBar: AppBar(
+                                  title: const Text('Схема или снимок примера'),
+                                ),
+                                body: InteractiveViewer(
+                                  minScale: .5,
+                                  maxScale: 8,
+                                  child: Center(
+                                    child: Image.asset(
+                                      'assets/content/${s['image']}',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxHeight: 360,
+                                ),
+                                child: Image.asset(
+                                  'assets/content/${s['image']}',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Text(
+                                s['imageCaption'] ?? 'Нажми, чтобы увеличить',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
                         ),
                       if (s['table'] != null)
                         _dataTable(Map<String, dynamic>.from(s['table']), size),

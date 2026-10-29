@@ -46,8 +46,8 @@ void main() {
             format: ui.ImageByteFormat.rawRgba,
           );
           final bytes = data!.buffer.asUint8List();
-          final background = (12 * image.width + 32) * 4;
-          final cat = (42 * image.width + 42) * 4;
+          final background = (46 * image.width + 24) * 4;
+          final cat = (29 * image.width + 42) * 4;
           result = [
             ...bytes.sublist(background, background + 4),
             ...bytes.sublist(cat, cat + 4),

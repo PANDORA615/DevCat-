@@ -12,10 +12,14 @@ void main() {
   test(
     'Offline curriculum has full lectures, relevant labs and real images',
     () {
-      expect(courses.length, 8);
+      expect(courses.length, 10);
       final ids = <String>{};
       for (final course in courses) {
-        expect(course.lessons.length, 48, reason: course.id);
+        expect(
+          course.lessons.length,
+          course.id == 'html' || course.id == 'css' ? 24 : 56,
+          reason: course.id,
+        );
         for (final lesson in course.lessons) {
           expect(ids.add(lesson.id), isTrue);
           expect(
@@ -75,6 +79,7 @@ void main() {
       final required =
           Platform.environment['DEVCAT_REQUIRE_ALL_TOOLCHAINS'] == 'true';
       for (final course in courses) {
+        if (!executableLanguages.contains(course.id)) continue;
         if (course.id != 'sql' &&
             tools[course.name]!.contains('Не установлен')) {
           if (required) fail('Missing ${course.name}');

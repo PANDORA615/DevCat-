@@ -4,6 +4,7 @@ import 'package:devcat/core/android_runtime.dart';
 import 'package:devcat/core/course.dart';
 import 'package:devcat/core/project.dart';
 import 'package:devcat/core/runner.dart';
+import 'package:devcat/core/web_preview.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,6 +13,33 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   testWidgets(
+    'Android serves HTML and CSS locally without a compiler or network',
+    (tester) async {
+      final project = DevProject.create('css', 'Offline web');
+      final preview = WebPreview();
+      final client = HttpClient();
+      try {
+        final uri = await preview.open(project);
+        final response = await (await client.getUrl(uri)).close();
+        expect(response.statusCode, 200);
+        expect(
+          await utf8.decoder.bind(response).join(),
+          contains('Моя первая страница'),
+        );
+        final css = await (await client.getUrl(
+          uri.resolve('style.css'),
+        )).close();
+        expect(css.statusCode, 200);
+        expect(css.headers.contentType!.mimeType, 'text/css');
+        await css.drain<void>();
+        debugPrint('ANDROID_WEB_PREVIEW_PASS');
+      } finally {
+        client.close(force: true);
+        await preview.close();
+      }
+    },
+  );
+  testWidgets(
     'All bundled Android toolchains are available without downloads',
     (tester) async {
       expect(Platform.isAndroid, isTrue);
@@ -19,7 +47,7 @@ void main() {
       expect(installation['root'], isNotEmpty);
       final runner = LocalRunner();
       final versions = await runner.toolchains();
-      for (final name in languageNames.values) {
+      for (final name in executableLanguages.map((id) => languageNames[id]!)) {
         expect(versions[name], isNotNull, reason: name);
         expect(
           versions[name],
@@ -33,7 +61,7 @@ void main() {
     timeout: const Timeout(Duration(minutes: 5)),
   );
 
-  for (final language in languageNames.keys) {
+  for (final language in executableLanguages) {
     testWidgets('Android offline references and generated task: $language', (
       tester,
     ) async {

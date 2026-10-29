@@ -2,8 +2,8 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "DevCat-0.3.0",
-  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.3.0",
+  "name": "DevCat-0.4.0",
+  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.4.0",
   "creationInfo": {
     "creators": [
       "Tool: DevCat license_inventory.py"

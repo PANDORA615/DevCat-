@@ -82,6 +82,21 @@ class ProgressData {
           }
           value['contentRevision'] = 2;
         }
+        if (key == 'cursors' && (value['contentRevision'] as int? ?? 2) < 4) {
+          if (const [
+            'c',
+            'cpp',
+            'csharp',
+            'python',
+            'java',
+            'javascript',
+            'go',
+            'sql',
+          ].contains(value['language'])) {
+            value['lesson'] = (value['lesson'] as int) + 8;
+          }
+          value['contentRevision'] = 4;
+        }
         out[e.key] = value;
       }
       return out;
@@ -157,7 +172,7 @@ class ProgressData {
   void cursor(String language, int lesson, int seed, String device) {
     cursors[device] = {
       'language': language,
-      'contentRevision': 2,
+      'contentRevision': 4,
       'lesson': lesson,
       'seed': seed,
       'updated': DateTime.now().millisecondsSinceEpoch,

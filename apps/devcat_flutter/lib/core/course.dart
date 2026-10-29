@@ -115,7 +115,19 @@ const languageNames = {
   'javascript': 'JavaScript',
   'go': 'Go',
   'sql': 'SQL',
+  'html': 'HTML',
+  'css': 'CSS',
 };
+const executableLanguages = [
+  'c',
+  'cpp',
+  'csharp',
+  'python',
+  'java',
+  'javascript',
+  'go',
+  'sql',
+];
 const fileNames = {
   'c': 'main.c',
   'cpp': 'main.cpp',
@@ -125,6 +137,8 @@ const fileNames = {
   'javascript': 'main.js',
   'go': 'main.go',
   'sql': 'query.sql',
+  'html': 'index.html',
+  'css': 'index.html',
 };
 
 /// Детерминированные задания: эталон и тесты создаются из одной спецификации,
@@ -135,7 +149,9 @@ Challenge generateChallenge(
   String kind = 'loop',
   String? lessonId,
 }) {
-  if (!languageNames.containsKey(language)) {
+  if (!languageNames.containsKey(language) ||
+      language == 'html' ||
+      language == 'css') {
     throw ArgumentError('Генератор доступен только для восьми языков, не Git.');
   }
   final bank = coursePracticeBank[language];
