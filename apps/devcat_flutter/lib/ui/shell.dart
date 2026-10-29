@@ -468,7 +468,12 @@ class _DevCatShellState extends State<DevCatShell> {
                 '$solved',
                 'решённых задач',
               ),
-              _stat(context, Icons.layers_outlined, '8 + Git', 'направлений'),
+              _stat(
+                context,
+                Icons.layers_outlined,
+                '${widget.courses.length} + Git',
+                'направлений',
+              ),
               _stat(
                 context,
                 Icons.cloud_off_rounded,

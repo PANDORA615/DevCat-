@@ -458,9 +458,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
         final directory = await project.materialize(widget.store.directory);
         final uri = await preview.open(project);
         if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-          throw StateError(
-            'Браузер не открылся. Адрес можно скопировать ниже.',
-          );
+          throw StateError('Браузер не открылся. Открой адрес вручную: $uri');
         }
         if (mounted) {
           setState(
