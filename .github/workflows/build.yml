@@ -134,6 +134,16 @@ jobs:
         with:
           path: build/android-runtime-image
           key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
+      - name: Pass the exact image to the universal packaging job
+        uses: actions/upload-artifact@v4
+        with:
+          name: devcat-runtime-image-${{ matrix.abi }}
+          path: |
+            build/android-runtime-image/${{ matrix.abi }}.json
+            build/android-runtime-image/${{ matrix.abi }}.zip
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
   android:
     needs: [test, android-image]
     runs-on: ubuntu-22.04
@@ -148,21 +158,12 @@ jobs:
         with:
           packages: 'platform-tools platforms;android-36 build-tools;36.0.0 ndk;28.2.13676358'
           log-accepted-android-sdk-licenses: false
-      - uses: actions/cache/restore@v4
+      - name: Receive all three images from this exact workflow run
+        uses: actions/download-artifact@v4
         with:
           path: build/android-runtime-image
-          key: android-runtime-arm64-v8a-${{ hashFiles('scripts/build_android_rootfs.py', 'scripts/android_runtime_versions.json') }}
-          fail-on-cache-miss: true
-      - uses: actions/cache/restore@v4
-        with:
-          path: build/android-runtime-image
-          key: android-runtime-armeabi-v7a-${{ hashFiles('scripts/build_android_rootfs.py', 'scripts/android_runtime_versions.json') }}
-          fail-on-cache-miss: true
-      - uses: actions/cache/restore@v4
-        with:
-          path: build/android-runtime-image
-          key: android-runtime-x86_64-${{ hashFiles('scripts/build_android_rootfs.py', 'scripts/android_runtime_versions.json') }}
-          fail-on-cache-miss: true
+          pattern: devcat-runtime-image-*
+          merge-multiple: true
       - name: Compact optional SDK files without removing compilers
         run: python3 scripts/compact_android_image.py build/android-runtime-image
       - name: Embed all architectures in one offline application
