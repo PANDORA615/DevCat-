@@ -60,6 +60,8 @@ HTML/CSS-практика открывает файлы именно выбра�
 | macOS, Intel и Apple Silicon | universal DMG / ZIP |
 | Android 7+, ARM64 / ARMv7 / x86_64 | **один универсальный APK** |
 
+**Размер APK 0.5.0: 1,47 ГБ — на 22,79% меньше 0.4.0, без дополнительных загрузок сред.**
+
 Android APK содержит все три архитектурных пакета с локальными средствами исполнения; распаковывается только подходящий устройству. Из SDK удалены необязательные исходники Java и инструменты, которые учебная среда не использует; компиляторы и стандартные библиотеки сохранены. Нужны место для APK, установки и примерно 1,2–1,6 ГБ для среды сверх установленного приложения. Подпись постоянная; versionCode 5006 выше старых split APK, обновление сохраняет данные. AAB и отдельные ABI APK в этом выпуске не распространяются.
 
 Linux требует GTK 3, libsecret и GStreamer, включая AppImage. На Ubuntu: `sudo apt install libgtk-3-0 libsecret-1-0 libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-plugins-good`. AppImage без FUSE запускается с `--appimage-extract-and-run`. Windows может требовать официальный Visual C++ Redistributable 2015–2022 x64. Authenticode и Apple Developer ID/notarization не настроены. [Матрица поддержки](docs/SUPPORT.md).

@@ -15,7 +15,7 @@
 | HTML | [MDN: Basic HTML syntax](https://developer.mozilla.org/ru/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax) | [HTML Notes for Professionals](https://books.goalkicker.com/HTML5Book/HTML5NotesForProfessionals.pdf) |
 | CSS | [Learn CSS: Box Model](https://web.dev/learn/css/box-model) | [CSS Notes for Professionals](https://books.goalkicker.com/CSSBook/CSSNotesForProfessionals.pdf) |
 
-Для Git/GitHub: [Pro Git](https://git-scm.com/book/ru/v2) и [GitHub Docs](https://docs.github.com/ru/get-started).
+Для Git/GitHub: [Pro Git](https://git-scm.com/book/ru/v2) и [GitHub Docs](https://docs.github.com/ru/get-started). Дополнительно сверены открытые исходные разделы: [создание репозитория](https://github.com/progit/progit2-ru/blob/master/book/02-git-basics/sections/getting-a-repository.asc), [запись изменений](https://github.com/progit/progit2-ru/blob/master/book/02-git-basics/sections/recording-changes.asc) и [первые действия в GitHub](https://github.com/github/docs/blob/main/content/repositories/creating-and-managing-repositories/quickstart-for-repositories.md).
 
 ## Как читать
 

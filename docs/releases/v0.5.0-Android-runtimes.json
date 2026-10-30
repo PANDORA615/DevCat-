@@ -1,0 +1,1495 @@
+{
+  "schema": 1,
+  "version": "0.5.0",
+  "buildRun": 40968165428,
+  "buildCommit": "c814826074af5aba25ba06c74353c8f149c69735",
+  "runtimes": [
+    {
+      "sha256": "b2082b09f91be0999e2d9fc6ee1b8b07d3068b9a2ca4bbe1895d85fd37849263",
+      "bytes": 471847151,
+      "schema": 1,
+      "abi": "arm64-v8a",
+      "dotnet": "8.0.427",
+      "java": "Liberica 21.0.13.0.3+5",
+      "node": "v22.23.4",
+      "go": "go1.27.3",
+      "packages": [
+        {
+          "deb": "base-files_12.4+deb12u15_arm64.deb",
+          "metadata": "Package: base-files\nVersion: 12.4+deb12u15\n",
+          "sha256": "b1272fbdc197f7d5bd22c05b741a03840f8bec66ca68c8d797f567ff2c99d42d"
+        },
+        {
+          "deb": "bash_5.2.15-2+b13_arm64.deb",
+          "metadata": "Package: bash\nVersion: 5.2.15-2+b13\nSource: bash (5.2.15-2)\n",
+          "sha256": "fdb470b5ec1773b90014138bfc1deda4505c1c23e7f5731e8b527c636ac03385"
+        },
+        {
+          "deb": "binutils-aarch64-linux-gnu_2.40-2_arm64.deb",
+          "metadata": "Package: binutils-aarch64-linux-gnu\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "fa154fed9b3bb5e11c4c152c3faaa5b56dce9ea39fed68156c3d656c97b4a11e"
+        },
+        {
+          "deb": "binutils-common_2.40-2_arm64.deb",
+          "metadata": "Package: binutils-common\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "2e340788164c94d876ab88c41f85ec0875a9f4324f83c93a44a14879925a11a0"
+        },
+        {
+          "deb": "binutils_2.40-2_arm64.deb",
+          "metadata": "Package: binutils\nVersion: 2.40-2\n",
+          "sha256": "546129bb85470fa3b5398d7429cd87c5353ab47f37e9d5e28abc57e6923a24fa"
+        },
+        {
+          "deb": "coreutils_9.1-1_arm64.deb",
+          "metadata": "Package: coreutils\nVersion: 9.1-1\n",
+          "sha256": "ec8f090a14c684879dce251254d8d9ed0876d4480f750d5807ef04e5435e1c4d"
+        },
+        {
+          "deb": "cpp-12_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: cpp-12\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "f95ae5b0f967bf9de96c952e12b865b133756f3f07f904a64a1fec5fcf3d20e7"
+        },
+        {
+          "deb": "cpp_4%3a12.2.0-3_arm64.deb",
+          "metadata": "Package: cpp\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "b4a7ff301927330e6120450fcfcbcf016cf58e485dc6f113b110e8a8280fbfca"
+        },
+        {
+          "deb": "debconf_1.5.82_all.deb",
+          "metadata": "Package: debconf\nVersion: 1.5.82\n",
+          "sha256": "74ab14194a3762b2fc717917dcfda42929ab98e3c59295a063344dc551cd7cc8"
+        },
+        {
+          "deb": "debianutils_5.7-0.5~deb12u1_arm64.deb",
+          "metadata": "Package: debianutils\nVersion: 5.7-0.5~deb12u1\n",
+          "sha256": "0fc03c548293aee2359af53bd03b30ab42ca3493afcb65bed2f3caee90ffd46a"
+        },
+        {
+          "deb": "dpkg_1.21.23_arm64.deb",
+          "metadata": "Package: dpkg\nVersion: 1.21.23\n",
+          "sha256": "00b2b9d112ecbfe99d8f0c3de56dd33bc242f71c8ae51c3fd1e154ab2e2eb07a"
+        },
+        {
+          "deb": "findutils_4.9.0-4_arm64.deb",
+          "metadata": "Package: findutils\nVersion: 4.9.0-4\n",
+          "sha256": "cc8792e769ff4a1280ff1a43b11a1858a72d858fb6eb871ec327ec8eebe99eaa"
+        },
+        {
+          "deb": "fontconfig-config_2.14.1-4_arm64.deb",
+          "metadata": "Package: fontconfig-config\nVersion: 2.14.1-4\nSource: fontconfig\n",
+          "sha256": "297b5a63f9214ffebe08892cdf2effdaf2b408e719811d5e8e98870f710cd35c"
+        },
+        {
+          "deb": "fonts-dejavu-core_2.37-6_all.deb",
+          "metadata": "Package: fonts-dejavu-core\nVersion: 2.37-6\nSource: fonts-dejavu\n",
+          "sha256": "8892669e51aab4dc56682c8e39d8ddb7d70fad83c369344e1e240bf3ca22bb76"
+        },
+        {
+          "deb": "g++-12_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: g++-12\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "cb6c11930cf7ad0e9baa5561b1f5fd033bed829e4acfc4472335bef99ca4cd71"
+        },
+        {
+          "deb": "g++_4%3a12.2.0-3_arm64.deb",
+          "metadata": "Package: g++\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "12d5e878436f9fd76802f46aeb635a404b946facb49f151bc3960a3267dd07fc"
+        },
+        {
+          "deb": "gcc-12-base_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: gcc-12-base\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "674cf6cba6d432bd200c45fe866c1652c7a53523cc2e7a613e05bc4abf7b5440"
+        },
+        {
+          "deb": "gcc-12_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: gcc-12\nVersion: 12.2.0-14+deb12u1\n",
+          "sha256": "d4f6bc31cefeb188eddc7e0f738f51c12f863cd03502935c388a9f305f558996"
+        },
+        {
+          "deb": "gcc_4%3a12.2.0-3_arm64.deb",
+          "metadata": "Package: gcc\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "81e86d3d3cd6731201b88fe5d8881aa281d7ffbfd8cc1c269c7a116c7b405e8d"
+        },
+        {
+          "deb": "grep_3.8-5_arm64.deb",
+          "metadata": "Package: grep\nVersion: 3.8-5\n",
+          "sha256": "2caf08393ef6ea18a52e7e4609a7bd13811ff53733b4e45d2c7b0957e8d592cf"
+        },
+        {
+          "deb": "libacl1_2.3.1-3_arm64.deb",
+          "metadata": "Package: libacl1\nVersion: 2.3.1-3\nSource: acl\n",
+          "sha256": "2b0eef11a2e271e7355adaf1f6cbf8d2e83835ae1b6cf15165d59b8289c08342"
+        },
+        {
+          "deb": "libasan8_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libasan8\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "e458ed0f5a845d0f247de5985aa2478e78619e3bf054de7a2a02ec5e200e34f4"
+        },
+        {
+          "deb": "libasound2-data_1.2.8-1_all.deb",
+          "metadata": "Package: libasound2-data\nVersion: 1.2.8-1\nSource: alsa-lib\n",
+          "sha256": "fe0780d2d3674b2977e0acb0d48b448ad72ba1642564b7dc537f55e839984c2d"
+        },
+        {
+          "deb": "libasound2_1.2.8-1+b1_arm64.deb",
+          "metadata": "Package: libasound2\nVersion: 1.2.8-1+b1\nSource: alsa-lib (1.2.8-1)\n",
+          "sha256": "9fa889400fcee4b92c8f4a2fafbb7f2cd33444d9ec1665a71002ab67c06114bb"
+        },
+        {
+          "deb": "libatomic1_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libatomic1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "1693aa13ce2b30d061a519fc28b77b9bab8c8e45804ced5969d99821e1bc2159"
+        },
+        {
+          "deb": "libattr1_1%3a2.5.1-4_arm64.deb",
+          "metadata": "Package: libattr1\nVersion: 1:2.5.1-4\nSource: attr\n",
+          "sha256": "481e1c3fcad6773ba1c9d7f1de59e4fc80d95326c9b20192e13b7111013c932a"
+        },
+        {
+          "deb": "libbinutils_2.40-2_arm64.deb",
+          "metadata": "Package: libbinutils\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "1987db5a2ca550be3153dce8b23d6b2e038079c4de0b26b349e5b742e293ad23"
+        },
+        {
+          "deb": "libbrotli1_1.0.9-2+deb12u1_arm64.deb",
+          "metadata": "Package: libbrotli1\nVersion: 1.0.9-2+deb12u1\nSource: brotli\n",
+          "sha256": "131e62b9708da9aea88be990d275cb5c7b119e40beccf174c23ac8dc7246bb0f"
+        },
+        {
+          "deb": "libbz2-1.0_1.0.8-5+b1_arm64.deb",
+          "metadata": "Package: libbz2-1.0\nVersion: 1.0.8-5+b1\nSource: bzip2 (1.0.8-5)\n",
+          "sha256": "d3a96ece03326498b39ff093a76800dfcbcb1d4049d6ae6e9f6fa1aa7a590ad6"
+        },
+        {
+          "deb": "libc-dev-bin_2.36-9+deb12u14_arm64.deb",
+          "metadata": "Package: libc-dev-bin\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "8fc74833f9eb19e39e760bff5b9d7e85a06d6513edf3685bf2ea6f9c710867a6"
+        },
+        {
+          "deb": "libc6-dev_2.36-9+deb12u14_arm64.deb",
+          "metadata": "Package: libc6-dev\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "8bc395bf2ee9939f1a6ae395f974cffdcf541d98f99adfe89ce7e4bef36d159e"
+        },
+        {
+          "deb": "libc6_2.36-9+deb12u14_arm64.deb",
+          "metadata": "Package: libc6\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "01f4330719fd4f65580e16ea5a0527f372fca750e8f588d26deaf09f2d3b1cf4"
+        },
+        {
+          "deb": "libcc1-0_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libcc1-0\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "ed4d33378031fb5138486e3aa648d57003456f257265a54059042fe952026fd8"
+        },
+        {
+          "deb": "libcom-err2_1.47.0-2+b2_arm64.deb",
+          "metadata": "Package: libcom-err2\nVersion: 1.47.0-2+b2\nSource: e2fsprogs (1.47.0-2)\n",
+          "sha256": "36c15f933a965b50f4c9558d792d9556934c84e532703935d8ae7e69dd3fa863"
+        },
+        {
+          "deb": "libcrypt-dev_1%3a4.4.33-2_arm64.deb",
+          "metadata": "Package: libcrypt-dev\nVersion: 1:4.4.33-2\nSource: libxcrypt\n",
+          "sha256": "8f40a050f6d54b47b0972f77ea29932573e0e6b4521b833c9d825f46a9db8b75"
+        },
+        {
+          "deb": "libcrypt1_1%3a4.4.33-2_arm64.deb",
+          "metadata": "Package: libcrypt1\nVersion: 1:4.4.33-2\nSource: libxcrypt\n",
+          "sha256": "eea0ad76ea5eb507127fea0c291622ea4ecdbb71c4b9a8ed9c76ae33fc1a0127"
+        },
+        {
+          "deb": "libctf-nobfd0_2.40-2_arm64.deb",
+          "metadata": "Package: libctf-nobfd0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "27a232cba9b33bd8495e7ccc8ffbe24c729574a8073df0851decba037fb12a63"
+        },
+        {
+          "deb": "libctf0_2.40-2_arm64.deb",
+          "metadata": "Package: libctf0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "539036b9ecf8af5e803962ffcf0639332dcb3a027a7ab10b174f8f92272f5b21"
+        },
+        {
+          "deb": "libdb5.3_5.3.28+dfsg2-1_arm64.deb",
+          "metadata": "Package: libdb5.3\nVersion: 5.3.28+dfsg2-1\nSource: db5.3\n",
+          "sha256": "344367608d622298a3d916f4cee3dc3173286f3b21f8f497ab21e7178ba930f9"
+        },
+        {
+          "deb": "libexpat1_2.5.0-1+deb12u5_arm64.deb",
+          "metadata": "Package: libexpat1\nVersion: 2.5.0-1+deb12u5\nSource: expat\n",
+          "sha256": "4a733e7f636de4a4483e3e5d7b02dc8e788b115361a04dd58df89461ce2ae65a"
+        },
+        {
+          "deb": "libffi8_3.4.4-1_arm64.deb",
+          "metadata": "Package: libffi8\nVersion: 3.4.4-1\nSource: libffi\n",
+          "sha256": "80b5c36177dc0e29d531c7eddbed3cc7355cb490e49f8cfa5959572d161f27b3"
+        },
+        {
+          "deb": "libfontconfig1_2.14.1-4_arm64.deb",
+          "metadata": "Package: libfontconfig1\nVersion: 2.14.1-4\nSource: fontconfig\n",
+          "sha256": "4836d9deca824883f0de33d4f8f3718ba776c6e7c80cd7c418b5a0f86c009b9e"
+        },
+        {
+          "deb": "libfreetype6_2.12.1+dfsg-5+deb12u4_arm64.deb",
+          "metadata": "Package: libfreetype6\nVersion: 2.12.1+dfsg-5+deb12u4\nSource: freetype\n",
+          "sha256": "b8d32e54ebc9020637f8fa16b6afa64a5731e40845a6e01880d38d6f632237c9"
+        },
+        {
+          "deb": "libgcc-12-dev_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libgcc-12-dev\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "c83d28b7c3397c25f15ae17783fce78716a3d7cd415940940cc2af8dc4db8d6d"
+        },
+        {
+          "deb": "libgcc-s1_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libgcc-s1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "576926b283613db80168ddf76380a3bd877602778cf0d226caa7bfbfa71eacf3"
+        },
+        {
+          "deb": "libgmp10_2%3a6.2.1+dfsg1-1.1_arm64.deb",
+          "metadata": "Package: libgmp10\nVersion: 2:6.2.1+dfsg1-1.1\nSource: gmp\n",
+          "sha256": "9906387c1dd806518c915bd8616d072c741061d7fa26b222e52763456060b31a"
+        },
+        {
+          "deb": "libgomp1_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libgomp1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "a48b70dd1a95585466b40bd94564bce56ebcb2566e49ccdb6441e996aaab2098"
+        },
+        {
+          "deb": "libgprofng0_2.40-2_arm64.deb",
+          "metadata": "Package: libgprofng0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "dd0d7fe758461a2a5560b272a7b71b26b571258554adfb5e9b72c4f18ddf6b24"
+        },
+        {
+          "deb": "libgssapi-krb5-2_1.20.1-2+deb12u5_arm64.deb",
+          "metadata": "Package: libgssapi-krb5-2\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "a00678963f692a929312968f19b77a61a8fc0011690d7dc909a8a2c4810fc7b3"
+        },
+        {
+          "deb": "libhwasan0_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libhwasan0\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "48085824a1a42c0a85bbe37381b49eeee3e43305827ac193e184d0d9a5306481"
+        },
+        {
+          "deb": "libicu72_72.1-3+deb12u1_arm64.deb",
+          "metadata": "Package: libicu72\nVersion: 72.1-3+deb12u1\nSource: icu\n",
+          "sha256": "4f5d892fd81110435e45ed0a5f1b12899d7ff989d51db283cbc043f5631646d8"
+        },
+        {
+          "deb": "libisl23_0.25-1.1_arm64.deb",
+          "metadata": "Package: libisl23\nVersion: 0.25-1.1\nSource: isl\n",
+          "sha256": "e7232e299714254a9473d7eacdf6879eedf02b950c87da145f5d605800710c6c"
+        },
+        {
+          "deb": "libitm1_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libitm1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "bec6094592fe01ac103ef45d7f16ffa3ada2e98e26769bd1ed43283703bb08bd"
+        },
+        {
+          "deb": "libjansson4_2.14-2_arm64.deb",
+          "metadata": "Package: libjansson4\nVersion: 2.14-2\nSource: jansson\n",
+          "sha256": "49fda2bcfdf6b78098a5cdc9eaee23ef1f3b331559f02f1e32bc26f1fb6b4aec"
+        },
+        {
+          "deb": "libk5crypto3_1.20.1-2+deb12u5_arm64.deb",
+          "metadata": "Package: libk5crypto3\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "8ae2c31cde0b3e6f80c573a495b0f90bf6d9efb4455d900728278bb54d9092e5"
+        },
+        {
+          "deb": "libkeyutils1_1.6.3-2_arm64.deb",
+          "metadata": "Package: libkeyutils1\nVersion: 1.6.3-2\nSource: keyutils\n",
+          "sha256": "aac46cb6faec4e737502b3c2290b7b02f8ba04e8accd5af7fd07934df0c867b1"
+        },
+        {
+          "deb": "libkrb5-3_1.20.1-2+deb12u5_arm64.deb",
+          "metadata": "Package: libkrb5-3\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "c3c7227f5db903a7a8b8936d47d1d79643edcda36365c4c992e1a96bcc2d4c7e"
+        },
+        {
+          "deb": "libkrb5support0_1.20.1-2+deb12u5_arm64.deb",
+          "metadata": "Package: libkrb5support0\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "3043fd4a54b945a1b503170749527f825dcfc7add2f8bf5abb4a329deeb48f4a"
+        },
+        {
+          "deb": "liblsan0_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: liblsan0\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "1422f9aafe1ef8adfe8568e34040409db374f06696990cd3a7a16de3f490dd58"
+        },
+        {
+          "deb": "liblzma5_5.4.1-1+deb12u2_arm64.deb",
+          "metadata": "Package: liblzma5\nVersion: 5.4.1-1+deb12u2\nSource: xz-utils\n",
+          "sha256": "36358d245f246234721e6c1c2ee5d11a46c1c877023c63f7570df02cd79964f5"
+        },
+        {
+          "deb": "libmd0_1.0.4-2_arm64.deb",
+          "metadata": "Package: libmd0\nVersion: 1.0.4-2\nSource: libmd\n",
+          "sha256": "99a8c7dd591fae9fb37d8bf8dfdffa850e207fa405b3198c5b24711a5f972381"
+        },
+        {
+          "deb": "libmpc3_1.3.1-1_arm64.deb",
+          "metadata": "Package: libmpc3\nVersion: 1.3.1-1\nSource: mpclib3\n",
+          "sha256": "19fd1712d02a9ee3eeff5b6678a8766a12f2858c3384258c7abc15edd891739f"
+        },
+        {
+          "deb": "libmpfr6_4.2.0-1_arm64.deb",
+          "metadata": "Package: libmpfr6\nVersion: 4.2.0-1\nSource: mpfr4\n",
+          "sha256": "d818fbfb555561bff56694cc628dc9939f393a07026aefd237e9c818b9f2cb77"
+        },
+        {
+          "deb": "libncursesw6_6.4-4_arm64.deb",
+          "metadata": "Package: libncursesw6\nVersion: 6.4-4\nSource: ncurses\n",
+          "sha256": "cf32cb6751718872c6def448b82211eec494f688e2f1a3e6c71bfdaf6b0722c5"
+        },
+        {
+          "deb": "libnsl-dev_1.3.0-2_arm64.deb",
+          "metadata": "Package: libnsl-dev\nVersion: 1.3.0-2\nSource: libnsl\n",
+          "sha256": "baf8a2ef1e9faec26dd84e62d0e8b653f54d2211a7a89c1b67965aee8a3da790"
+        },
+        {
+          "deb": "libnsl2_1.3.0-2_arm64.deb",
+          "metadata": "Package: libnsl2\nVersion: 1.3.0-2\nSource: libnsl\n",
+          "sha256": "8f9ba58b219779b43c4ccc78c79b0a23f721fc96323c202abb31e02f942104b3"
+        },
+        {
+          "deb": "libpcre2-8-0_10.42-1+deb12u2_arm64.deb",
+          "metadata": "Package: libpcre2-8-0\nVersion: 10.42-1+deb12u2\nSource: pcre2\n",
+          "sha256": "8498d2c0bd6747dfc2fc6eec62774a86967079555f7043d5a7b78ee4efbbc0fb"
+        },
+        {
+          "deb": "libpng16-16_1.6.39-2+deb12u6_arm64.deb",
+          "metadata": "Package: libpng16-16\nVersion: 1.6.39-2+deb12u6\nSource: libpng1.6\n",
+          "sha256": "9fa66d01197efe73f44ed566a3bffbb476675826326e9c32ffa80b29495de482"
+        },
+        {
+          "deb": "libpython3-stdlib_3.11.2-1+b1_arm64.deb",
+          "metadata": "Package: libpython3-stdlib\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "3ceea13a9d2eff6e850d47b4f03ebd0162acb2aa5646a84ccbe77783be104302"
+        },
+        {
+          "deb": "libpython3.11-minimal_3.11.2-6+deb12u9_arm64.deb",
+          "metadata": "Package: libpython3.11-minimal\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "dd9847d2f77c5a924b1d3dd953b81f161db9374c94d03b9216191925350928c3"
+        },
+        {
+          "deb": "libpython3.11-stdlib_3.11.2-6+deb12u9_arm64.deb",
+          "metadata": "Package: libpython3.11-stdlib\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "9937cbe3f647aa89a590fec647438ce02098c113d1c6f70e4cb1230c368d42a4"
+        },
+        {
+          "deb": "libreadline8_8.2-1.3_arm64.deb",
+          "metadata": "Package: libreadline8\nVersion: 8.2-1.3\nSource: readline\n",
+          "sha256": "f3b162b7c1e05430607e792ebdbfc417cbd1f1d32cf83664133ae63d811a72d2"
+        },
+        {
+          "deb": "libselinux1_3.4-1+b6_arm64.deb",
+          "metadata": "Package: libselinux1\nVersion: 3.4-1+b6\nSource: libselinux (3.4-1)\n",
+          "sha256": "29201edf23ebae40844d6c289afdb9bba52f927d55096ed1b1cd37e040135edc"
+        },
+        {
+          "deb": "libsqlite3-0_3.40.1-2+deb12u2_arm64.deb",
+          "metadata": "Package: libsqlite3-0\nVersion: 3.40.1-2+deb12u2\nSource: sqlite3\n",
+          "sha256": "a690f7f2aa6435bd1fd7cbbd2216acb9acbb8c48c9721f2c195766375439eb13"
+        },
+        {
+          "deb": "libssl3_3.0.22-1~deb12u2_arm64.deb",
+          "metadata": "Package: libssl3\nVersion: 3.0.22-1~deb12u2\nSource: openssl\n",
+          "sha256": "3d04ecd8d0f57fed50d205abaeedfcc84c1960073ea085719c00add44b0ccd7f"
+        },
+        {
+          "deb": "libstdc++-12-dev_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libstdc++-12-dev\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "b74b18927037498c10c8c5dd7a0abe132b4d90188ca5d6e899a4f777c6d52a74"
+        },
+        {
+          "deb": "libstdc++6_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libstdc++6\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "26e138c677a985775331373828a6c286c551ff397cb735d00e2383cb273d1cb2"
+        },
+        {
+          "deb": "libtinfo6_6.4-4_arm64.deb",
+          "metadata": "Package: libtinfo6\nVersion: 6.4-4\nSource: ncurses\n",
+          "sha256": "baef0f6776f84c7eed4f1146d6e5774689567dad43216894d41da02e6608e4b3"
+        },
+        {
+          "deb": "libtirpc-common_1.3.3+ds-1_all.deb",
+          "metadata": "Package: libtirpc-common\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "3e3ef129b4bf61513144236e15e1b4ec57fa5ae3dc8a72137abdbefb7a63af85"
+        },
+        {
+          "deb": "libtirpc-dev_1.3.3+ds-1_arm64.deb",
+          "metadata": "Package: libtirpc-dev\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "bec1ab917db9f30e08e209281ce5f073a2d4f7ac43aabb658780fccaa822341a"
+        },
+        {
+          "deb": "libtirpc3_1.3.3+ds-1_arm64.deb",
+          "metadata": "Package: libtirpc3\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "deaf9ea54f74cab6690b4bc0b427f05cbe62cc073580d84f5f18a8d9e2ece401"
+        },
+        {
+          "deb": "libtsan2_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libtsan2\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "c805db45db024c7c38bdf5b2ab8fd126a6c5572893bd8a458c541a555dae3334"
+        },
+        {
+          "deb": "libubsan1_12.2.0-14+deb12u1_arm64.deb",
+          "metadata": "Package: libubsan1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "3c658e6b8091f133bac398a4629383d74bef230215224cd2add6dab38ca4e4d8"
+        },
+        {
+          "deb": "libuuid1_2.38.1-5+deb12u3_arm64.deb",
+          "metadata": "Package: libuuid1\nVersion: 2.38.1-5+deb12u3\nSource: util-linux\n",
+          "sha256": "3b2d19df0f3190108cf54228c4cfc822226c06d8f3615a5ab16a7dffb1f58aed"
+        },
+        {
+          "deb": "libzstd1_1.5.4+dfsg2-5_arm64.deb",
+          "metadata": "Package: libzstd1\nVersion: 1.5.4+dfsg2-5\nSource: libzstd\n",
+          "sha256": "95e173c9538f96ede4fc275ec7863f395a97dd0ea62454be9bc914efa1b9be93"
+        },
+        {
+          "deb": "linux-libc-dev_6.1.190-1_arm64.deb",
+          "metadata": "Package: linux-libc-dev\nVersion: 6.1.190-1\nSource: linux\n",
+          "sha256": "d7b339ae3b99a4fdbee5c3ccd78091df9aa1dd4530d54b7d3f65b78eaaf736a1"
+        },
+        {
+          "deb": "mawk_1.3.4.20200120-3.1_arm64.deb",
+          "metadata": "Package: mawk\nVersion: 1.3.4.20200120-3.1\n",
+          "sha256": "af76445b28d3de5b9587b231893d5fc594a6eecdc842cc9a7f401f788cc0288f"
+        },
+        {
+          "deb": "media-types_10.0.0_all.deb",
+          "metadata": "Package: media-types\nVersion: 10.0.0\n",
+          "sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd"
+        },
+        {
+          "deb": "python3-minimal_3.11.2-1+b1_arm64.deb",
+          "metadata": "Package: python3-minimal\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "f01c94963ace8a6fec59300427c95fc4ac204d752567dd2e4b36ee930755110f"
+        },
+        {
+          "deb": "python3.11-minimal_3.11.2-6+deb12u9_arm64.deb",
+          "metadata": "Package: python3.11-minimal\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "617855dbf3299e03873926c75d61feaf3d36924586aecc1951a0b965a95bc694"
+        },
+        {
+          "deb": "python3.11_3.11.2-6+deb12u9_arm64.deb",
+          "metadata": "Package: python3.11\nVersion: 3.11.2-6+deb12u9\n",
+          "sha256": "f8d1726c2f5c61b42dbf7652cd9c01da23e55029e3c384a9f1802334fd964091"
+        },
+        {
+          "deb": "python3_3.11.2-1+b1_arm64.deb",
+          "metadata": "Package: python3\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "d31a6f8bdea49711f221baee0e27197c314d0cbe748c020262d32650aca5f017"
+        },
+        {
+          "deb": "readline-common_8.2-1.3_all.deb",
+          "metadata": "Package: readline-common\nVersion: 8.2-1.3\nSource: readline\n",
+          "sha256": "69317523fe56429aa361545416ad339d138c1500e5a604856a80dd9074b4e35c"
+        },
+        {
+          "deb": "rpcsvc-proto_1.4.3-1_arm64.deb",
+          "metadata": "Package: rpcsvc-proto\nVersion: 1.4.3-1\n",
+          "sha256": "2915158484a5bcb7fe2124944e66f859e7fb030d8ec6a4478ce273d385708851"
+        },
+        {
+          "deb": "sed_4.9-1+deb12u1_arm64.deb",
+          "metadata": "Package: sed\nVersion: 4.9-1+deb12u1\n",
+          "sha256": "a0ba2ac0e2f4fe2bfe9d74793b66061dbdf3a89a007e85c5277d6232e087e4e4"
+        },
+        {
+          "deb": "tar_1.34+dfsg-1.2+deb12u1_arm64.deb",
+          "metadata": "Package: tar\nVersion: 1.34+dfsg-1.2+deb12u1\n",
+          "sha256": "04a945d4f24068f9d4c44294014ef5a33fc6179a57021978afc7d08358e13df3"
+        },
+        {
+          "deb": "zlib1g_1%3a1.2.13.dfsg-1_arm64.deb",
+          "metadata": "Package: zlib1g\nVersion: 1:1.2.13.dfsg-1\nSource: zlib\n",
+          "sha256": "52b8b8a145bbe1956bba82034f77022cbef0c3d0885c9e32d9817a7932fe1913"
+        }
+      ],
+      "unpackedBytes": 1387999490,
+      "imageProfile": "devcat-offline-compact-1",
+      "removedOptionalFiles": 3784,
+      "removedOptionalBytes": 322986341,
+      "originalCompressedBytes": 618670577
+    },
+    {
+      "sha256": "d924df03101b34d0d17023129e350570b3c9ec46138278c9af7f19d731bc8e55",
+      "bytes": 427922116,
+      "schema": 1,
+      "abi": "armeabi-v7a",
+      "dotnet": "8.0.427",
+      "java": "Liberica 21.0.13.0.3+5",
+      "node": "v22.23.4",
+      "go": "go1.27.3",
+      "packages": [
+        {
+          "deb": "base-files_12.4+deb12u15_armhf.deb",
+          "metadata": "Package: base-files\nVersion: 12.4+deb12u15\n",
+          "sha256": "70e1c54484af17060d895a36a14a5256370f30391364c7797aba4994356c7d09"
+        },
+        {
+          "deb": "bash_5.2.15-2+b13_armhf.deb",
+          "metadata": "Package: bash\nVersion: 5.2.15-2+b13\nSource: bash (5.2.15-2)\n",
+          "sha256": "216816bcf81d4baf43c8033bf7dfa622ba01230a1a45c21288d0b3c03f2676df"
+        },
+        {
+          "deb": "binutils-arm-linux-gnueabihf_2.40-2_armhf.deb",
+          "metadata": "Package: binutils-arm-linux-gnueabihf\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "520045faaeb134f9e89917e6a0f97aa71e6a3d1aee3707ace210e7db02690c3f"
+        },
+        {
+          "deb": "binutils-common_2.40-2_armhf.deb",
+          "metadata": "Package: binutils-common\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "753cfe0ff87a64d80a03d033bd54e1cef5b4fd3a70ee070dee4c32133224c7cb"
+        },
+        {
+          "deb": "binutils_2.40-2_armhf.deb",
+          "metadata": "Package: binutils\nVersion: 2.40-2\n",
+          "sha256": "f56f8e29c8e7f005122d473a09dc2a45cf18970cff16594aa9343adcca7e2832"
+        },
+        {
+          "deb": "coreutils_9.1-1_armhf.deb",
+          "metadata": "Package: coreutils\nVersion: 9.1-1\n",
+          "sha256": "63b1179dc344a063777a369f12f23a4e7ff4b02468b6df42ab6936d63648f4b5"
+        },
+        {
+          "deb": "cpp-12_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: cpp-12\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "7d8c87ae208dfb10a08b3291ba5e48a606002dd3be019a8879a05020a1392171"
+        },
+        {
+          "deb": "cpp_4%3a12.2.0-3_armhf.deb",
+          "metadata": "Package: cpp\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "234a28f168e66b7bcb4062739684fe91a04bffacb7e6e764c286986a8e19589e"
+        },
+        {
+          "deb": "debconf_1.5.82_all.deb",
+          "metadata": "Package: debconf\nVersion: 1.5.82\n",
+          "sha256": "74ab14194a3762b2fc717917dcfda42929ab98e3c59295a063344dc551cd7cc8"
+        },
+        {
+          "deb": "debianutils_5.7-0.5~deb12u1_armhf.deb",
+          "metadata": "Package: debianutils\nVersion: 5.7-0.5~deb12u1\n",
+          "sha256": "421e3b828386cd2406c8a39cbf58097ec80b343e6a129d96e960acb26dedfef8"
+        },
+        {
+          "deb": "dpkg_1.21.23_armhf.deb",
+          "metadata": "Package: dpkg\nVersion: 1.21.23\n",
+          "sha256": "53c66ba6e645e5a4b7df0bfd9d6559d8905f1d4190ee891fc530940b4a7eb038"
+        },
+        {
+          "deb": "findutils_4.9.0-4_armhf.deb",
+          "metadata": "Package: findutils\nVersion: 4.9.0-4\n",
+          "sha256": "8ae49a272fd85ef1360483e3572bb7979ac7a75f5a2c4b23282340151f46daa7"
+        },
+        {
+          "deb": "fontconfig-config_2.14.1-4_armhf.deb",
+          "metadata": "Package: fontconfig-config\nVersion: 2.14.1-4\nSource: fontconfig\n",
+          "sha256": "bec753121f88d48fff3bb67fcdd44a09faaa3e9aa9262300272a4625930d6766"
+        },
+        {
+          "deb": "fonts-dejavu-core_2.37-6_all.deb",
+          "metadata": "Package: fonts-dejavu-core\nVersion: 2.37-6\nSource: fonts-dejavu\n",
+          "sha256": "8892669e51aab4dc56682c8e39d8ddb7d70fad83c369344e1e240bf3ca22bb76"
+        },
+        {
+          "deb": "g++-12_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: g++-12\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "25e6f72eadc30cbea9c556aaa2a972322aba05e8f5c2c6cb1045f77291a5ea38"
+        },
+        {
+          "deb": "g++_4%3a12.2.0-3_armhf.deb",
+          "metadata": "Package: g++\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "1c408b6d75fd9df62f273bea4fb6c12eab81fd5d0982b2effd873ae1b3c3ff4f"
+        },
+        {
+          "deb": "gcc-12-base_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: gcc-12-base\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "aa50f90c440377b9219830ed3e658aedcb0a1c1bb47733eb05cf65545012f563"
+        },
+        {
+          "deb": "gcc-12_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: gcc-12\nVersion: 12.2.0-14+deb12u1\n",
+          "sha256": "ab1c243a2a8965942c5d3927c3527325d62b209f9fb6a8989bf57a4adf28df16"
+        },
+        {
+          "deb": "gcc_4%3a12.2.0-3_armhf.deb",
+          "metadata": "Package: gcc\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "f0a35e3f8cadb509d1414444df6ccc8cd5cccf7f67f515f863e35f8e84ba1310"
+        },
+        {
+          "deb": "grep_3.8-5_armhf.deb",
+          "metadata": "Package: grep\nVersion: 3.8-5\n",
+          "sha256": "dc364e54dab4d768295caad23c9f6fc2c54b3443f47fcd10362a4f64f6418f7b"
+        },
+        {
+          "deb": "libacl1_2.3.1-3_armhf.deb",
+          "metadata": "Package: libacl1\nVersion: 2.3.1-3\nSource: acl\n",
+          "sha256": "825a955bc00fe2d0df2a4a91d06495dfef02b3121180d1f394ec731de1f266e7"
+        },
+        {
+          "deb": "libasan8_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libasan8\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "fcaf33cd24f07956430268e68f3d8dacc16672a5b964635946366ece3f16e8ff"
+        },
+        {
+          "deb": "libasound2-data_1.2.8-1_all.deb",
+          "metadata": "Package: libasound2-data\nVersion: 1.2.8-1\nSource: alsa-lib\n",
+          "sha256": "fe0780d2d3674b2977e0acb0d48b448ad72ba1642564b7dc537f55e839984c2d"
+        },
+        {
+          "deb": "libasound2_1.2.8-1+b1_armhf.deb",
+          "metadata": "Package: libasound2\nVersion: 1.2.8-1+b1\nSource: alsa-lib (1.2.8-1)\n",
+          "sha256": "97718ff5e552c9a7b9e77e8debbe219b0068a9ab5dcabedd0800c69dd8f0eb96"
+        },
+        {
+          "deb": "libatomic1_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libatomic1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "9fefdd86958961a384bbb07de3105e6502d581831ba8f69bb8e1a84ab0e63baa"
+        },
+        {
+          "deb": "libattr1_1%3a2.5.1-4_armhf.deb",
+          "metadata": "Package: libattr1\nVersion: 1:2.5.1-4\nSource: attr\n",
+          "sha256": "10ef4dc484fb01ab03e855e6d9226358ad65840d785d9b8620f10f6c22b9a8d4"
+        },
+        {
+          "deb": "libbinutils_2.40-2_armhf.deb",
+          "metadata": "Package: libbinutils\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "0bd013381eca874d05f36c2ad599c198acde3d80e261bc9478c17d7faa8edefa"
+        },
+        {
+          "deb": "libbrotli1_1.0.9-2+deb12u1_armhf.deb",
+          "metadata": "Package: libbrotli1\nVersion: 1.0.9-2+deb12u1\nSource: brotli\n",
+          "sha256": "2c05d2583b082a76491df5348c57413a8e0bec235d2a612539db150eb15b97c3"
+        },
+        {
+          "deb": "libbz2-1.0_1.0.8-5+b1_armhf.deb",
+          "metadata": "Package: libbz2-1.0\nVersion: 1.0.8-5+b1\nSource: bzip2 (1.0.8-5)\n",
+          "sha256": "aeed5e720eb41badf6ab8b0e719007fe446c13ce93a8d75ca37d1cdfaaf7f5b4"
+        },
+        {
+          "deb": "libc-dev-bin_2.36-9+deb12u14_armhf.deb",
+          "metadata": "Package: libc-dev-bin\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "1259766964abe371968ab87dbbd3f963ecd3bfc8fd211fc0cdfc7532a461df65"
+        },
+        {
+          "deb": "libc6-dev_2.36-9+deb12u14_armhf.deb",
+          "metadata": "Package: libc6-dev\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "ca9486dc7f2dfb25c61c0c93d561c01f8abdf9866bd4c157f0ccd518295bbbb7"
+        },
+        {
+          "deb": "libc6_2.36-9+deb12u14_armhf.deb",
+          "metadata": "Package: libc6\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "758c68b92654747025b48476a45c315bf16df1321224abdd9be672bfd120be45"
+        },
+        {
+          "deb": "libcc1-0_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libcc1-0\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "c9343365b9eeb7710dc0b0619af7c94772a96d69ea12eac39a0c7396f279837a"
+        },
+        {
+          "deb": "libcom-err2_1.47.0-2+b2_armhf.deb",
+          "metadata": "Package: libcom-err2\nVersion: 1.47.0-2+b2\nSource: e2fsprogs (1.47.0-2)\n",
+          "sha256": "dc81ddc4e62a2c9a702eac7937aeda9b7e60e852644d18f5afc0290517992d33"
+        },
+        {
+          "deb": "libcrypt-dev_1%3a4.4.33-2_armhf.deb",
+          "metadata": "Package: libcrypt-dev\nVersion: 1:4.4.33-2\nSource: libxcrypt\n",
+          "sha256": "57e8ee416fab69ed529c0ff4963f60e590613df51e46cb2293cdfcd23e10abc0"
+        },
+        {
+          "deb": "libcrypt1_1%3a4.4.33-2_armhf.deb",
+          "metadata": "Package: libcrypt1\nVersion: 1:4.4.33-2\nSource: libxcrypt\n",
+          "sha256": "6bb061a2279a27ff61791cda6edc8925455e5423e475e5e6c41ad7e04d8efc3c"
+        },
+        {
+          "deb": "libctf-nobfd0_2.40-2_armhf.deb",
+          "metadata": "Package: libctf-nobfd0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "720a81a9d03ffd99789350d2bd06ddddb19459814113aaf89da02ea11c9216e3"
+        },
+        {
+          "deb": "libctf0_2.40-2_armhf.deb",
+          "metadata": "Package: libctf0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "a9bdbf40d3d736945309117543d78b16ad9f9dc0ee3b83756dc10a6bf8724653"
+        },
+        {
+          "deb": "libdb5.3_5.3.28+dfsg2-1_armhf.deb",
+          "metadata": "Package: libdb5.3\nVersion: 5.3.28+dfsg2-1\nSource: db5.3\n",
+          "sha256": "cd3816b76546c2e39de75863e9615d4244dc173e157672a2970e22ee606094be"
+        },
+        {
+          "deb": "libexpat1_2.5.0-1+deb12u5_armhf.deb",
+          "metadata": "Package: libexpat1\nVersion: 2.5.0-1+deb12u5\nSource: expat\n",
+          "sha256": "50fd618113a1871dd868fb59cba2ec84a754fef57ca619a468d502be717d4532"
+        },
+        {
+          "deb": "libffi8_3.4.4-1_armhf.deb",
+          "metadata": "Package: libffi8\nVersion: 3.4.4-1\nSource: libffi\n",
+          "sha256": "c709b6666a6f166b7aaf98c9e89ab17143d5b1d33e6b545e582b6b5da31ec2bd"
+        },
+        {
+          "deb": "libfontconfig1_2.14.1-4_armhf.deb",
+          "metadata": "Package: libfontconfig1\nVersion: 2.14.1-4\nSource: fontconfig\n",
+          "sha256": "5dbabfdd066ccc84a31bd22054f68f1295b3bd70d6e3ba6238f6596bb1c51311"
+        },
+        {
+          "deb": "libfreetype6_2.12.1+dfsg-5+deb12u4_armhf.deb",
+          "metadata": "Package: libfreetype6\nVersion: 2.12.1+dfsg-5+deb12u4\nSource: freetype\n",
+          "sha256": "14fbbbf172798f79a130681fd9ecb0c8d10b81ab2c8bcf5845a596cd320e3c19"
+        },
+        {
+          "deb": "libgcc-12-dev_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libgcc-12-dev\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "f4af3b766ae50185d8c94933bfb369266aeb4b9288916d2c9789bf0283f3df5a"
+        },
+        {
+          "deb": "libgcc-s1_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libgcc-s1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "f58562bf01efd6112b914182147ee149e0d4c90869046e31844da8803669eeb3"
+        },
+        {
+          "deb": "libgmp10_2%3a6.2.1+dfsg1-1.1_armhf.deb",
+          "metadata": "Package: libgmp10\nVersion: 2:6.2.1+dfsg1-1.1\nSource: gmp\n",
+          "sha256": "240b6cc98c7fbd4781e8aa90d0bb68ccbc4a0931565cff7565509836bbd807ad"
+        },
+        {
+          "deb": "libgomp1_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libgomp1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "31a758a139de68333485e03679cc4721d4a5a2652b64a9402b0b1f401f38ce85"
+        },
+        {
+          "deb": "libgssapi-krb5-2_1.20.1-2+deb12u5_armhf.deb",
+          "metadata": "Package: libgssapi-krb5-2\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "e3f674af80e03b04a257eec5d4cb5baf680488b95f9f6eff35a151c1594432b0"
+        },
+        {
+          "deb": "libicu72_72.1-3+deb12u1_armhf.deb",
+          "metadata": "Package: libicu72\nVersion: 72.1-3+deb12u1\nSource: icu\n",
+          "sha256": "fbb0b414ecf8054b07ff927fd4dca94f21ac6856dcc6fd41a077367032616693"
+        },
+        {
+          "deb": "libisl23_0.25-1.1_armhf.deb",
+          "metadata": "Package: libisl23\nVersion: 0.25-1.1\nSource: isl\n",
+          "sha256": "92cef83e50f89688ebe4fe91787f2bf73feefbcf043c54b0478134c089c4f5ee"
+        },
+        {
+          "deb": "libjansson4_2.14-2_armhf.deb",
+          "metadata": "Package: libjansson4\nVersion: 2.14-2\nSource: jansson\n",
+          "sha256": "4200351f40944a9333152100935b2f53dd8cf3231b30830bb2fcbfb24a200acd"
+        },
+        {
+          "deb": "libk5crypto3_1.20.1-2+deb12u5_armhf.deb",
+          "metadata": "Package: libk5crypto3\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "be0457040c22c67f765767f63dc5531f1629f8f4914bcc8992b1edea17f493d0"
+        },
+        {
+          "deb": "libkeyutils1_1.6.3-2_armhf.deb",
+          "metadata": "Package: libkeyutils1\nVersion: 1.6.3-2\nSource: keyutils\n",
+          "sha256": "bfc6a3a668b58b88876b9e37192f669ceeb68db6d50c8374a9267a2bbd8f8a8e"
+        },
+        {
+          "deb": "libkrb5-3_1.20.1-2+deb12u5_armhf.deb",
+          "metadata": "Package: libkrb5-3\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "3dac821ed96dd0bfcafe9a1643f81ada7bcae30f64a3b5069fd1322886e6d478"
+        },
+        {
+          "deb": "libkrb5support0_1.20.1-2+deb12u5_armhf.deb",
+          "metadata": "Package: libkrb5support0\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "85a53b81203d0773809a1a76c20bd92fc2aee7ae063592a8ed8e6499b86706fa"
+        },
+        {
+          "deb": "liblzma5_5.4.1-1+deb12u2_armhf.deb",
+          "metadata": "Package: liblzma5\nVersion: 5.4.1-1+deb12u2\nSource: xz-utils\n",
+          "sha256": "e18aee5a45b59f2f85f9aa2518b0bb5964b1ddce86c926297d9688652415d6d3"
+        },
+        {
+          "deb": "libmd0_1.0.4-2_armhf.deb",
+          "metadata": "Package: libmd0\nVersion: 1.0.4-2\nSource: libmd\n",
+          "sha256": "07696488d15dc09da6543bff713846b69291250b5653d77f19d8dbd0a7a32012"
+        },
+        {
+          "deb": "libmpc3_1.3.1-1_armhf.deb",
+          "metadata": "Package: libmpc3\nVersion: 1.3.1-1\nSource: mpclib3\n",
+          "sha256": "f4bfd7ec3015b0c6d5b5b76c829b6acfb3df17f13d64222bd8584b9308d47b64"
+        },
+        {
+          "deb": "libmpfr6_4.2.0-1_armhf.deb",
+          "metadata": "Package: libmpfr6\nVersion: 4.2.0-1\nSource: mpfr4\n",
+          "sha256": "7262f2558d890fd3097fd804a91dee7ddefa894dfbc32ff278889416cae1fc77"
+        },
+        {
+          "deb": "libncursesw6_6.4-4_armhf.deb",
+          "metadata": "Package: libncursesw6\nVersion: 6.4-4\nSource: ncurses\n",
+          "sha256": "ded4916e2807b6f479c940faad42476ab4e101d16132a4b2c73f251f5288739f"
+        },
+        {
+          "deb": "libnsl-dev_1.3.0-2_armhf.deb",
+          "metadata": "Package: libnsl-dev\nVersion: 1.3.0-2\nSource: libnsl\n",
+          "sha256": "9ba25e4090f3677ea63ccc11da9b2d4ee80e365fa091658e15f350e9f76e3458"
+        },
+        {
+          "deb": "libnsl2_1.3.0-2_armhf.deb",
+          "metadata": "Package: libnsl2\nVersion: 1.3.0-2\nSource: libnsl\n",
+          "sha256": "a38fb6899749f74ebef429d7b20f1d0f962e2187653c82d66b8bc83ef694efb2"
+        },
+        {
+          "deb": "libpcre2-8-0_10.42-1+deb12u2_armhf.deb",
+          "metadata": "Package: libpcre2-8-0\nVersion: 10.42-1+deb12u2\nSource: pcre2\n",
+          "sha256": "2b444c1aaecffea8b4c5fd1972adca2751e7ee41f577ce0c93ddfa90b621f935"
+        },
+        {
+          "deb": "libpng16-16_1.6.39-2+deb12u6_armhf.deb",
+          "metadata": "Package: libpng16-16\nVersion: 1.6.39-2+deb12u6\nSource: libpng1.6\n",
+          "sha256": "aea34583a326655a3d218219ca0ca22adcb96b982baac3c5a1146696e6f4f6e1"
+        },
+        {
+          "deb": "libpython3-stdlib_3.11.2-1+b1_armhf.deb",
+          "metadata": "Package: libpython3-stdlib\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "78eba121bec8e5a182288f4e1fe037241d02892de4c9c864c0885251721b7230"
+        },
+        {
+          "deb": "libpython3.11-minimal_3.11.2-6+deb12u9_armhf.deb",
+          "metadata": "Package: libpython3.11-minimal\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "1c4925172c1ed6c123f1ca0013a7c413a5bc5c2f4b99f452c51975fc1637ab88"
+        },
+        {
+          "deb": "libpython3.11-stdlib_3.11.2-6+deb12u9_armhf.deb",
+          "metadata": "Package: libpython3.11-stdlib\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "d5d9fd83c1795ac16e7f59a94b0ae75a013dcda45d1f4b8e5faa2107263e0f7f"
+        },
+        {
+          "deb": "libreadline8_8.2-1.3_armhf.deb",
+          "metadata": "Package: libreadline8\nVersion: 8.2-1.3\nSource: readline\n",
+          "sha256": "a4eb4a4931012e597080396a23ed10df019e26868bf66d9694eab55c98f6a5c2"
+        },
+        {
+          "deb": "libselinux1_3.4-1+b6_armhf.deb",
+          "metadata": "Package: libselinux1\nVersion: 3.4-1+b6\nSource: libselinux (3.4-1)\n",
+          "sha256": "ca51aaac511bd83291d2d701cd08b12a8bdc4c646d4d6f7eed869c0dc188ebd8"
+        },
+        {
+          "deb": "libsqlite3-0_3.40.1-2+deb12u2_armhf.deb",
+          "metadata": "Package: libsqlite3-0\nVersion: 3.40.1-2+deb12u2\nSource: sqlite3\n",
+          "sha256": "216a65aab002d49e325430a6498ba62b59e3cf1b6b8f5fb87747c685a0713d92"
+        },
+        {
+          "deb": "libssl3_3.0.22-1~deb12u2_armhf.deb",
+          "metadata": "Package: libssl3\nVersion: 3.0.22-1~deb12u2\nSource: openssl\n",
+          "sha256": "811951e24996e0205aac131a96cb2b62ebf3dcc21dfaa75be1706eb46f7183e6"
+        },
+        {
+          "deb": "libstdc++-12-dev_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libstdc++-12-dev\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "77dc865277bf0486ec2fbdebb51dc701cfd90e7702d214f2356270e722e3b6ec"
+        },
+        {
+          "deb": "libstdc++6_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libstdc++6\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "66d53ddeb10a37f22e455611c2c515f9d444e523b55d873ff48bde47267963db"
+        },
+        {
+          "deb": "libtinfo6_6.4-4_armhf.deb",
+          "metadata": "Package: libtinfo6\nVersion: 6.4-4\nSource: ncurses\n",
+          "sha256": "5990d010cc1f96d166c1fb1bce06822f14665dc9d83e528b166e129982b09d7b"
+        },
+        {
+          "deb": "libtirpc-common_1.3.3+ds-1_all.deb",
+          "metadata": "Package: libtirpc-common\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "3e3ef129b4bf61513144236e15e1b4ec57fa5ae3dc8a72137abdbefb7a63af85"
+        },
+        {
+          "deb": "libtirpc-dev_1.3.3+ds-1_armhf.deb",
+          "metadata": "Package: libtirpc-dev\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "a9dfaca9fe304c32501a079251a2dd3732b4263fc45dcb248f45657b9f10390f"
+        },
+        {
+          "deb": "libtirpc3_1.3.3+ds-1_armhf.deb",
+          "metadata": "Package: libtirpc3\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "3e4c2942b3a24656c6e57fba8d72b18b234086f71f04928f51bd0039f3e2bbd8"
+        },
+        {
+          "deb": "libubsan1_12.2.0-14+deb12u1_armhf.deb",
+          "metadata": "Package: libubsan1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "cfe47448c41a66633b09a6564141c8cf6ac626cb20044c1c271596716416e3ad"
+        },
+        {
+          "deb": "libuuid1_2.38.1-5+deb12u3_armhf.deb",
+          "metadata": "Package: libuuid1\nVersion: 2.38.1-5+deb12u3\nSource: util-linux\n",
+          "sha256": "8e7bdaf72a70a29520cae0d3da81ab814a6954b17dedd33d68b7eebcdc9de56c"
+        },
+        {
+          "deb": "libzstd1_1.5.4+dfsg2-5_armhf.deb",
+          "metadata": "Package: libzstd1\nVersion: 1.5.4+dfsg2-5\nSource: libzstd\n",
+          "sha256": "a2ca48bc43bb51d3cbc6beb07aefd3fe252859868a4ccb9c1edbfc942786e4b1"
+        },
+        {
+          "deb": "linux-libc-dev_6.1.190-1_armhf.deb",
+          "metadata": "Package: linux-libc-dev\nVersion: 6.1.190-1\nSource: linux\n",
+          "sha256": "0aba9501cdc55456ad09691787a91eb8babc90476cca3cef10dd8902a422cc8c"
+        },
+        {
+          "deb": "mawk_1.3.4.20200120-3.1_armhf.deb",
+          "metadata": "Package: mawk\nVersion: 1.3.4.20200120-3.1\n",
+          "sha256": "e8fa784349d72f3bcf8399118074e78be504bf663244ff11b6fc06ea0ce53b71"
+        },
+        {
+          "deb": "media-types_10.0.0_all.deb",
+          "metadata": "Package: media-types\nVersion: 10.0.0\n",
+          "sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd"
+        },
+        {
+          "deb": "python3-minimal_3.11.2-1+b1_armhf.deb",
+          "metadata": "Package: python3-minimal\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "b08cd93e411403c60462e71dd5ae507fd6c682e09bed626c259e100b015f5270"
+        },
+        {
+          "deb": "python3.11-minimal_3.11.2-6+deb12u9_armhf.deb",
+          "metadata": "Package: python3.11-minimal\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "ddbef90d1b63b83e3347231da0060af63348e759b5b9d27badbc1d2dad88026a"
+        },
+        {
+          "deb": "python3.11_3.11.2-6+deb12u9_armhf.deb",
+          "metadata": "Package: python3.11\nVersion: 3.11.2-6+deb12u9\n",
+          "sha256": "beda3698cf5ac05e563b66953eb5d9cc1c0bdd7c5d717ce172d45c088612fdd6"
+        },
+        {
+          "deb": "python3_3.11.2-1+b1_armhf.deb",
+          "metadata": "Package: python3\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "ea72abf8595916b719b5711da643bf76c2553cb4f7e9af173dc0780610e7c5e8"
+        },
+        {
+          "deb": "readline-common_8.2-1.3_all.deb",
+          "metadata": "Package: readline-common\nVersion: 8.2-1.3\nSource: readline\n",
+          "sha256": "69317523fe56429aa361545416ad339d138c1500e5a604856a80dd9074b4e35c"
+        },
+        {
+          "deb": "rpcsvc-proto_1.4.3-1_armhf.deb",
+          "metadata": "Package: rpcsvc-proto\nVersion: 1.4.3-1\n",
+          "sha256": "201134489aad37bc15cc28474f9965ae3cc5838e4f6aca771621f5dc8b4f4f29"
+        },
+        {
+          "deb": "sed_4.9-1+deb12u1_armhf.deb",
+          "metadata": "Package: sed\nVersion: 4.9-1+deb12u1\n",
+          "sha256": "e955673dfabae0c99c45b35b3d0d36467af1a8dcfc165f13cb34819976059f67"
+        },
+        {
+          "deb": "tar_1.34+dfsg-1.2+deb12u1_armhf.deb",
+          "metadata": "Package: tar\nVersion: 1.34+dfsg-1.2+deb12u1\n",
+          "sha256": "0c175f51c666eedb0caacc02132933077ad303788896b8d78274e7422a5feff9"
+        },
+        {
+          "deb": "zlib1g_1%3a1.2.13.dfsg-1_armhf.deb",
+          "metadata": "Package: zlib1g\nVersion: 1:1.2.13.dfsg-1\nSource: zlib\n",
+          "sha256": "b52fcc443085ff9c676648b4d0fc97cd31b8f119bdd4e7534e50b6e9386502ba"
+        }
+      ],
+      "unpackedBytes": 1157611822,
+      "imageProfile": "devcat-offline-compact-1",
+      "removedOptionalFiles": 3784,
+      "removedOptionalBytes": 311303222,
+      "originalCompressedBytes": 573265905
+    },
+    {
+      "sha256": "31ff760b5a80b8727a65d347c8182b6204df0e2ed54522822e5b39fc4726be15",
+      "bytes": 489317625,
+      "schema": 1,
+      "abi": "x86_64",
+      "dotnet": "8.0.427",
+      "java": "Liberica 21.0.13.0.3+5",
+      "node": "v22.23.4",
+      "go": "go1.27.3",
+      "packages": [
+        {
+          "deb": "base-files_12.4+deb12u15_amd64.deb",
+          "metadata": "Package: base-files\nVersion: 12.4+deb12u15\n",
+          "sha256": "3eb1ea6d85488f488cc2a163b98ad640ef88cee4c79287cf14e361aaf6206f47"
+        },
+        {
+          "deb": "bash_5.2.15-2+b13_amd64.deb",
+          "metadata": "Package: bash\nVersion: 5.2.15-2+b13\nSource: bash (5.2.15-2)\n",
+          "sha256": "82130bb6a560cd2a7234d8018baf73f188f5dd56413d5aa0accc987b2197a6a1"
+        },
+        {
+          "deb": "binutils-common_2.40-2_amd64.deb",
+          "metadata": "Package: binutils-common\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "ab314134f43a0891a48f69a9bc33d825da748fa5e0ba2bebb7a5c491b026f1a0"
+        },
+        {
+          "deb": "binutils-x86-64-linux-gnu_2.40-2_amd64.deb",
+          "metadata": "Package: binutils-x86-64-linux-gnu\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "2d7ea8a570d768224d7f2424abbe6f373d2154865a1fa7f56c80d43ecf492521"
+        },
+        {
+          "deb": "binutils_2.40-2_amd64.deb",
+          "metadata": "Package: binutils\nVersion: 2.40-2\n",
+          "sha256": "83c3e20b53e1fbd84d764c3ba27d26a0376e361ae5d7fb37120196934dd87424"
+        },
+        {
+          "deb": "coreutils_9.1-1_amd64.deb",
+          "metadata": "Package: coreutils\nVersion: 9.1-1\n",
+          "sha256": "61038f857e346e8500adf53a2a0a20859f4d3a3b51570cc876b153a2d51a3091"
+        },
+        {
+          "deb": "cpp-12_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: cpp-12\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "fedbb98e877adde83c983c6071537ea25ac52b277ac6e4637d85025949ca1454"
+        },
+        {
+          "deb": "cpp_4%3a12.2.0-3_amd64.deb",
+          "metadata": "Package: cpp\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "a63db920f7aa1857a57beab185423deffb6111fa09437a99bbb4ef724fb7ba78"
+        },
+        {
+          "deb": "debconf_1.5.82_all.deb",
+          "metadata": "Package: debconf\nVersion: 1.5.82\n",
+          "sha256": "74ab14194a3762b2fc717917dcfda42929ab98e3c59295a063344dc551cd7cc8"
+        },
+        {
+          "deb": "debianutils_5.7-0.5~deb12u1_amd64.deb",
+          "metadata": "Package: debianutils\nVersion: 5.7-0.5~deb12u1\n",
+          "sha256": "55f951359670eb3236c9e2ccd5fac9ccb3db734f5a22aff21589e7a30aee48c9"
+        },
+        {
+          "deb": "dpkg_1.21.23_amd64.deb",
+          "metadata": "Package: dpkg\nVersion: 1.21.23\n",
+          "sha256": "f89e9f8d1a4a50ade44be3ed59a6ec55460fce205d2f8520c5c492137c5b609b"
+        },
+        {
+          "deb": "findutils_4.9.0-4_amd64.deb",
+          "metadata": "Package: findutils\nVersion: 4.9.0-4\n",
+          "sha256": "5dd86bd0af4aa73f067dfd6b8339dd868f2dd84056aa79db29d1206d4fbc5e04"
+        },
+        {
+          "deb": "fontconfig-config_2.14.1-4_amd64.deb",
+          "metadata": "Package: fontconfig-config\nVersion: 2.14.1-4\nSource: fontconfig\n",
+          "sha256": "281c66e46b95f045a0282a6c7a03b33de0e9a08d016897a759aaf4a04adfddbe"
+        },
+        {
+          "deb": "fonts-dejavu-core_2.37-6_all.deb",
+          "metadata": "Package: fonts-dejavu-core\nVersion: 2.37-6\nSource: fonts-dejavu\n",
+          "sha256": "8892669e51aab4dc56682c8e39d8ddb7d70fad83c369344e1e240bf3ca22bb76"
+        },
+        {
+          "deb": "g++-12_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: g++-12\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "68b182badae4ace7d472f1393c559d3532a95a2d70817498b10bb481d2627251"
+        },
+        {
+          "deb": "g++_4%3a12.2.0-3_amd64.deb",
+          "metadata": "Package: g++\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "26c451a660728cf7c15548a281e17eef2f36fab28499371e83fc2d3accb499d7"
+        },
+        {
+          "deb": "gcc-12-base_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: gcc-12-base\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "1896a2aacf4ad681ff5eacc24a5b0ca4d5d9c9b9c9e4b6de5197bc1e116ea619"
+        },
+        {
+          "deb": "gcc-12_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: gcc-12\nVersion: 12.2.0-14+deb12u1\n",
+          "sha256": "b46f33cc2ec245e435e043807038cecf4b201ef004800e9dfc1455240360e49d"
+        },
+        {
+          "deb": "gcc_4%3a12.2.0-3_amd64.deb",
+          "metadata": "Package: gcc\nVersion: 4:12.2.0-3\nSource: gcc-defaults (1.203)\n",
+          "sha256": "bb63b0fb2797e2a3a294dab8a02614930c557ec1f4ea96637c244b8b5f87e630"
+        },
+        {
+          "deb": "grep_3.8-5_amd64.deb",
+          "metadata": "Package: grep\nVersion: 3.8-5\n",
+          "sha256": "3264acea728df3c48a54f20e9291b965130e306b9d00adac76647049da7196df"
+        },
+        {
+          "deb": "libacl1_2.3.1-3_amd64.deb",
+          "metadata": "Package: libacl1\nVersion: 2.3.1-3\nSource: acl\n",
+          "sha256": "8be9df5795114bfe90e2be3d208ef47a5edd3fc7b3e20d387a597486d444e5e2"
+        },
+        {
+          "deb": "libasan8_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libasan8\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "e7ac5d797d7d438a130674a8e463530f06aa02ecf919ca054d75eaa2f7849ec7"
+        },
+        {
+          "deb": "libasound2-data_1.2.8-1_all.deb",
+          "metadata": "Package: libasound2-data\nVersion: 1.2.8-1\nSource: alsa-lib\n",
+          "sha256": "fe0780d2d3674b2977e0acb0d48b448ad72ba1642564b7dc537f55e839984c2d"
+        },
+        {
+          "deb": "libasound2_1.2.8-1+b1_amd64.deb",
+          "metadata": "Package: libasound2\nVersion: 1.2.8-1+b1\nSource: alsa-lib (1.2.8-1)\n",
+          "sha256": "44c77b076a7b11ae99712439022d822245b1994c435da564ebd320bb676faf4c"
+        },
+        {
+          "deb": "libatomic1_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libatomic1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "fbd4e154a6b444229ea002cc209df099209c0adc09102e5fd21239a3d2b55e2d"
+        },
+        {
+          "deb": "libattr1_1%3a2.5.1-4_amd64.deb",
+          "metadata": "Package: libattr1\nVersion: 1:2.5.1-4\nSource: attr\n",
+          "sha256": "c4945123d66d0503ba42e2fc0585abc76d0838978c6d277b9cc37a4da25d1a34"
+        },
+        {
+          "deb": "libbinutils_2.40-2_amd64.deb",
+          "metadata": "Package: libbinutils\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "fcf55b99e5f8a78f3c8ce9b6957f1024f394cf20c196b100d308a57e43547710"
+        },
+        {
+          "deb": "libbrotli1_1.0.9-2+deb12u1_amd64.deb",
+          "metadata": "Package: libbrotli1\nVersion: 1.0.9-2+deb12u1\nSource: brotli\n",
+          "sha256": "e27b3d655fa6fadd7a56f706687e94573c0af68b7d6df394a32a381a3a6c6d8b"
+        },
+        {
+          "deb": "libbz2-1.0_1.0.8-5+b1_amd64.deb",
+          "metadata": "Package: libbz2-1.0\nVersion: 1.0.8-5+b1\nSource: bzip2 (1.0.8-5)\n",
+          "sha256": "54149da3f44b22d523b26b692033b84503d822cc5122fed606ea69cc83ca5aeb"
+        },
+        {
+          "deb": "libc-dev-bin_2.36-9+deb12u14_amd64.deb",
+          "metadata": "Package: libc-dev-bin\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "f61d923b703401023bec2ac3d9d1c9ad7341930fbe11736f7f5ef64b489d03c4"
+        },
+        {
+          "deb": "libc6-dev_2.36-9+deb12u14_amd64.deb",
+          "metadata": "Package: libc6-dev\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "0218fc2befcd784c1b0c6292c0a137ce89fad054efaa579ad083bee0f2c01aae"
+        },
+        {
+          "deb": "libc6_2.36-9+deb12u14_amd64.deb",
+          "metadata": "Package: libc6\nVersion: 2.36-9+deb12u14\nSource: glibc\n",
+          "sha256": "ba4f88f73dbc3ae9055f3c20f4523bfdbaf1ad13ff95e258924f77d20b4fbedf"
+        },
+        {
+          "deb": "libcc1-0_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libcc1-0\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "4ee6009633003f47de98333ea7f7d8835ec563ae2ac4f30251dbfee04d75d46b"
+        },
+        {
+          "deb": "libcom-err2_1.47.0-2+b2_amd64.deb",
+          "metadata": "Package: libcom-err2\nVersion: 1.47.0-2+b2\nSource: e2fsprogs (1.47.0-2)\n",
+          "sha256": "a2bac7015e78fbc0c504df3e441f3a22292f1d2d77f9ccda760057f3690e22f2"
+        },
+        {
+          "deb": "libcrypt-dev_1%3a4.4.33-2_amd64.deb",
+          "metadata": "Package: libcrypt-dev\nVersion: 1:4.4.33-2\nSource: libxcrypt\n",
+          "sha256": "81ccd29130f75a9e3adabc80e61921abff42f76761e1f792fa2d1bb69af7f52f"
+        },
+        {
+          "deb": "libcrypt1_1%3a4.4.33-2_amd64.deb",
+          "metadata": "Package: libcrypt1\nVersion: 1:4.4.33-2\nSource: libxcrypt\n",
+          "sha256": "f5f60a5cdfd4e4eaa9438ade5078a57741a7a78d659fcb0c701204f523e8bd29"
+        },
+        {
+          "deb": "libctf-nobfd0_2.40-2_amd64.deb",
+          "metadata": "Package: libctf-nobfd0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "ef1dfcf22de41ea90ebd3d505447ccccd999e96b85aa777a1d7d981dc3b347aa"
+        },
+        {
+          "deb": "libctf0_2.40-2_amd64.deb",
+          "metadata": "Package: libctf0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "3fb7b6f326be3fae4a87a3d33b9269bd06c1e4346a24bd737f265067e3b7427f"
+        },
+        {
+          "deb": "libdb5.3_5.3.28+dfsg2-1_amd64.deb",
+          "metadata": "Package: libdb5.3\nVersion: 5.3.28+dfsg2-1\nSource: db5.3\n",
+          "sha256": "7dc5127b8dd0da80e992ba594954c005ae4359d839a24eb65d0d8129b5235c84"
+        },
+        {
+          "deb": "libexpat1_2.5.0-1+deb12u5_amd64.deb",
+          "metadata": "Package: libexpat1\nVersion: 2.5.0-1+deb12u5\nSource: expat\n",
+          "sha256": "cae5ded666d8573dd33060bc66fbac21eea8b101a6b56e2af8bd590fcfa65d79"
+        },
+        {
+          "deb": "libffi8_3.4.4-1_amd64.deb",
+          "metadata": "Package: libffi8\nVersion: 3.4.4-1\nSource: libffi\n",
+          "sha256": "6d9f6c25c30efccce6d4bceaa48ea86c329a3432abb360a141f76ac223a4c34a"
+        },
+        {
+          "deb": "libfontconfig1_2.14.1-4_amd64.deb",
+          "metadata": "Package: libfontconfig1\nVersion: 2.14.1-4\nSource: fontconfig\n",
+          "sha256": "16ee38d374e064f534116dc442b086ef26f9831f1c0af7e5fb4fe4512e700649"
+        },
+        {
+          "deb": "libfreetype6_2.12.1+dfsg-5+deb12u4_amd64.deb",
+          "metadata": "Package: libfreetype6\nVersion: 2.12.1+dfsg-5+deb12u4\nSource: freetype\n",
+          "sha256": "8043e479f73f29992d652e3f9dfe8b17f9780c7ea6330afe379ec5f9f188ac44"
+        },
+        {
+          "deb": "libgcc-12-dev_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libgcc-12-dev\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "d720259380a84f2ffc6fe516eff5cbe9c8a005138e8d6a5748747ba4b3404a82"
+        },
+        {
+          "deb": "libgcc-s1_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libgcc-s1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "3016e62cb4b7cd8038822870601f5ed131befe942774d0f745622cc77d8a88f7"
+        },
+        {
+          "deb": "libgmp10_2%3a6.2.1+dfsg1-1.1_amd64.deb",
+          "metadata": "Package: libgmp10\nVersion: 2:6.2.1+dfsg1-1.1\nSource: gmp\n",
+          "sha256": "187aedef2ed763f425c1e523753b9719677633c7eede660401739e9c893482bd"
+        },
+        {
+          "deb": "libgomp1_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libgomp1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "48fec46bda7f5b1638b9e959889bfbc20491247d402d120bb152687eb48143d7"
+        },
+        {
+          "deb": "libgprofng0_2.40-2_amd64.deb",
+          "metadata": "Package: libgprofng0\nVersion: 2.40-2\nSource: binutils\n",
+          "sha256": "a3c4092d84f19d13caf90f3c96eec53db8819f0e3a5247434944d71ed75fa53d"
+        },
+        {
+          "deb": "libgssapi-krb5-2_1.20.1-2+deb12u5_amd64.deb",
+          "metadata": "Package: libgssapi-krb5-2\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "d8b87aea91b956b416c01a28c44ff6228315ae3b73de40acddac3dc5043607d2"
+        },
+        {
+          "deb": "libicu72_72.1-3+deb12u1_amd64.deb",
+          "metadata": "Package: libicu72\nVersion: 72.1-3+deb12u1\nSource: icu\n",
+          "sha256": "f7f6f99c6d7b025914df2447fc93e11d22c44c0c8bdd8b6f36691c9e7ddcef88"
+        },
+        {
+          "deb": "libisl23_0.25-1.1_amd64.deb",
+          "metadata": "Package: libisl23\nVersion: 0.25-1.1\nSource: isl\n",
+          "sha256": "ebff0b2f8b220c74224197523019366e97ee4770d464bebc48e4865114e4da0e"
+        },
+        {
+          "deb": "libitm1_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libitm1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "0ed5b35dfd1346cccbf065408ec789db6c44c1d0a16ae84533411dea09632979"
+        },
+        {
+          "deb": "libjansson4_2.14-2_amd64.deb",
+          "metadata": "Package: libjansson4\nVersion: 2.14-2\nSource: jansson\n",
+          "sha256": "3fc9742f9f1a37bcb9931df6074b4d1483419ef832ad5349f47323e75fc27864"
+        },
+        {
+          "deb": "libk5crypto3_1.20.1-2+deb12u5_amd64.deb",
+          "metadata": "Package: libk5crypto3\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "7b6e47d15c5c9cdcd456137533d8308aeba608a54cec73b28bd59bfc4b54cf06"
+        },
+        {
+          "deb": "libkeyutils1_1.6.3-2_amd64.deb",
+          "metadata": "Package: libkeyutils1\nVersion: 1.6.3-2\nSource: keyutils\n",
+          "sha256": "cfac89e6a7a54ff3c6a4f843310e25efeddaa771baeae470bd98bd588c373563"
+        },
+        {
+          "deb": "libkrb5-3_1.20.1-2+deb12u5_amd64.deb",
+          "metadata": "Package: libkrb5-3\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "c90801be09701af221b54dd502a59cb378b7284ff31e480738baca317d2f7653"
+        },
+        {
+          "deb": "libkrb5support0_1.20.1-2+deb12u5_amd64.deb",
+          "metadata": "Package: libkrb5support0\nVersion: 1.20.1-2+deb12u5\nSource: krb5\n",
+          "sha256": "8b9c05f2d8d461a10d657b118f572af5bf8fd6c8f93dcef81e852c5ab0f428ab"
+        },
+        {
+          "deb": "liblsan0_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: liblsan0\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "d234ab339c0ba31a4fb44e2334cf5a8d15b87f2c2f9e74fadfaa877f92dcf22a"
+        },
+        {
+          "deb": "liblzma5_5.4.1-1+deb12u2_amd64.deb",
+          "metadata": "Package: liblzma5\nVersion: 5.4.1-1+deb12u2\nSource: xz-utils\n",
+          "sha256": "3d8c29c8c21ec6007635e1b2591edf98b771c9572a085968f47452b33040f384"
+        },
+        {
+          "deb": "libmd0_1.0.4-2_amd64.deb",
+          "metadata": "Package: libmd0\nVersion: 1.0.4-2\nSource: libmd\n",
+          "sha256": "03539fd30c509e27101d13a56e52eda9062bdf1aefe337c07ab56def25a13eab"
+        },
+        {
+          "deb": "libmpc3_1.3.1-1_amd64.deb",
+          "metadata": "Package: libmpc3\nVersion: 1.3.1-1\nSource: mpclib3\n",
+          "sha256": "d7f79544790e44f9b0c8cb9034a18c58d37f8702a15f32539050718679e52f80"
+        },
+        {
+          "deb": "libmpfr6_4.2.0-1_amd64.deb",
+          "metadata": "Package: libmpfr6\nVersion: 4.2.0-1\nSource: mpfr4\n",
+          "sha256": "37b7a2b4e78890b6a074777f27b96c84f58e81558ba08410c2b6c0ca4a4ad77b"
+        },
+        {
+          "deb": "libncursesw6_6.4-4_amd64.deb",
+          "metadata": "Package: libncursesw6\nVersion: 6.4-4\nSource: ncurses\n",
+          "sha256": "98fa7a53dc565a38b65fb70422ad08001bf5361d8fbc74255280c329996a6bec"
+        },
+        {
+          "deb": "libnsl-dev_1.3.0-2_amd64.deb",
+          "metadata": "Package: libnsl-dev\nVersion: 1.3.0-2\nSource: libnsl\n",
+          "sha256": "bb81a188c119cd7fdebae723cbc95887b6c549b2fe4fb7e268a9c8846444da99"
+        },
+        {
+          "deb": "libnsl2_1.3.0-2_amd64.deb",
+          "metadata": "Package: libnsl2\nVersion: 1.3.0-2\nSource: libnsl\n",
+          "sha256": "c0d83437fdb016cb289436f49f28a36be44b3e8f1f2498c7e3a095f709c0d6f8"
+        },
+        {
+          "deb": "libpcre2-8-0_10.42-1+deb12u2_amd64.deb",
+          "metadata": "Package: libpcre2-8-0\nVersion: 10.42-1+deb12u2\nSource: pcre2\n",
+          "sha256": "d2f7edfcc7689b9e0761c2742cc824ac86a20768bc5e8057818dc6875291fe76"
+        },
+        {
+          "deb": "libpng16-16_1.6.39-2+deb12u6_amd64.deb",
+          "metadata": "Package: libpng16-16\nVersion: 1.6.39-2+deb12u6\nSource: libpng1.6\n",
+          "sha256": "940b91d40d51c825de7f7aa133aecff1ffa25a91f12cb6aa6926c9ad55cd640c"
+        },
+        {
+          "deb": "libpython3-stdlib_3.11.2-1+b1_amd64.deb",
+          "metadata": "Package: libpython3-stdlib\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "4e58891d5c951a1e360ed9eaa814413cb5e84deadce3f08e801ac680434c786e"
+        },
+        {
+          "deb": "libpython3.11-minimal_3.11.2-6+deb12u9_amd64.deb",
+          "metadata": "Package: libpython3.11-minimal\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "69f41cfa3f4ba17284e538f843069d7529c53c207d2ae17a5b02785944870e33"
+        },
+        {
+          "deb": "libpython3.11-stdlib_3.11.2-6+deb12u9_amd64.deb",
+          "metadata": "Package: libpython3.11-stdlib\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "10f13e000ee757f5f2d2d3569f9e30546214a0c850acd78695feae373bfa3e53"
+        },
+        {
+          "deb": "libquadmath0_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libquadmath0\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "3f0c9a4c730da2fdab001cae596625438598fd2996d29d888feeb4c1cdc9011f"
+        },
+        {
+          "deb": "libreadline8_8.2-1.3_amd64.deb",
+          "metadata": "Package: libreadline8\nVersion: 8.2-1.3\nSource: readline\n",
+          "sha256": "e02ebbd3701cf468dbf98d6d917fbe0325e881f07fe8b316150c8d2a64486e66"
+        },
+        {
+          "deb": "libselinux1_3.4-1+b6_amd64.deb",
+          "metadata": "Package: libselinux1\nVersion: 3.4-1+b6\nSource: libselinux (3.4-1)\n",
+          "sha256": "2b07f5287b9105f40158b56e4d70cc1652dac56a408f3507b4ab3d061eed425f"
+        },
+        {
+          "deb": "libsqlite3-0_3.40.1-2+deb12u2_amd64.deb",
+          "metadata": "Package: libsqlite3-0\nVersion: 3.40.1-2+deb12u2\nSource: sqlite3\n",
+          "sha256": "a8d78b40e9b4e422224aeebfe0e4dfc243f6acf3532490b0c05480d4283d41e2"
+        },
+        {
+          "deb": "libssl3_3.0.22-1~deb12u2_amd64.deb",
+          "metadata": "Package: libssl3\nVersion: 3.0.22-1~deb12u2\nSource: openssl\n",
+          "sha256": "cb4784740daa9b3b0eaea2b444bbefa686794afbbf3d678d238c1fd9875f2efd"
+        },
+        {
+          "deb": "libstdc++-12-dev_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libstdc++-12-dev\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "d28def6c23630432b57cb38a4c2fd67a79d4e0484027386ca6e8d6005c3d7a73"
+        },
+        {
+          "deb": "libstdc++6_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libstdc++6\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "5cd3171216d4ab0fc911cfe9c35509bf2dd8f47761c43b7f6a4296701551a24d"
+        },
+        {
+          "deb": "libtinfo6_6.4-4_amd64.deb",
+          "metadata": "Package: libtinfo6\nVersion: 6.4-4\nSource: ncurses\n",
+          "sha256": "072d908f38f51090ca28ca5afa3b46b2957dc61fe35094c0b851426859a49a51"
+        },
+        {
+          "deb": "libtirpc-common_1.3.3+ds-1_all.deb",
+          "metadata": "Package: libtirpc-common\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "3e3ef129b4bf61513144236e15e1b4ec57fa5ae3dc8a72137abdbefb7a63af85"
+        },
+        {
+          "deb": "libtirpc-dev_1.3.3+ds-1_amd64.deb",
+          "metadata": "Package: libtirpc-dev\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "03326473eed54ffa27efae19aa5d6aeb402930968f869f318445513093691d55"
+        },
+        {
+          "deb": "libtirpc3_1.3.3+ds-1_amd64.deb",
+          "metadata": "Package: libtirpc3\nVersion: 1.3.3+ds-1\nSource: libtirpc\n",
+          "sha256": "2a46d5a5e9486da11ffeff5740931740d6deae4f92cd6098df060dc5dff1e1c7"
+        },
+        {
+          "deb": "libtsan2_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libtsan2\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "06906663d644a75a1a836382ecd80b61461129c06f02935ce408b25809f6c958"
+        },
+        {
+          "deb": "libubsan1_12.2.0-14+deb12u1_amd64.deb",
+          "metadata": "Package: libubsan1\nVersion: 12.2.0-14+deb12u1\nSource: gcc-12\n",
+          "sha256": "744f52adf00ffd45d44806b1c7e802a36bd27e479c9bc8457128fde357faa530"
+        },
+        {
+          "deb": "libuuid1_2.38.1-5+deb12u3_amd64.deb",
+          "metadata": "Package: libuuid1\nVersion: 2.38.1-5+deb12u3\nSource: util-linux\n",
+          "sha256": "5fff398321da62d28a842bcbabd193d72ae21724962c029dc32b1dc6b2deaeaf"
+        },
+        {
+          "deb": "libzstd1_1.5.4+dfsg2-5_amd64.deb",
+          "metadata": "Package: libzstd1\nVersion: 1.5.4+dfsg2-5\nSource: libzstd\n",
+          "sha256": "6315b5ac38b724a710fb96bf1042019398cb656718b1522279a5185ed39318fa"
+        },
+        {
+          "deb": "linux-libc-dev_6.1.190-1_amd64.deb",
+          "metadata": "Package: linux-libc-dev\nVersion: 6.1.190-1\nSource: linux\n",
+          "sha256": "a88a129991cbb7db1715bed232c9808b91ac0fb7149660558b9df0d074348f05"
+        },
+        {
+          "deb": "mawk_1.3.4.20200120-3.1_amd64.deb",
+          "metadata": "Package: mawk\nVersion: 1.3.4.20200120-3.1\n",
+          "sha256": "bcbc83f391854ea9d50ce2a4101aacf330de3b8b71d81a798faadba14a157f78"
+        },
+        {
+          "deb": "media-types_10.0.0_all.deb",
+          "metadata": "Package: media-types\nVersion: 10.0.0\n",
+          "sha256": "aaa46dcb3b39948ae2e0fdb72cfcb2f48c0b59f19785a3da8045c05eb19955dd"
+        },
+        {
+          "deb": "python3-minimal_3.11.2-1+b1_amd64.deb",
+          "metadata": "Package: python3-minimal\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "30f9618670e686d781afbfc713eb0830c29d2819e9cb2a0488800dad6bb99faa"
+        },
+        {
+          "deb": "python3.11-minimal_3.11.2-6+deb12u9_amd64.deb",
+          "metadata": "Package: python3.11-minimal\nVersion: 3.11.2-6+deb12u9\nSource: python3.11\n",
+          "sha256": "b5f855ab922dfcd5d1a3223b2118c3dae13ffc7751b0cd5dc24740386323a33a"
+        },
+        {
+          "deb": "python3.11_3.11.2-6+deb12u9_amd64.deb",
+          "metadata": "Package: python3.11\nVersion: 3.11.2-6+deb12u9\n",
+          "sha256": "4facf334e0e0830a87013852f8c3a1cfee11ad702f72f240adf9ad5b9a334e7c"
+        },
+        {
+          "deb": "python3_3.11.2-1+b1_amd64.deb",
+          "metadata": "Package: python3\nVersion: 3.11.2-1+b1\nSource: python3-defaults (3.11.2-1)\n",
+          "sha256": "33f6dafbd1a6902d9063172ec7dbd4b2225e12009e0d7ec5c933a72c2f5f3b74"
+        },
+        {
+          "deb": "readline-common_8.2-1.3_all.deb",
+          "metadata": "Package: readline-common\nVersion: 8.2-1.3\nSource: readline\n",
+          "sha256": "69317523fe56429aa361545416ad339d138c1500e5a604856a80dd9074b4e35c"
+        },
+        {
+          "deb": "rpcsvc-proto_1.4.3-1_amd64.deb",
+          "metadata": "Package: rpcsvc-proto\nVersion: 1.4.3-1\n",
+          "sha256": "32ac0692694f8a34cc90c895f4fc739680fb2ef0e2d4870a68833682bf1c81a3"
+        },
+        {
+          "deb": "sed_4.9-1+deb12u1_amd64.deb",
+          "metadata": "Package: sed\nVersion: 4.9-1+deb12u1\n",
+          "sha256": "fd557efeee8aae4619c2cb7f68aadccb804322ad4a99ab048aaae5901d253885"
+        },
+        {
+          "deb": "tar_1.34+dfsg-1.2+deb12u1_amd64.deb",
+          "metadata": "Package: tar\nVersion: 1.34+dfsg-1.2+deb12u1\n",
+          "sha256": "24fb92e98c2969171f81a8b589263d705f6b1670f95d121cd74c810d4605acc3"
+        },
+        {
+          "deb": "zlib1g_1%3a1.2.13.dfsg-1_amd64.deb",
+          "metadata": "Package: zlib1g\nVersion: 1:1.2.13.dfsg-1\nSource: zlib\n",
+          "sha256": "d7dd1d1411fedf27f5e27650a6eff20ef294077b568f4c8c5e51466dc7c08ce4"
+        }
+      ],
+      "unpackedBytes": 1380727261,
+      "imageProfile": "devcat-offline-compact-1",
+      "removedOptionalFiles": 3784,
+      "removedOptionalBytes": 314060696,
+      "originalCompressedBytes": 637381644
+    }
+  ],
+  "correspondingSources": {
+    "file": "DevCat-0.5.0-android-runtime-sources.tar",
+    "bytes": 605388800,
+    "sha256": "0a5658775361388abef48e656873d0ec7d203fb66f8695b5dcee43b90710e932",
+    "debianSourcePackages": 55
+  }
+}
