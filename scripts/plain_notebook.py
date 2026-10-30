@@ -99,11 +99,16 @@ def manuscript(lang, lesson):
     return unit[2], unit
 
 
-def vocabulary(text, core):
+def vocabulary(text, core, lang):
     result = []
     if core:
         result += [tuple(x.split('=', 1)) for x in core[1].split('; ')]
-    for word, definition in WORDS.items():
+    scoped = dict(WORDS)
+    if lang == 'html':
+        scoped['ссылка'] = 'элемент HTML с адресом перехода, обычно a с атрибутом href'
+    if lang == 'sql':
+        scoped['индекс'] = 'структура базы данных, ускоряющая некоторые выборки и требующая места и обновления'
+    for word, definition in scoped.items():
         if word in text.lower() and all(word != x[0] for x in result):
             result.append((word, definition))
     return result[:7]
@@ -167,7 +172,7 @@ def rewrite(course):
         complete = lesson.get('runnableExample')
         code = complete['code'] if complete else lab['solution'] if lab else next(
             (s['code'] for s in old_sections if s.get('code')), lesson['examples'][0] if lesson['examples'] else '')
-        terms = vocabulary(concept, core)
+        terms = vocabulary(concept, core, lang)
         goal = core[0] if core else 'Разобрать тему «'+lesson['title']+'» и выполнить связанный опыт с объяснением результата.'
         experiment = core[3] if core else 'Повтори показанный пример, затем измени один относящийся к теме параметр. До обновления результата запиши, какие значения или видимые части должны измениться. Сравни фактический результат с этим ожиданием.'
         if lang == 'git':

@@ -107,7 +107,7 @@ def main():
             target=ROOT/'content'/course['id'];target.mkdir(exist_ok=True)
             (target/'intro.json').write_text(json.dumps(course,ensure_ascii=False,indent=2)+'\n')
     (ROOT/'apps/devcat_flutter/assets/content/courses.json').write_text(json.dumps(courses,ensure_ascii=False,indent=2)+'\n')
-    lines=['# Подробные курсы DevCat 0.5\n', 'Десять направлений с вводным маршрутом для новичка: основы, особенности языка, проекты и восемь подробных разборов сложных задач. Материалы, фотографии и схемы входят в офлайн-приложение. Заверши проекты, объясни решения и продолжай читать документацию.\n', '125 лабораторных проверяются автоматически; остальные работы — самостоятельная реализация с критериями. Проверка результата программы не оценивает автоматически качество тестов, стиль и объяснение. Для эталонов выполняется реальный запуск в CI; независимая экспертная редактура текста ещё нужна.\n']
+    lines=['# Подробные курсы DevCat 0.6\n', 'Главный маршрут состоит из 1 548 коротких интерактивных занятий по 516 темам, включая отдельный Git/GitHub. На каждой теме три ступени: знакомство, тренировка, самостоятельная попытка. Список ниже описывает подробную библиотеку теории и полную практику; указанные минуты не являются длительностью одной короткой сессии. Десять направлений с вводным маршрутом для новичка: основы, особенности языка, проекты и восемь подробных разборов сложных задач. Материалы, фотографии и схемы входят в офлайн-приложение. Заверши проекты, объясни решения и продолжай читать документацию.\n', '125 лабораторных проверяются автоматически; остальные работы — самостоятельная реализация с критериями. Проверка результата программы не оценивает автоматически качество тестов, стиль и объяснение. Для эталонов выполняется реальный запуск в CI; независимая экспертная редактура текста ещё нужна.\n']
     for course in courses:
         lines.append('\n## '+course['name']+' · '+course['version']+'\n')
         current=None
@@ -119,6 +119,8 @@ def main():
         lines.append('\nДокументация: '+course['source']+'\n')
     git = visual_enrich(rewrite_notebook(git_course()))
     (ROOT/'apps/devcat_flutter/assets/content/git_course.json').write_text(json.dumps(git,ensure_ascii=False,indent=2)+'\n')
+    from study_path import write as write_study
+    write_study(courses+[git])
     used_images={s['image'] for c in courses+[git] for l in c['lessons'] for s in l['sections'] if s.get('image')}
     for image in (ROOT/'apps/devcat_flutter/assets/content').glob('steps-*.png'):
         if image.name not in used_images:

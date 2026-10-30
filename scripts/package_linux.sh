@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
-version="${1:-0.5.0}"
+version="${1:-0.6.0}"
 arch=x86_64
 bundle="$root/apps/devcat_flutter/build/linux/x64/release/bundle"
 dist="$root/dist"

@@ -94,6 +94,32 @@ class AppStore extends ChangeNotifier {
     await save();
   }
 
+  Future<void> studyRecords(Map<String, String> records) async {
+    final previous = <String, Map<String, dynamic>?>{};
+    final written = <String, Map<String, dynamic>>{};
+    for (final entry in records.entries) {
+      final key = '${entry.key}:$device';
+      previous[key] = progress.drafts[key];
+      progress.draft(entry.key, entry.value, device);
+      written[key] = progress.drafts[key]!;
+    }
+    try {
+      await save();
+    } catch (_) {
+      for (final key in written.keys) {
+        if (!identical(progress.drafts[key], written[key])) continue;
+        if (previous[key] == null) {
+          progress.drafts.remove(key);
+        } else {
+          progress.drafts[key] = previous[key]!;
+        }
+      }
+      notifyListeners();
+      rethrow;
+    }
+    notifyListeners();
+  }
+
   Future<void> cursor(String lang, int lesson, int seed) async {
     progress.cursor(lang, lesson, seed, device);
     await save();

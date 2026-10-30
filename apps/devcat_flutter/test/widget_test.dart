@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:devcat/core/course.dart';
 import 'package:devcat/core/sound.dart';
 import 'package:devcat/core/store.dart';
+import 'package:devcat/core/study.dart';
 import 'package:devcat/ui/shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,7 @@ void main() {
       final store = MemoryStore();
       late List<Course> courses;
       await tester.runAsync(() async {
+        await StudyCatalog.load();
         courses =
             (jsonDecode(
                       await rootBundle.loadString(
@@ -43,31 +45,15 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
-      await tester.scrollUntilVisible(
-        find.text('Продолжить обучение'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
+      expect(find.text('Твоя цель на сегодня'), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const ValueKey('study-start')));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Продолжить обучение'));
+      await tester.tap(find.byKey(const ValueKey('study-start')));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
-      expect(find.text('План занятия'), findsOneWidget);
-      await tester.tap(find.text('Практика'));
+      expect(find.textContaining('Знакомство'), findsWidgets);
+      await tester.tap(find.byIcon(Icons.close_rounded));
       await tester.pumpAndSettle();
-      if (size.width < 760) {
-        expect(find.text('Условие'), findsOneWidget);
-        await tester.tap(find.text('Редактор'));
-        await tester.pumpAndSettle();
-      }
-      expect(find.text('Запустить'), findsOneWidget);
-      if (size.width < 960) {
-        tester.view.viewInsets = const FakeViewPadding(bottom: 300);
-        await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull);
-        tester.view.resetViewInsets();
-        await tester.pumpAndSettle();
-      }
       if (size.width > 960) {
         await tester.tap(find.text('Настройки'));
       } else {

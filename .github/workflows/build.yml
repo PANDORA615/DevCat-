@@ -64,12 +64,12 @@ jobs:
       - working-directory: apps/devcat_flutter
         run: flutter build ${{ matrix.target }} --release
       - if: matrix.target == 'linux'
-        run: scripts/package_linux.sh 0.5.0
+        run: scripts/package_linux.sh 0.6.0
       - if: matrix.target == 'windows'
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force dist
-          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.5.0-windows-x64.zip
+          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.6.0-windows-x64.zip
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" scripts/windows.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - if: matrix.target == 'macos'
@@ -77,11 +77,11 @@ jobs:
           mkdir -p dist
           app=apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app
           codesign --force --deep --sign - "$app"
-          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.5.0-macos-universal.zip
+          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.6.0-macos-universal.zip
           mkdir -p /tmp/devcat-dmg
           ditto "$app" /tmp/devcat-dmg/DevCat.app
           ln -s /Applications /tmp/devcat-dmg/Applications
-          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.5.0-macos-universal.dmg
+          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.6.0-macos-universal.dmg
       - uses: actions/upload-artifact@v4
         with:
           name: devcat-${{ matrix.target }}
@@ -184,7 +184,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           flutter pub get --enforce-lockfile
-          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=5006
+          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=5007
       - run: |
           mkdir -p dist/android-build-inputs
           mv apps/devcat_flutter/build/app/outputs/flutter-apk/app-release.apk dist/android-build-inputs/

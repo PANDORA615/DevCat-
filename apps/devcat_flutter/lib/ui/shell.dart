@@ -1,15 +1,13 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import '../core/course.dart';
 import '../core/store.dart';
 import '../core/sound.dart';
 import 'widgets.dart';
-import 'workspace.dart';
 import 'settings.dart';
-import 'git_page.dart';
-import 'lecture.dart';
-import 'course_route.dart';
 import 'ide.dart';
+import 'study_hub.dart';
+import 'study_widgets.dart';
+import '../core/study.dart';
 import '../core/cat_chatter.dart';
 import 'companion.dart';
 
@@ -28,13 +26,13 @@ class DevCatShell extends StatefulWidget {
 }
 
 class _DevCatShellState extends State<DevCatShell> {
-  int page = 0;
+  int page = 1;
   bool reading = true;
   late String language;
   int lesson = 0, seed = 0;
   static const labels = [
     'Главная',
-    'Языки',
+    'Учиться',
     'Git / GitHub',
     'DevCat IDE',
     'Справочник',
@@ -95,7 +93,7 @@ class _DevCatShellState extends State<DevCatShell> {
     final content = switch (page) {
       0 => _home(context),
       1 => _courses(context),
-      2 => GitPage(store: widget.store, sounds: widget.sounds),
+      2 => GitStudyHub(store: widget.store, sounds: widget.sounds),
       3 => IdePage(
         key: const ValueKey('ide'),
         store: widget.store,
@@ -201,7 +199,8 @@ class _DevCatShellState extends State<DevCatShell> {
                 padding: const EdgeInsets.fromLTRB(12, 22, 12, 18),
                 decoration: BoxDecoration(
                   color: scheme.surfaceContainerLow,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(color: scheme.outlineVariant, width: 2),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -402,6 +401,7 @@ class _DevCatShellState extends State<DevCatShell> {
   Widget _home(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final solved = widget.store.progress.solved.length;
+    final study = StudyLedger(widget.store.progress);
     return ListView(
       padding: const EdgeInsets.fromLTRB(28, 16, 28, 30),
       children: [
@@ -439,7 +439,7 @@ class _DevCatShellState extends State<DevCatShell> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        'Один урок, немного практики — и ты уже дальше.',
+                        'Короткое занятие: разбери идею, ответь и попробуй написать код.',
                       ),
                       const SizedBox(height: 24),
                       FilledButton.icon(
@@ -466,8 +466,8 @@ class _DevCatShellState extends State<DevCatShell> {
               _stat(
                 context,
                 Icons.check_circle_outline_rounded,
-                '$solved',
-                'решённых задач',
+                '${study.xp} XP',
+                '${study.streak} дней подряд · $solved задач в IDE',
               ),
               _stat(
                 context,
@@ -622,167 +622,22 @@ class _DevCatShellState extends State<DevCatShell> {
       ),
     ),
   );
-  Future<void> _directory() async {
-    final selected = await showModalBottomSheet<int>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      builder: (_) => CourseRouteSheet(
-        course: course,
-        store: widget.store,
-        current: lesson,
-      ),
-    );
-    if (selected != null && mounted) {
-      openCourse(language, index: selected, generated: 0);
-    }
-  }
-
-  Widget _courses(BuildContext context) => Column(
-    children: [
-      if (MediaQuery.viewInsetsOf(context).bottom == 0) ...[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-          child: Row(
-            children: [
-              Expanded(
-                child: DropdownButton<String>(
-                  value: language,
-                  isExpanded: true,
-                  items: widget.courses
-                      .map(
-                        (c) =>
-                            DropdownMenuItem(value: c.id, child: Text(c.name)),
-                      )
-                      .toList(),
-                  onChanged: (id) {
-                    if (id != null) openCourse(id, generated: 0);
-                  },
-                ),
-              ),
-              const SizedBox(width: 16),
-              OutlinedButton.icon(
-                onPressed: _directory,
-                icon: const Icon(Icons.route_outlined),
-                label: const Text('План курса'),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: lesson > 0
-                    ? () =>
-                          openCourse(language, index: lesson - 1, generated: 0)
-                    : null,
-                icon: const Icon(Icons.chevron_left_rounded),
-                tooltip: 'Предыдущая лекция',
-              ),
-              Expanded(
-                child: TextButton.icon(
-                  onPressed: _directory,
-                  icon: const Icon(Icons.menu_book_rounded),
-                  label: Text(
-                    '${lesson + 1}/${course.lessons.length}. ${course.lessons[lesson].title}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: lesson + 1 < course.lessons.length
-                    ? () =>
-                          openCourse(language, index: lesson + 1, generated: 0)
-                    : null,
-                icon: const Icon(Icons.chevron_right_rounded),
-                tooltip: 'Следующая лекция',
-              ),
-            ],
-          ),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-          child: Row(
-            children: [
-              SegmentedButton<bool>(
-                segments: const [
-                  ButtonSegment(
-                    value: true,
-                    icon: Icon(Icons.auto_stories_outlined),
-                    label: Text('Лекция'),
-                  ),
-                  ButtonSegment(
-                    value: false,
-                    icon: Icon(Icons.code_rounded),
-                    label: Text('Практика'),
-                  ),
-                ],
-                selected: {reading && seed == 0},
-                onSelectionChanged: (value) {
-                  widget.sounds.cue(SoundCue.navigation);
-                  setState(() {
-                    reading = value.first;
-                    if (reading) seed = 0;
-                  });
-                },
-              ),
-              const SizedBox(width: 12),
-              if (lesson >= 32 && language != 'html' && language != 'css')
-                ActionChip(
-                  avatar: const Icon(Icons.auto_awesome_rounded, size: 18),
-                  label: const Text('Тренировка по всему курсу'),
-                  onPressed: () => openCourse(
-                    language,
-                    index: lesson,
-                    generated: 1 + Random.secure().nextInt(1000000000),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ],
-      Expanded(
-        child: (language == 'html' || language == 'css') && !reading
-            ? IdePage(
-                key: ValueKey('web-lesson:$language:$lesson'),
-                store: widget.store,
-                sounds: widget.sounds,
-                language: language,
-                lesson: course.lessons[lesson],
-              )
-            : reading && seed == 0
-            ? LectureView(
-                key: ValueKey('lecture:$language:$lesson'),
-                lesson: course.lessons[lesson],
-                course: course,
-                store: widget.store,
-                onPractice: () => setState(() => reading = false),
-                onNext: () {
-                  if (lesson + 1 < course.lessons.length) {
-                    openCourse(language, index: lesson + 1, generated: 0);
-                  } else {
-                    _directory();
-                  }
-                },
-              )
-            : WorkspacePage(
-                key: ValueKey('$language:$lesson:$seed'),
-                store: widget.store,
-                language: language,
-                sounds: widget.sounds,
-                course: course,
-                lesson: course.lessons[lesson],
-                seed: seed,
-              ),
-      ),
-    ],
+  Widget _courses(BuildContext context) => StudyHub(
+    key: ValueKey('study-path:$language'),
+    course: course,
+    courses: widget.courses,
+    store: widget.store,
+    sounds: widget.sounds,
+    onCourseChanged: (id) => openCourse(id, generated: 0),
+    onTopicChanged: (index) => setState(() {
+      lesson = index;
+      seed = 0;
+      reading = true;
+    }),
   );
   Widget _progress(BuildContext context) {
     final progress = widget.store.progress;
+    final study = StudyLedger(progress);
     return ListView(
       padding: const EdgeInsets.all(28),
       children: [
@@ -791,6 +646,25 @@ class _DevCatShellState extends State<DevCatShell> {
           'Здесь только результаты реальных проверок. Без штрафов за паузы.',
           eyebrow: 'ТВОЙ ПРОГРЕСС',
         ),
+        Wrap(
+          spacing: 20,
+          runSpacing: 14,
+          children: [
+            StudyMetric(Icons.bolt_rounded, '${study.xp} XP', 'опыт'),
+            StudyMetric(
+              Icons.local_fire_department_rounded,
+              '${study.streak}',
+              'дней подряд',
+              color: Colors.deepOrange,
+            ),
+            StudyMetric(
+              Icons.star_rounded,
+              '${study.events.map((e) => e['unit']).toSet().length}',
+              'коротких занятий пройдено',
+            ),
+          ],
+        ),
+        const SizedBox(height: 18),
         _stat(
           context,
           Icons.task_alt_rounded,
@@ -801,6 +675,11 @@ class _DevCatShellState extends State<DevCatShell> {
         ...widget.courses.map((c) {
           final count = progress.solved
               .where((id) => id.startsWith('${c.id}.'))
+              .length;
+          final units = study.events
+              .map((e) => e['unit'] as String)
+              .where((id) => id.startsWith('${c.id}.'))
+              .toSet()
               .length;
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
@@ -814,7 +693,12 @@ class _DevCatShellState extends State<DevCatShell> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
-                  Text('$count решено'),
+                  Flexible(
+                    child: Text(
+                      '$units из ${c.lessons.length * 3} занятий\n$count задач в IDE',
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
                   const SizedBox(width: 16),
                   FilledButton.tonal(
                     onPressed: () => openCourse(c.id),

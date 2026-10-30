@@ -5,6 +5,9 @@ import 'package:devcat/core/course.dart';
 import 'package:devcat/core/project.dart';
 import 'package:devcat/core/runner.dart';
 import 'package:devcat/core/web_preview.dart';
+import 'package:devcat/core/study.dart';
+import 'package:devcat/core/study_runner.dart';
+import 'package:devcat/core/progress.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -271,4 +274,69 @@ COMMIT;
       await root.delete(recursive: true);
     }
   }, timeout: const Timeout(Duration(minutes: 10)));
+
+  testWidgets(
+    'Android short lessons bundle the complete path and check actual code offline',
+    (tester) async {
+      final catalog = StudyCatalog.decode(
+        await rootBundle.loadString('assets/content/study_path.json'),
+      );
+      expect(catalog.topics.length, 516);
+      expect(
+        catalog.topics.values.fold<int>(
+          0,
+          (count, topic) => count + topic.rounds.length,
+        ),
+        1548,
+      );
+      expect(catalog.topics.values.map((t) => t.course).toSet(), {
+        ...languageNames.keys,
+        'git',
+      });
+      final courses =
+          (jsonDecode(
+                    await rootBundle.loadString('assets/content/courses.json'),
+                  )
+                  as List)
+              .map((j) => Course(j))
+              .toList();
+      final runner = LocalRunner();
+      for (final language in ['python', 'sql']) {
+        final course = courses.firstWhere((c) => c.id == language);
+        final lesson = course.lessons.first;
+        final exercise = catalog.topics[lesson.id]!.rounds.last.steps
+            .firstWhere((s) => s.kind == 'code');
+        final result = await evaluateStudyCode(
+          runner,
+          course,
+          lesson,
+          exercise,
+          exercise.answer,
+        );
+        expect(result.passed, isTrue, reason: '$language: ${result.report}');
+        final invalid = await evaluateStudyCode(
+          runner,
+          course,
+          lesson,
+          exercise,
+          'definitely_invalid_token',
+        );
+        expect(invalid.passed, isFalse);
+      }
+      final unit = catalog.topics['python.zero.start']!.rounds.first;
+      final date = DateTime.now();
+      final key = StudyLedger.eventKey(unit, date);
+      final pc = ProgressData()
+        ..draft(key, StudyLedger.event(unit, {}, date), 'pc');
+      final phone = ProgressData()
+        ..draft(key, StudyLedger.event(unit, {}, date), 'phone');
+      final restored = ProgressData.decode(pc.merge(phone).encode());
+      expect(StudyLedger(restored).xp, 20);
+      expect(restored.solved, isEmpty);
+      debugPrint(
+        'ANDROID_STUDY_FORMAT_PASS 1548 sessions; actual Python/SQL; deduplicated progress',
+      );
+    },
+    timeout: const Timeout(Duration(minutes: 5)),
+  );
 }
