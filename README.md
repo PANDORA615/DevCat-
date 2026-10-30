@@ -10,6 +10,7 @@ DevCat работает на Linux, Windows, macOS и Android. Учебные м
 
 ![Настольная главная без белой подложки вокруг кота](docs/screenshots/home-transparent-v04.png)
 ![Учебный маршрут с тремя ступенями на тему](docs/screenshots/study-path-v06.png)
+![Короткое объяснение и пример первой программы](docs/screenshots/study-lesson-v06.png)
 ![Один вопрос за раз и понятная проверка ответа](docs/screenshots/study-feedback-v06.png)
 ![IDE открывает файлы выбранного HTML-урока](docs/screenshots/web-lesson-v05.png)
 
