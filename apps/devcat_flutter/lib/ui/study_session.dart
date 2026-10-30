@@ -655,6 +655,13 @@ class _StudySessionPageState extends State<StudySessionPage>
                         text: option.value,
                         number: option.key + 1,
                         selected: session.selectedOption == option.value,
+                        correct: session.feedback == null
+                            ? null
+                            : option.value == exercise.answer
+                            ? true
+                            : session.selectedOption == option.value
+                            ? false
+                            : null,
                         enabled: session.feedback == null,
                         onTap: () {
                           setState(() => session.selectedOption = option.value);

@@ -122,6 +122,20 @@ void main() {
         await tester.tap(find.text('ПРОВЕРИТЬ'));
         await tester.pumpAndSettle();
         expect(find.text('Разберём и попробуем ещё раз'), findsOneWidget);
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('choice:option:1')),
+            matching: find.byIcon(Icons.close_rounded),
+          ),
+          findsOneWidget,
+        );
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('choice:option:0')),
+            matching: find.byIcon(Icons.check_rounded),
+          ),
+          findsOneWidget,
+        );
         expect(StudyLedger(store.progress).xp, 0);
         await tester.tap(find.text('ПРОДОЛЖИТЬ'));
         await tester.pumpAndSettle();

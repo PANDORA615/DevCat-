@@ -88,6 +88,7 @@ class StudyOption extends StatelessWidget {
   final String text;
   final int number;
   final bool selected, enabled;
+  final bool? correct;
   final VoidCallback onTap;
   const StudyOption({
     super.key,
@@ -95,23 +96,40 @@ class StudyOption extends StatelessWidget {
     required this.number,
     required this.selected,
     required this.enabled,
+    this.correct,
     required this.onTap,
   });
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final highlighted = selected || correct == true;
+    final accent = correct == false ? scheme.error : scheme.primary;
+    final foreground = correct == false
+        ? scheme.onErrorContainer
+        : highlighted
+        ? scheme.onPrimaryContainer
+        : scheme.onSurface;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Semantics(
         button: true,
         selected: selected,
         enabled: enabled,
+        label: correct == null
+            ? null
+            : correct!
+            ? 'Правильный ответ'
+            : 'Неверный ответ',
         child: Material(
-          color: selected ? scheme.primaryContainer : scheme.surface,
+          color: correct == false
+              ? scheme.errorContainer
+              : highlighted
+              ? scheme.primaryContainer
+              : scheme.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
             side: BorderSide(
-              color: selected ? scheme.primary : scheme.outlineVariant,
+              color: highlighted ? accent : scheme.outlineVariant,
               width: 2,
             ),
           ),
@@ -129,17 +147,19 @@ class StudyOption extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: selected
-                            ? scheme.primary
-                            : scheme.outlineVariant,
+                        color: highlighted ? accent : scheme.outlineVariant,
                         width: 2,
                       ),
                     ),
-                    child: selected
+                    child: highlighted
                         ? Icon(
-                            Icons.check_rounded,
+                            correct == null
+                                ? Icons.radio_button_checked_rounded
+                                : correct!
+                                ? Icons.check_rounded
+                                : Icons.close_rounded,
                             size: 18,
-                            color: scheme.primary,
+                            color: accent,
                           )
                         : Text(
                             '$number',
@@ -153,7 +173,8 @@ class StudyOption extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 17,
                         height: 1.45,
-                        fontWeight: selected
+                        color: foreground,
+                        fontWeight: highlighted
                             ? FontWeight.w800
                             : FontWeight.w600,
                       ),
