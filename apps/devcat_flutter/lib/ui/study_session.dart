@@ -1031,10 +1031,19 @@ class _StudySessionPageState extends State<StudySessionPage>
               runSpacing: 12,
               children: [
                 StudyMetric(Icons.bolt_rounded, '+$earned XP', 'опыт'),
-                StudyMetric(
-                  Icons.check_circle_outline_rounded,
-                  '${session.questionCount - session.wrong.length}/${session.questionCount}',
-                  'с первой попытки',
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    StudyMetric(
+                      Icons.check_circle_outline_rounded,
+                      '${session.questionCount - session.wrong.length}/${session.questionCount}',
+                      'с первой попытки',
+                    ),
+                    const Text(
+                      'с первой попытки',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
                 ),
               ],
             ),
