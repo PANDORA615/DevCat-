@@ -75,6 +75,13 @@ void main() {
       );
       expect(cpp.ok, isTrue, reason: cpp.error);
       expect(cpp.output.trim(), 'Study');
+      final unicode = await LocalRunner().run(
+        'csharp',
+        'using System; class Program { static void Main() { Console.WriteLine(Console.ReadLine()); } }',
+        'Привет, кот!\n',
+      );
+      expect(unicode.ok, isTrue, reason: unicode.error);
+      expect(unicode.output.trim(), 'Привет, кот!');
     },
     skip: !enabled,
     timeout: const Timeout(Duration(minutes: 15)),

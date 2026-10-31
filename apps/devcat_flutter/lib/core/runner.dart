@@ -450,12 +450,29 @@ class LocalRunner {
           );
         }
         final csproj = p.join(buildDirectory.path, 'App.csproj');
+        if (Platform.isWindows) {
+          // Redirected Windows pipes may inherit an OEM console code page.
+          // Initialize UTF-8 before the student's Main without rewriting it.
+          await File(
+            p.join(buildDirectory.path, 'DevCatUtf8Console.g.cs'),
+          ).writeAsString('''
+namespace DevCat.Internal {
+  internal static class Utf8Bootstrap8a1c {
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    internal static void Initialize() {
+      System.Console.InputEncoding = new System.Text.UTF8Encoding(false);
+      System.Console.OutputEncoding = new System.Text.UTF8Encoding(false);
+    }
+  }
+}
+''');
+        }
         final include = files == null
             ? ''
             : '<EnableDefaultCompileItems>false</EnableDefaultCompileItems>';
         final sources = files == null
             ? ''
-            : '<ItemGroup>${files.keys.where((name) => name.endsWith('.cs')).map((name) => '<Compile Include="../${const HtmlEscape(HtmlEscapeMode.attribute).convert(name)}" />').join()}</ItemGroup>';
+            : '<ItemGroup>${files.keys.where((name) => name.endsWith('.cs')).map((name) => '<Compile Include="../${const HtmlEscape(HtmlEscapeMode.attribute).convert(name)}" />').join()}${Platform.isWindows ? '<Compile Include="DevCatUtf8Console.g.cs" />' : ''}</ItemGroup>';
         await File(csproj).writeAsString(
           '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><Nullable>enable</Nullable>$include</PropertyGroup>$sources</Project>',
         );

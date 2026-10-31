@@ -69,6 +69,7 @@ class DesktopRuntime {
     final python = p.join(base, 'python');
     final dotnet = p.join(base, 'dotnet');
     final paths = [
+      p.dirname(Platform.resolvedExecutable),
       p.join(base, 'zig'),
       p.join(base, 'go', 'bin'),
       p.join(java, 'bin'),

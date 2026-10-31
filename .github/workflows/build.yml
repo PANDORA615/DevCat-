@@ -1,7 +1,7 @@
 name: Build and verify DevCat
 on:
   push:
-    branches: [main]
+    branches: [main, 'feature/bundled-desktop-runtimes']
     tags: ['v*']
   pull_request:
   workflow_dispatch:
