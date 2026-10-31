@@ -24,6 +24,15 @@ if target == 'windows':
     shutil.copytree(source, destination, symlinks=True)
 else:
     shutil.move(str(source), destination)
+if target != 'windows':
+    # Extraction staging directories can be 0700 (notably the .NET archive
+    # root). A root-owned DEB/RPM or AppImage must remain readable/executable
+    # by the learner, rather than only by the CI account that tested it.
+    for path in [destination, *destination.rglob('*')]:
+        if path.is_symlink():
+            continue
+        mode = path.stat().st_mode
+        path.chmod(0o755 if path.is_dir() or mode & 0o111 else 0o644)
 if target == 'windows':
     # App-local Microsoft runtime: the Flutter app itself must launch on a PC
     # without Visual Studio or a separately installed VC++ redistributable.

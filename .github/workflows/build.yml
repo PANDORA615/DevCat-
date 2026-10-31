@@ -62,6 +62,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        id: desktop-sdk-cache
+        with:
+          path: build/desktop-downloads
+          key: desktop-sdk-archives-${{ runner.os }}-${{ hashFiles('scripts/desktop_runtime_versions.json') }}
       - name: Bundle verified portable compilers and interpreters
         shell: bash
         run: |
@@ -71,6 +76,11 @@ jobs:
             macos) platforms="--platform macos-x64 --platform macos-arm64" ;;
           esac
           python scripts/bundle_desktop_runtimes.py $platforms --output build/desktop-runtime
+      - uses: actions/cache/save@v4
+        if: steps.desktop-sdk-cache.outputs.cache-hit != 'true'
+        with:
+          path: build/desktop-downloads
+          key: ${{ steps.desktop-sdk-cache.outputs.cache-primary-key }}
       - name: Verify bundled tools and the real curriculum without system SDK lookup
         working-directory: apps/devcat_flutter
         shell: bash
