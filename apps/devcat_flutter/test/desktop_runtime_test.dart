@@ -82,6 +82,13 @@ void main() {
       );
       expect(unicode.ok, isTrue, reason: unicode.error);
       expect(unicode.output.trim(), 'Привет, кот!');
+      final pythonUnicode = await LocalRunner().run(
+        'python',
+        'print(input())',
+        'Привет, кот!\n',
+      );
+      expect(pythonUnicode.ok, isTrue, reason: pythonUnicode.error);
+      expect(pythonUnicode.output.trim(), 'Привет, кот!');
     },
     skip: !enabled,
     timeout: const Timeout(Duration(minutes: 15)),

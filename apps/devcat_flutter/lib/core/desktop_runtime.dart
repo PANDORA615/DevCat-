@@ -165,6 +165,9 @@ class DesktopRuntime {
         resolved = p.join(java, 'bin', '$name$suffix');
       case 'python':
       case 'python3':
+        // -I ignores PYTHONUTF8. A command-line option keeps isolated Python's
+        // redirected Windows input/output in the same UTF-8 protocol as Dart.
+        arguments = ['-X', 'utf8', ...args];
         resolved = windows
             ? p.join(python, 'python.exe')
             : p.join(python, 'bin', 'python3');
