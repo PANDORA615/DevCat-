@@ -2,13 +2,13 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "DevCat-0.6.0",
-  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.6.0",
+  "name": "DevCat-0.7.0",
+  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.7.0",
   "creationInfo": {
     "creators": [
       "Tool: DevCat license_inventory.py"
     ],
-    "created": "2026-10-30T00:00:00Z"
+    "created": "2026-11-01T00:00:00Z"
   },
   "packages": [
     {
@@ -1266,6 +1266,390 @@
       "name": "yaml",
       "versionInfo": "3.1.4",
       "downloadLocation": "https://pub.dev/packages/yaml",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-windows-x64-zig",
+      "name": "zig-windows-x64",
+      "versionInfo": "0.15.2",
+      "downloadLocation": "https://ziglang.org/download/0.15.2/zig-x86_64-windows-0.15.2.zip",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3a0ed1e8799a2f8ce2a6e6290a9ff22e6906f8227865911fb7ddedc3cc14cb0c"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-windows-x64-python",
+      "name": "python-windows-x64",
+      "versionInfo": "3.13.18",
+      "downloadLocation": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-pc-windows-msvc-install_only_stripped.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7369f7a35f261222a6ac8b3a87c1c88eeebee8af945d85346202591a64038dd3"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-windows-x64-java",
+      "name": "java-windows-x64",
+      "versionInfo": "21.0.13.0.3+5",
+      "downloadLocation": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-windows-amd64.zip",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d810b9ec45ce29a121fac5e60c77cad146929bce9ffdc0f7f0940581d9462abd"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-windows-x64-go",
+      "name": "go-windows-x64",
+      "versionInfo": "1.27.3",
+      "downloadLocation": "https://go.dev/dl/go1.27.3.windows-amd64.zip",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "f26081f438319757f8a1b46d7d0b2c5ec7583d4038e485e0aa725cfde7885fff"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-windows-x64-dotnet",
+      "name": "dotnet-windows-x64",
+      "versionInfo": "8.0.427",
+      "downloadLocation": "https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.427/dotnet-sdk-8.0.427-win-x64.zip",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "a4dd6eb2bf2a2f6fb10997d3e044a229b23ad96a5c86d20494687e34ee73b537d7bd14488ce14cded6917f6778da4d66360e2734020b7ef487d0f29ab144489d"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-windows-x64-node",
+      "name": "node-windows-x64",
+      "versionInfo": "22.23.4",
+      "downloadLocation": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-win-x64.zip",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "cbc74b5e0982c9dbb41525fd8fb5dcd32fbee237863f7829072f4639a1ce5f20"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-linux-x64-zig",
+      "name": "zig-linux-x64",
+      "versionInfo": "0.15.2",
+      "downloadLocation": "https://ziglang.org/download/0.15.2/zig-x86_64-linux-0.15.2.tar.xz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "02aa270f183da276e5b5920b1dac44a63f1a49e55050ebde3aecc9eb82f93239"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-linux-x64-python",
+      "name": "python-linux-x64",
+      "versionInfo": "3.13.18",
+      "downloadLocation": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "df15fe60d3ff55bf9dcf25824b5572756bb8816ff93865a273d3301d7066a8b7"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-linux-x64-java",
+      "name": "java-linux-x64",
+      "versionInfo": "21.0.13.0.3+5",
+      "downloadLocation": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-linux-amd64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "f6bac5c836223d91525360bfbb2e422b39f8fcebedafbc1adda27945934926da"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-linux-x64-go",
+      "name": "go-linux-x64",
+      "versionInfo": "1.27.3",
+      "downloadLocation": "https://go.dev/dl/go1.27.3.linux-amd64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-linux-x64-dotnet",
+      "name": "dotnet-linux-x64",
+      "versionInfo": "8.0.427",
+      "downloadLocation": "https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.427/dotnet-sdk-8.0.427-linux-x64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "85725692f465f5024b9b42a159a29d9f73e8c57ad9e8bfe1e7028a505d18031d68931e8aa3f9de44145b08170dde897c8a78e1aa18d4219698b6891af7095d39"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-linux-x64-node",
+      "name": "node-linux-x64",
+      "versionInfo": "22.23.4",
+      "downloadLocation": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-x64.tar.xz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "1805bcd35e6815559bd2eb97db438d3fdb0eb3a5e6a977b7c1badca76337e9ce"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-x64-zig",
+      "name": "zig-macos-x64",
+      "versionInfo": "0.15.2",
+      "downloadLocation": "https://ziglang.org/download/0.15.2/zig-x86_64-macos-0.15.2.tar.xz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "375b6909fc1495d16fc2c7db9538f707456bfc3373b14ee83fdd3e22b3d43f7f"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-x64-python",
+      "name": "python-macos-x64",
+      "versionInfo": "3.13.18",
+      "downloadLocation": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-apple-darwin-install_only_stripped.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7412c19d896c99431b74a18a5643e110449a7f9590fbab179c3e5ab27b9aa9e3"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-x64-java",
+      "name": "java-macos-x64",
+      "versionInfo": "21.0.13.0.3+5",
+      "downloadLocation": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-macos-amd64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "825262a8dbca3ba924049d0f2ae3e246c9dc7da4202427c9a3afda60ecaf845d"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-x64-go",
+      "name": "go-macos-x64",
+      "versionInfo": "1.27.3",
+      "downloadLocation": "https://go.dev/dl/go1.27.3.darwin-amd64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b6f8e931e4ab497fcde6da8ae4499a58f9d258e55c8a80824a516eae5950a750"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-x64-dotnet",
+      "name": "dotnet-macos-x64",
+      "versionInfo": "8.0.427",
+      "downloadLocation": "https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.427/dotnet-sdk-8.0.427-osx-x64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "a6c6d0a3708b15e20285f4f662195b6fd276e3df2fc91c0a38f30681ff8a23d5e322ada8a92e9b410343449eab635d01b30a4f55aeef6f884651a559cce07707"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-x64-node",
+      "name": "node-macos-x64",
+      "versionInfo": "22.23.4",
+      "downloadLocation": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-darwin-x64.tar.xz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "f42abca7aaac61efc57d49fb42ea84fc53bbeba9a749cb03a291ce6e4e7a69c1"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-arm64-zig",
+      "name": "zig-macos-arm64",
+      "versionInfo": "0.15.2",
+      "downloadLocation": "https://ziglang.org/download/0.15.2/zig-aarch64-macos-0.15.2.tar.xz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3cc2bab367e185cdfb27501c4b30b1b0653c28d9f73df8dc91488e66ece5fa6b"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-arm64-python",
+      "name": "python-macos-arm64",
+      "versionInfo": "3.13.18",
+      "downloadLocation": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-aarch64-apple-darwin-install_only_stripped.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "8392b6ea51d94391befb2c31ebe75463f045d0b69dfcf5e1bb3234e1f5fa3405"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-arm64-java",
+      "name": "java-macos-arm64",
+      "versionInfo": "21.0.13.0.3+5",
+      "downloadLocation": "https://github.com/bell-sw/Liberica/releases/download/21.0.13.0.3%2B5/bellsoft-jdk21.0.13.0.3%2B5-macos-aarch64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "27fcb378f14ce717d050e7a2347fd16b5c50f6e21c74b18758698a737e384e8e"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-arm64-go",
+      "name": "go-macos-arm64",
+      "versionInfo": "1.27.3",
+      "downloadLocation": "https://go.dev/dl/go1.27.3.darwin-arm64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "dd3908cf20959d798c1e06ebe5b72213f0505ce01373b40ce3110975a6cd99c2"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-arm64-dotnet",
+      "name": "dotnet-macos-arm64",
+      "versionInfo": "8.0.427",
+      "downloadLocation": "https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.427/dotnet-sdk-8.0.427-osx-arm64.tar.gz",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "79786b93f249d233b15f1d6338d4798bd71c8143f267c5e84de76c9eb8a1054920e56ea5478f7bddfb74b951cc58aaca11fbd780cf134350b7cb7cdcb42a8c8c"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-desktop-macos-arm64-node",
+      "name": "node-macos-arm64",
+      "versionInfo": "22.23.4",
+      "downloadLocation": "https://nodejs.org/dist/v22.23.4/node-v22.23.4-darwin-arm64.tar.xz",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "037650d0839f457747396f052073fb48333d31bf5abd3c98b74da20d89ebb1ad"
+        }
+      ],
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",

@@ -10,10 +10,16 @@ import 'package:window_manager/window_manager.dart';
 import 'core/course.dart';
 import 'core/sound.dart';
 import 'core/store.dart';
+import 'core/desktop_diagnostics.dart';
 import 'ui/shell.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final diagnosticReport =
+      Platform.environment['DEVCAT_VERIFY_RUNTIMES_REPORT'];
+  if (diagnosticReport != null && !Platform.isAndroid) {
+    exit(await verifyPackagedDesktop(diagnosticReport) ? 0 : 1);
+  }
   LicenseRegistry.addLicense(() async* {
     for (final name in ['Nunito', 'JetBrainsMono']) {
       yield LicenseEntryWithLineBreaks([

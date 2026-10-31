@@ -42,7 +42,9 @@ assert run['conclusion'] == 'success' and run['head_sha'] == manifest['build_com
 subprocess.run(['git', 'diff', '--exit-code', manifest['build_commit'], 'HEAD', '--',
                 'apps/devcat_flutter', 'content', 'third_party',
                 'scripts/build_android_proot.sh', 'scripts/build_android_rootfs.py',
-                'scripts/android_runtime_versions.json'], check=True)
+                'scripts/android_runtime_versions.json', 'scripts/desktop_runtime_versions.json',
+                'scripts/bundle_desktop_runtimes.py', 'scripts/finish_desktop_bundle.py',
+                'scripts/desktop_package_checksums.py', 'scripts/verify_packaged_desktop.py'], check=True)
 expected_android = {f'DevCat-{version}-android-{abi}.apk' for abi in
                     (['universal', 'arm64-v8a', 'armeabi-v7a', 'x86_64'] if manifest['version'] == 1 else ['universal'] if manifest['version'] == 4 else ['arm64-v8a', 'armeabi-v7a', 'x86_64'])}
 if manifest['version'] == 1:

@@ -54,22 +54,55 @@ jobs:
           - os: macos-15
             target: macos
     runs-on: ${{ matrix.os }}
+    env:
+      PYTHONUTF8: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/flutter
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Bundle verified portable compilers and interpreters
+        shell: bash
+        run: |
+          case "${{ matrix.target }}" in
+            windows) platforms="--platform windows-x64" ;;
+            linux) platforms="--platform linux-x64" ;;
+            macos) platforms="--platform macos-x64 --platform macos-arm64" ;;
+          esac
+          python scripts/bundle_desktop_runtimes.py $platforms --output build/desktop-runtime
+      - name: Verify bundled tools and the real curriculum without system SDK lookup
+        working-directory: apps/devcat_flutter
+        shell: bash
+        env:
+          DEVCAT_REQUIRE_BUNDLED: 'true'
+          DEVCAT_ISOLATE_TOOLS: 'true'
+          DEVCAT_REQUIRE_ALL_TOOLCHAINS: 'true'
+        run: |
+          export DEVCAT_RUNTIME_DIR="$GITHUB_WORKSPACE/build/desktop-runtime"
+          flutter pub get --enforce-lockfile
+          flutter test test/desktop_runtime_test.dart test/curriculum_test.dart --reporter expanded --concurrency=1
       - if: matrix.target == 'linux'
-        run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev libunwind-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-good rpm zstd
+        run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev libunwind-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-good rpm zstd xvfb xauth libicu70 libssl3
       - working-directory: apps/devcat_flutter
         run: flutter pub get --enforce-lockfile
       - working-directory: apps/devcat_flutter
-        run: flutter build ${{ matrix.target }} --release
+        run: flutter build ${{ matrix.target }} --release --dart-define=DEVCAT_BUNDLED_DESKTOP=true
+      - name: Include the verified runtimes and audit the final desktop bundle
+        shell: bash
+        run: python scripts/finish_desktop_bundle.py ${{ matrix.target }}
+      - if: matrix.target == 'macos'
+        run: codesign --force --deep --sign - apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app
+      - name: Run all eight languages through the packaged app
+        shell: bash
+        run: python scripts/verify_packaged_desktop.py ${{ matrix.target }}
       - if: matrix.target == 'linux'
-        run: scripts/package_linux.sh 0.6.0
+        run: scripts/package_linux.sh 0.7.0
       - if: matrix.target == 'windows'
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force dist
-          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.6.0-windows-x64.zip
+          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.7.0-windows-x64.zip
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" scripts/windows.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - if: matrix.target == 'macos'
@@ -77,14 +110,23 @@ jobs:
           mkdir -p dist
           app=apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app
           codesign --force --deep --sign - "$app"
-          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.6.0-macos-universal.zip
+          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.7.0-macos-universal.zip
           mkdir -p /tmp/devcat-dmg
-          ditto "$app" /tmp/devcat-dmg/DevCat.app
+          cp -cR "$app" /tmp/devcat-dmg/DevCat.app || ditto "$app" /tmp/devcat-dmg/DevCat.app
           ln -s /Applications /tmp/devcat-dmg/Applications
-          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.6.0-macos-universal.dmg
+          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.7.0-macos-universal.dmg
+      - name: Record exact package checksums
+        shell: bash
+        run: python scripts/desktop_package_checksums.py ${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: devcat-desktop-proof-${{ matrix.target }}
+          path: build/desktop-proof-${{ matrix.target }}.json
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: devcat-${{ matrix.target }}
+          compression-level: 0
           path: |
             dist/*.tar.gz
             dist/*.deb
@@ -185,7 +227,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           flutter pub get --enforce-lockfile
-          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=5007
+          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=5008
       - run: |
           mkdir -p dist/android-build-inputs
           mv apps/devcat_flutter/build/app/outputs/flutter-apk/app-release.apk dist/android-build-inputs/

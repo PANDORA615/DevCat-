@@ -7,7 +7,7 @@ app=root/'apps/devcat_flutter'
 config=json.loads((app/'.dart_tool/package_config.json').read_text())
 lock=(app/'pubspec.lock').read_text()
 versions={m[0]:m[1] for m in re.findall(r'^  ([a-zA-Z_0-9]+):\n(?:(?:    .*|      .*)\n)*?    version: "([^"]+)"',lock,re.M)}
-notices=['# Third-party license notices\n\nActual LICENSE files from the locked Flutter/Dart dependencies. Desktop toolchains are supplied by the user. Android runtimes are bundled; their original license texts follow the Flutter/Dart notices.\n']
+notices=['# Third-party license notices\n\nActual LICENSE files from the locked Flutter/Dart dependencies. Desktop and Android toolchains are bundled; their original license texts follow the Flutter/Dart notices.\n']
 packages=[]
 for pkg in config['packages']:
  if pkg['name']=='devcat':continue
@@ -21,5 +21,11 @@ for font in ['Nunito', 'JetBrainsMono']:
  text=(app/'assets/fonts'/f'{font}-OFL.txt').read_text()
  notices.append(f'\n## {font} font — SIL Open Font License\n\n```text\n{text}\n```\n')
 notices.append('\n' + (root/'docs/ANDROID_RUNTIME_NOTICES.md').read_text())
+desktop=json.loads((root/'scripts/desktop_runtime_versions.json').read_text())
+notices.append('\n## Bundled desktop runtimes\n\nZig/Clang, CPython, .NET SDK, Liberica JDK, Node.js and Go are included in the desktop packages. Original upstream license and legal files remain under runtime/<platform>/<component>. Exact versions, archive URLs and checksums are recorded in scripts/desktop_runtime_versions.json and the installed runtime/manifest.json. Corresponding OpenJDK sources are included with the release.\n')
+for platform, components in desktop['platforms'].items():
+ for name, item in components.items():
+  algorithm='sha512' if 'sha512' in item else 'sha256'
+  packages.append({'SPDXID':f'SPDXRef-desktop-{platform}-{name}','name':f'{name}-{platform}','versionInfo':item['version'],'downloadLocation':item['url'],'checksums':[{'algorithm':algorithm.upper(),'checksumValue':item[algorithm]}],'filesAnalyzed':False,'licenseConcluded':'NOASSERTION','licenseDeclared':'NOASSERTION','copyrightText':'NOASSERTION'})
 (root/'docs/THIRD_PARTY_NOTICES.md').write_text(''.join(notices))
-(root/'docs/SBOM.spdx.json').write_text(json.dumps({'spdxVersion':'SPDX-2.3','dataLicense':'CC0-1.0','SPDXID':'SPDXRef-DOCUMENT','name':'DevCat-0.6.0','documentNamespace':'https://github.com/PANDORA615/DevCat-/sbom/0.6.0','creationInfo':{'creators':['Tool: DevCat license_inventory.py'],'created':'2026-10-30T00:00:00Z'},'packages':packages},indent=2)+'\n')
+(root/'docs/SBOM.spdx.json').write_text(json.dumps({'spdxVersion':'SPDX-2.3','dataLicense':'CC0-1.0','SPDXID':'SPDXRef-DOCUMENT','name':'DevCat-0.7.0','documentNamespace':'https://github.com/PANDORA615/DevCat-/sbom/0.7.0','creationInfo':{'creators':['Tool: DevCat license_inventory.py'],'created':'2026-11-01T00:00:00Z'},'packages':packages},indent=2)+'\n')

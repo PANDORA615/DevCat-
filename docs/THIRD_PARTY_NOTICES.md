@@ -1,6 +1,6 @@
 # Third-party license notices
 
-Actual LICENSE files from the locked Flutter/Dart dependencies. Desktop toolchains are supplied by the user. Android runtimes are bundled; their original license texts follow the Flutter/Dart notices.
+Actual LICENSE files from the locked Flutter/Dart dependencies. Desktop and Android toolchains are bundled; their original license texts follow the Flutter/Dart notices.
 
 ## args 2.7.0
 
@@ -65909,3 +65909,7 @@ License: Zlib
  the FAQ for more information on the distribution of modified source versions.
 
 ```
+
+## Bundled desktop runtimes
+
+Zig/Clang, CPython, .NET SDK, Liberica JDK, Node.js and Go are included in the desktop packages. Original upstream license and legal files remain under runtime/<platform>/<component>. Exact versions, archive URLs and checksums are recorded in scripts/desktop_runtime_versions.json and the installed runtime/manifest.json. Corresponding OpenJDK sources are included with the release.

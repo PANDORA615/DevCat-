@@ -9,6 +9,7 @@ import 'package:sqlite3/sqlite3.dart';
 import 'course.dart';
 import 'project.dart';
 import 'android_runtime.dart';
+import 'desktop_runtime.dart';
 
 class RunResult {
   final String output, error;
@@ -45,7 +46,14 @@ class LocalRunner {
   }
 
   Future<RunResult?> _ready() async {
-    if (!Platform.isAndroid) return null;
+    if (!Platform.isAndroid) {
+      try {
+        DesktopRuntime.root;
+        return null;
+      } catch (e) {
+        return RunResult('', 'Не удалось открыть встроенные среды: $e', 127);
+      }
+    }
     try {
       await AndroidRuntime.ensureInstalled();
       return _cancelled ? const RunResult('', 'Отменено', 130) : null;
@@ -68,17 +76,21 @@ class LocalRunner {
     if (_cancelled) return const RunResult('', 'Отменено', 130);
     Process proc;
     try {
+      final command = Platform.isAndroid
+          ? null
+          : DesktopRuntime.command(executable, args, cwd: cwd);
       proc = Platform.isAndroid
           ? await AndroidRuntime.start(executable, args, cwd: cwd)
           : await Process.start(
-              executable,
-              args,
+              command!.executable,
+              command.args,
               workingDirectory: cwd,
               environment: {
                 'DOTNET_CLI_TELEMETRY_OPTOUT': '1',
                 'GOTOOLCHAIN': 'local',
                 'GOPROXY': 'off',
                 'GOSUMDB': 'off',
+                ...command.environment,
               },
             );
     } catch (e) {
@@ -86,7 +98,7 @@ class LocalRunner {
         '',
         Platform.isAndroid
             ? 'Не удалось подготовить локальную среду Android: $e'
-            : 'Не удалось запустить $executable. Установи toolchain и добавь его в PATH; перезапусти DevCat.',
+            : 'Не удалось запустить среду $executable: $e',
         127,
       );
     }
@@ -164,11 +176,13 @@ class LocalRunner {
           }
           continue;
         }
-        final result = await Process.run(
+        final result = await process(
           exe,
           p.basenameWithoutExtension(exe) == 'go' ? ['version'] : ['--version'],
-        ).timeout(const Duration(seconds: 15));
-        if (result.exitCode == 0) return exe;
+          cwd: Directory.systemTemp.path,
+          timeout: const Duration(seconds: 15),
+        );
+        if (result.ok) return exe;
       } catch (_) {
         /* Try the next official toolchain. */
       }
@@ -183,7 +197,8 @@ class LocalRunner {
     if (!supported) return result;
     final unavailable = await _ready();
     if (unavailable != null) {
-      result['Среды Android'] = unavailable.error;
+      result[Platform.isAndroid ? 'Среды Android' : 'Встроенные среды'] =
+          unavailable.error;
       return result;
     }
     for (final entry in <String, List<String>>{
@@ -201,7 +216,9 @@ class LocalRunner {
       if (Platform.isAndroid && entry.key == 'Git') continue;
       final exe = await _find(entry.value);
       if (exe == null) {
-        result[entry.key] = 'Не установлен / отсутствует в PATH';
+        result[entry.key] = DesktopRuntime.root != null && entry.key != 'Git'
+            ? 'Встроенная среда недоступна. Переустанови полную версию DevCat.'
+            : 'Не установлен / отсутствует в PATH';
         continue;
       }
       if (Platform.isAndroid) {
@@ -219,11 +236,13 @@ class LocalRunner {
         }
         continue;
       }
-      final r = await Process.run(
+      final r = await process(
         exe,
         p.basenameWithoutExtension(exe) == 'go' ? ['version'] : ['--version'],
+        cwd: Directory.systemTemp.path,
+        timeout: const Duration(seconds: 15),
       );
-      result[entry.key] = '${r.stdout}${r.stderr}'.trim().split('\n').first;
+      result[entry.key] = '${r.output}${r.error}'.trim().split('\n').first;
     }
     return result;
   }
@@ -246,7 +265,13 @@ class LocalRunner {
         exe,
         args,
         cwd: dir.path,
-        timeout: Duration(seconds: Platform.isAndroid ? 120 : 45),
+        timeout: Duration(
+          seconds: Platform.isAndroid
+              ? 120
+              : DesktopRuntime.root != null
+              ? 180
+              : 45,
+        ),
       );
       return (command: command, error: r.ok ? null : r);
     }
@@ -270,7 +295,7 @@ class LocalRunner {
             command: <String>[],
             error: const RunResult(
               '',
-              'Установи Clang или GCC и добавь в PATH.',
+              'Не удалось открыть компилятор C/C++. Переустанови полную версию DevCat со встроенными средами.',
               127,
             ),
           );

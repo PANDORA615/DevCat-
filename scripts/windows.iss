@@ -1,4 +1,4 @@
-#define AppVersion "0.6.0"
+#define AppVersion "0.7.0"
 [Setup]
 AppId={{655B3A52-8BFC-45F6-A4DD-54F88CF7064F}
 AppName=DevCat
@@ -14,6 +14,8 @@ SolidCompression=yes
 WizardStyle=modern
 SetupIconFile=..\apps\devcat_flutter\windows\runner\resources\app_icon.ico
 UninstallDisplayIcon={app}\devcat.exe
+[InstallDelete]
+Type: filesandordirs; Name: "{app}\runtime"
 [Files]
 Source: "..\apps\devcat_flutter\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 [Icons]
