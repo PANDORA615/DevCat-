@@ -482,7 +482,15 @@ namespace DevCat.Internal {
         final output = p.join(buildDirectory.path, 'out');
         return compiled(
           'dotnet',
-          ['build', csproj, '-o', output, '--nologo'],
+          [
+            'build',
+            csproj,
+            '-o',
+            output,
+            '--nologo',
+            '--disable-build-servers',
+            '-p:UseSharedCompilation=false',
+          ],
           ['dotnet', p.join(output, 'App.dll')],
         );
       case 'python':

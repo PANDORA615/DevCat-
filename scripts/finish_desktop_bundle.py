@@ -18,7 +18,12 @@ metadata = json.loads((source / 'manifest.json').read_text())
 assert metadata['schema'] == 1 and len(metadata['platforms']) == (2 if target == 'macos' else 1)
 destination = bundle / 'runtime'
 assert not destination.exists()
-shutil.move(str(source), destination)
+if target == 'windows':
+    # A test process or antivirus may briefly hold an SDK DLL open. Reading
+    # the verified files is safe; deleting or renaming the source is unnecessary.
+    shutil.copytree(source, destination, symlinks=True)
+else:
+    shutil.move(str(source), destination)
 if target == 'windows':
     # App-local Microsoft runtime: the Flutter app itself must launch on a PC
     # without Visual Studio or a separately installed VC++ redistributable.
