@@ -16,19 +16,18 @@ class SilentVoice extends SoftSounds {
   }
 }
 
-Widget harness(SilentVoice sounds, {bool reducedMotion = false}) =>
-    MaterialApp(
-      home: MediaQuery(
-        data: MediaQueryData(disableAnimations: reducedMotion),
-        child: Scaffold(
-          body: CompanionBar(
-            sounds: sounds,
-            autoTalk: false,
-            conversation: const CompanionContext(CompanionPlace.practice),
-          ),
-        ),
+Widget harness(SilentVoice sounds, {bool reducedMotion = false}) => MaterialApp(
+  home: MediaQuery(
+    data: MediaQueryData(disableAnimations: reducedMotion),
+    child: Scaffold(
+      body: CompanionBar(
+        sounds: sounds,
+        autoTalk: false,
+        conversation: const CompanionContext(CompanionPlace.practice),
       ),
-    );
+    ),
+  ),
+);
 
 void main() {
   testWidgets('visible dialogue can be skipped without leaving speech active', (
