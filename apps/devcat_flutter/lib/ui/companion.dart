@@ -62,10 +62,7 @@ class _CompanionBarState extends State<CompanionBar>
     if (history.length > 30) history.removeAt(0);
     speech = speak ? line.text : null;
     reveal = speak
-        ? MascotTextReveal(
-            line.text,
-            correlationId: '${++speechSequence}',
-          )
+        ? MascotTextReveal(line.text, correlationId: '${++speechSequence}')
         : null;
     if (!speak) return;
     widget.sounds.speak(line.mood); // Existing legacy single syllable.
