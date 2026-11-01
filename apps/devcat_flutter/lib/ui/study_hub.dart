@@ -532,7 +532,7 @@ class _StudyHubState extends State<StudyHub> {
                 return Center(
                   child: SizedBox(
                     width: 480,
-                    child: _PathNode(
+                    child: LessonPathNode(
                       topic: topic,
                       levels: level,
                       unlocked: unlocked,
@@ -550,12 +550,13 @@ class _StudyHubState extends State<StudyHub> {
   );
 }
 
-class _PathNode extends StatelessWidget {
+class LessonPathNode extends StatelessWidget {
   final StudyTopic topic;
   final int levels;
   final bool unlocked, active;
   final VoidCallback onTap;
-  const _PathNode({
+  const LessonPathNode({
+    super.key,
     required this.topic,
     required this.levels,
     required this.unlocked,
@@ -577,6 +578,11 @@ class _PathNode extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, box) {
             final dx = offset(topic.index) * min(1, box.maxWidth / 430);
+            final nodeCenter = box.maxWidth / 2 + dx;
+            final labelWidth = min(
+              260.0,
+              2.0 * min(nodeCenter, box.maxWidth - nodeCenter),
+            );
             return Stack(
               clipBehavior: Clip.none,
               children: [
@@ -594,15 +600,17 @@ class _PathNode extends StatelessWidget {
                 ),
                 Positioned(
                   top: 19,
-                  left: box.maxWidth / 2 + dx - 46,
+                  left: nodeCenter - 46,
                   child: SizedBox(
                     width: 92,
                     height: 92,
                     child: Stack(
                       alignment: Alignment.center,
+                      clipBehavior: Clip.none,
                       children: [
                         if (active || levels > 0)
                           SizedBox(
+                            key: ValueKey('lesson-node:${topic.id}:ring'),
                             width: 90,
                             height: 90,
                             child: CircularProgressIndicator(
@@ -613,17 +621,12 @@ class _PathNode extends StatelessWidget {
                             ),
                           ),
                         Container(
+                          key: ValueKey('lesson-node:${topic.id}:disk'),
                           width: 73,
                           height: 73,
                           decoration: BoxDecoration(
                             color: color,
                             shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.lerp(color, Colors.black, .22)!,
-                                offset: const Offset(0, 7),
-                              ),
-                            ],
                           ),
                           child: Material(
                             color: Colors.transparent,
@@ -637,6 +640,7 @@ class _PathNode extends StatelessWidget {
                                     ? Icons.check_rounded
                                     : Icons.star_rounded,
                                 size: 37,
+                                key: ValueKey('lesson-node:${topic.id}:icon'),
                                 color: unlocked
                                     ? scheme.onPrimary
                                     : scheme.onSurfaceVariant,
@@ -646,7 +650,7 @@ class _PathNode extends StatelessWidget {
                         ),
                         if (active)
                           Positioned(
-                            top: 0,
+                            top: -20,
                             child: DecoratedBox(
                               decoration: BoxDecoration(
                                 color: scheme.surface,
@@ -678,8 +682,8 @@ class _PathNode extends StatelessWidget {
                 ),
                 Positioned(
                   top: 120,
-                  left: max(0, box.maxWidth / 2 + dx - 130),
-                  right: max(0, box.maxWidth / 2 - dx - 130),
+                  left: nodeCenter - labelWidth / 2,
+                  width: labelWidth,
                   child: GestureDetector(
                     onTap: onTap,
                     child: ColoredBox(
@@ -726,12 +730,13 @@ class _PathLine extends CustomPainter {
       ..moveTo(center + previous, 0)
       ..cubicTo(
         center + previous,
-        24,
+        8,
         center + current,
-        30,
+        12,
         center + current,
-        65,
+        20,
       )
+      ..moveTo(center + current, 110)
       ..lineTo(center + current, size.height);
     final paint = Paint()
       ..color = color

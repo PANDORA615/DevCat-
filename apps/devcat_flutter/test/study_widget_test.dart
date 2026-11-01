@@ -70,6 +70,62 @@ void main() {
     'rounds': [unitData()],
   });
 
+  for (final width in [320.0, 390.0, 480.0]) {
+    for (final scale in [1.0, 1.25, 1.5, 2.0]) {
+      testWidgets(
+        'Path ring, disk and icon share a center at $width / $scale',
+        (tester) async {
+          tester.view.physicalSize = Size(width * scale, 600 * scale);
+          tester.view.devicePixelRatio = scale;
+          addTearDown(tester.view.resetPhysicalSize);
+          addTearDown(tester.view.resetDevicePixelRatio);
+          for (final index in [0, 2, 6]) {
+            final nodeTopic = StudyTopic({
+              'id': 'path-test-$index',
+              'course': 'python',
+              'title': 'Очень длинное название темы для проверки подписи узла',
+              'chapter': 'С нуля',
+              'index': index,
+              'rounds': [unitData()],
+            });
+            await tester.pumpWidget(
+              MaterialApp(
+                home: Scaffold(
+                  body: Align(
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      width: width,
+                      child: LessonPathNode(
+                        topic: nodeTopic,
+                        levels: 1,
+                        unlocked: true,
+                        active: true,
+                        onTap: () {},
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+            final prefix = 'lesson-node:${nodeTopic.id}:';
+            final ring = tester.getCenter(
+              find.byKey(ValueKey('${prefix}ring')),
+            );
+            final disk = tester.getCenter(
+              find.byKey(ValueKey('${prefix}disk')),
+            );
+            final icon = tester.getCenter(
+              find.byKey(ValueKey('${prefix}icon')),
+            );
+            expect((ring - disk).distance, lessThanOrEqualTo(.5));
+            expect((ring - icon).distance, lessThanOrEqualTo(.5));
+            expect(tester.takeException(), isNull);
+          }
+        },
+      );
+    }
+  }
+
   for (final size in [
     const Size(1280, 900),
     const Size(390, 844),
