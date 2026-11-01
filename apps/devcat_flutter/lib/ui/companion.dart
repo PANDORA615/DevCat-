@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../core/cat_chatter.dart';
+import '../core/mascot_speech.dart';
 import '../core/sound.dart';
 import 'widgets.dart';
 import '../core/course.dart';
@@ -38,6 +39,9 @@ class _CompanionBarState extends State<CompanionBar>
   Timer? timer;
   bool foreground = true;
   String? speech;
+  MascotTextReveal? reveal;
+  Timer? revealTimer;
+  int speechSequence = 0;
 
   @override
   void initState() {
@@ -51,11 +55,45 @@ class _CompanionBarState extends State<CompanionBar>
   }
 
   void _next({bool speak = true}) {
+    revealTimer?.cancel();
+    reveal?.cancel();
     line = deck.next(widget.conversation);
     history.add(line);
     if (history.length > 30) history.removeAt(0);
     speech = speak ? line.text : null;
-    if (speak) widget.sounds.speak(line.mood);
+    reveal = speak
+        ? MascotTextReveal(
+            line.text,
+            correlationId: '${++speechSequence}',
+          )
+        : null;
+    if (!speak) return;
+    widget.sounds.speak(line.mood); // Existing legacy single syllable.
+    final current = reveal!;
+    revealTimer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
+      if (!mounted || !identical(reveal, current)) {
+        timer.cancel();
+        return;
+      }
+      if (!foreground || !(ModalRoute.of(context)?.isCurrent ?? true)) {
+        timer.cancel();
+        setState(current.skip);
+        widget.sounds.stopVoice();
+        return;
+      }
+      setState(() => current.advance(const Duration(milliseconds: 40)));
+      if (current.complete) {
+        timer.cancel();
+        revealTimer = null;
+      }
+    });
+  }
+
+  void _skipSpeech() {
+    revealTimer?.cancel();
+    revealTimer = null;
+    reveal?.skip();
+    widget.sounds.stopVoice();
   }
 
   void _schedule() {
@@ -75,6 +113,7 @@ class _CompanionBarState extends State<CompanionBar>
   void didUpdateWidget(CompanionBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.conversation.key != widget.conversation.key) {
+      _skipSpeech();
       _next(speak: false);
     }
     if (oldWidget.autoTalk != widget.autoTalk ||
@@ -88,18 +127,23 @@ class _CompanionBarState extends State<CompanionBar>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     foreground = state == AppLifecycleState.resumed;
     _schedule();
-    if (!foreground) widget.sounds.stopVoice();
+    if (!foreground) {
+      setState(_skipSpeech);
+    }
   }
 
   @override
   void dispose() {
     timer?.cancel();
+    revealTimer?.cancel();
+    reveal?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     widget.sounds.stopVoice();
     super.dispose();
   }
 
   void _history() {
+    setState(_skipSpeech);
     final messages = history.reversed.toList();
     showDialog<void>(
       context: context,
@@ -130,6 +174,12 @@ class _CompanionBarState extends State<CompanionBar>
   @override
   Widget build(BuildContext context) {
     final reduce = MediaQuery.of(context).disableAnimations;
+    if (reduce && reveal != null && !reveal!.complete) {
+      revealTimer?.cancel();
+      revealTimer = null;
+      reveal!.skip();
+    }
+    final visibleText = reveal?.visibleText ?? line.text;
     final style = Theme.of(context).textTheme.bodyMedium!;
     final lineHeight =
         MediaQuery.textScalerOf(context).scale(style.fontSize ?? 14) *
@@ -147,6 +197,7 @@ class _CompanionBarState extends State<CompanionBar>
               size: widget.compact ? 36 : 62,
               mood: line.mood,
               speech: speech,
+              speaking: !reduce && (reveal?.mouthActive ?? false),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -174,7 +225,7 @@ class _CompanionBarState extends State<CompanionBar>
                             key: ValueKey(line.text),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              line.text,
+                              visibleText,
                               style: style,
                               maxLines: widget.compact ? 1 : 2,
                               overflow: TextOverflow.ellipsis,
@@ -203,6 +254,12 @@ class _CompanionBarState extends State<CompanionBar>
                     ),
                   ),
                 ),
+              ),
+            if (reveal != null && !reveal!.complete)
+              IconButton(
+                tooltip: 'Показать реплику целиком',
+                onPressed: () => setState(_skipSpeech),
+                icon: const Icon(Icons.fast_forward_rounded),
               ),
             IconButton(
               tooltip: 'Ещё реплика',
