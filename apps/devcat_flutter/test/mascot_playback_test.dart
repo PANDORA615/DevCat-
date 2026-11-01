@@ -11,7 +11,10 @@ MascotClip clip(
   id: name,
   frames: [
     for (var i = 0; i < ms.length; i++)
-      MascotFrame('animations/student/$name/${i.toString().padLeft(3, '0')}.png', ms[i]),
+      MascotFrame(
+        'animations/student/$name/${i.toString().padLeft(3, '0')}.png',
+        ms[i],
+      ),
   ],
   loop: loop,
   next: next,
@@ -21,8 +24,18 @@ MascotClip clip(
 MascotCatalog approvedCatalog() => MascotCatalog({
   'student': {
     'idle': clip('idle', [100, 150], loop: true, priority: 10),
-    'talk': clip('talk', [100, 90, 110, 90, 110, 100, 100, 100], loop: true, priority: 70),
-    'jump': clip('jump', [90, 80, 100, 130, 100, 80], next: 'land', priority: 45),
+    'talk': clip(
+      'talk',
+      [100, 90, 110, 90, 110, 100, 100, 100],
+      loop: true,
+      priority: 70,
+    ),
+    'jump': clip(
+      'jump',
+      [90, 80, 100, 130, 100, 80],
+      next: 'land',
+      priority: 45,
+    ),
     'land': clip('land', [80, 90, 110, 120], priority: 45),
     'error': clip('error', [140, 180, 200, 140], priority: 90),
   },
@@ -39,7 +52,10 @@ MascotCatalog approvedCatalog() => MascotCatalog({
 
 void main() {
   test('per-frame elapsed time handles irregular advances and looping', () {
-    final p = MascotPlaybackController(approvedCatalog(), appearance: 'student');
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
     expect(p.state, 'idle');
     expect(p.frameIndex, 0);
     p.advance(const Duration(milliseconds: 99));
@@ -60,7 +76,10 @@ void main() {
   });
 
   test('jump always finishes through land before idle', () {
-    final p = MascotPlaybackController(approvedCatalog(), appearance: 'student');
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
     expect(p.play('jump'), isTrue);
     expect(p.play('idle'), isFalse);
     p.advance(const Duration(milliseconds: 580));
@@ -71,7 +90,10 @@ void main() {
   });
 
   test('speech start, loop, end follow frames 0-2, 2-6, 6-7', () {
-    final p = MascotPlaybackController(approvedCatalog(), appearance: 'student');
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
     expect(p.startSpeech(correlationId: 'new'), isTrue);
     expect(p.frameIndex, 0);
     p.advance(const Duration(milliseconds: 100));
@@ -95,7 +117,10 @@ void main() {
   });
 
   test('old completion cannot cancel a newer dialogue', () {
-    final p = MascotPlaybackController(approvedCatalog(), appearance: 'student');
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
     p.startSpeech(correlationId: 'first');
     p.startSpeech(correlationId: 'second');
     p.cancel(correlationId: 'first');
@@ -107,7 +132,10 @@ void main() {
   });
 
   test('high priority result interrupts speech and deduplicates result', () {
-    final p = MascotPlaybackController(approvedCatalog(), appearance: 'student');
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
     p.startSpeech(correlationId: 'text');
     expect(p.play('jump'), isFalse);
     expect(p.play('error', correlationId: 'compile-1'), isTrue);
@@ -121,7 +149,10 @@ void main() {
   });
 
   test('missing costume clips never switch the appearance to student', () {
-    final p = MascotPlaybackController(approvedCatalog(), appearance: 'student');
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
     p.setAppearance('pirate');
     expect(p.state, 'idle');
     expect(p.asset, 'animations/pirate/idle/000.png');
@@ -180,7 +211,10 @@ void main() {
   });
 
   test('disposed player rejects subsequent operations', () {
-    final p = MascotPlaybackController(approvedCatalog(), appearance: 'student');
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
     p.dispose();
     expect(p.isDisposed, true);
     expect(() => p.advance(const Duration(milliseconds: 1)), throwsStateError);
