@@ -8,11 +8,15 @@ class CatActor extends StatefulWidget {
   final double size;
   final CatMood mood;
   final String? speech;
+  /// When supplied, the caller owns visible-character timing and cancellation.
+  /// Null preserves legacy timed behaviour for older call sites.
+  final bool? speaking;
   const CatActor({
     super.key,
     required this.size,
     this.mood = CatMood.greeting,
     this.speech,
+    this.speaking,
   });
   @override
   State<CatActor> createState() => _CatActorState();
@@ -50,15 +54,21 @@ class _CatActorState extends State<CatActor>
   @override
   void didUpdateWidget(CatActor old) {
     super.didUpdateWidget(old);
-    if (old.speech != widget.speech) _talk();
+    if (old.speech != widget.speech || old.speaking != widget.speaking) {
+      _talk();
+    }
   }
 
   void _talk() {
     stop?.cancel();
     animation.stop();
-    if (widget.speech == null || MediaQuery.of(context).disableAnimations) {
+    animation.value = 0;
+    if (MediaQuery.of(context).disableAnimations) return;
+    if (widget.speaking != null) {
+      if (widget.speaking!) animation.repeat(reverse: true);
       return;
     }
+    if (widget.speech == null) return;
     animation.repeat(reverse: true);
     stop = Timer(
       Duration(milliseconds: (widget.speech!.length * 35).clamp(1600, 6500)),
