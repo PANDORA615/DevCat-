@@ -1,4 +1,7 @@
 #define AppVersion "0.7.0"
+#ifndef BundleDir
+  #define BundleDir "..\apps\devcat_flutter\build\windows\x64\runner\Release"
+#endif
 [Setup]
 AppId={{655B3A52-8BFC-45F6-A4DD-54F88CF7064F}
 AppName=DevCat
@@ -17,7 +20,7 @@ UninstallDisplayIcon={app}\devcat.exe
 [InstallDelete]
 Type: filesandordirs; Name: "{app}\runtime"
 [Files]
-Source: "..\apps\devcat_flutter\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#BundleDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 [Icons]
 Name: "{group}\DevCat"; Filename: "{app}\devcat.exe"
 Name: "{autodesktop}\DevCat"; Filename: "{app}\devcat.exe"; Tasks: desktopicon

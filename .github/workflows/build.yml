@@ -112,8 +112,13 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force dist
-          Compress-Archive -Path apps/devcat_flutter/build/windows/x64/runner/Release/* -DestinationPath dist/DevCat-0.7.0-windows-x64.zip
-          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" scripts/windows.iss
+          # Inno enumerates some .NET SDK paths through MAX_PATH APIs.
+          # A short junction avoids changing or omitting any bundled files.
+          $bundle = (Resolve-Path apps/devcat_flutter/build/windows/x64/runner/Release).Path
+          $shortBundle = Join-Path $env:RUNNER_TEMP 'dc'
+          New-Item -ItemType Junction -Path $shortBundle -Target $bundle
+          Compress-Archive -Path "$shortBundle/*" -DestinationPath dist/DevCat-0.7.0-windows-x64.zip
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DBundleDir=$shortBundle" scripts/windows.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - if: matrix.target == 'macos'
         run: |

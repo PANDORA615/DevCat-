@@ -7,7 +7,10 @@ bundle="$root/apps/devcat_flutter/build/linux/x64/release/bundle"
 dist="$root/dist"
 stage="$dist/linux-root"
 mkdir -p "$stage/usr/lib/devcat" "$stage/usr/bin" "$stage/usr/share/applications" "$stage/usr/share/icons/hicolor/512x512/apps" "$stage/usr/share/licenses/devcat"
-cp -a "$bundle/." "$stage/usr/lib/devcat/"
+cp -al "$bundle/." "$stage/usr/lib/devcat/"
+# Packaging may remove staging directories. Keep SDK files unchanged while
+# making only these independent directory inodes writable to the builder.
+find "$stage/usr/lib/devcat/runtime" -type d -exec chmod u+w {} +
 cp "$root/LICENSE" "$stage/usr/share/licenses/devcat/LICENSE"
 cp "$root/packages/cat_assets/devcat.png" "$stage/usr/share/icons/hicolor/512x512/apps/devcat.png"
 cat > "$stage/usr/bin/devcat" <<'LAUNCH'
@@ -27,7 +30,7 @@ Categories=Development;Education;
 StartupWMClass=dev.devcat.devcat
 DESKTOP
 mkdir -p "$dist/DevCat-$version-linux-$arch"
-cp -a "$bundle/." "$dist/DevCat-$version-linux-$arch/"
+cp -al "$bundle/." "$dist/DevCat-$version-linux-$arch/"
 cp "$root/LICENSE" "$dist/DevCat-$version-linux-$arch/"
 tar -C "$dist" -czf "$dist/DevCat-$version-linux-$arch.tar.gz" "DevCat-$version-linux-$arch"
 mkdir -p "$stage/DEBIAN"
@@ -56,11 +59,15 @@ URL: https://github.com/PANDORA615/DevCat-
 BuildArch: x86_64
 Requires: gtk3, libsecret, gstreamer1, gstreamer1-plugins-base, gstreamer1-plugins-good
 AutoReqProv: no
+%global debug_package %{nil}
+# SDK archives are already built and verified; RPM must not strip or rewrite
+# compiler binaries, Go object fixtures or bundled shared libraries.
+%global __os_install_post %{nil}
 %description
 Introductory programming lessons and local code practice.
 %install
 mkdir -p %{buildroot}
-cp -a "$stage/usr" %{buildroot}/
+cp -al "$stage/usr" %{buildroot}/
 %files
 /usr/bin/devcat
 /usr/lib/devcat
@@ -76,7 +83,7 @@ rpmbuild --define "_topdir $rpmdir" -bb "$rpmdir/SPECS/devcat.spec"
 cp "$rpmdir/RPMS/x86_64/"*.rpm "$dist/DevCat-$version-linux-opensuse-x86_64.rpm"
 archroot="$dist/arch-root"
 mkdir -p "$archroot"
-cp -a "$stage/usr" "$archroot/"
+cp -al "$stage/usr" "$archroot/"
 cat > "$archroot/.PKGINFO" <<PKG
 pkgname = devcat
 pkgbase = devcat
@@ -97,7 +104,7 @@ PKG
 tar --zstd --owner=0 --group=0 -C "$archroot" -cf "$dist/DevCat-$version-linux-x86_64.pkg.tar.zst" .PKGINFO usr
 appdir="$dist/DevCat.AppDir"
 mkdir -p "$appdir/usr/lib"
-cp -a "$stage/usr/lib/devcat" "$appdir/usr/lib/"
+cp -al "$stage/usr/lib/devcat" "$appdir/usr/lib/"
 cp "$stage/usr/share/applications/dev.devcat.DevCat.desktop" "$appdir/devcat.desktop"
 cp "$root/packages/cat_assets/devcat.png" "$appdir/devcat.png"
 cat > "$appdir/AppRun" <<'APPRUN'
