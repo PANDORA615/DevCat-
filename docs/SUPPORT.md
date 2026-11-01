@@ -33,25 +33,26 @@
 ## ОС и пакеты
 
 - Linux x86_64: Ubuntu 22.04+, Debian 12+, актуальные Fedora/openSUSE/Arch с glibc ≥ 2.35. `deb`, `rpm`, Arch `pkg.tar.zst`, `AppImage`, `tar.gz`. GTK 3, libsecret и GStreamer — зависимости ОС, в том числе для AppImage; musl/Alpine и ARM Linux не заявлены.
-- Windows x64: Windows 10/11, portable ZIP и setup EXE. Для Flutter и плагинов может понадобиться Microsoft Visual C++ Redistributable 2015–2022 x64. Authenticode не настроен.
+- Windows x64: Windows 10/11, portable ZIP и setup EXE. Необходимые Flutter и плагинам библиотеки Microsoft Visual C++ включены рядом с приложением. Отдельная установка Redistributable не требуется. Authenticode не настроен.
 - macOS: сборка Flutter Release, DMG и ZIP; архитектуры подтверждаются `lipo` в проверке релиза. Developer ID / notarization не настроены, поэтому Gatekeeper может потребовать ручное открытие через системные настройки.
 - Android: один универсальный APK arm64-v8a + armeabi-v7a + x86_64 со всеми средами. Распаковывается только соответствующий устройству образ. AAB в 0.7.0 не распространяется. Минимум Android 7.0 (API 24), target API 36 для текущего Flutter. Магазин Google Play не настроен.
 
 Сборка пакета не доказывает проверку на реальном устройстве. Фактические результаты: [VALIDATION.md](VALIDATION.md).
 
-## Toolchain
+## Комплектные среды ПК
 
-| Язык | Требование |
+| Язык | Входит в приложение |
 |---|---|
-| C / C++ | Clang или GCC в PATH, C17 / C++20 |
-| C# | .NET 8 SDK, а не только runtime |
-| Python | CPython 3.10+ в PATH |
-| Java | JDK 21 с `java` и `javac` в PATH |
-| JavaScript | Node.js LTS |
-| Go | Go 1.22+ в PATH, без скачивания модулей |
-| Git | Git 2 в PATH |
+| C / C++ | Zig 0.15.2 с Clang, заголовками и стандартными библиотеками; C17 / C++20 |
+| C# | Полный .NET 8 SDK |
+| Python | Автономный CPython 3.13 |
+| Java | JDK 21, включая `java` и `javac` |
+| JavaScript | Node.js 22 LTS |
+| Go | Go с локальной стандартной библиотекой |
+| SQL | SQLite внутри приложения |
+| Git | Для отдельной командной лаборатории требуется Git 2 в PATH |
 
-На Android компиляторы включены в APK, работают без сервера и однократно распаковываются при первом запуске. Точные версии и ограничения: [ANDROID_RUNTIME.md](ANDROID_RUNTIME.md). Desktop-компиляторы устанавливаются пользователем. C# собирает только локальный проект без NuGet-источников. Go использует `GOPROXY=off`, `GOTOOLCHAIN=local`. Перед запуском локального кода пользователь даёт согласие. Это процесс с его правами, не sandbox. Не запускайте сторонний код как недоверенные серверные задания.
+На Android компиляторы включены в APK, работают без сервера и однократно распаковываются при первом запуске. Точные версии и ограничения: [ANDROID_RUNTIME.md](ANDROID_RUNTIME.md). На ПК среды находятся в каталоге приложения: DevCat использует абсолютные пути без ручной настройки PATH и загрузок после установки. Версии и SHA архивов зафиксированы в `scripts/desktop_runtime_versions.json`. C# собирает только локальный проект без NuGet-источников. Go использует `GOPROXY=off`, `GOTOOLCHAIN=local`. Перед запуском локального кода пользователь даёт согласие. Это процесс с его правами, не sandbox. Не запускайте сторонний код как недоверенные серверные задания.
 
 ## Учебный маршрут 0.5
 

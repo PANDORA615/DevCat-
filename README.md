@@ -52,6 +52,8 @@ HTML/CSS-практика открывает файлы именно выбра�
 
 [Релиз 0.7.0](https://github.com/PANDORA615/DevCat-/releases/tag/v0.7.0) содержит пакеты и `SHA256SUMS`.
 
+[Установщик Windows x64 со встроенными средами](https://github.com/PANDORA615/DevCat-/releases/download/v0.7.0/DevCat-0.7.0-windows-x64-setup.exe). Для учебных C/C++, C#, Python, Java, JavaScript и Go отдельные SDK и настройка PATH не нужны.
+
 | Платформа | Пакеты |
 |---|---|
 | Ubuntu / Debian / Mint / Pop!_OS, x86_64 | DEB |
@@ -62,11 +64,11 @@ HTML/CSS-практика открывает файлы именно выбра�
 | macOS, Intel и Apple Silicon | universal DMG / ZIP |
 | Android 7+, ARM64 / ARMv7 / x86_64 | **один универсальный APK** |
 
-**Один универсальный APK со всеми средами внутри.** Все среды внутри, дополнительных загрузок не требуется. SHA-256 опубликован в релизе и `SHA256SUMS`.
+**Один универсальный APK со всеми средами внутри (1.37 ГиБ).** Все среды внутри, дополнительных загрузок не требуется. SHA-256 опубликован в релизе и `SHA256SUMS`.
 
 Android APK содержит все три архитектурных пакета с локальными средствами исполнения; распаковывается только подходящий устройству. Из SDK удалены необязательные исходники Java и инструменты, которые учебная среда не использует; компиляторы и стандартные библиотеки сохранены. Нужны место для APK, установки и примерно 1,2–1,6 ГБ для среды сверх установленного приложения. Подпись постоянная; versionCode 5008 выше старых split APK, обновление сохраняет данные. AAB и отдельные ABI APK в этом выпуске не распространяются.
 
-Linux требует GTK 3, libsecret и GStreamer, включая AppImage. На Ubuntu: `sudo apt install libgtk-3-0 libsecret-1-0 libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-plugins-good`. AppImage без FUSE запускается с `--appimage-extract-and-run`. Windows может требовать официальный Visual C++ Redistributable 2015–2022 x64. Authenticode и Apple Developer ID/notarization не настроены. [Матрица поддержки](docs/SUPPORT.md).
+Linux требует GTK 3, libsecret и GStreamer, включая AppImage. На Ubuntu: `sudo apt install libgtk-3-0 libsecret-1-0 libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-plugins-good`. AppImage без FUSE запускается с `--appimage-extract-and-run`. Windows-пакет включает необходимые библиотеки Visual C++; отдельная установка Redistributable не требуется. Authenticode и Apple Developer ID/notarization не настроены. [Матрица поддержки](docs/SUPPORT.md).
 
 ## Продолжить на другом устройстве
 
