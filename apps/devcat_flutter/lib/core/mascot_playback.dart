@@ -318,8 +318,9 @@ class MascotPlaybackController {
     _speechPhase = MascotSpeechPhase.none;
     _endSpeechRequested = false;
     _correlationId = null;
-    if (_clip == null)
+    if (_clip == null) {
       diagnostics.add('Missing approved idle for $_appearance');
+    }
   }
 
   void _assertActive() {
