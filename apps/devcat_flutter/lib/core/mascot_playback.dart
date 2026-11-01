@@ -20,7 +20,11 @@ class MascotClip {
   }) : frames = List.unmodifiable(frames) {
     if (frames.isEmpty ||
         frames.any((frame) => frame.durationMs <= 0 || frame.asset.isEmpty)) {
-      throw ArgumentError.value(frames, 'frames', 'All frames need a path and positive duration');
+      throw ArgumentError.value(
+        frames,
+        'frames',
+        'All frames need a path and positive duration',
+      );
     }
   }
 
@@ -35,10 +39,10 @@ class MascotClip {
 /// The review archive's productionReady=false frames are never loaded here.
 class MascotCatalog {
   MascotCatalog(Map<String, Map<String, MascotClip>> clips)
-      : _clips = {
-          for (final appearance in clips.entries)
-            appearance.key: Map.unmodifiable(appearance.value),
-        };
+    : _clips = {
+        for (final appearance in clips.entries)
+          appearance.key: Map.unmodifiable(appearance.value),
+      };
 
   final Map<String, Map<String, MascotClip>> _clips;
 
@@ -109,7 +113,7 @@ enum MascotSpeechPhase { none, start, loop, end }
 /// cadence; [stopSpeech] must be called when typing ends or is skipped.
 class MascotPlaybackController {
   MascotPlaybackController(this.catalog, {required String appearance})
-      : _appearance = appearance {
+    : _appearance = appearance {
     _returnToIdle();
   }
 
@@ -284,7 +288,9 @@ class MascotPlaybackController {
       } else {
         final nextClip = catalog.getClip(_appearance, next);
         if (nextClip == null || nextClip.id == clip.id) {
-          diagnostics.add('Missing next $next for $_appearance after ${clip.id}');
+          diagnostics.add(
+            'Missing next $next for $_appearance after ${clip.id}',
+          );
           _returnToIdle();
         } else {
           _begin(nextClip, _correlationId);
@@ -309,7 +315,8 @@ class MascotPlaybackController {
     _speechPhase = MascotSpeechPhase.none;
     _endSpeechRequested = false;
     _correlationId = null;
-    if (_clip == null) diagnostics.add('Missing approved idle for $_appearance');
+    if (_clip == null)
+      diagnostics.add('Missing approved idle for $_appearance');
   }
 
   void _assertActive() {
