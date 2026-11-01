@@ -82,11 +82,25 @@ void main() {
     );
     expect(p.play('jump'), isTrue);
     expect(p.play('idle'), isFalse);
+    expect(p.startSpeech(correlationId: 'during-jump'), isFalse);
     p.advance(const Duration(milliseconds: 580));
     expect(p.state, 'land');
     expect(p.frameIndex, 0);
     p.advance(const Duration(milliseconds: 400));
     expect(p.state, 'idle');
+  });
+
+  test('critical error can abort movement while ordinary talk cannot', () {
+    final p = MascotPlaybackController(
+      approvedCatalog(),
+      appearance: 'student',
+    );
+    expect(p.play('jump'), isTrue);
+    p.advance(const Duration(milliseconds: 90));
+    expect(p.startSpeech(correlationId: 'non-critical'), isFalse);
+    expect(p.play('error', correlationId: 'critical'), isTrue);
+    expect(p.state, 'error');
+    expect(p.frameIndex, 0);
   });
 
   test('speech start, loop, end follow frames 0-2, 2-6, 6-7', () {
