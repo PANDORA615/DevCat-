@@ -159,11 +159,7 @@ class MascotPlaybackController {
       _returnToIdle();
       return false;
     }
-    if (_clip != null &&
-        _clip!.id != 'idle' &&
-        clip.priority < _clip!.priority) {
-      return false;
-    }
+    if (!_mayInterrupt(clip)) return false;
     if (_clip?.id == state && _correlationId == correlationId) {
       return true; // Deduplicate repeated results/events.
     }
@@ -179,11 +175,7 @@ class MascotPlaybackController {
       _returnToIdle();
       return false;
     }
-    if (_clip != null &&
-        _clip!.id != 'idle' &&
-        clip.priority < _clip!.priority) {
-      return false;
-    }
+    if (!_mayInterrupt(clip)) return false;
     if (_speechPhase != MascotSpeechPhase.none &&
         _correlationId == correlationId) {
       return true;
@@ -248,6 +240,17 @@ class MascotPlaybackController {
     _clip = null;
     _correlationId = null;
     _disposed = true;
+  }
+
+  bool _mayInterrupt(MascotClip incoming) {
+    final active = _clip;
+    if (active == null || active.id == 'idle') return true;
+    // A moving cat must land before a non-critical event replaces the pose.
+    if ((active.id == 'jump' || active.id == 'land') &&
+        incoming.priority < 80) {
+      return false;
+    }
+    return incoming.priority >= active.priority;
   }
 
   void _nextFrame() {
