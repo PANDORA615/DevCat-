@@ -153,15 +153,17 @@ class CatPortrait extends StatelessWidget {
   final double size;
   final CatMood mood;
   final String? speech;
+  final bool? speaking;
   const CatPortrait({
     super.key,
     this.size = 150,
     this.mood = CatMood.greeting,
     this.speech,
+    this.speaking,
   });
   @override
   Widget build(BuildContext context) =>
-      CatActor(size: size, mood: mood, speech: speech);
+      CatActor(size: size, mood: mood, speech: speech, speaking: speaking);
 }
 
 class CatMessage extends StatefulWidget {
