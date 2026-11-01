@@ -81,7 +81,7 @@ void main() {
     p.advance(const Duration(milliseconds: 110));
     expect(p.speechPhase, MascotSpeechPhase.loop);
     expect(p.frameIndex, 2);
-    p.advance(const Duration(milliseconds: 90 + 110 + 90 + 110 + 100));
+    p.advance(const Duration(milliseconds: 110 + 90 + 110 + 100 + 100));
     expect(p.frameIndex, 2);
     p.stopSpeech(correlationId: 'old');
     expect(p.speechPhase, MascotSpeechPhase.loop);
