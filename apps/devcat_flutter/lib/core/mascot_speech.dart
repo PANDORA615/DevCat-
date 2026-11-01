@@ -35,9 +35,7 @@ class MascotTextReveal {
     _pendingMs += elapsed.inMilliseconds;
     while (_visible < _characters.length) {
       final next = _characters[_visible];
-      final duration = _isPause(next)
-          ? pauseDurationMs
-          : characterDurationMs;
+      final duration = _isPause(next) ? pauseDurationMs : characterDurationMs;
       if (_pendingMs < duration) break;
       _pendingMs -= duration;
       _visible++;
@@ -60,8 +58,16 @@ class MascotTextReveal {
   static bool _isPause(int rune) {
     if (rune <= 32) return true;
     return const {
-      0x0021, 0x002C, 0x002D, 0x002E, 0x003A, 0x003B, 0x003F,
-      0x2013, 0x2014, 0x2026,
+      0x0021,
+      0x002C,
+      0x002D,
+      0x002E,
+      0x003A,
+      0x003B,
+      0x003F,
+      0x2013,
+      0x2014,
+      0x2026,
     }.contains(rune);
   }
 }
