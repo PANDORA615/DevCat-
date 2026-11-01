@@ -8,6 +8,7 @@ class CatActor extends StatefulWidget {
   final double size;
   final CatMood mood;
   final String? speech;
+
   /// When supplied, the caller owns visible-character timing and cancellation.
   /// Null preserves legacy timed behaviour for older call sites.
   final bool? speaking;
