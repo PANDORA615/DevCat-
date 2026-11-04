@@ -1654,6 +1654,16 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-windows-vc143-runtime",
+      "name": "Microsoft Visual C++ 2022 app-local runtime (VC143)",
+      "downloadLocation": "https://learn.microsoft.com/en-us/cpp/windows/redistributing-visual-cpp-files?view=msvc-170",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Microsoft Corporation",
+      "comment": "Windows app-local DLLs from the official Visual Studio 2022 VC/Redist/MSVC x64/Microsoft.VC143.CRT directory on the build runner. Original binaries and embedded copyright information are preserved."
     }
   ]
 }

@@ -147,6 +147,7 @@ class _TutorPageState extends State<TutorPage> {
                               messages[i]['text']!,
                               key: ValueKey(messages.length),
                               mood: CatMood.explaining,
+                              reserveSpace: false,
                             )
                           : SelectableText(
                               '${messages[i]['role']}\n\n${messages[i]['text']}',

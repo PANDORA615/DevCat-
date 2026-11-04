@@ -121,4 +121,40 @@ void main() {
       await voice.dispose();
     },
   );
+  testWidgets(
+    'Long tutor replies grow from visible text instead of reserving an empty page',
+    (tester) async {
+      final voice = VoiceLog()..enabled = false;
+      final key = GlobalKey();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: 300,
+                child: CatDialogue(
+                  List.filled(
+                    30,
+                    'Разберём программу по одному маленькому шагу.',
+                  ).join(' '),
+                  key: key,
+                  sounds: voice,
+                  reserveSpace: false,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      final initial = tester.getSize(find.byKey(key)).height;
+      expect(initial, lessThan(100));
+      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(milliseconds: 200));
+      expect(tester.getSize(find.byKey(key)).height, greaterThan(initial));
+      expect(tester.getSize(find.byKey(key)).height, lessThan(600));
+      await tester.pumpWidget(const SizedBox());
+      await voice.dispose();
+    },
+  );
 }

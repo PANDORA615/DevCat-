@@ -10,7 +10,7 @@ class CatDialogue extends StatefulWidget {
   final SoftSounds? sounds;
   final double size;
   final int? maxLines;
-  final bool instant, showSkip;
+  final bool instant, showSkip, reserveSpace;
   final TextStyle? style;
   const CatDialogue(
     this.text, {
@@ -21,6 +21,7 @@ class CatDialogue extends StatefulWidget {
     this.maxLines,
     this.instant = false,
     this.showSkip = true,
+    this.reserveSpace = true,
     this.style,
   });
   @override
@@ -130,29 +131,47 @@ class _CatDialogueState extends State<CatDialogue> with WidgetsBindingObserver {
             liveRegion: true,
             label: widget.text,
             excludeSemantics: true,
-            child: Stack(
-              children: [
-                Opacity(
-                  opacity: 0,
-                  child: Text(
-                    widget.text,
-                    maxLines: widget.maxLines,
-                    overflow: widget.maxLines == null
-                        ? null
-                        : TextOverflow.ellipsis,
-                    style: widget.style,
+            child: widget.reserveSpace
+                ? Stack(
+                    children: [
+                      Opacity(
+                        opacity: 0,
+                        child: Text(
+                          widget.text,
+                          maxLines: widget.maxLines,
+                          overflow: widget.maxLines == null
+                              ? null
+                              : TextOverflow.ellipsis,
+                          style: widget.style,
+                        ),
+                      ),
+                      Text(
+                        timeline.text,
+                        maxLines: widget.maxLines,
+                        overflow: widget.maxLines == null
+                            ? null
+                            : TextOverflow.ellipsis,
+                        style: widget.style,
+                      ),
+                    ],
+                  )
+                : AnimatedSize(
+                    duration: Duration(
+                      milliseconds: MediaQuery.disableAnimationsOf(context)
+                          ? 0
+                          : 140,
+                    ),
+                    alignment: Alignment.topLeft,
+                    curve: Curves.easeOut,
+                    child: Text(
+                      timeline.text,
+                      maxLines: widget.maxLines,
+                      overflow: widget.maxLines == null
+                          ? null
+                          : TextOverflow.ellipsis,
+                      style: widget.style,
+                    ),
                   ),
-                ),
-                Text(
-                  timeline.text,
-                  maxLines: widget.maxLines,
-                  overflow: widget.maxLines == null
-                      ? null
-                      : TextOverflow.ellipsis,
-                  style: widget.style,
-                ),
-              ],
-            ),
           ),
         ),
         if (widget.showSkip)
