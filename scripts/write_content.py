@@ -122,7 +122,7 @@ def main():
     from study_path import write as write_study
     write_study(courses+[git])
     used_images={s['image'] for c in courses+[git] for l in c['lessons'] for s in l['sections'] if s.get('image')}
-    for image in (ROOT/'apps/devcat_flutter/assets/content').glob('steps-*.png'):
+    for image in [*(ROOT/'apps/devcat_flutter/assets/content').glob('steps-*.png'), *(ROOT/'apps/devcat_flutter/assets/content').glob('diagram-*.png')]:
         if image.name not in used_images:
             image.unlink()
     export(courses+[git])

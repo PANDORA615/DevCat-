@@ -46,9 +46,12 @@ class StudyPathContracts(unittest.TestCase):
             if lesson.get('runnableExample') or lesson.get('challenge'):
                 self.assertEqual(len(coding), 1, topic['id'])
             for step in coding:
-                if step['mode'] == 'example':
-                    self.assertEqual(step['code'].replace('___', step['answer'], 1),
-                                     lesson['runnableExample']['code'], topic['id'])
+                if step['mode'] == 'program':
+                    self.assertTrue(step['tests'], topic['id'])
+                    self.assertTrue(step['solution'], topic['id'])
+                    self.assertNotEqual(step['starter'], step['solution'], topic['id'])
+                    self.assertNotIn('___', step['solution'], topic['id'])
+
                 else:
                     if lesson['challenge']['language'] == 'sql':
                         # SQL labs are compared with their reference query on
@@ -99,6 +102,28 @@ class StudyPathContracts(unittest.TestCase):
                             self.assertTrue(set(step['options']) <= allowed, step['id'])
         first = next(t for t in self.catalog['topics'] if t['course'] == 'python')
         self.assertNotIn('контекстному менеджеру', json.dumps(first, ensure_ascii=False))
+
+    def test_every_topic_has_its_own_illustration_and_new_practice_is_explicit(self):
+        seen = {}
+        modifications = []
+        manual = []
+        for topic in self.catalog['topics']:
+            images = [s['image'] for r in topic['rounds'] for s in r['steps'] if s.get('image')]
+            self.assertEqual(len(images), 1, topic['id'])
+            course_images = seen.setdefault(topic['course'], set())
+            self.assertNotIn(images[0], course_images, topic['id'])
+            course_images.add(images[0])
+            for round_ in topic['rounds']:
+                for step in round_['steps']:
+                    if step.get('task') == 'modify':
+                        modifications.append(step)
+                    if step['kind'] == 'lab':
+                        manual.append(step)
+                        self.assertEqual(topic['course'] in ('html', 'css', 'git'), True)
+                        self.assertTrue(step['checklist'])
+                        self.assertIn('самостоятельную', step['why'])
+        self.assertEqual(len(modifications), 56)
+        self.assertEqual(len(manual), 136)
 
 
 if __name__ == '__main__':

@@ -66,6 +66,8 @@ def png(title,boxes):
  return name
 
 def enrich(course):
+ from lesson_diagrams import diagram
+ seen_images=set()
  for lesson in course['lessons']:
   parts=lesson['id'].split('.');slug=parts[1] if len(parts)>1 else ''
   if course.get('teachingRevision',0)<1 and slug in GLOSSARY and '.zero.' not in lesson['id']:
@@ -87,5 +89,12 @@ def enrich(course):
   # A meaningful visual for non-code topics shows the actual stated assignment.
   if not any(s.get('image') for s in enriched):
    enriched.append({'heading':'Карта самостоятельного опыта','text':lesson['assignment'],'image':png(lesson['title'],[lesson['title'],lesson['assignment']]),'imageCaption':'Схема условия самостоятельного опыта.'})
+  specific=diagram(lesson,course['id'])
+  if specific:enriched.insert(2,specific)
+  for item in enriched:
+   image=item.get('image')
+   if image in seen_images:
+    item.pop('image',None);item.pop('imageCaption',None)
+   elif image:seen_images.add(image)
   lesson['sections']=enriched;lesson['theory']='\n\n'.join(s.get('text','') for s in enriched);lesson['readingWords']=len(lesson['theory'].split())
  return course

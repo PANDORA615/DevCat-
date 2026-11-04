@@ -1,0 +1,17 @@
+{
+  "evolution/beginner": "a6eac627-ffa9-46e0-9285-36a6e798d474",
+  "evolution/student": "8965346a-49cd-4a41-9bd1-dae0932415e0",
+  "evolution/developer": "86032305-9154-40ac-b40d-73cebeda0aac",
+  "evolution/middle": "f25b70ba-5a29-4533-ba3e-7d66652f2544",
+  "evolution/senior": "b9049da4-99bd-41b3-925a-9aa8937d3825",
+  "evolution/architect": "b6bbc3fe-a9cb-471f-89b1-ce97e1190eb4",
+  "costumes/space": "f5c70802-789d-4c57-bf23-08db68855848",
+  "costumes/hacker": "9530ba9c-fd15-4333-bc1c-56a4d5e4ab8f",
+  "costumes/samurai": "e9de684e-dbf0-45cd-8789-4e936fe648af",
+  "costumes/winter": "3ae63ce8-9d41-44dd-b748-99878f96fa64",
+  "costumes/mage": "e5f1db62-d346-428b-8c74-3e1c9876d194",
+  "costumes/engineer": "76c2973c-3090-464e-be83-24fd1e410e2a",
+  "costumes/pirate": "f2ddcc59-9485-4336-8c8e-512bbcc6da57",
+  "costumes/cyberpunk": "bc3aa1a8-133e-4570-b318-88aaccbd7e31",
+  "costumes/scientist": "7b1b93e4-6a42-4519-a619-244ecb59b2c5"
+}

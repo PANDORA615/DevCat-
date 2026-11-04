@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/sound.dart';
 import 'cat_actor.dart';
+import 'cat_dialogue.dart';
 
 /// Maps the original mint background to the theme while preserving black and white.
 /// The asset stays unchanged, so every palette uses the same cat silhouette.
@@ -152,19 +153,19 @@ class StatusBadge extends StatelessWidget {
 class CatPortrait extends StatelessWidget {
   final double size;
   final CatMood mood;
-  final String? speech;
+  final bool? talking;
   const CatPortrait({
     super.key,
     this.size = 150,
     this.mood = CatMood.greeting,
-    this.speech,
+    this.talking,
   });
   @override
   Widget build(BuildContext context) =>
-      CatActor(size: size, mood: mood, speech: speech);
+      CatActor(size: size, mood: mood, talking: talking);
 }
 
-class CatMessage extends StatefulWidget {
+class CatMessage extends StatelessWidget {
   final String text;
   final bool reducedMotion;
   final CatMood mood;
@@ -175,89 +176,9 @@ class CatMessage extends StatefulWidget {
     this.mood = CatMood.explaining,
   });
   @override
-  State<CatMessage> createState() => _CatMessageState();
-}
-
-class _CatMessageState extends State<CatMessage> {
-  bool skip = false;
-  String? _spoken;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _speak();
-  }
-
-  void _speak() {
-    if (_spoken == widget.text) return;
-    _spoken = widget.text;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) SoundScope.of(context)?.speak(widget.mood);
-    });
-  }
-
-  @override
-  void didUpdateWidget(CatMessage old) {
-    super.didUpdateWidget(old);
-    if (old.text != widget.text) {
-      skip = false;
-      _speak();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) => Panel(
     padding: const EdgeInsets.all(18),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CatPortrait(size: 66),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Semantics(
-            liveRegion: true,
-            label: widget.text,
-            excludeSemantics: true,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Кот-наставник',
-                  style: Theme.of(context).textTheme.labelLarge,
-                ),
-                const SizedBox(height: 6),
-                TweenAnimationBuilder<double>(
-                  key: ValueKey('${widget.text}$skip'),
-                  tween: Tween(
-                    begin: skip || widget.reducedMotion ? 1 : 0,
-                    end: 1,
-                  ),
-                  duration: Duration(
-                    milliseconds: skip || widget.reducedMotion
-                        ? 0
-                        : widget.text.length * 20,
-                  ),
-                  builder: (context, value, _) => Text(
-                    widget.text.substring(
-                      0,
-                      (widget.text.length * value).round(),
-                    ),
-                  ),
-                  onEnd: () => skip = true,
-                ),
-              ],
-            ),
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            SoundScope.of(context)?.stopVoice();
-            setState(() => skip = true);
-          },
-          icon: const Icon(Icons.fast_forward_rounded),
-          tooltip: 'Показать реплику целиком',
-        ),
-      ],
-    ),
+    child: CatDialogue(text, mood: mood, instant: reducedMotion),
   );
 }
 

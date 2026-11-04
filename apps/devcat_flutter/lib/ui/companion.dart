@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../core/cat_chatter.dart';
 import '../core/sound.dart';
-import 'widgets.dart';
+import 'cat_dialogue.dart';
 import '../core/course.dart';
 import '../core/store.dart';
 import 'tutor_page.dart';
@@ -55,7 +55,6 @@ class _CompanionBarState extends State<CompanionBar>
     history.add(line);
     if (history.length > 30) history.removeAt(0);
     speech = speak ? line.text : null;
-    if (speak) widget.sounds.speak(line.mood);
   }
 
   void _schedule() {
@@ -95,7 +94,6 @@ class _CompanionBarState extends State<CompanionBar>
   void dispose() {
     timer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
-    widget.sounds.stopVoice();
     super.dispose();
   }
 
@@ -129,11 +127,7 @@ class _CompanionBarState extends State<CompanionBar>
 
   @override
   Widget build(BuildContext context) {
-    final reduce = MediaQuery.of(context).disableAnimations;
     final style = Theme.of(context).textTheme.bodyMedium!;
-    final lineHeight =
-        MediaQuery.textScalerOf(context).scale(style.fontSize ?? 14) *
-        (style.height ?? 1.5);
     return Material(
       color: Theme.of(context).colorScheme.surfaceContainerLow,
       child: Padding(
@@ -143,12 +137,6 @@ class _CompanionBarState extends State<CompanionBar>
         ),
         child: Row(
           children: [
-            CatPortrait(
-              size: widget.compact ? 36 : 62,
-              mood: line.mood,
-              speech: speech,
-            ),
-            const SizedBox(width: 12),
             Expanded(
               child: InkWell(
                 onTap: _history,
@@ -157,32 +145,16 @@ class _CompanionBarState extends State<CompanionBar>
                   label:
                       'Кот-наставник. ${line.text}. Открыть историю разговора',
                   button: true,
-                  excludeSemantics: true,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (!widget.compact)
-                        Text(
-                          'Кот рядом',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      SizedBox(
-                        height: lineHeight * (widget.compact ? 1 : 2),
-                        child: AnimatedSwitcher(
-                          duration: Duration(milliseconds: reduce ? 0 : 240),
-                          child: Align(
-                            key: ValueKey(line.text),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              line.text,
-                              style: style,
-                              maxLines: widget.compact ? 1 : 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: CatDialogue(
+                    line.text,
+                    key: ValueKey(line.text),
+                    mood: line.mood,
+                    sounds: widget.sounds,
+                    size: widget.compact ? 36 : 62,
+                    maxLines: widget.compact ? 1 : 2,
+                    instant: speech == null,
+                    showSkip: false,
+                    style: style,
                   ),
                 ),
               ),

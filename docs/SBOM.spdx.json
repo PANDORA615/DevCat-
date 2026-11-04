@@ -2,13 +2,13 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "DevCat-0.7.0",
-  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.7.0",
+  "name": "DevCat-0.8.0",
+  "documentNamespace": "https://github.com/PANDORA615/DevCat-/sbom/0.8.0",
   "creationInfo": {
     "creators": [
       "Tool: DevCat license_inventory.py"
     ],
-    "created": "2026-11-01T00:00:00Z"
+    "created": "2026-11-04T00:00:00Z"
   },
   "packages": [
     {
@@ -1654,16 +1654,6 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "copyrightText": "NOASSERTION"
-    },
-    {
-      "SPDXID": "SPDXRef-windows-vc143-runtime",
-      "name": "Microsoft Visual C++ 2022 app-local runtime (VC143)",
-      "downloadLocation": "https://learn.microsoft.com/en-us/cpp/windows/redistributing-visual-cpp-files?view=msvc-170",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "copyrightText": "Microsoft Corporation",
-      "comment": "Windows app-local DLLs from the official Visual Studio 2022 VC/Redist/MSVC x64/Microsoft.VC143.CRT directory on the build runner. Original binaries and embedded copyright information are preserved."
     }
   ]
 }

@@ -6,6 +6,7 @@ import '../core/store.dart';
 import '../core/tutor.dart';
 import '../core/sound.dart';
 import 'widgets.dart';
+import 'cat_dialogue.dart';
 
 class TutorPage extends StatefulWidget {
   final List<Course> courses;
@@ -66,9 +67,7 @@ class _TutorPageState extends State<TutorPage> {
       input.clear();
       if (messages.length > 24) messages.removeRange(0, messages.length - 24);
     });
-    SoundScope.of(
-      context,
-    )?.speak(answer.found ? CatMood.explaining : CatMood.thinking);
+
     while (jsonEncode(messages).length > 180000 && messages.length > 2) {
       messages.removeRange(0, 2);
     }
@@ -141,9 +140,17 @@ class _TutorPageState extends State<TutorPage> {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Panel(
                       padding: const EdgeInsets.all(16),
-                      child: SelectableText(
-                        '${messages[i]['role']}\n\n${messages[i]['text']}',
-                      ),
+                      child:
+                          messages[i]['role'] == 'Кот' &&
+                              i == messages.length - 1
+                          ? CatDialogue(
+                              messages[i]['text']!,
+                              key: ValueKey(messages.length),
+                              mood: CatMood.explaining,
+                            )
+                          : SelectableText(
+                              '${messages[i]['role']}\n\n${messages[i]['text']}',
+                            ),
                     ),
                   ),
           ),

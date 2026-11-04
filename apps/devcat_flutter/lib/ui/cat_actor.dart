@@ -1,18 +1,19 @@
-import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../core/sound.dart';
+import '../core/mascot.dart';
+import 'mascot_frames.dart';
 
 class CatActor extends StatefulWidget {
   final double size;
   final CatMood mood;
-  final String? speech;
+  final bool? talking;
   const CatActor({
     super.key,
     required this.size,
     this.mood = CatMood.greeting,
-    this.speech,
+    this.talking,
   });
   @override
   State<CatActor> createState() => _CatActorState();
@@ -22,7 +23,6 @@ class _CatActorState extends State<CatActor>
     with SingleTickerProviderStateMixin {
   static Future<ui.Image>? atlas;
   late final AnimationController animation;
-  Timer? stop;
   @override
   void initState() {
     super.initState();
@@ -50,61 +50,71 @@ class _CatActorState extends State<CatActor>
   @override
   void didUpdateWidget(CatActor old) {
     super.didUpdateWidget(old);
-    if (old.speech != widget.speech) _talk();
+    if (old.talking != widget.talking) _talk();
   }
 
   void _talk() {
-    stop?.cancel();
     animation.stop();
-    if (widget.speech == null || MediaQuery.of(context).disableAnimations) {
+    animation.value = 0;
+    if (widget.talking != true || MediaQuery.disableAnimationsOf(context)) {
       return;
     }
     animation.repeat(reverse: true);
-    stop = Timer(
-      Duration(milliseconds: (widget.speech!.length * 35).clamp(1600, 6500)),
-      () {
-        if (mounted) {
-          animation.stop();
-          animation.value = 0;
-        }
-      },
-    );
   }
 
   @override
   void dispose() {
-    stop?.cancel();
     animation.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => Semantics(
-    label: 'Кот на учебнике: ${widget.mood.name}',
-    image: true,
-    child: SizedBox(
-      width: widget.size,
-      height: widget.size * .85,
-      child: FutureBuilder<ui.Image>(
-        future: atlas,
-        builder: (_, snapshot) => snapshot.hasData
-            ? AnimatedBuilder(
-                animation: animation,
-                builder: (_, _) => CustomPaint(
-                  painter: _CatFrame(
-                    snapshot.data!,
-                    widget.mood,
-                    animation.isAnimating && animation.value > .45,
+  Widget build(BuildContext context) {
+    final appearance = MascotScope.of(context);
+    if (appearance != 'classic') {
+      final state = widget.talking == true
+          ? 'talk'
+          : switch (widget.mood) {
+              CatMood.greeting => 'idle',
+              CatMood.celebration => 'happy',
+              CatMood.explaining => 'explaining',
+              CatMood.thinking => 'thinking',
+              CatMood.warning => 'failure',
+              CatMood.encouragement => 'thoughtful',
+            };
+      return MascotFrames(
+        appearance: appearance,
+        state: state,
+        size: widget.size,
+      );
+    }
+    return Semantics(
+      label: 'Кот на учебнике: ${widget.mood.name}',
+      image: true,
+      child: SizedBox(
+        width: widget.size,
+        height: widget.size * .85,
+        child: FutureBuilder<ui.Image>(
+          future: atlas,
+          builder: (_, snapshot) => snapshot.hasData
+              ? AnimatedBuilder(
+                  animation: animation,
+                  builder: (_, _) => CustomPaint(
+                    painter: _CatFrame(
+                      snapshot.data!,
+                      widget.mood,
+                      animation.isAnimating && animation.value > .12,
+                    ),
                   ),
+                )
+              : Image.asset(
+                  'assets/branding/devcat_book.png',
+                  filterQuality: FilterQuality.none,
                 ),
-              )
-            : Image.asset(
-                'assets/branding/devcat_book.png',
-                filterQuality: FilterQuality.none,
-              ),
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _CatFrame extends CustomPainter {

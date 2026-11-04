@@ -3,6 +3,7 @@ import json, re, hashlib
 from pathlib import Path
 from urllib.parse import urlparse,unquote
 root=Path(__file__).resolve().parents[1]
+version=re.search(r'^version:\s*([^+\s]+)', (root/'apps/devcat_flutter/pubspec.yaml').read_text(),re.M)[1]
 app=root/'apps/devcat_flutter'
 config=json.loads((app/'.dart_tool/package_config.json').read_text())
 lock=(app/'pubspec.lock').read_text()
@@ -28,4 +29,4 @@ for platform, components in desktop['platforms'].items():
   algorithm='sha512' if 'sha512' in item else 'sha256'
   packages.append({'SPDXID':f'SPDXRef-desktop-{platform}-{name}','name':f'{name}-{platform}','versionInfo':item['version'],'downloadLocation':item['url'],'checksums':[{'algorithm':algorithm.upper(),'checksumValue':item[algorithm]}],'filesAnalyzed':False,'licenseConcluded':'NOASSERTION','licenseDeclared':'NOASSERTION','copyrightText':'NOASSERTION'})
 (root/'docs/THIRD_PARTY_NOTICES.md').write_text(''.join(notices))
-(root/'docs/SBOM.spdx.json').write_text(json.dumps({'spdxVersion':'SPDX-2.3','dataLicense':'CC0-1.0','SPDXID':'SPDXRef-DOCUMENT','name':'DevCat-0.7.0','documentNamespace':'https://github.com/PANDORA615/DevCat-/sbom/0.7.0','creationInfo':{'creators':['Tool: DevCat license_inventory.py'],'created':'2026-11-01T00:00:00Z'},'packages':packages},indent=2)+'\n')
+(root/'docs/SBOM.spdx.json').write_text(json.dumps({'spdxVersion':'SPDX-2.3','dataLicense':'CC0-1.0','SPDXID':'SPDXRef-DOCUMENT','name':'DevCat-'+version,'documentNamespace':'https://github.com/PANDORA615/DevCat-/sbom/'+version,'creationInfo':{'creators':['Tool: DevCat license_inventory.py'],'created':'2026-11-04T00:00:00Z'},'packages':packages},indent=2)+'\n')

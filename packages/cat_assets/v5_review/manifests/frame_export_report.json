@@ -1,0 +1,450 @@
+[
+  {
+    "id": "angry",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "blink",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "celebrating",
+    "actualFrames": 8,
+    "requestedFrames": 8,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "error",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "excited",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "explaining",
+    "actualFrames": 6,
+    "requestedFrames": 6,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "failure",
+    "actualFrames": 6,
+    "requestedFrames": 6,
+    "masterSize": [
+      1536,
+      1024
+    ],
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "greeting",
+    "actualFrames": 6,
+    "requestedFrames": 6,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "happy",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "idea",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "idle",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "jump",
+    "actualFrames": 6,
+    "requestedFrames": 6,
+    "masterSize": [
+      1536,
+      1024
+    ],
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "land",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "loading",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "new",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "notification",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "orientations",
+    "actualFrames": 8,
+    "requestedFrames": 8,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "reading",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "run",
+    "actualFrames": 8,
+    "requestedFrames": 8,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "sad",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "shy",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "sleeping",
+    "actualFrames": 6,
+    "requestedFrames": 6,
+    "masterSize": [
+      1536,
+      1024
+    ],
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "sleepy",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "success",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "surprised",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "talk",
+    "actualFrames": 8,
+    "requestedFrames": 8,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "text_typing",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "thinking",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "thoughtful",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "typing",
+    "actualFrames": 6,
+    "requestedFrames": 6,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "waiting",
+    "actualFrames": 4,
+    "requestedFrames": 4,
+    "masterSize": [
+      1329,
+      1183
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  },
+  {
+    "id": "walk",
+    "actualFrames": 8,
+    "requestedFrames": 8,
+    "masterSize": [
+      1774,
+      887
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "status": "review_generated"
+  }
+]

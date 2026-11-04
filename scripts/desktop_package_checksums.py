@@ -1,13 +1,15 @@
 """Attest final native package names, sizes and SHA after bundled-tool tests."""
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
 
 repo = Path(__file__).resolve().parents[1]
 target = sys.argv[1]
-files = sorted(p for p in (repo / 'dist').glob('DevCat-0.7.0-*') if p.is_file())
+version = re.search(r'^version:\s*([^+\s]+)', (repo/'apps/devcat_flutter/pubspec.yaml').read_text(), re.M)[1]
+files = sorted(p for p in (repo / 'dist').glob(f'DevCat-{version}-*') if p.is_file())
 assert len(files) == (6 if target == 'linux' else 2), [p.name for p in files]
 result = {'schema': 1, 'platform': target,
           'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip(),

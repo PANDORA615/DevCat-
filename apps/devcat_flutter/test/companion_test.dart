@@ -7,11 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 class RecordingVoice extends SoftSounds {
   final spoken = <CatMood>[];
+  final tokens = <int>{};
   @override
   bool get voiceBusy => false;
   @override
-  void speak(CatMood mood) {
-    if (enabled && voiceEnabled) spoken.add(mood);
+  void syllable(int token, CatMood mood, {bool question = false}) {
+    if (enabled && voiceEnabled && tokens.add(token)) spoken.add(mood);
   }
 
   @override
@@ -58,8 +59,10 @@ void main() {
       );
       await tester.pumpWidget(app());
       await tester.pump(const Duration(seconds: 20));
+      await tester.pump(const Duration(milliseconds: 150));
       expect(voice.spoken.length, 1);
       await tester.pump(const Duration(seconds: 20));
+      await tester.pump(const Duration(milliseconds: 150));
       expect(voice.spoken.length, 2);
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
       await tester.pump(const Duration(seconds: 60));
@@ -67,16 +70,19 @@ void main() {
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
       voice.voiceEnabled = false;
       await tester.pump(const Duration(seconds: 20));
+      await tester.pump(const Duration(milliseconds: 150));
       expect(voice.spoken.length, 2);
       voice.voiceEnabled = true;
       await tester.pumpWidget(app(seconds: 10));
       await tester.pump(const Duration(seconds: 10));
+      await tester.pump(const Duration(milliseconds: 150));
       expect(voice.spoken.length, 3);
       await tester.pumpWidget(app(automatic: false));
       await tester.pump(const Duration(seconds: 90));
       expect(voice.spoken.length, 3);
       await tester.tap(find.byTooltip('Ещё реплика'));
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
       expect(voice.spoken.length, 4);
       await tester.pumpWidget(const SizedBox.shrink());
     },
@@ -109,6 +115,7 @@ void main() {
       await tester.tap(find.text('Закрыть'));
       await tester.pumpAndSettle();
       await tester.pump(const Duration(seconds: 20));
+      await tester.pump(const Duration(milliseconds: 150));
       expect(voice.spoken.length, 1);
       await tester.pumpWidget(const SizedBox.shrink());
     },

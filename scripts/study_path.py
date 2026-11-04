@@ -12,6 +12,7 @@ import re
 from plain_core import CORE, ZERO_KEYS
 from plain_syntax import FRAMES
 from study_facts import ADVANCED, WEB, SQL, GIT, ALGORITHMS
+from study_programs import first_program_variation, restore_statement
 
 ROOT = Path(__file__).resolve().parents[1]
 NAMES = ['Знакомство', 'Тренировка', 'Самостоятельно']
@@ -273,7 +274,7 @@ def build(courses):
             source = full_code(lesson, lang)
             line, token, syntax = focus(source, lang, term, meaning)
             illustration = next((s for s in lesson['sections'] if s.get('image')
-                                 and not s['image'].startswith('steps-')), lesson['sections'][0])
+                                 and s.get('diagramKind')), next((s for s in reversed(lesson['sections']) if s.get('image')), lesson['sections'][0]))
             rounds = []
             for level, name in enumerate(NAMES):
                 prefix = f'{identifier}.r{level}'
@@ -355,23 +356,28 @@ def build(courses):
                                       prompt='Собери запись из блоков в том же порядке, что в изученном примере.',
                                       pieces=pieces, why=syntax or 'Порядок блоков восстанавливает изученную запись.',
                                       example=line))
+                if level == 1 and example:
+                    program = restore_statement(lesson, lang, line, syntax)
+                    if program:
+                        steps.append(dict(id=f'{prefix}.practice.v2', kind='code', **program))
                 if level == 2 and (challenge or example):
                     if challenge:
-                        steps.append(dict(id=f'{prefix}.code', kind='code', prompt='Теперь напиши решение.',
-                                          mode='challenge', why='Решение должно пройти настоящие тесты на разных входных данных.'))
-                    elif token and line in example['code']:
-                        before, _, after = example['code'].partition(line)
-                        template = before + line.replace(token, '___', 1) + after
-                        assert template.replace('___', token, 1) == example['code']
-                        steps.append(dict(id=f'{prefix}.code', kind='code', prompt='Дополни программу и проверь её запуском.',
-                                          mode='example', code=template, answer=token,
-                                          why=syntax or 'Восстанови изученный фрагмент и проверь результат на приведённых данных.'))
+                        steps.append(dict(id=f'{prefix}.code', kind='code', prompt='Теперь напиши решение.', mode='challenge', why='Решение должно пройти настоящие тесты на разных входных данных.'))
+                    elif example:
+                        program = first_program_variation(lesson, lang) or restore_statement(lesson, lang, line, syntax)
+                        if program:
+                            steps.append(dict(id=f'{prefix}.program.v2', kind='code', **program))
+                if level > 0 and lang in ('html', 'css', 'git'):
+                    steps.append(dict(id=f'{prefix}.lab', kind='lab', prompt='Практика в настоящем редакторе' if lang != 'git' else 'Практика с репозиторием',
+                                      text=lesson['assignment'], answer='observed',
+                                      why='Открой практику, выполни условие и проверь результат по шагам. Эта работа имеет самостоятельную проверку; галочка не является автоматическим тестом.',
+                                      checklist=['Изменил исходники или выполнил действия из условия', 'Открыл результат в браузере или проверил состояние Git', 'Сравнил результат с условием и могу объяснить изменение']))
                 assert any(s['kind'] not in ('learn',) for s in steps), identifier
                 rounds.append(dict(id=f'{identifier}:{level}', level=level, title=name, steps=steps))
             topics.append(dict(id=identifier, course=lang, index=index, title=lesson['title'],
                                chapter=lesson['chapter'], term=term, rounds=rounds))
     assert len(topics) == 516
-    return dict(schema=1, revision=1, topics=topics)
+    return dict(schema=1, revision=2, topics=topics)
 
 
 def write(courses):
