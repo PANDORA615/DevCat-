@@ -27,6 +27,7 @@ class DevCatShell extends StatefulWidget {
 
 class _DevCatShellState extends State<DevCatShell> {
   int page = 1;
+  int navigationDirection = 1;
   bool reading = true;
   late String language;
   int lesson = 0, seed = 0;
@@ -67,6 +68,15 @@ class _DevCatShellState extends State<DevCatShell> {
   }
 
   Course get course => widget.courses.firstWhere((c) => c.id == language);
+  void _navigateTo(int next) {
+    if (next == page) return;
+    widget.sounds.cue(SoundCue.navigation);
+    setState(() {
+      navigationDirection = next > page ? 1 : -1;
+      page = next;
+    });
+  }
+
   void openCourse(String id, {int? index, int? generated}) {
     setState(() {
       if (language != id) {
@@ -76,6 +86,7 @@ class _DevCatShellState extends State<DevCatShell> {
       language = id;
       lesson = index ?? lesson;
       seed = generated ?? seed;
+      if (page != 1) navigationDirection = 1 > page ? 1 : -1;
       page = 1;
       reading = seed == 0;
     });
@@ -151,8 +162,24 @@ class _DevCatShellState extends State<DevCatShell> {
           child: AnimatedSwitcher(
             duration: Duration(milliseconds: reduce ? 0 : 240),
             switchInCurve: Curves.easeOutCubic,
-            transitionBuilder: (child, animation) =>
-                FadeTransition(opacity: animation, child: child),
+            transitionBuilder: (child, animation) {
+              final incoming = child.key == ValueKey(page);
+              final direction = navigationDirection.toDouble();
+              final begin = Offset(
+                (incoming ? direction : -direction) * .08,
+                0,
+              );
+              return FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: begin,
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+              );
+            },
             child: KeyedSubtree(key: ValueKey(page), child: content),
           ),
         ),
@@ -228,38 +255,43 @@ class _DevCatShellState extends State<DevCatShell> {
                       labels.length,
                       (i) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Material(
-                          color: page == i
-                              ? scheme.secondaryContainer
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(30),
-                          child: InkWell(
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: reduce ? 0 : 240),
+                          curve: Curves.easeInOutCubic,
+                          decoration: BoxDecoration(
+                            color: page == i
+                                ? scheme.secondaryContainer
+                                : Colors.transparent,
                             borderRadius: BorderRadius.circular(30),
-                            onTap: () {
-                              widget.sounds.cue(SoundCue.navigation);
-                              setState(() => page = i);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 18,
-                                vertical: 16,
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(icons[i], size: 21),
-                                  const SizedBox(width: 14),
-                                  Expanded(
-                                    child: Text(
-                                      labels[i],
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: page == i
-                                            ? FontWeight.w600
-                                            : FontWeight.w400,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(30),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(30),
+                              onTap: () => _navigateTo(i),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 18,
+                                  vertical: 16,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(icons[i], size: 21),
+                                    const SizedBox(width: 14),
+                                    Expanded(
+                                      child: Text(
+                                        labels[i],
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: page == i
+                                              ? FontWeight.w600
+                                              : FontWeight.w400,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -302,8 +334,7 @@ class _DevCatShellState extends State<DevCatShell> {
                 _ => 4,
               },
               onDestinationSelected: (i) {
-                widget.sounds.cue(SoundCue.navigation);
-                setState(() => page = [0, 1, 3, 5, 6][i]);
+                _navigateTo([0, 1, 3, 5, 6][i]);
               },
               destinations: const [
                 NavigationDestination(
@@ -381,7 +412,7 @@ class _DevCatShellState extends State<DevCatShell> {
                   onPressed: () async {
                     await widget.store.set('language', language);
                     await widget.store.set('onboarded', true);
-                    if (mounted) setState(() => page = 0);
+                    if (mounted) _navigateTo(0);
                   },
                   icon: const Icon(Icons.arrow_forward_rounded),
                   label: const Text('Начать в своём темпе'),
@@ -443,7 +474,7 @@ class _DevCatShellState extends State<DevCatShell> {
                       ),
                       const SizedBox(height: 24),
                       FilledButton.icon(
-                        onPressed: () => setState(() => page = 1),
+                        onPressed: () => _navigateTo(1),
                         icon: const Icon(Icons.play_arrow_rounded),
                         label: const Text('Продолжить обучение'),
                       ),
@@ -508,7 +539,7 @@ class _DevCatShellState extends State<DevCatShell> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             TextButton(
-              onPressed: () => setState(() => page = 4),
+              onPressed: () => _navigateTo(4),
               child: const Text('Справочник'),
             ),
           ],

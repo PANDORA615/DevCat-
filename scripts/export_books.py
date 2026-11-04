@@ -19,8 +19,6 @@ def html_book(course):
     parts.append('</nav>')
     for i,lesson in enumerate(course['lessons'],1):
         parts += [f'<section aria-labelledby="lesson-{i}"><h2 id="lesson-{i}">{i}. {escape(lesson["title"])}</h2>', '<p class="meta">'+escape(lesson['chapter']+' · '+lesson['difficulty'])+'</p>']
-        if i == 1 or course['lessons'][i-2]['chapter'] != lesson['chapter']:
-            parts.append('<figure><img loading=\"lazy\" src=\"assets/'+escape(lesson['photo'],quote=True)+'\" alt=\"Учебная фотография DevCat\"><figcaption><small>'+escape(lesson['photoCaption'])+'</small></figcaption></figure>')
         for section in lesson['sections']:
             parts += ['<h3>'+escape(section['heading'])+'</h3>', paragraphs(section.get('text',''))]
             if section.get('image'):parts.append('<figure><img loading="lazy" src="assets/'+escape(section['image'],quote=True)+'" alt="'+escape(section.get('imageCaption','Пошаговая схема'),quote=True)+'"><figcaption>'+escape(section.get('imageCaption',''))+'</figcaption></figure>')

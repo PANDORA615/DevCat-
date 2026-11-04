@@ -10,6 +10,7 @@ import '../core/sync.dart';
 import 'transfer.dart';
 import 'widgets.dart';
 import 'nearby_page.dart';
+import 'mascot_gallery.dart';
 
 class SettingsPage extends StatefulWidget {
   final AppStore store;
@@ -393,12 +394,27 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _title(context, Icons.music_note_outlined, 'Тихие звуки'),
+              _title(context, Icons.music_note_outlined, 'Кот и тихие звуки'),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.pets_rounded),
+                title: const Text('Образы и анимации кота'),
+                subtitle: const Text(
+                  '15 образов, кадры и 18 звуков · предпросмотр v5',
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        MascotGallery(store: store, sounds: widget.sounds),
+                  ),
+                ),
+              ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Звуки касаний и результатов'),
                 subtitle: const Text(
-                  '14 звуков из твоего архива: отдельные сигналы для навигации, действий, ошибок и результатов',
+                  'Новый Soft8Bit v3: отдельные сигналы для вкладок, открытия, возврата, подсказки и результатов',
                 ),
                 value: store.setting('sound', true),
                 onChanged: (v) => _change('sound', v),
@@ -408,7 +424,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   const Icon(Icons.volume_down_outlined),
                   Expanded(
                     child: Slider(
-                      value: store.setting<num>('volume', .22).toDouble(),
+                      value: store.setting<num>('volume', .15).toDouble(),
                       min: 0,
                       max: 1,
                       onChanged: (v) => _change('volume', v),
@@ -471,9 +487,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               const SizedBox(height: 14),
+              const Text('Громкость достижений'),
+              Slider(
+                value: store.setting<num>('achievementVolume', .15).toDouble(),
+                onChanged: (v) => _change('achievementVolume', v),
+                onChangeEnd: (_) => widget.sounds.cue(SoundCue.achievement),
+              ),
               Text('Громкость голоса'),
               Slider(
-                value: store.setting<num>('voiceVolume', .18).toDouble(),
+                value: store.setting<num>('voiceVolume', .20).toDouble(),
                 min: 0,
                 max: 1,
                 onChanged: (v) => _change('voiceVolume', v),
@@ -481,24 +503,29 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: store.setting('voiceStyle', 'auto'),
+                initialValue:
+                    SoftSounds.voices.containsValue(
+                      store.setting('voiceStyle', 'auto'),
+                    )
+                    ? store.setting('voiceStyle', 'auto')
+                    : 'auto',
                 decoration: const InputDecoration(labelText: 'Характер голоса'),
                 items: [
                   const DropdownMenuItem(
                     value: 'auto',
-                    child: Text('По ситуации · все шесть голосов'),
+                    child: Text('По ситуации · семь мягких вариантов'),
                   ),
                   ...SoftSounds.voices.entries.map(
                     (e) => DropdownMenuItem(
                       value: e.value,
                       child: Text(
                         const {
-                          CatMood.greeting: 'Классический · приветствие',
-                          CatMood.encouragement: 'Мягкий · поддержка',
-                          CatMood.thinking: 'Робот · размышление',
-                          CatMood.warning: 'Низкий · предупреждение',
-                          CatMood.celebration: 'Волшебный · успех',
-                          CatMood.explaining: 'Радио · объяснение',
+                          CatMood.greeting: 'Мягкий слог 1',
+                          CatMood.encouragement: 'Мягкий слог 3',
+                          CatMood.thinking: 'Спокойное размышление',
+                          CatMood.warning: 'Бережная поддержка',
+                          CatMood.celebration: 'Радость',
+                          CatMood.explaining: 'Мягкий слог 2',
                         }[e.key]!,
                       ),
                     ),
@@ -529,6 +556,11 @@ class _SettingsPageState extends State<SettingsPage> {
                             'hint': 'Подсказка',
                             'success': 'Успех',
                             'error': 'Ошибка',
+                            'back': 'Назад',
+                            'close': 'Закрытие',
+                            'achievement': 'Достижение',
+                            'notification': 'Уведомление',
+                            'update': 'Обновление',
                           }[cue.name]!,
                         ),
                       ),

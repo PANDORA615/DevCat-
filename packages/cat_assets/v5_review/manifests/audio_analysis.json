@@ -1,0 +1,128 @@
+[
+  {
+    "file": "cat_voice_concern.wav",
+    "peak": 5950,
+    "peakDbFS": -14.82,
+    "rmsDbFS": -21.77,
+    "clippedSamples": 0
+  },
+  {
+    "file": "cat_voice_happy.wav",
+    "peak": 3949,
+    "peakDbFS": -18.38,
+    "rmsDbFS": -22.56,
+    "clippedSamples": 0
+  },
+  {
+    "file": "cat_voice_question.wav",
+    "peak": 3952,
+    "peakDbFS": -18.37,
+    "rmsDbFS": -22.68,
+    "clippedSamples": 0
+  },
+  {
+    "file": "cat_voice_soft_01.wav",
+    "peak": 4392,
+    "peakDbFS": -17.46,
+    "rmsDbFS": -22.1,
+    "clippedSamples": 0
+  },
+  {
+    "file": "cat_voice_soft_02.wav",
+    "peak": 4170,
+    "peakDbFS": -17.91,
+    "rmsDbFS": -22.39,
+    "clippedSamples": 0
+  },
+  {
+    "file": "cat_voice_soft_03.wav",
+    "peak": 3733,
+    "peakDbFS": -18.87,
+    "rmsDbFS": -23.39,
+    "clippedSamples": 0
+  },
+  {
+    "file": "cat_voice_thinking.wav",
+    "peak": 6325,
+    "peakDbFS": -14.29,
+    "rmsDbFS": -22.17,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_achievement.wav",
+    "peak": 6691,
+    "peakDbFS": -13.8,
+    "rmsDbFS": -20.2,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_back.wav",
+    "peak": 5576,
+    "peakDbFS": -15.38,
+    "rmsDbFS": -21.84,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_close.wav",
+    "peak": 4832,
+    "peakDbFS": -16.63,
+    "rmsDbFS": -23.2,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_error.wav",
+    "peak": 5951,
+    "peakDbFS": -14.82,
+    "rmsDbFS": -21.52,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_hint.wav",
+    "peak": 5932,
+    "peakDbFS": -14.84,
+    "rmsDbFS": -22.04,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_notification.wav",
+    "peak": 5567,
+    "peakDbFS": -15.4,
+    "rmsDbFS": -22.69,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_open.wav",
+    "peak": 5204,
+    "peakDbFS": -15.98,
+    "rmsDbFS": -22.64,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_success.wav",
+    "peak": 6680,
+    "peakDbFS": -13.81,
+    "rmsDbFS": -20.39,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_switch.wav",
+    "peak": 6316,
+    "peakDbFS": -14.3,
+    "rmsDbFS": -20.66,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_tap.wav",
+    "peak": 5938,
+    "peakDbFS": -14.84,
+    "rmsDbFS": -21.06,
+    "clippedSamples": 0
+  },
+  {
+    "file": "ui_soft_update.wav",
+    "peak": 5944,
+    "peakDbFS": -14.83,
+    "rmsDbFS": -21.89,
+    "clippedSamples": 0
+  }
+]

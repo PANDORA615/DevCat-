@@ -10,6 +10,108 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  testWidgets('Main navigation moves in the selected direction', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1280, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final store = MemoryStore();
+    store.settings['cat'] = false;
+    final sounds = SoftSounds()..enabled = false;
+    await tester.runAsync(() async {
+      await StudyCatalog.load();
+    });
+    final courses =
+        (jsonDecode(File('assets/content/courses.json').readAsStringSync())
+                as List)
+            .map((item) => Course(item))
+            .toList();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        home: DevCatShell(store: store, courses: courses, sounds: sounds),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Настройки'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 120));
+    final settingsTransition = tester.widget<SlideTransition>(
+      find
+          .ancestor(
+            of: find.byKey(const ValueKey(6)),
+            matching: find.byType(SlideTransition),
+          )
+          .first,
+    );
+    expect(settingsTransition.position.value.dx, greaterThan(0));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Главная'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 120));
+    final homeTransition = tester.widget<SlideTransition>(
+      find
+          .ancestor(
+            of: find.byKey(const ValueKey(0)),
+            matching: find.byType(SlideTransition),
+          )
+          .first,
+    );
+    expect(homeTransition.position.value.dx, lessThan(0));
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
+    await sounds.dispose();
+  });
+
+  testWidgets('Reduced motion disables shell and sidebar transitions', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1280, 900);
+    tester.view.devicePixelRatio = 1;
+    tester.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures(
+          disableAnimations: true,
+          reduceMotion: true,
+        );
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
+    final store = MemoryStore();
+    store.settings['cat'] = false;
+    final sounds = SoftSounds()..enabled = false;
+    await tester.runAsync(() async {
+      await StudyCatalog.load();
+    });
+    final courses =
+        (jsonDecode(File('assets/content/courses.json').readAsStringSync())
+                as List)
+            .map((item) => Course(item))
+            .toList();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        home: DevCatShell(store: store, courses: courses, sounds: sounds),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<AnimatedSwitcher>(find.byType(AnimatedSwitcher).first)
+          .duration,
+      Duration.zero,
+    );
+    await tester.tap(find.text('Настройки'));
+    await tester.pumpAndSettle();
+    expect(find.text('Устройся поудобнее.'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
+    await sounds.dispose();
+  });
+
   for (final size in [
     const Size(1280, 900),
     const Size(390, 844),

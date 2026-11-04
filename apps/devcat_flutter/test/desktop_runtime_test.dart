@@ -50,7 +50,9 @@ void main() {
           course,
           lesson,
           exercise,
-          exercise.answer,
+          exercise.data['mode'] == 'program'
+              ? exercise.data['solution']
+              : exercise.answer,
         );
         expect(result.passed, isTrue, reason: '$language: ${result.report}');
         // A visible marker makes a missing SDK distinguishable from compilation

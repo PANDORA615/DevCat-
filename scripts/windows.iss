@@ -1,4 +1,4 @@
-#define AppVersion "0.7.0"
+#define AppVersion "0.8.0"
 #ifndef BundleDir
   #define BundleDir "..\apps\devcat_flutter\build\windows\x64\runner\Release"
 #endif

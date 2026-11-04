@@ -80,7 +80,7 @@ class StudyCatalog {
   StudyCatalog(this.topics);
   factory StudyCatalog.decode(String text) {
     final raw = jsonDecode(text);
-    if (raw['schema'] != 1 || raw['revision'] != 1) {
+    if (raw['schema'] != 1 || ![1, 2].contains(raw['revision'])) {
       throw const FormatException('Неподдерживаемая программа занятий.');
     }
     final topics = <String, StudyTopic>{};

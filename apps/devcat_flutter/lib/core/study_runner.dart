@@ -3,7 +3,7 @@ import 'runner.dart';
 import 'study.dart';
 
 String studySource(StudyExercise exercise, String entry) =>
-    exercise.data['mode'] == 'challenge'
+    ['challenge', 'program'].contains(exercise.data['mode'])
     ? entry
     : exercise.code.replaceFirst('___', entry);
 
@@ -34,7 +34,10 @@ Future<CheckResult> evaluateStudyCode(
     );
   }
   var count = 0;
-  for (final raw in example['tests'] as List) {
+  final tests = exercise.data['mode'] == 'program'
+      ? exercise.data['tests'] as List
+      : example['tests'] as List;
+  for (final raw in tests) {
     final sample = Map<String, dynamic>.from(raw);
     final result = await runner.run(course.id, source, sample['input']);
     if (!result.ok) {

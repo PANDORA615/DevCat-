@@ -6,6 +6,7 @@ Actual LICENSE files from the locked Flutter/Dart dependencies. Desktop and Andr
 
 Windows packages include the unmodified Microsoft.VC143.CRT x64 redistributable DLLs from the official Visual Studio 2022 installation. These Microsoft components retain their original embedded copyright and version information and are governed by Microsoft license terms, separately from DevCat's MIT license. Distribution reference and applicable license information: https://learn.microsoft.com/en-us/cpp/windows/redistributing-visual-cpp-files?view=msvc-170 and https://visualstudio.microsoft.com/license-terms/.
 
+
 ## args 2.7.0
 
 ```text

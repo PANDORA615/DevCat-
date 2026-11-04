@@ -251,29 +251,6 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                       ),
                     ),
                   const SizedBox(height: 20),
-                  if (lesson.photo.isNotEmpty) ...[
-                    ExpansionTile(
-                      title: const Text('Учебная иллюстрация'),
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(24),
-                          child: Image.asset(
-                            'assets/content/${lesson.photo}',
-                            height: 160,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      lesson.photoCaption,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: 24),
-                  ],
                   Panel(
                     padding: const EdgeInsets.all(8),
                     child: ExpansionTile(
@@ -338,7 +315,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           child: ConceptDiagram(s['diagram']),
                         ),
-                      if (s['visual'] != null)
+                      if (s['visual'] != null && s['image'] == null)
                         LessonVisual(Map<String, dynamic>.from(s['visual'])),
                       if (s['image'] != null)
                         InkWell(

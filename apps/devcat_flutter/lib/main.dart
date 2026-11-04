@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:window_manager/window_manager.dart';
 import 'core/course.dart';
 import 'core/sound.dart';
+import 'core/mascot.dart';
+import 'core/study.dart';
 import 'core/store.dart';
 import 'core/desktop_diagnostics.dart';
 import 'ui/shell.dart';
@@ -88,11 +90,22 @@ class _DevCatAppState extends State<DevCatApp> {
     listenable: widget.store,
     builder: (context, _) {
       final store = widget.store;
+      if ((!store.setting('sound', true) && sounds.enabled) ||
+          (!store.setting('catVoice', true) && sounds.voiceEnabled)) {
+        sounds.stopVoice();
+      }
       sounds.enabled = store.setting('sound', true);
-      sounds.volume = store.setting<num>('volume', .22).toDouble();
+      sounds.volume = store.setting<num>('volume', .15).toDouble();
       sounds.voiceEnabled = store.setting('catVoice', true);
-      sounds.voiceVolume = store.setting<num>('voiceVolume', .18).toDouble();
+      sounds.voiceVolume = store.setting<num>('voiceVolume', .20).toDouble();
       sounds.voiceStyle = store.setting('voiceStyle', 'auto');
+      sounds.achievementVolume = store
+          .setting<num>('achievementVolume', .15)
+          .toDouble();
+      final selectedAppearance = store.setting('mascotAppearance', 'classic');
+      final appearance = selectedAppearance == 'auto'
+          ? MascotCatalog.evolution(1 + StudyLedger(store.progress).xp ~/ 200)
+          : selectedAppearance;
       final seed = Color(store.setting('seedColor', 0xff416c57));
       return DynamicColorBuilder(
         builder: (light, dark) {
@@ -191,7 +204,10 @@ class _DevCatAppState extends State<DevCatApp> {
               ),
               child: SoundScope(
                 sounds: sounds,
-                child: PointerSoundLayer(sounds: sounds, child: child!),
+                child: MascotScope(
+                  appearance: appearance,
+                  child: PointerSoundLayer(sounds: sounds, child: child!),
+                ),
               ),
             ),
             home: DevCatShell(

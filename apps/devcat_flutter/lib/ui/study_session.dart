@@ -9,6 +9,7 @@ import '../core/study_runner.dart';
 import '../core/runner.dart';
 import '../core/sound.dart';
 import 'cat_actor.dart';
+import 'cat_dialogue.dart';
 import 'lecture.dart';
 import 'study_widgets.dart';
 import 'tutor_page.dart';
@@ -135,6 +136,9 @@ class _StudySessionPageState extends State<StudySessionPage>
             : drafts.first['text'];
       }
     }
+    if (text.isEmpty && exercise.data['mode'] == 'program') {
+      text = exercise.data['starter'] ?? '';
+    }
     entry.text = text;
     session.entry = text;
   }
@@ -172,7 +176,6 @@ class _StudySessionPageState extends State<StudySessionPage>
       speech = text;
       mood = nextMood;
     });
-    if (widget.store.setting('cat', true)) widget.sounds.speak(nextMood);
   }
 
   Future<void> _check() async {
@@ -186,7 +189,7 @@ class _StudySessionPageState extends State<StudySessionPage>
         final yes = await confirm(
           context,
           'Запустить локальный код?',
-          'Программа выполнится с правами приложения. На Android все среды уже входят в APK; на компьютере нужен установленный локальный компилятор. Запускай только собственный код.',
+          'Программа выполнится с правами приложения. На Android и компьютере учебные среды входят в приложение. Запускай только собственный код.',
         );
         if (!yes || !mounted) return;
         await widget.store.set('trustedLocalRun', true);
@@ -235,7 +238,12 @@ class _StudySessionPageState extends State<StudySessionPage>
         'order' => session.selectedPieces.map((i) => exercise.pieces[i]).join(),
         _ => entry.text,
       };
-      session.checked(exercise.accepts(response));
+      session.checked(
+        exercise.accepts(response),
+        explanation: exercise.kind == 'lab'
+            ? 'Ты подтвердил самостоятельную проверку результата. Автотесты эту работу не оценивали.'
+            : '',
+      );
     }
     if (!mounted || session.feedback == null) return;
     final correct = session.feedback!;
@@ -280,7 +288,12 @@ class _StudySessionPageState extends State<StudySessionPage>
           'Занятие закончено! Ты сделал ещё один настоящий шаг.',
           CatMood.celebration,
         );
-        widget.sounds.cue(SoundCue.success);
+        widget.sounds.cue(
+          (before + earned) ~/ 200 > before ~/ 200
+              ? SoundCue.achievement
+              : SoundCue.success,
+          eventId: StudyLedger.eventKey(widget.unit, now),
+        );
       } catch (e) {
         if (mounted) {
           setState(() => problem = 'Не получилось сохранить результат: $e');
@@ -394,6 +407,7 @@ class _StudySessionPageState extends State<StudySessionPage>
       'learn' => true,
       'choice' => session.selectedOption != null,
       'order' => session.selectedPieces.length == e.pieces.length,
+      'lab' => entry.text == 'observed',
       _ => entry.text.trim().isNotEmpty,
     };
   }
@@ -540,27 +554,12 @@ class _StudySessionPageState extends State<StudySessionPage>
                 if (widget.store.setting('cat', true))
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Row(
-                      children: [
-                        CatActor(size: 76, mood: mood, speech: speech),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: scheme.outlineVariant,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                            child: Text(
-                              speech,
-                              style: const TextStyle(fontSize: 14, height: 1.4),
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: CatDialogue(
+                      speech,
+                      mood: mood,
+                      sounds: widget.sounds,
+                      size: 76,
+                      style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
                 Text(
@@ -633,6 +632,8 @@ class _StudySessionPageState extends State<StudySessionPage>
                   ),
                 if (exercise.kind == 'code')
                   ..._codeExercise(exercise)
+                else if (exercise.kind == 'lab')
+                  ..._labExercise(exercise)
                 else if (exercise.kind == 'order')
                   ..._ordering(exercise)
                 else ...[
@@ -769,6 +770,25 @@ class _StudySessionPageState extends State<StudySessionPage>
         _answerField(exercise, multiline: true),
       ];
     }
+    if (exercise.data['mode'] == 'program') {
+      final tests = exercise.data['tests'] as List;
+      return [
+        const Text(
+          'Редактируй полный исходник. Кнопка «Проверить» действительно запустит программу локально.',
+        ),
+        const SizedBox(height: 12),
+        _answerField(exercise, multiline: true),
+        ExpansionTile(
+          title: Text('Вход и ожидаемый результат · ${tests.length} проверок'),
+          children: [
+            for (final sample in tests)
+              StudyCode(
+                'Вход:\n${(sample['input'] as String).isEmpty ? 'Ввод не требуется' : sample['input']}\nОжидается:\n${sample['expected']}',
+              ),
+          ],
+        ),
+      ];
+    }
     final cases = widget.lesson.runnableExample!['tests'] as List;
     final sample = cases.first as Map;
     return [
@@ -789,6 +809,35 @@ class _StudySessionPageState extends State<StudySessionPage>
       ),
     ];
   }
+
+  List<Widget> _labExercise(StudyExercise exercise) => [
+    const Text(
+      'Это самостоятельная проверка в настоящем редакторе, Git или браузере. Автотест не подменяется нажатием кнопки.',
+    ),
+    const SizedBox(height: 12),
+    FilledButton.icon(
+      onPressed: () {
+        entry.text = 'opened';
+        setState(() {});
+        widget.onPractice();
+      },
+      icon: const Icon(Icons.code_rounded),
+      label: const Text('Открыть практику этого урока'),
+    ),
+    for (final item in exercise.data['checklist'] as List)
+      ListTile(leading: const Icon(Icons.checklist_rounded), title: Text(item)),
+    CheckboxListTile(
+      contentPadding: EdgeInsets.zero,
+      title: const Text('Выполнил работу и проверил результат по пунктам'),
+      value: entry.text == 'observed',
+      onChanged: entry.text.isEmpty
+          ? null
+          : (v) {
+              entry.text = v == true ? 'observed' : 'opened';
+              setState(() {});
+            },
+    ),
+  ];
 
   List<Widget> _ordering(StudyExercise exercise) {
     final indices = List<int>.generate(exercise.pieces.length, (i) => i)
@@ -972,6 +1021,8 @@ class _StudySessionPageState extends State<StudySessionPage>
                   StudyButton(
                     label: feedback != null || exercise.informational
                         ? 'ПРОДОЛЖИТЬ'
+                        : exercise.kind == 'lab'
+                        ? 'ПОДТВЕРДИТЬ ПРАКТИКУ'
                         : 'ПРОВЕРИТЬ',
                     onPressed: awarding || !(ready || feedback != null)
                         ? null
@@ -1009,7 +1060,7 @@ class _StudySessionPageState extends State<StudySessionPage>
         constraints: const BoxConstraints(maxWidth: 560),
         child: Column(
           children: [
-            CatActor(size: 180, mood: CatMood.celebration, speech: speech),
+            const CatActor(size: 180, mood: CatMood.celebration),
             const SizedBox(height: 20),
             Text(
               'Ещё один шаг сделан!',

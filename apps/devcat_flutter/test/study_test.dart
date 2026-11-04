@@ -223,7 +223,7 @@ void main() {
           course,
           lesson,
           code,
-          code.answer,
+          code.data['mode'] == 'program' ? code.data['solution'] : code.answer,
         );
         expect(result.passed, isTrue, reason: '$lang: ${result.report}');
         final wrong = await evaluateStudyCode(
