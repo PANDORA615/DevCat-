@@ -1,0 +1,31 @@
+{
+  "build_run": 42097143045,
+  "build_commit": "56fbf53eef49f6a2357ec6b11f88ca26e43d9a8f",
+  "tag": "v0.9.0",
+  "pr": 3,
+  "android_baseline": "786b0b31e643a3008644bd31fb228dc948d2da8d",
+  "localValidation": {
+    "syncAndProgressTests": 10,
+    "androidBaselineTests": 2,
+    "verifiedAndroidFiles": 1661,
+    "contentUpdateTests": 6,
+    "analyzer": "clean",
+    "ciFlutterTests": 105,
+    "ciConditionalSkip": 1,
+    "pythonTests": 20
+  },
+  "ci_checkout_commit": "40b5202f4d221341a80cc36b879e55ae946df53c",
+  "source_tree": "c9ebe91f71b25372aff868de432e5d6ffe3d76f2",
+  "android": {
+    "name": "DevCat-0.9.0-android-universal.apk",
+    "abi": "universal",
+    "versionCode": 5010,
+    "bytes": 1531650383,
+    "sha256": "e946d691a579b6b9b4914b9dfd89d8737ad9694de3a15e15cb51852fcab5b1b7",
+    "certificateSHA256": "f4412cfc2567a7b33248df99777c0d104761dd2dda3ee7de8fe8bac467098bca",
+    "copiedBytes": 1531097954,
+    "literalBytes": 552429,
+    "patchBytes": 810513
+  },
+  "asset_count": 19
+}

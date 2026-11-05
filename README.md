@@ -2,7 +2,10 @@
 <h1 align="center">DevCat</h1>
 <p align="center">Локальная мастерская программирования. Учимся с полного нуля, по одному понятному шагу.</p>
 
-[Скачать DevCat 0.8.0](https://github.com/PANDORA615/DevCat-/releases/tag/v0.8.0) · [Учебники одним архивом](https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-lectures.zip) · [Программа](docs/CURRICULUM.md) · [Источники учебников](docs/BOOK_SOURCES.md) · [Проверки](docs/VALIDATION.md)
+[Скачать DevCat 0.9.0](https://github.com/PANDORA615/DevCat-/releases/tag/v0.9.0) · [Учебники одним архивом](https://github.com/PANDORA615/DevCat-/releases/download/v0.9.0/DevCat-0.9.0-lectures.zip) · [Программа](docs/CURRICULUM.md) · [Источники учебников](docs/BOOK_SOURCES.md) · [Проверки](docs/VALIDATION.md)
+
+
+В 0.9.0 новые функции, интерфейс и поведение маскота развиваются для Windows, Linux и macOS. Android сохраняет функции 0.8.0 с новым номером версии и совместимым прогрессом. [Границы выпуска](docs/PLATFORM_SCOPE.md) · [Изменения и ограничения](docs/RELEASE_NOTES_0.9.0.md).
 
 ![Иллюстрация DevCat, не скриншот приложения](docs/banner.png)
 
@@ -59,9 +62,9 @@ HTML/CSS-практика открывает файлы именно выбра�
 
 ## Скачать и установить
 
-[Релиз 0.8.0](https://github.com/PANDORA615/DevCat-/releases/tag/v0.8.0) содержит пакеты и `SHA256SUMS`.
+[Релиз 0.9.0](https://github.com/PANDORA615/DevCat-/releases/tag/v0.9.0) содержит пакеты и `SHA256SUMS`.
 
-[Установщик Windows x64 со встроенными средами](https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-windows-x64-setup.exe). Для учебных C/C++, C#, Python, Java, JavaScript и Go отдельные SDK и настройка PATH не нужны.
+[Установщик Windows x64 со встроенными средами](https://github.com/PANDORA615/DevCat-/releases/download/v0.9.0/DevCat-0.9.0-windows-x64-setup.exe). Для учебных C/C++, C#, Python, Java, JavaScript и Go отдельные SDK и настройка PATH не нужны.
 
 | Платформа | Пакеты |
 |---|---|
@@ -75,7 +78,7 @@ HTML/CSS-практика открывает файлы именно выбра�
 
 **Один универсальный APK со всеми средами внутри (1.43 ГиБ).** Все среды внутри, дополнительных загрузок не требуется. SHA-256 опубликован в релизе и `SHA256SUMS`.
 
-Android APK содержит все три архитектурных пакета с локальными средствами исполнения; распаковывается только подходящий устройству. Из SDK удалены необязательные исходники Java и инструменты, которые учебная среда не использует; компиляторы и стандартные библиотеки сохранены. Нужны место для APK, установки и примерно 1,2–1,6 ГБ для среды сверх установленного приложения. Подпись постоянная; versionCode 5008 выше старых split APK, обновление сохраняет данные. AAB и отдельные ABI APK в этом выпуске не распространяются.
+Android APK содержит все три архитектурных пакета с локальными средствами исполнения; распаковывается только подходящий устройству. Из SDK удалены необязательные исходники Java и инструменты, которые учебная среда не использует; компиляторы и стандартные библиотеки сохранены. Нужны место для APK, установки и примерно 1,2–1,6 ГБ для среды сверх установленного приложения. Подпись постоянная; versionCode 5010 выше старых split APK, обновление сохраняет данные. AAB и отдельные ABI APK в этом выпуске не распространяются.
 
 Linux требует GTK 3, libsecret и GStreamer, включая AppImage. На Ubuntu: `sudo apt install libgtk-3-0 libsecret-1-0 libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-plugins-good`. AppImage без FUSE запускается с `--appimage-extract-and-run`. Windows-пакет включает необходимые библиотеки Visual C++; отдельная установка Redistributable не требуется. Authenticode и Apple Developer ID/notarization не настроены. [Матрица поддержки](docs/SUPPORT.md).
 

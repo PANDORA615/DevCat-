@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "buildRun": 42097143045,
+  "buildCommit": "56fbf53eef49f6a2357ec6b11f88ca26e43d9a8f",
+  "reports": [
+    {
+      "schema": 1,
+      "platform": "linux",
+      "commit": "40b5202f4d221341a80cc36b879e55ae946df53c",
+      "files": [
+        {
+          "name": "DevCat-0.9.0-linux-amd64.deb",
+          "bytes": 642040338,
+          "sha256": "849128ef568968920b883d51ab39ad5bfbbd181ce62dfd92f0abc59497fa3629"
+        },
+        {
+          "name": "DevCat-0.9.0-linux-fedora-x86_64.rpm",
+          "bytes": 819871096,
+          "sha256": "ad20e9456041e5e8bb94ccbead25d4cdf1f33f86cdc2040c753de745db2822f9"
+        },
+        {
+          "name": "DevCat-0.9.0-linux-opensuse-x86_64.rpm",
+          "bytes": 819871276,
+          "sha256": "8a270b6d2126e3ebf7c1630bb9476349314592f3636ea4da569381aa50445e0a"
+        },
+        {
+          "name": "DevCat-0.9.0-linux-x86_64.AppImage",
+          "bytes": 732129784,
+          "sha256": "92d3dc72bbacc94adba39405b31b5a34c48ab26be28d02ab75afe339268b004a"
+        },
+        {
+          "name": "DevCat-0.9.0-linux-x86_64.pkg.tar.zst",
+          "bytes": 768678428,
+          "sha256": "5c88bc68f30835f151653d51885a459afadb937370c5be756237c5adaeafe8ee"
+        },
+        {
+          "name": "DevCat-0.9.0-linux-x86_64.tar.gz",
+          "bytes": 820638489,
+          "sha256": "3e7517840a069eac643e0abe4e0491f28d51eafbc4fab420b3c37b78f6cdc69d"
+        }
+      ],
+      "packagedRuntimeCheck": {
+        "schema": 1,
+        "passed": true,
+        "languages": {
+          "c": {
+            "passed": true,
+            "error": ""
+          },
+          "cpp": {
+            "passed": true,
+            "error": ""
+          },
+          "csharp": {
+            "passed": true,
+            "error": ""
+          },
+          "python": {
+            "passed": true,
+            "error": ""
+          },
+          "java": {
+            "passed": true,
+            "error": ""
+          },
+          "javascript": {
+            "passed": true,
+            "error": ""
+          },
+          "go": {
+            "passed": true,
+            "error": ""
+          },
+          "sql": {
+            "passed": true,
+            "error": ""
+          }
+        },
+        "runtimeRoot": "/home/runner/work/DevCat-/DevCat-/apps/devcat_flutter/build/linux/x64/release/bundle/runtime/linux-x64"
+      }
+    },
+    {
+      "schema": 1,
+      "platform": "windows",
+      "commit": "40b5202f4d221341a80cc36b879e55ae946df53c",
+      "files": [
+        {
+          "name": "DevCat-0.9.0-windows-x64-setup.exe",
+          "bytes": 596574220,
+          "sha256": "24d8bb677fb4fe3368994f9cc376999b71d668c3d733e1324b0f023eed5d76e8"
+        },
+        {
+          "name": "DevCat-0.9.0-windows-x64.zip",
+          "bytes": 857821837,
+          "sha256": "d662eaf6266cf68c7417d95ff2dc7aa3b9d9febafbc90e1d0baee37d753514d1"
+        }
+      ],
+      "packagedRuntimeCheck": {
+        "schema": 1,
+        "passed": true,
+        "languages": {
+          "c": {
+            "passed": true,
+            "error": ""
+          },
+          "cpp": {
+            "passed": true,
+            "error": ""
+          },
+          "csharp": {
+            "passed": true,
+            "error": ""
+          },
+          "python": {
+            "passed": true,
+            "error": ""
+          },
+          "java": {
+            "passed": true,
+            "error": ""
+          },
+          "javascript": {
+            "passed": true,
+            "error": ""
+          },
+          "go": {
+            "passed": true,
+            "error": ""
+          },
+          "sql": {
+            "passed": true,
+            "error": ""
+          }
+        },
+        "runtimeRoot": "D:\\a\\DevCat-\\DevCat-\\apps\\devcat_flutter\\build\\windows\\x64\\runner\\Release\\runtime\\windows-x64"
+      }
+    },
+    {
+      "schema": 1,
+      "platform": "macos",
+      "commit": "40b5202f4d221341a80cc36b879e55ae946df53c",
+      "files": [
+        {
+          "name": "DevCat-0.9.0-macos-universal.dmg",
+          "bytes": 2073960288,
+          "sha256": "6ab8bb11f3a1f001f58ec3bce52486e1af2ab752ee13802b836bc52934ab24c2"
+        },
+        {
+          "name": "DevCat-0.9.0-macos-universal.zip",
+          "bytes": 1522174327,
+          "sha256": "59ee2f37ce55ecad9693993978d550cf96afa54584dff19274b6999c6d035ad3"
+        }
+      ],
+      "packagedRuntimeCheck": {
+        "schema": 1,
+        "passed": true,
+        "languages": {
+          "c": {
+            "passed": true,
+            "error": ""
+          },
+          "cpp": {
+            "passed": true,
+            "error": ""
+          },
+          "csharp": {
+            "passed": true,
+            "error": ""
+          },
+          "python": {
+            "passed": true,
+            "error": ""
+          },
+          "java": {
+            "passed": true,
+            "error": ""
+          },
+          "javascript": {
+            "passed": true,
+            "error": ""
+          },
+          "go": {
+            "passed": true,
+            "error": ""
+          },
+          "sql": {
+            "passed": true,
+            "error": ""
+          }
+        },
+        "runtimeRoot": "/Users/runner/work/DevCat-/DevCat-/apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app/Contents/Resources/runtime/macos-arm64"
+      }
+    }
+  ]
+}
