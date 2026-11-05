@@ -9,11 +9,13 @@ class CatActor extends StatefulWidget {
   final double size;
   final CatMood mood;
   final bool? talking;
+  final String? action;
   const CatActor({
     super.key,
     required this.size,
     this.mood = CatMood.greeting,
     this.talking,
+    this.action,
   });
   @override
   State<CatActor> createState() => _CatActorState();
@@ -74,16 +76,18 @@ class _CatActorState extends State<CatActor>
     if (appearance != 'classic') {
       final state = widget.talking == true
           ? 'talk'
-          : switch (widget.mood) {
-              CatMood.greeting => 'idle',
-              CatMood.celebration => 'happy',
-              CatMood.explaining => 'explaining',
-              CatMood.thinking => 'thinking',
-              CatMood.warning => 'failure',
-              CatMood.encouragement => 'thoughtful',
-            };
+          : widget.action ??
+                switch (widget.mood) {
+                  CatMood.greeting => 'idle',
+                  CatMood.celebration => 'happy',
+                  CatMood.explaining => 'explaining',
+                  CatMood.thinking => 'thinking',
+                  CatMood.warning => 'failure',
+                  CatMood.encouragement => 'thoughtful',
+                };
       return MascotFrames(
         appearance: appearance,
+        reactive: true,
         state: state,
         size: widget.size,
       );
