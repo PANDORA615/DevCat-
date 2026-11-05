@@ -15,6 +15,8 @@ import '../core/project.dart';
 import '../core/store.dart';
 import '../core/sound.dart';
 import '../core/runner.dart';
+import '../core/execution_feedback.dart';
+import 'cat_actor.dart';
 import 'widgets.dart';
 import '../core/web_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -40,6 +42,9 @@ class IdePage extends StatefulWidget {
 
 class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   final runner = LocalRunner();
+  late final feedback = ExecutionFeedback(() {
+    if (mounted) setState(() {});
+  });
   final preview = WebPreview();
   late DevProject project;
   late CodeController code;
@@ -161,6 +166,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    feedback.dispose();
     preview.close();
     debounce?.cancel();
     widget.store
@@ -189,6 +195,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   }
 
   Future<void> _load(DevProject value) async {
+    feedback.clear();
     await _save();
     if (!mounted) return;
     code.removeListener(_changed);
@@ -488,7 +495,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
       final yes = await confirm(
         context,
         'Запустить свой проект?',
-        'Код выполнится локально с правами приложения и сможет читать и изменять файлы. Запускай собственный код. На Android компиляторы входят в APK; при первом запуске им потребуется место и время на подготовку. На ПК нужен установленный компилятор выбранного языка.',
+        'Код выполнится локально с правами приложения и сможет читать и изменять файлы. Запускай собственный код. На Android компиляторы входят в APK; при первом запуске им потребуется место и время на подготовку. В полной версии для ПК все среды тоже входят в установщик: отдельно устанавливать компиляторы и настраивать PATH не нужно.',
       );
       if (!yes) return;
       await widget.store.set('trustedLocalRun', true);
@@ -499,6 +506,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
       busy = true;
       output = 'Сборка и запуск ${project.entry}…';
     });
+    final executionTicket = feedback.begin();
     widget.sounds.cue(SoundCue.open);
     try {
       final result = await runner.runProject(
@@ -511,10 +519,20 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
           () => output =
               '${result.output}${result.error.isNotEmpty ? '\n${result.error}' : ''}\n\nКод завершения: ${result.exitCode}',
         );
-        widget.sounds.cue(result.ok ? SoundCue.success : SoundCue.error);
+        feedback.finish(
+          executionTicket,
+          ok: result.ok,
+          cancelled: result.exitCode == 130,
+        );
+        if (result.exitCode != 130) {
+          widget.sounds.cue(result.ok ? SoundCue.success : SoundCue.error);
+        }
       }
     } catch (e) {
-      if (mounted) setState(() => output = 'Не удалось запустить: $e');
+      if (mounted) {
+        feedback.finish(executionTicket, ok: false);
+        setState(() => output = 'Не удалось запустить: $e');
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }
@@ -784,15 +802,47 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
           height: 160,
           child: Panel(
             padding: const EdgeInsets.all(12),
-            child: SingleChildScrollView(
-              child: SelectableText(
-                output,
-                style: const TextStyle(
-                  fontFamily: 'JetBrainsMono',
-                  fontSize: 12,
-                  height: 1.5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (feedback.reaction != ExecutionReaction.idle)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      children: [
+                        CatActor(
+                          key: ValueKey(feedback.generation),
+                          size: 32,
+                          action: feedback.animation,
+                          mood: feedback.reaction == ExecutionReaction.error
+                              ? CatMood.warning
+                              : CatMood.encouragement,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            feedback.message,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: SelectableText(
+                      output,
+                      style: const TextStyle(
+                        fontFamily: 'JetBrainsMono',
+                        fontSize: 12,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
