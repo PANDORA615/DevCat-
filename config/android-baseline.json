@@ -1,0 +1,5 @@
+{
+  "source_commit": "786b0b31e643a3008644bd31fb228dc948d2da8d",
+  "build_number_offset": 5000,
+  "reason": "Android retains the released 0.8.0 application; only release version changes. Desktop development continues independently."
+}

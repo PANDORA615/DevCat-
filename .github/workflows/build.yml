@@ -107,7 +107,7 @@ jobs:
         shell: bash
         run: python scripts/verify_packaged_desktop.py ${{ matrix.target }}
       - if: matrix.target == 'linux'
-        run: scripts/package_linux.sh 0.8.0
+        run: scripts/package_linux.sh 0.9.0
       - if: matrix.target == 'windows'
         shell: pwsh
         run: |
@@ -117,7 +117,7 @@ jobs:
           $bundle = (Resolve-Path apps/devcat_flutter/build/windows/x64/runner/Release).Path
           $shortBundle = Join-Path $env:RUNNER_TEMP 'dc'
           New-Item -ItemType Junction -Path $shortBundle -Target $bundle
-          Compress-Archive -Path "$shortBundle/*" -DestinationPath dist/DevCat-0.8.0-windows-x64.zip
+          Compress-Archive -Path "$shortBundle/*" -DestinationPath dist/DevCat-0.9.0-windows-x64.zip
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DBundleDir=$shortBundle" scripts/windows.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - if: matrix.target == 'macos'
@@ -125,11 +125,11 @@ jobs:
           mkdir -p dist
           app=apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app
           codesign --force --deep --sign - "$app"
-          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.8.0-macos-universal.zip
+          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.9.0-macos-universal.zip
           mkdir -p /tmp/devcat-dmg
           cp -cR "$app" /tmp/devcat-dmg/DevCat.app || ditto "$app" /tmp/devcat-dmg/DevCat.app
           ln -s /Applications /tmp/devcat-dmg/Applications
-          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.8.0-macos-universal.dmg
+          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.9.0-macos-universal.dmg
       - name: Record exact package checksums
         shell: bash
         run: python scripts/desktop_package_checksums.py ${{ matrix.target }}
@@ -206,6 +206,14 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Stage frozen Android application with the shared release version
+        id: android-source
+        run: |
+          python3 scripts/stage_android_baseline.py --output build/android-frozen
+          mv apps/devcat_flutter build/desktop-source
+          mv build/android-frozen apps/devcat_flutter
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -242,7 +250,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           flutter pub get --enforce-lockfile
-          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=5009
+          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=${{ steps.android-source.outputs.build_number }}
       - run: |
           mkdir -p dist/android-build-inputs
           mv apps/devcat_flutter/build/app/outputs/flutter-apk/app-release.apk dist/android-build-inputs/
