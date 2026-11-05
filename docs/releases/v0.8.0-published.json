@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "tag": "v0.8.0",
+  "url": "https://github.com/PANDORA615/DevCat-/releases/tag/v0.8.0",
+  "publishedAt": "2026-11-04T14:36:16Z",
+  "verifiedAt": "2026-11-05T17:52:19.588611+00:00",
+  "buildRun": 41836030220,
+  "buildCommit": "786b0b31e643a3008644bd31fb228dc948d2da8d",
+  "publisherRun": 41845586037,
+  "publisherCommit": "4ac286d4e0ec848c19d965cec6bf9e09715346ea",
+  "assets": [
+    {
+      "name": "DevCat-0.8.0-Android-runtimes.json",
+      "bytes": 72675,
+      "sha256": "cabc379c1a9677bbfd120d71d4ae444d1b80e644050e0153c9ef6e948143883c",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-Android-runtimes.json"
+    },
+    {
+      "name": "DevCat-0.8.0-SBOM.spdx.json",
+      "bytes": 57241,
+      "sha256": "5086448efe1c4cc7a1ea41d1e93ef2742d7913ca9454035272d81c35bfc148b5",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-SBOM.spdx.json"
+    },
+    {
+      "name": "DevCat-0.8.0-android-runtime-sources.tar",
+      "bytes": 605388800,
+      "sha256": "0a5658775361388abef48e656873d0ec7d203fb66f8695b5dcee43b90710e932",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-android-runtime-sources.tar"
+    },
+    {
+      "name": "DevCat-0.8.0-android-universal.apk",
+      "bytes": 1531650383,
+      "sha256": "5324cb2bffc3b986b3aacf131c9a51ee84e6bd256821b51c8c2e678ff8a0fabd",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-android-universal.apk"
+    },
+    {
+      "name": "DevCat-0.8.0-lectures.zip",
+      "bytes": 44656370,
+      "sha256": "2967288173401784030d354b5f06c4d9d4c128cbf86d238fe801c60dd3a3a340",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-lectures.zip"
+    },
+    {
+      "name": "DevCat-0.8.0-linux-amd64.deb",
+      "bytes": 642036096,
+      "sha256": "c47fd6e794aa19fc81a72e7a52d59e2a3aceac6fcabe7482be01a06ce455ec43",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-linux-amd64.deb"
+    },
+    {
+      "name": "DevCat-0.8.0-linux-fedora-x86_64.rpm",
+      "bytes": 819912460,
+      "sha256": "6b137f8c2e5c881039ccdddf8daa24d40eaef9f24c17c26cb79af5e85900b31e",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-linux-fedora-x86_64.rpm"
+    },
+    {
+      "name": "DevCat-0.8.0-linux-opensuse-x86_64.rpm",
+      "bytes": 819912521,
+      "sha256": "f096fe33e9a80795a8e5dfcb7eacc649f22ce950ed45e4dd828aeb422dd54b27",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-linux-opensuse-x86_64.rpm"
+    },
+    {
+      "name": "DevCat-0.8.0-linux-x86_64.AppImage",
+      "bytes": 732125688,
+      "sha256": "2fb7b08908258a9dc27e15c19f06d8c5b8b519341e9261244e0bd5b06dcf95df",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-linux-x86_64.AppImage"
+    },
+    {
+      "name": "DevCat-0.8.0-linux-x86_64.pkg.tar.zst",
+      "bytes": 768673524,
+      "sha256": "e941b2121527bf49702502ae6cea693ebc095fd5d03427318eeefe90693c4381",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-linux-x86_64.pkg.tar.zst"
+    },
+    {
+      "name": "DevCat-0.8.0-linux-x86_64.tar.gz",
+      "bytes": 820633215,
+      "sha256": "e211bd0ccc7f1e61d77ae4f7ba481e8e74be1680e62a4ea1c0e623cdcea8a8bd",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-linux-x86_64.tar.gz"
+    },
+    {
+      "name": "DevCat-0.8.0-macos-universal.dmg",
+      "bytes": 2052164979,
+      "sha256": "274685fe3323d2c481a281503f06f4c93ac287f0439fe4f40baac1eda11bbd0f",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-macos-universal.dmg"
+    },
+    {
+      "name": "DevCat-0.8.0-macos-universal.zip",
+      "bytes": 1522164889,
+      "sha256": "dc188b2f689ce271ff76d7d3f3e815d716ce97a3e8cf3d6a27676b4654d9ffa7",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-macos-universal.zip"
+    },
+    {
+      "name": "DevCat-0.8.0-windows-x64-setup.exe",
+      "bytes": 596560850,
+      "sha256": "ca6b36856d3ad8540b8873f58221b5d1fc5f1350baf6b625fd08d9f08a09329c",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-windows-x64-setup.exe"
+    },
+    {
+      "name": "DevCat-0.8.0-windows-x64.zip",
+      "bytes": 857817149,
+      "sha256": "d3ebc77dc3832b7320293aaee0dd2cc7fbb363bc4642ed4badd6de35256a97b8",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-0.8.0-windows-x64.zip"
+    },
+    {
+      "name": "DevCat-Android-release-cert.pem",
+      "bytes": 1822,
+      "sha256": "72f1808305e799bc06d0c7c2977cb8ef123353f6ff961e88fafec46df34653cc",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/DevCat-Android-release-cert.pem"
+    },
+    {
+      "name": "LICENSE",
+      "bytes": 1076,
+      "sha256": "77c16f10f2b9869d4677cceaff2ec13c2b80a8c335a321a87cfeeb5dd350c74f",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/LICENSE"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 1757,
+      "sha256": "e9e5aea0b7984b11ca63d4095e7d7ea27b37c92333e76565c8a305be5a3d7f54",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/SHA256SUMS"
+    },
+    {
+      "name": "THIRD_PARTY_NOTICES.md",
+      "bytes": 3038288,
+      "sha256": "8f68a7684298eca8e9c397cda4f08a0465474ca3a63b51ebf9df70ba590e4c93",
+      "url": "https://github.com/PANDORA615/DevCat-/releases/download/v0.8.0/THIRD_PARTY_NOTICES.md"
+    }
+  ]
+}
