@@ -27,5 +27,8 @@
     "literalBytes": 552429,
     "patchBytes": 810513
   },
-  "asset_count": 19
+  "asset_count": 19,
+  "publisher_run": 42103913248,
+  "published_assets_verified": 19,
+  "release_url": "https://github.com/PANDORA615/DevCat-/releases/tag/v0.9.0"
 }
