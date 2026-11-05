@@ -1,10 +1,13 @@
+import 'dart:ui' show ViewFocusEvent, ViewFocusState;
 import 'package:flutter/material.dart';
 import '../core/mascot.dart';
+import '../core/mascot_playback.dart';
+import 'package:flutter/scheduler.dart';
 
 class MascotFrames extends StatefulWidget {
   final String appearance, state;
   final double size;
-  final bool playing;
+  final bool playing, reactive;
   final int? frame;
   final ValueChanged<int>? onFrame;
   const MascotFrames({
@@ -13,6 +16,7 @@ class MascotFrames extends StatefulWidget {
     this.state = 'idle',
     required this.size,
     this.playing = true,
+    this.reactive = false,
     this.frame,
     this.onFrame,
   });
@@ -21,19 +25,28 @@ class MascotFrames extends StatefulWidget {
 }
 
 class _MascotFramesState extends State<MascotFrames>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController clock = AnimationController(vsync: this);
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  static int _nextSeed = 0;
+  final int _seed = ++_nextSeed;
+  late final Ticker ticker = createTicker(_tick);
   MascotCatalog? catalog;
-  bool unavailable = false;
+  MascotPlayback? playback;
+  bool unavailable = false, foreground = true, focused = true;
+  Duration? lastTick;
+  int carryMicros = 0;
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    foreground = lifecycle == null || lifecycle == AppLifecycleState.resumed;
     catalog = MascotCatalog.cached;
     MascotCatalog.load().then(
       (value) {
         if (!mounted) return;
-        setState(() => catalog = value);
-        _start();
+        catalog = value;
+        _configure(rebuild: true);
+        setState(() {});
       },
       onError: (Object _) {
         if (mounted) setState(() => unavailable = true);
@@ -41,62 +54,107 @@ class _MascotFramesState extends State<MascotFrames>
     );
   }
 
+  void _tick(Duration elapsed) {
+    final previous = lastTick;
+    lastTick = elapsed;
+    if (previous == null) return;
+    final micros = (elapsed - previous).inMicroseconds + carryMicros;
+    carryMicros = micros % 1000;
+    final oldState = playback?.state, oldFrame = playback?.frame;
+    playback?.advance(micros ~/ 1000);
+    if (playback?.completed ?? false) ticker.stop();
+    if (mounted &&
+        (oldState != playback?.state || oldFrame != playback?.frame)) {
+      setState(() {});
+    }
+  }
+
+  void _configure({bool rebuild = false, bool command = false}) {
+    if (catalog == null) return;
+    if (rebuild || playback == null) {
+      playback?.dispose();
+      final clips = <String, MascotClip>{};
+      for (final entry in catalog!.states.entries) {
+        if (catalog!.clip(widget.appearance, entry.key) != null) {
+          clips[entry.key] = MascotClip.fromJson(
+            Map<String, dynamic>.from(entry.value),
+          );
+        }
+      }
+      playback = MascotPlayback(
+        clips,
+        ambient: widget.reactive,
+        followTransitions: widget.reactive,
+        seed: _seed,
+      );
+      playback!.play(widget.state, force: true);
+    } else if (command) {
+      playback!.play(widget.state);
+    }
+    if (widget.frame != null && widget.frame != playback!.frame) {
+      playback!.seek(widget.frame!);
+    }
+    final animate =
+        widget.playing &&
+        widget.frame == null &&
+        playback!.clips.isNotEmpty &&
+        !playback!.completed &&
+        foreground &&
+        focused &&
+        (ModalRoute.of(context)?.isCurrent ?? true) &&
+        TickerMode.valuesOf(context).enabled &&
+        !MediaQuery.disableAnimationsOf(context);
+    if (animate) {
+      playback!.resume();
+      if (!ticker.isActive) {
+        lastTick = null;
+        ticker.start();
+      }
+    } else {
+      playback!.pause();
+      ticker.stop();
+      lastTick = null;
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _start();
+    _configure();
   }
 
   @override
-  void didUpdateWidget(MascotFrames oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.state != widget.state ||
-        oldWidget.appearance != widget.appearance ||
-        oldWidget.playing != widget.playing ||
-        oldWidget.frame != widget.frame) {
-      _start(
-        restart:
-            oldWidget.state != widget.state ||
-            oldWidget.appearance != widget.appearance,
-      );
+  void didUpdateWidget(MascotFrames old) {
+    super.didUpdateWidget(old);
+    if (!old.playing && widget.playing && (playback?.completed ?? false)) {
+      playback!.seek(0);
     }
+    _configure(
+      rebuild:
+          old.appearance != widget.appearance ||
+          old.reactive != widget.reactive,
+      command: old.state != widget.state,
+    );
   }
 
-  void _start({bool restart = true}) {
-    clock.stop();
-    if (restart) clock.value = 0;
-    final clip = catalog?.clip(widget.appearance, widget.state);
-    if (clip == null) {
-      return;
-    }
-    clock.duration = Duration(
-      milliseconds: (clip['durationsMs'] as List).cast<int>().fold<int>(
-        0,
-        (a, b) => a + b,
-      ),
-    );
-    if (widget.frame != null) {
-      final durations = List<int>.from(clip['durationsMs']);
-      clock.value =
-          durations
-              .take(widget.frame!.clamp(0, durations.length - 1))
-              .fold<int>(0, (a, b) => a + b) /
-          clock.duration!.inMilliseconds;
-      return;
-    }
-    if (!widget.playing || MediaQuery.disableAnimationsOf(context)) {
-      return;
-    }
-    if (clip['loop'] == true) {
-      clock.repeat();
-    } else {
-      clock.forward();
-    }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    foreground = state == AppLifecycleState.resumed;
+    _configure();
+  }
+
+  @override
+  void didChangeViewFocus(ViewFocusEvent event) {
+    if (event.viewId != View.of(context).viewId) return;
+    focused = event.state == ViewFocusState.focused;
+    _configure();
   }
 
   @override
   void dispose() {
-    clock.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    playback?.dispose();
+    ticker.dispose();
     super.dispose();
   }
 
@@ -112,20 +170,14 @@ class _MascotFramesState extends State<MascotFrames>
             : null,
       );
     }
-    final clip = data.clip(widget.appearance, widget.state);
-    return AnimatedBuilder(
-      animation: clock,
-      builder: (context, _) {
+    final clip = data.clip(widget.appearance, playback?.state ?? widget.state);
+    return Builder(
+      builder: (context) {
         String path;
         if (clip == null) {
           path = data.appearance(widget.appearance)['asset'];
         } else {
-          final durations = List<int>.from(clip['durationsMs']);
-          final elapsed =
-              (clock.value * durations.fold<int>(0, (a, b) => a + b)).round();
-          final index =
-              widget.frame?.clamp(0, durations.length - 1) ??
-              mascotFrame(durations, elapsed, loop: clip['loop'] == true);
+          final index = playback?.frame ?? 0;
           widget.onFrame?.call(index);
           path = (clip['frames'] as List)[index];
         }

@@ -84,6 +84,7 @@ class _CatActorState extends State<CatActor>
             };
       return MascotFrames(
         appearance: appearance,
+        reactive: true,
         state: state,
         size: widget.size,
       );
