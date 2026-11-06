@@ -30,8 +30,11 @@ class ContentVerifier {
         ),
       );
 
-  Future<VerifiedContent> verify(String envelope) async {
-    if (utf8.encode(envelope).length > maxPackageBytes) {
+  Future<Map<String, dynamic>> signedPayload(
+    String envelope, {
+    int limit = maxPackageBytes * 2,
+  }) async {
+    if (envelope.length > limit || utf8.encode(envelope).length > limit) {
       throw const FormatException('Пакет превышает допустимый размер.');
     }
     final outer = jsonDecode(envelope) as Map<String, dynamic>;
@@ -47,7 +50,11 @@ class ContentVerifier {
     if (!await Ed25519().verify(payload, signature: signature)) {
       throw const FormatException('Подпись обновления не прошла проверку.');
     }
-    final data = jsonDecode(utf8.decode(payload)) as Map<String, dynamic>;
+    return jsonDecode(utf8.decode(payload)) as Map<String, dynamic>;
+  }
+
+  Future<VerifiedContent> verify(String envelope) async {
+    final data = await signedPayload(envelope);
     if (data['schemaVersion'] != 1 ||
         data['kind'] != 'devcat-content' ||
         data['revision'] is! int ||
@@ -116,7 +123,7 @@ class ContentUpdateStore {
         if (data['sequence'] is int &&
             data['sequence'] > 0 &&
             data['revision'] is int &&
-            data['revision'] > 0) {
+            data['revision'] >= 0) {
           result.add((
             sequence: data['sequence'] as int,
             revision: data['revision'] as int,
@@ -157,6 +164,7 @@ class ContentUpdateStore {
 
   Future<VerifiedContent?> active() async {
     for (final pointer in await _pointers()) {
+      if (pointer.revision == 0) return null;
       try {
         return await _readSnapshot(pointer.revision);
       } on FileSystemException {
@@ -173,7 +181,22 @@ class ContentUpdateStore {
   Future<void> _activate(int revision) async {
     final pointers = await _pointers();
     final newest = pointers.isEmpty ? null : pointers.first;
-    final slot = newest == null ? 0 : 1 - newest.slot;
+    // Keep the last *valid* pointer when the newest snapshot is damaged.
+    int? validSlot;
+    for (final pointer in pointers) {
+      try {
+        if (pointer.revision != 0) await _readSnapshot(pointer.revision);
+        validSlot = pointer.slot;
+        break;
+      } on FileSystemException {
+        continue;
+      } on FormatException {
+        continue;
+      } on TypeError {
+        continue;
+      }
+    }
+    final slot = validSlot == null ? 0 : 1 - validSlot;
     final target = File(p.join(directory.path, 'active-$slot.json'));
     final temp = File('${target.path}.tmp');
     await temp.writeAsString(
@@ -224,6 +247,7 @@ class ContentUpdateStore {
         p.join(staging.path, 'signed.json'),
       ).writeAsString(content.envelope, flush: true);
       await staging.rename(p.join(versions.path, '${content.revision}'));
+      if ((await _pointers()).isEmpty) await _activate(0);
       await _activate(content.revision);
       await _prune();
     } finally {
@@ -255,8 +279,9 @@ class ContentUpdateStore {
       if (pointers.length < 2 || pointers[0].revision == pointers[1].revision) {
         return false;
       }
-      final previous = await _readSnapshot(pointers[1].revision);
-      await _activate(previous.revision);
+      final revision = pointers[1].revision;
+      if (revision != 0) await _readSnapshot(revision);
+      await _activate(revision);
       return true;
     } finally {
       _busy = false;

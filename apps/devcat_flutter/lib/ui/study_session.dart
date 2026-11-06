@@ -1,3 +1,5 @@
+import 'motion.dart';
+import '../core/project_flush.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -54,10 +56,19 @@ class _StudySessionPageState extends State<StudySessionPage>
   CatMood mood = CatMood.explaining;
   DateTime actionAt = DateTime.now();
 
+  void Function()? unregisterSave;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    unregisterSave = ProjectFlush.register(() async {
+      if (!mounted) return;
+      if (busy) {
+        throw StateError('Сначала заверши или останови выполняющийся код.');
+      }
+      session.entry = entry.text;
+      await widget.store.draft(resumeKey, jsonEncode(session.toJson()));
+    });
     resumeKey =
         'study.resume.v1:${widget.unit.id}${widget.review ? ':review:${studyDay(DateTime.now())}' : ''}';
     final effectiveUnit = widget.review ? widget.unit.forReview() : widget.unit;
@@ -318,7 +329,7 @@ class _StudySessionPageState extends State<StudySessionPage>
     if (completed || session.complete) return;
     widget.sounds.cue(SoundCue.hint);
     final exercise = session.current;
-    showModalBottomSheet<void>(
+    showDevCatSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -374,7 +385,7 @@ class _StudySessionPageState extends State<StudySessionPage>
   }
 
   void _theory() => Navigator.of(context).push(
-    MaterialPageRoute(
+    DevCatRoute(
       builder: (page) => Scaffold(
         appBar: AppBar(title: const Text('Подробное объяснение')),
         body: LectureView(
@@ -391,7 +402,7 @@ class _StudySessionPageState extends State<StudySessionPage>
   );
 
   void _tutor() => Navigator.of(context).push(
-    MaterialPageRoute(
+    DevCatRoute(
       builder: (_) => TutorPage(
         store: widget.store,
         courses: [widget.course],
@@ -414,6 +425,7 @@ class _StudySessionPageState extends State<StudySessionPage>
 
   @override
   void dispose() {
+    unregisterSave?.call();
     WidgetsBinding.instance.removeObserver(this);
     saveTimer?.cancel();
     chatter?.cancel();
@@ -582,7 +594,7 @@ class _StudySessionPageState extends State<StudySessionPage>
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: InkWell(
-                      onTap: () => showDialog<void>(
+                      onTap: () => showDevCatDialog<void>(
                         context: context,
                         builder: (dialog) => Dialog.fullscreen(
                           child: SafeArea(

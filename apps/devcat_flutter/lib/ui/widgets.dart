@@ -1,3 +1,4 @@
+import 'motion.dart';
 import 'package:flutter/material.dart';
 import '../core/sound.dart';
 import 'cat_actor.dart';
@@ -183,7 +184,7 @@ class CatMessage extends StatelessWidget {
 }
 
 Future<bool> confirm(BuildContext context, String title, String body) async =>
-    await showDialog<bool>(
+    await showDevCatDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),

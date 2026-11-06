@@ -1,5 +1,5 @@
+import 'learning_assets.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'course.dart';
 import 'progress.dart';
 
@@ -93,7 +93,7 @@ class StudyCatalog {
     }
     return StudyCatalog(topics);
   }
-  static Future<StudyCatalog> load() => _loading ??= rootBundle
+  static Future<StudyCatalog> load() => _loading ??= LearningAssets.bundle
       .loadString('assets/content/study_path.json')
       .then((text) => cached = StudyCatalog.decode(text))
       .catchError((Object e) {

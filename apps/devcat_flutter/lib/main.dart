@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 import 'dart:io';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,9 @@ import 'core/mascot.dart';
 import 'core/study.dart';
 import 'core/store.dart';
 import 'core/desktop_diagnostics.dart';
+import 'core/content_runtime.dart';
+import 'core/desktop_updates.dart';
+import 'core/learning_assets.dart';
 import 'ui/shell.dart';
 
 Future<void> main() async {
@@ -45,11 +49,6 @@ Future<void> main() async {
       : Directory(override);
   final store = AppStore(directory);
   await store.load();
-  final courses =
-      (jsonDecode(await rootBundle.loadString('assets/content/courses.json'))
-              as List)
-          .map((j) => Course(j))
-          .toList();
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
     await windowManager.ensureInitialized();
     await windowManager.waitUntilReadyToShow(
@@ -66,7 +65,91 @@ Future<void> main() async {
       },
     );
   }
-  runApp(DevCatApp(store: store, courses: courses));
+  runApp(_LearningBoot(store: store));
+}
+
+class _LearningBoot extends StatefulWidget {
+  final AppStore store;
+  const _LearningBoot({required this.store});
+  @override
+  State<_LearningBoot> createState() => _LearningBootState();
+}
+
+class _LearningBootState extends State<_LearningBoot> {
+  late final Future<List<Course>> loading = _load();
+  Future<List<Course>> _load() async {
+    await ContentRuntime.initialize(widget.store.directory);
+    final data =
+        jsonDecode(
+              await LearningAssets.bundle.loadString(
+                'assets/content/courses.json',
+              ),
+            )
+            as List;
+    return data.map((j) => Course(j)).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<List<Course>>(
+    future: loading,
+    builder: (_, snapshot) {
+      if (snapshot.hasData) {
+        return DefaultAssetBundle(
+          bundle: LearningAssets.bundle,
+          child: DevCatApp(store: widget.store, courses: snapshot.data!),
+        );
+      }
+      final seed = Color(widget.store.setting('seedColor', 0xff416c57));
+      return MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: seed),
+          fontFamily: 'Nunito',
+        ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: seed,
+            brightness: Brightness.dark,
+          ),
+          fontFamily: 'Nunito',
+        ),
+        themeMode: switch (widget.store.setting('theme', 'system')) {
+          'light' => ThemeMode.light,
+          'dark' => ThemeMode.dark,
+          _ => ThemeMode.system,
+        },
+        home: Scaffold(
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    'assets/branding/devcat_book.png',
+                    width: 120,
+                    height: 110,
+                  ),
+                  const SizedBox(height: 24),
+                  if (!snapshot.hasError)
+                    const SizedBox(
+                      width: 180,
+                      child: LinearProgressIndicator(),
+                    ),
+                  const SizedBox(height: 16),
+                  Text(
+                    snapshot.hasError
+                        ? 'Не удалось открыть встроенные уроки. Переустанови DevCat. Прогресс хранится отдельно.'
+                        : 'Готовлю твою мастерскую…',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
 
 class DevCatApp extends StatefulWidget {
@@ -79,8 +162,39 @@ class DevCatApp extends StatefulWidget {
 
 class _DevCatAppState extends State<DevCatApp> {
   final sounds = SoftSounds();
+  Timer? updateChecks;
+  DesktopUpdates? updates;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final runtime = ContentRuntime.current;
+      if (runtime == null) return;
+      updates = DesktopUpdates.current = DesktopUpdates(runtime);
+      void check() {
+        if (mounted && widget.store.setting('autoCheckUpdates', true)) {
+          unawaited(
+            updates!.check(
+              beta: widget.store.setting('updateChannel', 'beta') == 'beta',
+              automatic: true,
+            ),
+          );
+        }
+      }
+
+      check();
+      updateChecks = Timer.periodic(const Duration(hours: 6), (_) => check());
+    });
+  }
+
   @override
   void dispose() {
+    updateChecks?.cancel();
+    updates?.dispose();
+    if (identical(DesktopUpdates.current, updates)) {
+      DesktopUpdates.current = null;
+    }
     sounds.dispose();
     super.dispose();
   }

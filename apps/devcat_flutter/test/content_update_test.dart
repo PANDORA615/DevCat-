@@ -146,4 +146,19 @@ void main() {
       expect(await ContentUpdateStore(temp, verifier).active(), isNull);
     },
   );
+  test(
+    'A damaged newest snapshot cannot evict the last working rollback',
+    () async {
+      final store = ContentUpdateStore(temp, verifier);
+      await store.install(await verifier.verify(await pack(1)));
+      await store.install(await verifier.verify(await pack(2)));
+      await File(
+        '${temp.path}/versions/2/assets/content/example.json',
+      ).writeAsString('broken');
+      await store.install(await verifier.verify(await pack(3)));
+      expect((await store.active())!.revision, 3);
+      expect(await store.rollback(), isTrue);
+      expect((await store.active())!.revision, 1);
+    },
+  );
 }

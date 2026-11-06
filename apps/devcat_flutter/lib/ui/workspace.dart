@@ -1,3 +1,5 @@
+import 'motion.dart';
+import '../core/project_flush.dart';
 import 'dart:async';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -56,10 +58,18 @@ class _WorkspacePageState extends State<WorkspacePage>
   bool get manual => widget.seed == 0 && widget.lesson?.kind == 'review';
   String? failure;
   String get taskKey => widget.ide ? 'ide.$language' : task.id;
+  void Function()? unregisterSave;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    unregisterSave = ProjectFlush.register(() async {
+      if (!mounted) return;
+      if (busy) {
+        throw StateError('Сначала заверши или останови выполняющийся код.');
+      }
+      await widget.store.draft(taskKey, code.fullText);
+    });
     language = widget.language;
     _configure();
   }
@@ -141,6 +151,7 @@ class _WorkspacePageState extends State<WorkspacePage>
 
   @override
   void dispose() {
+    unregisterSave?.call();
     WidgetsBinding.instance.removeObserver(this);
     debounce?.cancel();
     widget.store.draft(taskKey, code.fullText).catchError((_) {});
@@ -226,7 +237,7 @@ class _WorkspacePageState extends State<WorkspacePage>
       setState(() => compactPane = 2);
       return;
     }
-    showModalBottomSheet<void>(
+    showDevCatSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -549,7 +560,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                   const Icon(Icons.task_alt_rounded),
                 if (compact && !widget.ide)
                   IconButton(
-                    onPressed: () => showModalBottomSheet(
+                    onPressed: () => showDevCatSheet(
                       context: context,
                       isScrollControlled: true,
                       showDragHandle: true,
@@ -812,7 +823,7 @@ class _WorkspacePageState extends State<WorkspacePage>
           )) {
             if (!context.mounted) return;
             widget.sounds.speak(CatMood.explaining);
-            showDialog(
+            showDevCatDialog(
               context: context,
               builder: (context) => AlertDialog(
                 title: Text(manual ? 'Пример из лекции' : 'Эталонное решение'),

@@ -1,3 +1,4 @@
+import 'motion.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../core/cat_chatter.dart';
@@ -99,7 +100,7 @@ class _CompanionBarState extends State<CompanionBar>
 
   void _history() {
     final messages = history.reversed.toList();
-    showDialog<void>(
+    showDevCatDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Разговор с котом'),
@@ -164,7 +165,7 @@ class _CompanionBarState extends State<CompanionBar>
                 tooltip: 'Спросить кота',
                 icon: const Icon(Icons.help_outline_rounded),
                 onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
+                  DevCatRoute(
                     builder: (_) => TutorPage(
                       courses: widget.courses,
                       store: widget.store!,

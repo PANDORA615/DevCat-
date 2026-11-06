@@ -1,3 +1,5 @@
+import 'motion.dart';
+import '../core/project_flush.dart';
 import 'dart:async';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -94,10 +96,18 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
     return result;
   }
 
+  void Function()? unregisterSave;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    unregisterSave = ProjectFlush.register(() async {
+      if (!mounted) return;
+      if (busy) {
+        throw StateError('Сначала заверши или останови выполняющийся код.');
+      }
+      await widget.store.draft('project.${project.id}', project.encode());
+    });
     final saved = projects;
     project = widget.lesson != null
         ? saved
@@ -165,6 +175,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    unregisterSave?.call();
     WidgetsBinding.instance.removeObserver(this);
     feedback.dispose();
     preview.close();
@@ -213,7 +224,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
 
   Future<String?> _text(String title, {String initial = ''}) async {
     final c = TextEditingController(text: initial);
-    final result = await showDialog<String>(
+    final result = await showDevCatDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),
@@ -245,7 +256,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   Future<void> _newProject() async {
     String language = project.language;
     final name = TextEditingController(text: 'Новый проект');
-    final yes = await showDialog<bool>(
+    final yes = await showDevCatDialog<bool>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, update) => AlertDialog(
@@ -367,7 +378,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
   }
 
   Future<void> _importLegacy() async {
-    final chosen = await showDialog<Map<String, dynamic>>(
+    final chosen = await showDevCatDialog<Map<String, dynamic>>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Черновики мастерской 0.1'),
@@ -410,7 +421,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
     final candidates = versions
         .where((d) => d['task'] == 'project.${project.id}')
         .toList();
-    final selected = await showDialog<DevProject>(
+    final selected = await showDevCatDialog<DevProject>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Версии проекта с устройств'),
@@ -860,7 +871,7 @@ class _IdePageState extends State<IdePage> with WidgetsBindingObserver {
             children: [
               if (!wide)
                 IconButton(
-                  onPressed: () => showModalBottomSheet(
+                  onPressed: () => showDevCatSheet(
                     context: context,
                     showDragHandle: true,
                     builder: (_) => SizedBox(height: 420, child: _files()),

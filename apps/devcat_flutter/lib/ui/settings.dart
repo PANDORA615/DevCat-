@@ -1,4 +1,7 @@
+import 'motion.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'updates_page.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -394,6 +397,19 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.system_update_alt_rounded),
+                  title: const Text('Обновления DevCat'),
+                  subtitle: const Text(
+                    'Новые уроки, версия приложения и откат',
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => Navigator.of(context).push(
+                    DevCatRoute(builder: (_) => UpdatesPage(store: store)),
+                  ),
+                ),
               _title(context, Icons.music_note_outlined, 'Кот и тихие звуки'),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -404,7 +420,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 trailing: const Icon(Icons.chevron_right_rounded),
                 onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
+                  DevCatRoute(
                     builder: (_) =>
                         MascotGallery(store: store, sounds: widget.sounds),
                   ),

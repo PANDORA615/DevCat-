@@ -1,7 +1,8 @@
+import 'motion.dart';
+import '../core/learning_assets.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../core/course.dart';
 import '../core/store.dart';
 import '../core/study.dart';
@@ -60,7 +61,7 @@ class _StudyHubState extends State<StudyHub> {
     }
     if (!mounted) return;
     await Navigator.of(context).push<bool>(
-      MaterialPageRoute(
+      DevCatRoute(
         builder: (_) => StudySessionPage(
           topic: topic,
           unit: unit,
@@ -94,7 +95,7 @@ class _StudyHubState extends State<StudyHub> {
             lesson: lesson,
           );
     Navigator.of(context).push(
-      MaterialPageRoute(
+      DevCatRoute(
         builder: (_) => Scaffold(
           appBar: AppBar(title: const Text('Практика в редакторе')),
           body: child,
@@ -104,7 +105,7 @@ class _StudyHubState extends State<StudyHub> {
   }
 
   void _book(Lesson lesson) => Navigator.of(context).push(
-    MaterialPageRoute(
+    DevCatRoute(
       builder: (page) => Scaffold(
         appBar: AppBar(title: const Text('Теория с примерами')),
         body: LectureView(
@@ -120,7 +121,7 @@ class _StudyHubState extends State<StudyHub> {
     ),
   );
 
-  Future<void> _goal() => showModalBottomSheet<void>(
+  Future<void> _goal() => showDevCatSheet<void>(
     context: context,
     showDragHandle: true,
     builder: (sheet) => SafeArea(
@@ -164,7 +165,7 @@ class _StudyHubState extends State<StudyHub> {
 
   void _topic(StudyTopic topic, bool unlocked) {
     final ledger = StudyLedger(widget.store.progress);
-    showModalBottomSheet<void>(
+    showDevCatSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -767,7 +768,7 @@ class GitStudyHub extends StatefulWidget {
 }
 
 class _GitStudyHubState extends State<GitStudyHub> {
-  late final course = rootBundle
+  late final course = LearningAssets.bundle
       .loadString('assets/content/git_course.json')
       .then((s) => Course(jsonDecode(s)));
   @override

@@ -1,3 +1,4 @@
+import 'motion.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../core/course.dart';
@@ -213,7 +214,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                   ),
                   TextButton.icon(
                     onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
+                      DevCatRoute(
                         builder: (_) => TutorPage(
                           courses: [widget.course],
                           store: widget.store,
@@ -319,7 +320,7 @@ class _LectureViewState extends State<LectureView> with WidgetsBindingObserver {
                         LessonVisual(Map<String, dynamic>.from(s['visual'])),
                       if (s['image'] != null)
                         InkWell(
-                          onTap: () => showDialog<void>(
+                          onTap: () => showDevCatDialog<void>(
                             context: context,
                             builder: (_) => Dialog.fullscreen(
                               child: Scaffold(
