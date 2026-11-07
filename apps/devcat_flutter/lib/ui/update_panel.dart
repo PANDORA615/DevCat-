@@ -160,12 +160,23 @@ class _UpdatePanelState extends State<UpdatePanel> {
               onPressed: busy
                   ? null
                   : () async {
-                      await UpdateService.rollback(widget.store);
-                      if (mounted) {
-                        setState(
-                          () => status =
-                              'Восстановлена предыдущая версия. Перезапусти приложение.',
-                        );
+                      setState(() => busy = true);
+                      try {
+                        await UpdateService.rollback(widget.store);
+                        if (mounted) {
+                          setState(
+                            () => status =
+                                'Восстановлена предыдущая версия. Перезапусти приложение.',
+                          );
+                        }
+                      } catch (error) {
+                        if (mounted) {
+                          setState(
+                            () => status = 'Не удалось сохранить откат: $error',
+                          );
+                        }
+                      } finally {
+                        if (mounted) setState(() => busy = false);
                       }
                     },
               child: const Text('Откатить курсы'),

@@ -7,6 +7,12 @@ import 'package:devcat/core/course.dart';
 import 'package:devcat/core/updates.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+class ReadOnlyStore extends AppStore {
+  ReadOnlyStore(super.directory);
+  @override
+  Future<void> save() async => throw const FileSystemException('Read only');
+}
+
 class MemoryHttpClient implements HttpClient {
   final List<int> bytes;
   MemoryHttpClient(this.bytes);
@@ -227,6 +233,19 @@ void main() {
         service.installContent(plan('0.9.3', hash), store),
         throwsFormatException,
       );
+    },
+  );
+  test(
+    'A failed rollback write still permits bundled courses at startup',
+    () async {
+      final root = await Directory.systemTemp.createTemp('devcat-readonly-');
+      addTearDown(() => root.delete(recursive: true));
+      final store = ReadOnlyStore(root);
+      await store.load();
+      store.settings['contentUpdateActive'] = '0.9.3';
+      store.progress.attempt('saved-work', 'python', true);
+      expect(await UpdateService.activeContent(store), isNull);
+      expect(store.progress.solved, contains('saved-work'));
     },
   );
 }

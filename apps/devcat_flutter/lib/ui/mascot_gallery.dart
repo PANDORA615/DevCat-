@@ -96,7 +96,9 @@ class _MascotGalleryState extends State<MascotGallery> {
           listenable: controller,
           builder: (_, _) => Text(
             controller.diagnostic ??
-                '${controller.state}: кадр ${controller.frame + 1}/${controller.clip.frames.length} · ${controller.clip.durationMs} мс',
+                (controller.hasClip
+                    ? '${controller.state}: кадр ${controller.frame + 1}/${controller.clip.frames.length} · ${controller.clip.durationMs} мс'
+                    : 'Статичный образ · клипы не подготовлены'),
           ),
         ),
         Wrap(

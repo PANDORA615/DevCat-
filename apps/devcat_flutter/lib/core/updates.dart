@@ -291,7 +291,11 @@ class UpdateService {
       validateCourses(text);
       return text;
     } catch (_) {
-      await rollback(store);
+      try {
+        await rollback(store);
+      } catch (_) {
+        return null;
+      }
       return store.setting<String?>('contentUpdateActive', null) == null
           ? null
           : activeContent(store);
