@@ -13,6 +13,7 @@ from workshops import build_workshops
 from export_books import export
 from beginner_course import lessons as beginner_lessons
 from web_courses import course as web_course
+from web_sample_assets import write as write_web_asset
 from git_course import course as git_course
 from learning_visuals import enrich as visual_enrich
 from plain_notebook import rewrite as rewrite_notebook
@@ -79,6 +80,7 @@ def sql_lesson(index,t):
     lab=dict(id='sql.'+slug+'.v2',language='sql',title=title,prompt=assignment+'\nСхема: customers(id, name), orders(id, customer_id, amount). Выводи столбцы именно в указанном порядке. Проверка выполняется на двух наборах данных.',starter='-- Напиши SELECT или WITH по условию\n',solution=query,hints=['Определи, что означает одна строка ответа.','Проследи фильтрацию, связь таблиц и обработку NULL на бумаге.','Проверь порядок столбцов и ORDER BY. Эталон доступен после самостоятельной попытки.'],tests=[]) if automatic else None
     return dict(id='sql.'+slug,title=title,chapter=f'{index//7+1:02} · '+['Основы запросов','Агрегация и связи','Подзапросы и множества','Оконные вычисления','Схема и изменения','Надёжность и проекты'][min(index//7,5)],kind='authored' if lab else 'review',sections=sections,theory='\n\n'.join(s['text'] for s in sections),examples=[query],mistakes=['Не полагайся на порядок без ORDER BY.','Проверь NULL, кратность связей и независимые данные.'],questions=['Что означает одна строка результата?','Как поведёт себя запрос на пустых данных и NULL?','Какая независимая проверка отличит верный запрос от случайного совпадения?'],assignment=assignment,challenge=lab,photo='data.png',photoCaption='Сгенерированная фотография картотеки: аналогия записей и связей, а не внутреннего хранения SQLite.',checklist=['Я объяснил контракт результата.','Я проверил запрос на независимых данных.','Я могу изменить запрос под новое требование.'],minutes=40 if index<27 else 75)
 def main():
+    write_web_asset()
     courses=[]
     for lang,(version,subtitle,source) in META.items():
         lessons=[sql_lesson(i,t) for i,t in enumerate(SQL)] if lang=='sql' else [foundation(lang,i,t) for i,t in enumerate(FOUNDATIONS)]+[specialized(lang,i,t) for i,t in enumerate(SPECIAL[lang])]

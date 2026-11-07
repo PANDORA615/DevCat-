@@ -71,6 +71,25 @@ class MascotCatalog {
       if (e.value['kind'] != 'views')
         e.key: CatClip(e.key, Map<String, dynamic>.from(e.value)),
   };
+
+  /// Additional clips are separate from the unchanged uploaded v5 contract.
+  static final appearanceClips = <String, Map<String, CatClip>>{
+    'student': clips,
+    for (final entry
+        in (jsonDecode(mascotAppearanceAnimationsJson)['appearances']
+                as Map<String, dynamic>)
+            .entries)
+      entry.key: {
+        for (final state in (entry.value as Map<String, dynamic>).entries)
+          state.key: CatClip(state.key, Map<String, dynamic>.from(state.value)),
+      },
+  };
+  static Map<String, CatClip> clipsFor(String appearanceId) =>
+      appearanceClips[appearanceId] ?? const {};
+  static String restAsset(String appearanceId) =>
+      clipsFor(appearanceId)['idle']?.frames.first ??
+      appearance(appearanceId).asset;
+
   static CatAppearance appearance(String id) => appearances.firstWhere(
     (a) => a.id == id,
     orElse: () => appearances.first,
@@ -97,9 +116,13 @@ class CatAnimationController extends ChangeNotifier {
   bool paused = false;
   String? diagnostic, correlationId;
   bool _disposed = false;
-  CatAnimationController({this.appearanceId = 'beginner'});
-  CatClip get clip => MascotCatalog.clips[state]!;
-  bool get hasClip => appearanceId == 'student';
+  CatAnimationController({String appearanceId = 'beginner'})
+    : appearanceId = MascotCatalog.appearance(appearanceId).id;
+  Map<String, CatClip> get availableClips =>
+      MascotCatalog.clipsFor(appearanceId);
+  CatClip get clip => availableClips[state] ?? MascotCatalog.clips['idle']!;
+  bool get hasClip => availableClips.containsKey(state);
+  String get restAsset => MascotCatalog.restAsset(appearanceId);
   int get frame => hasClip ? clip.frameAt(elapsedMs) : 0;
   String get asset => hasClip
       ? clip.frames[frame]
@@ -112,19 +135,20 @@ class CatAnimationController extends ChangeNotifier {
 
   bool play(String id, {String? correlation, bool force = false}) {
     final requested = MascotCatalog.clips[id];
+    final available = availableClips[id];
     if (_disposed || requested == null) return false;
     if (!force && requested.priority < clip.priority && state != 'idle') {
       return false;
     }
     correlationId = correlation;
-    diagnostic = hasClip
+    diagnostic = available != null
         ? null
         : 'Клип «${requested.title}» не подготовлен для выбранной внешности';
-    state = hasClip ? id : 'idle';
+    state = available != null ? id : 'idle';
     elapsedMs = 0;
     paused = false;
     notifyListeners();
-    return hasClip;
+    return available != null;
   }
 
   void advance(int milliseconds) {
@@ -156,6 +180,7 @@ class CatAnimationController extends ChangeNotifier {
     state = 'idle';
     elapsedMs = 0;
     correlationId = null;
+    diagnostic = null;
     if (!_disposed) notifyListeners();
   }
 
@@ -177,14 +202,24 @@ class CatAnimationController extends ChangeNotifier {
   }
 }
 
-String catStateForMood(CatMood mood) => switch (mood) {
-  CatMood.greeting => 'greeting',
-  CatMood.explaining => 'explaining',
-  CatMood.thinking => 'thinking',
-  CatMood.encouragement => 'happy',
-  CatMood.celebration => 'celebrating',
-  CatMood.warning => 'failure',
-};
+String catStateForMood(CatMood mood, {String appearanceId = 'student'}) {
+  final preferred = switch (mood) {
+    CatMood.greeting => 'greeting',
+    CatMood.explaining => 'explaining',
+    CatMood.thinking => 'thinking',
+    CatMood.encouragement => 'happy',
+    CatMood.celebration => 'celebrating',
+    CatMood.warning => 'failure',
+  };
+  if (MascotCatalog.clipsFor(appearanceId).containsKey(preferred)) {
+    return preferred;
+  }
+  return switch (mood) {
+    CatMood.greeting || CatMood.encouragement || CatMood.celebration => 'happy',
+    CatMood.explaining || CatMood.thinking => 'thinking',
+    CatMood.warning => 'error',
+  };
+}
 
 class MascotScope extends InheritedWidget {
   final String appearanceId;

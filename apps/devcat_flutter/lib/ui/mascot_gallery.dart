@@ -33,7 +33,7 @@ class _MascotGalleryState extends State<MascotGallery> {
       padding: const EdgeInsets.all(24),
       children: [
         const Text(
-          'Проверочный пакет v5: графика требует ручной доводки. Анимации подготовлены только для «Ученика».',
+          'У Ученика — 31 действие. У остальных образов — 6 базовых анимаций. Созданные кадры проходят визуальную проверку; отсутствующие действия отмечены отдельно.',
         ),
         const SizedBox(height: 16),
         DropdownButtonFormField<String>(
@@ -58,7 +58,9 @@ class _MascotGalleryState extends State<MascotGallery> {
               .map(
                 (c) => DropdownMenuItem(
                   value: c.id,
-                  child: Text('${c.title} · ${c.id}'),
+                  child: Text(
+                    '${c.title} · ${c.id}${MascotCatalog.clipsFor(controller.appearanceId).containsKey(c.id) ? '' : ' · нет кадров'}',
+                  ),
                 ),
               )
               .toList(),

@@ -34,8 +34,11 @@ jobs:
         with:
           node-version: '22'
       - run: sudo apt-get update && sudo apt-get install -y clang libsqlite3-dev
-      - name: Verify supplied mascot assets
-        run: python3 scripts/verify_mascot_assets.py
+      - name: Verify supplied and generated mascot assets
+        run: |
+          python3 -m pip install -r scripts/requirements-assets.txt
+          python3 scripts/verify_mascot_assets.py
+          python3 scripts/verify_appearance_animations.py
       - name: Initialize .NET before concurrent compiler tests
         run: dotnet --version
       - working-directory: apps/devcat_flutter
@@ -44,7 +47,7 @@ jobs:
           dart format --output=none --set-exit-if-changed lib test
           flutter analyze
           DEVCAT_REQUIRE_ALL_TOOLCHAINS=true flutter test --reporter expanded --concurrency=2
-      - run: python3 scripts/write_content.py && python3 -m unittest discover -s scripts -p 'test_*.py' -v && git diff --exit-code -- content apps/devcat_flutter/assets/content docs/textbooks docs/DevCat-lectures.zip
+      - run: python3 scripts/write_content.py && python3 -m unittest discover -s scripts -p 'test_*.py' -v && git diff --exit-code -- content apps/devcat_flutter/assets/content apps/devcat_flutter/lib/core/web_sample_assets.dart docs/textbooks docs/DevCat-lectures.zip
   desktop:
     needs: test
     strategy:

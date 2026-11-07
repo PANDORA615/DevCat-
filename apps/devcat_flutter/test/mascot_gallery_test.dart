@@ -54,10 +54,14 @@ void main() {
       await tester.pumpAndSettle();
       await tester.runAsync(
         () => precacheImage(
-          const ResizeImage(
-            AssetImage('assets/mascot/models/evolution/beginner.png'),
-            width: 240,
-          ),
+          tester
+              .widget<Image>(
+                find.descendant(
+                  of: find.byType(CatActor),
+                  matching: find.byType(Image),
+                ),
+              )
+              .image,
           boundary.currentContext!,
         ),
       );

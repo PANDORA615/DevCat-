@@ -81,13 +81,74 @@ void main() {
     expect(c.state, 'idle');
     expect(c.elapsedMs, 0);
   });
-  test('Missing costume animations never change the selected cat', () {
+  test('Unsupported actions retain the selected costume and its idle clip', () {
     final c = CatAnimationController(appearanceId: 'pirate');
     addTearDown(c.dispose);
-    expect(c.play('talk'), false);
+    expect(c.play('walk'), false);
     expect(c.appearanceId, 'pirate');
-    expect(c.asset, contains('costumes/pirate.png'));
+    expect(c.asset, contains('animations/pirate/idle/'));
     expect(c.diagnostic, isNotNull);
+  });
+  test('All 15 appearances have their own six minimum clips', () {
+    for (final appearance in MascotCatalog.appearances) {
+      final clips = MascotCatalog.clipsFor(appearance.id);
+      for (final state in [
+        'idle',
+        'blink',
+        'talk',
+        'happy',
+        'thinking',
+        'error',
+      ]) {
+        expect(clips, contains(state), reason: '${appearance.id}/$state');
+        final c = CatAnimationController(appearanceId: appearance.id);
+        expect(c.play(state), true);
+        expect(c.asset, contains('animations/${appearance.id}/$state/'));
+        c.advance(clips[state]!.durations.first);
+        expect(c.frame, 1);
+        expect(c.appearanceId, appearance.id);
+        c.dispose();
+      }
+    }
+  });
+  testWidgets('MediaQuery changes and hidden tabs never restart old speech', (
+    tester,
+  ) async {
+    Widget app({double ratio = 1, bool visible = true}) => MaterialApp(
+      home: MediaQuery(
+        data: MediaQueryData(devicePixelRatio: ratio),
+        child: TickerMode(
+          enabled: visible,
+          child: const CatActor(
+            size: 100,
+            speech: 'Кот объясняет длинную реплику, сохраняя текущую фазу.',
+          ),
+        ),
+      ),
+    );
+    await tester.pumpWidget(app());
+    final c =
+        tester
+                .widget<ListenableBuilder>(
+                  find
+                      .descendant(
+                        of: find.byType(CatActor),
+                        matching: find.byType(ListenableBuilder),
+                      )
+                      .first,
+                )
+                .listenable
+            as CatAnimationController;
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(c.state, 'talk');
+    final elapsed = c.elapsedMs;
+    await tester.pumpWidget(app(ratio: 2));
+    expect(c.elapsedMs, elapsed);
+    await tester.pumpWidget(app(ratio: 2, visible: false));
+    expect(c.state, 'idle');
+    await tester.pumpWidget(app(ratio: 2));
+    expect(c.state, 'idle');
+    await tester.pumpWidget(const SizedBox.shrink());
   });
   test('Speech budget ignores punctuation and bounds long utterances', () {
     final b = SpeechBudget();

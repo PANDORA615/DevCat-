@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/mascot.dart';
 import '../core/sound.dart';
 
-/// PNG frames are supplied by the v5 archive; no poster slicing at runtime.
+/// Original v5 and exported appearance PNGs; no atlas slicing at runtime.
 class CatActor extends StatefulWidget {
   final double size;
   final CatMood mood;
@@ -40,19 +40,30 @@ class _CatActorState extends State<CatActor> with WidgetsBindingObserver {
     super.didChangeDependencies();
     reduced = MediaQuery.disableAnimationsOf(context);
     visible = TickerMode.valuesOf(context).enabled;
-    if (widget.controller == null) {
-      controller.selectAppearance(
-        widget.appearanceId ?? MascotScope.of(context),
-      );
-    }
-    _react();
+    final identity = widget.appearanceId ?? MascotScope.of(context);
+    final changed =
+        widget.controller == null && controller.appearanceId != identity;
+    if (widget.controller == null) controller.selectAppearance(identity);
+    if (!initialized || changed) _react();
+    initialized = true;
+    if (!visible && widget.speech != null) controller.cancel();
     _schedule();
   }
 
   @override
   void didUpdateWidget(CatActor oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.appearanceId != widget.appearanceId) {
+    if (oldWidget.controller != widget.controller) {
+      if (oldWidget.controller == null) controller.dispose();
+      controller =
+          widget.controller ??
+          CatAnimationController(
+            appearanceId: widget.appearanceId ?? MascotScope.of(context),
+          );
+      _react();
+    }
+    if (widget.controller == null &&
+        oldWidget.appearanceId != widget.appearanceId) {
       controller.selectAppearance(
         widget.appearanceId ?? MascotScope.of(context),
       );
@@ -71,7 +82,12 @@ class _CatActorState extends State<CatActor> with WidgetsBindingObserver {
     blinkAt = 4000;
     controller.play(
       widget.action ??
-          (widget.speech != null ? 'talk' : catStateForMood(widget.mood)),
+          (widget.speech != null
+              ? 'talk'
+              : catStateForMood(
+                  widget.mood,
+                  appearanceId: controller.appearanceId,
+                )),
       force: true,
     );
   }
@@ -103,6 +119,8 @@ class _CatActorState extends State<CatActor> with WidgetsBindingObserver {
     foreground = state == AppLifecycleState.resumed;
     if (!foreground) {
       controller.pause();
+    } else if (widget.controller != null || widget.speech == null) {
+      controller.resume();
     } else {
       controller.cancel();
     }
@@ -127,9 +145,7 @@ class _CatActorState extends State<CatActor> with WidgetsBindingObserver {
       child: ListenableBuilder(
         listenable: controller,
         builder: (context, _) => Image.asset(
-          reduced
-              ? MascotCatalog.appearance(controller.appearanceId).asset
-              : controller.asset,
+          reduced ? controller.restAsset : controller.asset,
           fit: BoxFit.contain,
           filterQuality: FilterQuality.none,
           cacheWidth: (widget.size * MediaQuery.devicePixelRatioOf(context))
@@ -141,6 +157,11 @@ class _CatActorState extends State<CatActor> with WidgetsBindingObserver {
             filterQuality: FilterQuality.none,
             cacheWidth: (widget.size * MediaQuery.devicePixelRatioOf(context))
                 .ceil(),
+            errorBuilder: (_, _, _) => Center(
+              child: Text(
+                MascotCatalog.appearance(controller.appearanceId).title,
+              ),
+            ),
           ),
         ),
       ),

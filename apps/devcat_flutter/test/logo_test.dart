@@ -31,7 +31,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.runAsync(
         () => precacheImage(
-          const ResizeImage(AssetImage('assets/branding/icon.png'), width: 64),
+          tester.widget<Image>(find.byType(Image)).image,
           key.currentContext!,
         ),
       );

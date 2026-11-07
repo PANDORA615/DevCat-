@@ -1,0 +1,3233 @@
+{
+  "schemaVersion": 1,
+  "frameSize": [
+    128,
+    128
+  ],
+  "appearances": {
+    "architect": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/architect/idle/000.png",
+          "animations/architect/idle/001.png",
+          "animations/architect/idle/002.png",
+          "animations/architect/idle/003.png"
+        ],
+        "frameSha256": [
+          "0a02c642f2660adc578fe02df4d29f72773f70cb43691331014f26aba6000b92",
+          "5ee246a0068780928bc3dbd71e123f60fe4ccef71a04ce3d24228dc26df191c5",
+          "2d7672dad357ab080bd70e2c06ed8a51c14fa595cea26871cbcb36810bf602e5",
+          "081a47f50d65fd157ae5a1c8e5a77a575d0dcd6005e5c61502a5e4a1bf39874b"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "architect",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/architect.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/architect/blink/000.png",
+          "animations/architect/blink/001.png",
+          "animations/architect/blink/002.png",
+          "animations/architect/blink/003.png"
+        ],
+        "frameSha256": [
+          "e03778ea94feb0a408b9378aac04c1bc39783961a69cf97dba859393b94846ab",
+          "e6f624298b87b09207cc09e3dd4548ad7804edb04e4e19376521ff955841548e",
+          "e52e25b9ed16efda960460e008d199214de8d9bc864da236a1e40c607f02eaf7",
+          "40c73f04abd22432e56ddcbb19a048279075f13c9b88c3287876b5918ca8ef95"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "architect",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/architect.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/architect/talk/000.png",
+          "animations/architect/talk/001.png",
+          "animations/architect/talk/002.png",
+          "animations/architect/talk/003.png",
+          "animations/architect/talk/004.png",
+          "animations/architect/talk/005.png",
+          "animations/architect/talk/006.png",
+          "animations/architect/talk/007.png"
+        ],
+        "frameSha256": [
+          "9813ad6fdb60c00b09e9880c71698bfc742aee986955e5e5e5c303ca40e4240f",
+          "7be47cc379391dc846f4c61894085568af162a7a92c409d0ffe0afba807f1408",
+          "d58fa7a3b19d2ad4cc29982570ea773924f5dc6a75014ca0b13bce30adf337d8",
+          "c7534c158b56b92c03a9a427fbb0167e943eeb9047b184766a39a6f81ff05b7e",
+          "ded95d148849c3193b279f86d518bebb17644960fbdcbd534fccef02edee51fa",
+          "76d05c0080f397740c716812ff413d12ac534ed2f46de1da78f0ec13b791e88c",
+          "a934f33d88879a04c6e27ec3604225541c1da6a3b7bc964da2d99a626d2a8981",
+          "33ead619f442cacf26ec1def616ca204a48b5175dc7af58ee420c038927e2515"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "architect",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/architect.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/architect/happy/000.png",
+          "animations/architect/happy/001.png",
+          "animations/architect/happy/002.png",
+          "animations/architect/happy/003.png"
+        ],
+        "frameSha256": [
+          "3645105c99216013e63db5e893438de4a5b49a01d5b2730645e90477f78c8272",
+          "054852d14389cc58817dcf0bc8cade06265aaf769de20a77994c9ab5b1ea7f89",
+          "5f633e564eabb9d9dae19817a4c82055518dbc9f436be0430a2b0cec546d6763",
+          "05a80e331b28fc80505e1308acb07654c1bfdf2b07701d6cd45cfd850c0675e2"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "architect",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/architect.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/architect/thinking/000.png",
+          "animations/architect/thinking/001.png",
+          "animations/architect/thinking/002.png",
+          "animations/architect/thinking/003.png"
+        ],
+        "frameSha256": [
+          "a5334913843e132d5fd01882e5cf23b86808369cbeb803dbcee1cd6a49536c14",
+          "94fe4070665a34933df19d86d233516eb788d2a792169b82d0ccdf954f48b6c0",
+          "da43bb8f7d777fb3bdce9703231f41bec660a85b4f94446c85641ce9b56d44cb",
+          "22ec9af3611f6978430f76a6e589ad9526c02535d8bb1eaacd98e25be21bfd64"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "architect",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/architect.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/architect/error/000.png",
+          "animations/architect/error/001.png",
+          "animations/architect/error/002.png",
+          "animations/architect/error/003.png"
+        ],
+        "frameSha256": [
+          "82139c5c6080081a122f92a03d2147263bb08433574f9724cc87e1a1db791eb8",
+          "088bcd64a233d0815e843eed59ad1f9c5c1b22feda9bd97bc2c9c80768b18241",
+          "9e66142a7899bc0a6347e3fca76aec1ef07f29dca1ae6e2e00e2da8065666bcc",
+          "1f8e78eb9c12b215d786f90d63e7ca2f0372857f1bfa7ff3bddfe7cb1b599def"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "architect",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/architect.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "beginner": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/beginner/idle/000.png",
+          "animations/beginner/idle/001.png",
+          "animations/beginner/idle/002.png",
+          "animations/beginner/idle/003.png"
+        ],
+        "frameSha256": [
+          "6d243f401cbcc1ea9c087c18328d793267847ebf4267b801919b528cafdbdad7",
+          "5643905b9d1e778e95f2264c686f91b73778dceaf4682a071f47f8f041a145fe",
+          "ae0e427938ad166d1e7883e75884ce0082f19a023394a66034379145babe99ff",
+          "79300714f2285b43dc2870c3217b502303a28ff37cd477f3b9d74f264af457d0"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "beginner",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/beginner.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/beginner/blink/000.png",
+          "animations/beginner/blink/001.png",
+          "animations/beginner/blink/002.png",
+          "animations/beginner/blink/003.png"
+        ],
+        "frameSha256": [
+          "76ee257df475ca7b31d059bfa7aa042d5e4b576c5db48d80b2ba94da625475f4",
+          "d93225320aa6166a61a2ee055875968a54c7378e3c10fcc6ea9d7dc7ec88e422",
+          "ca75d475e0a640394d249870ced07df84f5f59b54c1021e1b30646aa285a4eb1",
+          "dcfa96b029396d8bb948c6a2fa64537f542d510eb5b9cd7da5866cb34c2d12bf"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "beginner",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/beginner.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/beginner/talk/000.png",
+          "animations/beginner/talk/001.png",
+          "animations/beginner/talk/002.png",
+          "animations/beginner/talk/003.png",
+          "animations/beginner/talk/004.png",
+          "animations/beginner/talk/005.png",
+          "animations/beginner/talk/006.png",
+          "animations/beginner/talk/007.png"
+        ],
+        "frameSha256": [
+          "39d5182f1aaf753ddab26d447e0c718e4e8b4077557e99b704309a4ace5421e1",
+          "5a5da10544da7765739f36bf288a189096d44067c97627d5ce8b49224c3a1424",
+          "d6f392837802db003c6273f1cdbdf36514ee28b71ca08379219c1c3233a63ade",
+          "fb9ea53e3e82fb44ff3dad57ad05e176a658200366af3ecc9ee0f2e2771fb862",
+          "f82d9c36bbec13aac99b2692c9d7a76a64e19375a1683adcfec6e1faaeac9636",
+          "5bbafa7b9d7558f001eb78989b73fc0d1e7830b1d6c0239a2aefef5555d93b83",
+          "1e19b9a30c281117d136e2d967e87f25d8492a672cae341e097f66e16ce2dbfe",
+          "f97986fab3a71b77942a37e5e9e3fd8a99cb9a6adac4ce1f4f3640b8a6548805"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "beginner",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/beginner.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/beginner/happy/000.png",
+          "animations/beginner/happy/001.png",
+          "animations/beginner/happy/002.png",
+          "animations/beginner/happy/003.png"
+        ],
+        "frameSha256": [
+          "7dea4da1ca079088ad192635cc2507d476bf26782f12cbf1e89c15a9fc67e7d8",
+          "5152f0562d5cdb0b79bde859f3a44776cc64c78c2247e89ed89367d4f79fca4c",
+          "06f881aa49e2c20e0f84c0867b3215593f9877caa320f0799795446326cae681",
+          "5671b2db49fa58b84a3aab49753dd87070595e92212df4a0681b22fcbfe499a0"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "beginner",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/beginner.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/beginner/thinking/000.png",
+          "animations/beginner/thinking/001.png",
+          "animations/beginner/thinking/002.png",
+          "animations/beginner/thinking/003.png"
+        ],
+        "frameSha256": [
+          "48a40375f615d5ada905f92d449aeb8513d3697d00c6bf5d938f0d756592e127",
+          "830ba0bd83ef405d43f76ffe758ed55ebf664a874d06ddfb9443cba1a5fc0e71",
+          "13ad68be1a7745128a6a41adff327dd7e50e271a1028d72a27227e8818973a35",
+          "8554afa7f54823892755a52ab003e32c5540fcccf242fdf67b8258346d851651"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "beginner",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/beginner.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/beginner/error/000.png",
+          "animations/beginner/error/001.png",
+          "animations/beginner/error/002.png",
+          "animations/beginner/error/003.png"
+        ],
+        "frameSha256": [
+          "89c6e4413291fcfa8bb249e15db31caedbbda0fa91252ed012485a0f1d0ec124",
+          "e3d5704a9c7c9a859fefa1df6b648f16ddbdd50ee2cdd3a58fde6192ceebb3a8",
+          "8c82bb876be8928a0c55a4c5e4bbd0c2cf0b4b16d1cd2c1b8c0d738b6c3255cb",
+          "e1ad9011a776b7c2616d0627693b9ae4b68846feabb7b94a67f8877d121abbcd"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "beginner",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/beginner.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "cyberpunk": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/cyberpunk/idle/000.png",
+          "animations/cyberpunk/idle/001.png",
+          "animations/cyberpunk/idle/002.png",
+          "animations/cyberpunk/idle/003.png"
+        ],
+        "frameSha256": [
+          "6fc049cc1b25de0dd2bff8d90106fb016c741a5f49fd6b5be2774f8ab4e8dfa8",
+          "4cdf18e633a9b304cccfecae2ca27e54ab94496a169b90a5b193d1b7ddbca51c",
+          "378e0d9eed837968245f2a18c8ef6aa8bdb5e8c4ef6a648157f4402b07261ca8",
+          "040c2198f7f941a9da377baba43d4cc29c26743acc45d5063a353b01efc9083b"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "cyberpunk",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/cyberpunk.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/cyberpunk/blink/000.png",
+          "animations/cyberpunk/blink/001.png",
+          "animations/cyberpunk/blink/002.png",
+          "animations/cyberpunk/blink/003.png"
+        ],
+        "frameSha256": [
+          "59f4d25dc9d205b1bb591b2fa8e34b6c956d27f45bcdf60ab991c79f8e773628",
+          "d94ca85a45beba58dbc14d2dae1066bfc41925d794cbd1ccd1715f5ee15ec61d",
+          "fd0254d672d9916a7125c8c2218920e9c1c99c16d8955621366ac2187e0dfe4b",
+          "adab5d78b1cc6d4a075ed0915967e26f46ce4cc2b4d15c03a6a1e90cd48b10f6"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "cyberpunk",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/cyberpunk.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/cyberpunk/talk/000.png",
+          "animations/cyberpunk/talk/001.png",
+          "animations/cyberpunk/talk/002.png",
+          "animations/cyberpunk/talk/003.png",
+          "animations/cyberpunk/talk/004.png",
+          "animations/cyberpunk/talk/005.png",
+          "animations/cyberpunk/talk/006.png",
+          "animations/cyberpunk/talk/007.png"
+        ],
+        "frameSha256": [
+          "1faafb9168e0f780f1c2a3a3ca9a2e879fa30bb441bba4dccf0d6025ffe1bc1e",
+          "8d22367b08b9e7ccd824b1cbf5956168c2e8293a222a6cf6904e09003b06d9d8",
+          "339e3dd004f512da57f4740fd9735f3da19e7898b6b4206aa9994544b6e3629d",
+          "f3b7462b4f564b418f8b5de24f27d8643e4abe61c0f657f0e7b7b8335ee7559c",
+          "0c4a801d4fcfe3c09972c02f9ba3d4518136dc1aabafe9dec4df7a9ecc582bd9",
+          "07d1fd2ff619dfad2fc483e6ec3c90f3c6f99b0e5d16c56c15e019aea5d93f07",
+          "b0fca86eb1f59cb5221ed0ffbb6223c3ab90d116e623a23c8837c2f066d3a045",
+          "95b50375d445d10aa39cbb80d3608545fc0baf875ea54c73f08f134a80973c45"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "cyberpunk",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/cyberpunk.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/cyberpunk/happy/000.png",
+          "animations/cyberpunk/happy/001.png",
+          "animations/cyberpunk/happy/002.png",
+          "animations/cyberpunk/happy/003.png"
+        ],
+        "frameSha256": [
+          "5dd73663881fbca0c6569f659c57ad4fe916ab875e2d05fc547503926f5eaabe",
+          "0a2e9a3ad22a1b24aef5ccbab4e58359685ce3a09a1c8fb189bc8e90fe816770",
+          "0f72788dd60329cf1b2d70d7d2bcc35c60ad651a64686124ed26abd0712d3520",
+          "d82bea6eebd7dc7eb8b3e61977c0304b03350406d7b4904810077cce551de295"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "cyberpunk",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/cyberpunk.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/cyberpunk/thinking/000.png",
+          "animations/cyberpunk/thinking/001.png",
+          "animations/cyberpunk/thinking/002.png",
+          "animations/cyberpunk/thinking/003.png"
+        ],
+        "frameSha256": [
+          "8c88964c11cfe57cd27f5d4d7a5ec341e15cda6e43de3d351e450852b0bb43fc",
+          "265ee7bdc67b19ea9cd82567681053673a3f7093575f463acc686ae935d1d811",
+          "fc71d3c2d6f6e23ccb753ace1210d1978d14466666db9ab86510112f5e0bfb2f",
+          "ffda41f38fbe95cc422a4b552fd142636cdd009367f0d7adf2ba99b68da6a117"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "cyberpunk",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/cyberpunk.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/cyberpunk/error/000.png",
+          "animations/cyberpunk/error/001.png",
+          "animations/cyberpunk/error/002.png",
+          "animations/cyberpunk/error/003.png"
+        ],
+        "frameSha256": [
+          "16503d4973bed71822d9a68689d29394037339da2ec4b026bf4611dc04425887",
+          "468654e0adc3f6abc993c1edd833a9f79431adf1eee05508c7606ea49108d911",
+          "63d9c889c25cbec162281168235d679b41245ea91bd9db90ba4831d4d6827d01",
+          "f4a28e7b0f9ce961035d1831aeef201d226d7aac878798dd7417385c03058208"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "cyberpunk",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/cyberpunk.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "developer": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/developer/idle/000.png",
+          "animations/developer/idle/001.png",
+          "animations/developer/idle/002.png",
+          "animations/developer/idle/003.png"
+        ],
+        "frameSha256": [
+          "eb61de76579119604290b032837f2a5264bc911538b426a1459d9bee1a13018c",
+          "9c8f6d5a5b8285b33550626555de0294376a6811670c4c8c4fafb86930e02c40",
+          "4bb9963e29bf0b3832fce0affe98485545a359aaef6eb096ddf48bdcd6c4b9a4",
+          "bc9b433f4a01fa0d252bc5c1cc322942377beb1fb544b7e4207848764439aa53"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "developer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/developer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/developer/blink/000.png",
+          "animations/developer/blink/001.png",
+          "animations/developer/blink/002.png",
+          "animations/developer/blink/003.png"
+        ],
+        "frameSha256": [
+          "a035111a2c5c2386a167e6d96b9d3ce16b16269173d54b1a1ce3aceeb5043ac0",
+          "171d7fc8ed1a29f3f349e422d584a5f2f27c62d57b5a30b78b138982ffffdf06",
+          "58089dec63e306e6cb1f7f788a6ceeca36df5ba0ea61ec33f0fa9289411087c1",
+          "9b3e11773418a1bb9c70714018d002ba4da8366bf8c9536c4931bdefb4bfa126"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "developer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/developer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/developer/talk/000.png",
+          "animations/developer/talk/001.png",
+          "animations/developer/talk/002.png",
+          "animations/developer/talk/003.png",
+          "animations/developer/talk/004.png",
+          "animations/developer/talk/005.png",
+          "animations/developer/talk/006.png",
+          "animations/developer/talk/007.png"
+        ],
+        "frameSha256": [
+          "d8f5b2d62fbd8dca3975d6f3c6eaceb24ba300bcad6ee6fc602f9084366b7dd7",
+          "d1b8f0311892d9a991493e2ac7c48aa58142f4fdadfb187c76ae57ca258beac3",
+          "00b4a3fb5e90614422aa0fc880da82045595d8836bfc2986bcedbd35f61f77cb",
+          "4d89fb9d8b5694d08f3517e60746fd4229c51d40b305a8ef9352123e08732bcf",
+          "6050e2b84f33a149cc49604a6adacf2d122a4d21f6b163216dfa843c04584708",
+          "8990317447d93781f31c66a1da60f7a689d99d5715af21fadc81e3c7f0a371c5",
+          "d19e25d09515c4d2dad2cdfba4a2d03b6b0d6b5b16ff760482de65a0ed61a789",
+          "9c7a3db7d4229d4012c710ea951fa067f4bcc84ffeee806b0dc33cba440f8b35"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "developer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/developer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/developer/happy/000.png",
+          "animations/developer/happy/001.png",
+          "animations/developer/happy/002.png",
+          "animations/developer/happy/003.png"
+        ],
+        "frameSha256": [
+          "bbfb9c2189ab940187504f1c2a5bdb08e909035910a98b24b04ec1463712fed9",
+          "c9b6bcc3b3089c1b2db859667b4785c8513766d39e72100e7cf342e3f58f1b3d",
+          "b2e91126178a2b7b63d7d1e7631e935b5899d3c4031945c32c70245c3a86d3b7",
+          "aca987bff85bac1d594704e319699d46a6b1d5ceb3789c7e1c03a07259e55130"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "developer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/developer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/developer/thinking/000.png",
+          "animations/developer/thinking/001.png",
+          "animations/developer/thinking/002.png",
+          "animations/developer/thinking/003.png"
+        ],
+        "frameSha256": [
+          "d27ee7ce7c9327609731cda4c6a0cea3a52af44022f185506cf06c6e0552b314",
+          "30e93891e241788b11b1a4961bea2fc79af14abed0dc053a51706c0a12d96513",
+          "27cc497dba380999f9afe8636c9f0551b72492eec870c51541c16cdd2cc96364",
+          "10ba4e00b290f8b5278f3e283cf786c4d4d12dbcbc827a6b201cc12c50a831a8"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "developer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/developer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/developer/error/000.png",
+          "animations/developer/error/001.png",
+          "animations/developer/error/002.png",
+          "animations/developer/error/003.png"
+        ],
+        "frameSha256": [
+          "8324b5b293e09fb4ea348cd10439b3717e4ced2d2eb6ae519369c677845e32d5",
+          "27c0d9b14e5b44b7a28548b2759fb060c439d42404388e5ec7ec97ce19559c1e",
+          "dff711d919f398aecfb5974c3e9fd6d441217e2b54478aaddbfd0081b9be2da4",
+          "27c9c08546c14a864501f7d8ecbf4b75009108bdf96ad4e850c9f8f8c4ad3026"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "developer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/developer.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "engineer": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/engineer/idle/000.png",
+          "animations/engineer/idle/001.png",
+          "animations/engineer/idle/002.png",
+          "animations/engineer/idle/003.png"
+        ],
+        "frameSha256": [
+          "e68010e836158302c90a3eb79cb0a7f02a7c4a49aaa0b3384afec9c837cdf24b",
+          "24d1f8b59d2079e43e0521ad54c4fc92e3b2e84bd9532eaa21f5d2d6a041984b",
+          "840756cef1af8c8afb0594486fe9ec5ef5453d813898468590a3a1f7eee865dd",
+          "8b0683d097982b31945c97971e34dfaa56b4f2cd37dbac858158f89a355a429a"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "engineer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/engineer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/engineer/blink/000.png",
+          "animations/engineer/blink/001.png",
+          "animations/engineer/blink/002.png",
+          "animations/engineer/blink/003.png"
+        ],
+        "frameSha256": [
+          "d27aa5a2e92051054a9baaa8304dc842f8d541b685eee924be2f440f7670235e",
+          "c0a989f9d88efc9b80254e9964e5c36c8e067dcdd1cbbf5f3da2cffa5c31eb97",
+          "3867ac34129cce1b3e6754b0c95e9e60fca2e69581d30de3c24997009ea8b1a7",
+          "3cf8f6b8c8f3dde7a56135fe4ad91b48d441d461730fff00df35b317626e878b"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "engineer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/engineer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/engineer/talk/000.png",
+          "animations/engineer/talk/001.png",
+          "animations/engineer/talk/002.png",
+          "animations/engineer/talk/003.png",
+          "animations/engineer/talk/004.png",
+          "animations/engineer/talk/005.png",
+          "animations/engineer/talk/006.png",
+          "animations/engineer/talk/007.png"
+        ],
+        "frameSha256": [
+          "9946e86b578a264a780a1a960ac64cc931ff54446fa48c5b43e4f670a6eb66e2",
+          "4c716d18e936f8eabdb1c3127e04c4ea83460c668d3a6ea979474e4acb88000b",
+          "8c8166b6e06dd38b0e974cdac6a1e60858088ea677accc0baaa161bb04f3a434",
+          "a6fa3a641ed20a8792d8b6ce79f46453f2f6423035e3daa12b70614c43f9bba7",
+          "468a8cf28cc73ab18be997eab352b3cd2fcc84b3e1bb92b363ab6e3064ecf316",
+          "5c0477ca1c60ff2b75c01b7a9efba022e845478d0ee967e0e16c0979b61543c8",
+          "56923e6f088694e6d44b06648413eef5c04e70f6d74541c29eda73da39a80e0d",
+          "e5bade3c3fe75b652aa63762c15c00a97cb969ee62f21b8aa19dd0a9e5e62659"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "engineer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/engineer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/engineer/happy/000.png",
+          "animations/engineer/happy/001.png",
+          "animations/engineer/happy/002.png",
+          "animations/engineer/happy/003.png"
+        ],
+        "frameSha256": [
+          "fcfb78fed06cbd59f066226e7ab981e1efa5678011762bf12667809f8c6dac49",
+          "77688d100892759d1550f828bd0bcf2fe43764574a2fc72faced1ce2fd2b5cfd",
+          "6223e43c09d1c412b08efeb08d48363c0dfd158ffce0b7f9e2a6713137dbd923",
+          "02b3870b39bd0da346c0c1c35e6947b978db6e287ae3b0d8c61e0ccec7f07bfc"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "engineer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/engineer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/engineer/thinking/000.png",
+          "animations/engineer/thinking/001.png",
+          "animations/engineer/thinking/002.png",
+          "animations/engineer/thinking/003.png"
+        ],
+        "frameSha256": [
+          "9d46cfb36727e82ceefa6abccb2b72a99f093dd36532d03b96e88fb2c48c734f",
+          "b0c060755449ae9db1b6fde8e5984dfabe21d5c8954a64130b946680619754aa",
+          "9607554d58169a7a92d958a64d16932e5e7a07b1e01aa26d9924c1c75c567547",
+          "f969c6d787adff7cda67ef12d138a740dd12b86fe20dd7034168321a35936550"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "engineer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/engineer.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/engineer/error/000.png",
+          "animations/engineer/error/001.png",
+          "animations/engineer/error/002.png",
+          "animations/engineer/error/003.png"
+        ],
+        "frameSha256": [
+          "10969e148c2dba7f3f372075db9998d3412d68cc86fb8eb6edd31ecd14b26b27",
+          "d3ce2dc5ab1e0c06abad9e4b26667f31ad9e7ecac86233ccf5f0bf6ef3342f48",
+          "7cacdb3c0454d9239f7d1ff812c9bbdd2d01da320c69fd4851d47f72d0e7df3a",
+          "590bed23707939b7b2a42af5b6269384d431d99b5e1432737971646a9b214c84"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "engineer",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/engineer.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "hacker": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/hacker/idle/000.png",
+          "animations/hacker/idle/001.png",
+          "animations/hacker/idle/002.png",
+          "animations/hacker/idle/003.png"
+        ],
+        "frameSha256": [
+          "1dac4773bfd515813f5b2c0f717d2cb952b3d212dfda72b3d7976fdc6782f1ae",
+          "9a88e93530583003776b5642ff200e66d8930d7001e9aa017eba91d79827d544",
+          "1460a3ab367aa88c904f2429d3cf49584c0f7416130a4a8194d4897b063b1a18",
+          "46e50b355c9cb77f3cd54b816f9a1569f019991821b2a5af3c516e66a8812596"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "hacker",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/hacker.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/hacker/blink/000.png",
+          "animations/hacker/blink/001.png",
+          "animations/hacker/blink/002.png",
+          "animations/hacker/blink/003.png"
+        ],
+        "frameSha256": [
+          "23bf531e1e1e1c079780130243d1e7ef5d3bf3d7045fedb57f6e2d8454eeb531",
+          "65edebe040a6f0b40be3aeb8d4bea1b45b9f1fb5cb4b666b9c6a693899401678",
+          "8d5a03b836a9d08dccce53c0a120ecf09124a463106d7be253b5f4e88d554f85",
+          "6aeb5ffe466e5727ce03b435f9874911bc5025f0cc7a532cf3d0d3bf176c4fb0"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "hacker",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/hacker.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/hacker/talk/000.png",
+          "animations/hacker/talk/001.png",
+          "animations/hacker/talk/002.png",
+          "animations/hacker/talk/003.png",
+          "animations/hacker/talk/004.png",
+          "animations/hacker/talk/005.png",
+          "animations/hacker/talk/006.png",
+          "animations/hacker/talk/007.png"
+        ],
+        "frameSha256": [
+          "4a48618ae696575fd61516da6820290241b3a6a397664e197060d0404480625d",
+          "9699aa05c0b1a3668b4cf8b37212ce6521f181d64466b6744865907c85caf54f",
+          "f4c6af258cd36590bb5da001b1efc895a8e10d9e98a1ed2600a1f131da69ed0e",
+          "3ce8022c8e2e134a2a51cd4dd8d6325aced542be2b056401931217ab83b9397f",
+          "1a0532d272e1f9d409ecb59288852aa02df9515653c0789a1314d7d7d6370720",
+          "cf883da92c9bf6efea9f2eaaafd46bdd8f32f11fac5e9f4663202d98b8538cb8",
+          "4dc1e1d5ccc43c344b494513f91a80ca3a0cda11a060465284326c4bdfef1526",
+          "5e308e59f5978543a8e553833cc815789722978e32c6c7f70d7c88bfd3bc1ba9"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "hacker",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/hacker.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/hacker/happy/000.png",
+          "animations/hacker/happy/001.png",
+          "animations/hacker/happy/002.png",
+          "animations/hacker/happy/003.png"
+        ],
+        "frameSha256": [
+          "3c24425e5580711fc1b9e7845785538fea0de73c48803109252dfb3f5e4d6811",
+          "1f2360d2d941d276f82ce79549563acb208f0d7045f3ef30d468659d6dfdb893",
+          "28c78d546d0f46c6e0ff1ae24e2c998b44851edc99fe6a499964a363c1cc2c4d",
+          "a368e3927e552a8afc21d2ffa1985d00ed5944ad8a17741517e3be8b55fefbce"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "hacker",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/hacker.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/hacker/thinking/000.png",
+          "animations/hacker/thinking/001.png",
+          "animations/hacker/thinking/002.png",
+          "animations/hacker/thinking/003.png"
+        ],
+        "frameSha256": [
+          "034ca43ec21ff74bf667f8d770eed79af69c60b0a3d45ca45bd997207cfeb2ca",
+          "f2f6d7c7f115fedb93b50ac64e2e0b0dbc6db773c59b4b6e2dd08d8dbd519d55",
+          "f1ce48e7b9d2f18bc3a2c41a999ccfc00fac814cfebc600a99aa64ac24c4462a",
+          "5a92d890c800f415d09b16809ab5ebf26546beb282c023a3b6aeaadbf8c34b3d"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "hacker",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/hacker.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/hacker/error/000.png",
+          "animations/hacker/error/001.png",
+          "animations/hacker/error/002.png",
+          "animations/hacker/error/003.png"
+        ],
+        "frameSha256": [
+          "15fe5d3838e937f8721a19a8f1099029a124e32cb7ed5ea0b6c13e79834b952f",
+          "64b5eec364eb5b7bb2938d32aea26b745403cd3001dece53e7ede4bd6a77c284",
+          "37b76dca5147a3ba5b74c78222585346a74f5abf777ce6e5c753eb5d6525903e",
+          "9280a51341d14efa422089d2ae043d267c6d74827c78a0b064972001c8821a9f"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "hacker",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/hacker.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "mage": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/mage/idle/000.png",
+          "animations/mage/idle/001.png",
+          "animations/mage/idle/002.png",
+          "animations/mage/idle/003.png"
+        ],
+        "frameSha256": [
+          "7722eca76679c1b9dfaeef8ccec1ed44c786087437862eb47b34336d0a1e81df",
+          "f288ea53e1389e65c4b16bf7236ad29cb1b4ef6525186e58b8ecf4ca6f49ff0d",
+          "25bd11d798801937638fc90d19a266e9e75169f8d7ebcc5a25f2ec0f3fc5b2a1",
+          "7f66148f86162e51bce9722abe9fc39f2773213642324c27662150254ea178c6"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "mage",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/mage.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/mage/blink/000.png",
+          "animations/mage/blink/001.png",
+          "animations/mage/blink/002.png",
+          "animations/mage/blink/003.png"
+        ],
+        "frameSha256": [
+          "977bc967c281adfe25dacb981d9ac0fdcbc1d5c8b1b05da9023812988ae81738",
+          "991452827474abc8dacd193efb88287b2872824a67806117380d8b2dd3c18684",
+          "caac721b227b0161e043556150f0bcf5da96bbd1fb0bf7f7b62c2d8fe3bf512d",
+          "f2640f69ffebb0e57bfb6a2ec95c449225b51195b178ede9416f858df102584b"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "mage",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/mage.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/mage/talk/000.png",
+          "animations/mage/talk/001.png",
+          "animations/mage/talk/002.png",
+          "animations/mage/talk/003.png",
+          "animations/mage/talk/004.png",
+          "animations/mage/talk/005.png",
+          "animations/mage/talk/006.png",
+          "animations/mage/talk/007.png"
+        ],
+        "frameSha256": [
+          "235a3e0d273f9e10d0ee5e6bc547358ce4a1267b6ae83edd8db05c99e004dca0",
+          "b7b1d542c01700155b1ffa888d55d6826df8621ba37e3357dc91c72ef31675be",
+          "2c492073ac2597327ed96647bc06b1198d0a20473c86f78300ec801974ce94a5",
+          "38891ec78a5d7e133c559f7861b3c0f14d1406321e5247e51ab1f1b1e1d2db2c",
+          "b7584eaa813aa6d60a34d2069cc65d5f9cc9fe26c8b7e2f036458a2262f93d18",
+          "20b48f7ac5246c451358b55bb4edf13718a4a269ae92a6e3b335e251ad2f4849",
+          "d82abcaf0306648b9b9696f40d3bbec6f7d52e2102db2485dc83f54e2bfffaa1",
+          "07aa585e399f4cc041cdea716624d3b6623149e343f533a1d4088ca0e0107f23"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "mage",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/mage.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/mage/happy/000.png",
+          "animations/mage/happy/001.png",
+          "animations/mage/happy/002.png",
+          "animations/mage/happy/003.png"
+        ],
+        "frameSha256": [
+          "aeb1123911c240d70d89b232be7b79d0a11d4caa94c64d55faea820b53d03260",
+          "742499b3c66ef651509707607e4592cf16e1eae55e710e475c22d5c33d7e4223",
+          "2b988ee6f15d8ad03b5b1bf7141dadd330ecbe3fa0e529a7da4d59e68a50f490",
+          "28bacbeb991038eb32561091d8d3845c3cc801b8c9add10402e41d08c550be42"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "mage",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/mage.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/mage/thinking/000.png",
+          "animations/mage/thinking/001.png",
+          "animations/mage/thinking/002.png",
+          "animations/mage/thinking/003.png"
+        ],
+        "frameSha256": [
+          "413d8602d45711c3acb0d583ff3c67bd345ba98c2e86eb3c460f0afc6c095d08",
+          "370a4edcf6009c2ea72d17c1b99f286da2964b617c4f9d294d650464820df0bd",
+          "6341d4f1fea44ec76fa7364c6760195b030aaed19fc3be9a71492ed412c7d17f",
+          "027c58b42ae4340883547e6e8af636d38a69075e8762ff917fe859cda050214c"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "mage",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/mage.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/mage/error/000.png",
+          "animations/mage/error/001.png",
+          "animations/mage/error/002.png",
+          "animations/mage/error/003.png"
+        ],
+        "frameSha256": [
+          "2e21eb17aba429f4285f3e9544abea03985cb246dd79582d7f2d9db4e20584d3",
+          "7c329f479d87e871be60a8513fa9bb2587ac1a60090c17a137077b941ad692b0",
+          "949f1978358411861b5160545520487084c3f5e5c915e3617c62cddc6bfe45b7",
+          "bc53a83c5839ace7263848227df1793e7367a440389a16aca48ee3210ac392d7"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "mage",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/mage.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "middle": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/middle/idle/000.png",
+          "animations/middle/idle/001.png",
+          "animations/middle/idle/002.png",
+          "animations/middle/idle/003.png"
+        ],
+        "frameSha256": [
+          "7e693816e3ce6333a4cb5e9b4c63c128976ed54297cdcf7192f9db54f0a7a206",
+          "47b3a4f352a95efdc5d1c814785ad43797297228b18e6a47b8c2fae4cd37d53d",
+          "67f42285ef19b8ec9511b33a99a913b10c9cfa69c2a6f5f693a29d4e70f2333f",
+          "11a37c9d0cbeb0530254dcd99737979a684bc1dc2237d7daec36068035c12feb"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "middle",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/middle.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/middle/blink/000.png",
+          "animations/middle/blink/001.png",
+          "animations/middle/blink/002.png",
+          "animations/middle/blink/003.png"
+        ],
+        "frameSha256": [
+          "2609874217b9479284cdd83e2ca956841f3f9d7b5b881f9f5fc5e3faf10c5b48",
+          "0e3b5ad47dd36f93df684e630bff75148acbc22f5676f334d05fdb0aab77d361",
+          "4b0e7f2d37908f7cdda522cf64011a2d4b348c4e32fc5ab9f50c6f8005b3ca07",
+          "b74f2d066258070c7ebece89f86f557496f5db466266609ac2569130a174a015"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "middle",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/middle.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/middle/talk/000.png",
+          "animations/middle/talk/001.png",
+          "animations/middle/talk/002.png",
+          "animations/middle/talk/003.png",
+          "animations/middle/talk/004.png",
+          "animations/middle/talk/005.png",
+          "animations/middle/talk/006.png",
+          "animations/middle/talk/007.png"
+        ],
+        "frameSha256": [
+          "c8a55ae61e7fc9332d793a6646d4b1a6b537603b279f5497240d0b573981edc6",
+          "d5695f80f0e02e494d40dbd9d232ad40b84014f5e98540cff3b916712acd7d2a",
+          "4747125d69d8ad8de7c65a4efeba41a77ee3c3c47f6d38efe2d78c63787ec251",
+          "3311b1a580efc27514f803fcf0e755a383d3441ea51d9d6106a0c3ef64902688",
+          "27d129428f14daa702c2a49c072a711d62286f8482cc26d4137da7f2fe893156",
+          "512c06efddcfdb066152a1388082f5fa0705e9d2da21d5dc0004308d09c2f722",
+          "dd86864ec27516adf9f4c0d4a485038a9f8b1889b8877dc453dd08a4ba917845",
+          "3c77e03d93e771933eab4641400e6930e54a2529274155121994e071ce048980"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "middle",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/middle.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/middle/happy/000.png",
+          "animations/middle/happy/001.png",
+          "animations/middle/happy/002.png",
+          "animations/middle/happy/003.png"
+        ],
+        "frameSha256": [
+          "5fb12c9db3b2931efe1dd374243b560f173de226be4097c1cdb9afb76437b3e8",
+          "15e2b1bfc726c4e8d3e98f5f07390d214f82944e05de369c93833633fcaf646f",
+          "d36c4161a74f0a7a083466d6df2c95ae16ed1667676279a92217a6320fec23ad",
+          "3718156063d04f64517d1198b74598c54650cf612e2df4613355a545e59d1ed6"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "middle",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/middle.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/middle/thinking/000.png",
+          "animations/middle/thinking/001.png",
+          "animations/middle/thinking/002.png",
+          "animations/middle/thinking/003.png"
+        ],
+        "frameSha256": [
+          "f8adb7b1f77d88b398dffda63b1f6ea0d7c12357b65e4146ca40384713de8042",
+          "07410331b213bd927d081940f35db7905beebd644a3f0549d32c508b11aeb0c8",
+          "bf346517f7fa5c4644a1de0624131f2520f52e8dd4252bfecf10d0613a42c82a",
+          "e78a88780335cf0b0c2930858e58b510532a1adcb3a5f6e1cc3b30d38eeab63a"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "middle",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/middle.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/middle/error/000.png",
+          "animations/middle/error/001.png",
+          "animations/middle/error/002.png",
+          "animations/middle/error/003.png"
+        ],
+        "frameSha256": [
+          "9533fb731a3446c36d3b3dc346e7a2638371c8b33e2c6ca7cafb80d40dc9e607",
+          "b3cbd773ddcf97f08d5c73d5898f5a28a403019484ca676263acb2342ee72dc5",
+          "7e6a93b381b0dd69097ed22e9d9b00c594bbc409a5a49341b564226762d8a6a3",
+          "205e90935f7ad99164ef6889a32c3db7f02611f178e3be9a69baebcaed0d957e"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "middle",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/middle.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "pirate": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/pirate/idle/000.png",
+          "animations/pirate/idle/001.png",
+          "animations/pirate/idle/002.png",
+          "animations/pirate/idle/003.png"
+        ],
+        "frameSha256": [
+          "acc5627a10da960cfc657240f0a026cee900837c44c2120b368c41103890866c",
+          "dd530d81147a212bf3a0c21169cd2bb7f24a9c38620846168a31618cfb841247",
+          "b96604ce6b5764cc61810e3da9a6d1acfa5cfa85bc57fc975bb55f05204dd8b8",
+          "6a1d50704fe0264e03fbaaf915f899c31d77fd4ec6720f09dd027aa2a5c3470e"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "pirate",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/pirate.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/pirate/blink/000.png",
+          "animations/pirate/blink/001.png",
+          "animations/pirate/blink/002.png",
+          "animations/pirate/blink/003.png"
+        ],
+        "frameSha256": [
+          "ac160c5f9e02aa48ae8147d09eb12f95b040a3ac5fe2758ffd9ba9ecef684ae1",
+          "e25452f3a837ae5223768ee512ec48a44994b1385f2d4138c853bae1078435e6",
+          "d5b0d333610888d1b428930ad212fbd21f6e4712d60a194874056c7ac3bba9c6",
+          "4cd7057e9a8fd95d8b19f467a9e04e0932272d659fad33a1fca9e09961e85fb9"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "pirate",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/pirate.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/pirate/talk/000.png",
+          "animations/pirate/talk/001.png",
+          "animations/pirate/talk/002.png",
+          "animations/pirate/talk/003.png",
+          "animations/pirate/talk/004.png",
+          "animations/pirate/talk/005.png",
+          "animations/pirate/talk/006.png",
+          "animations/pirate/talk/007.png"
+        ],
+        "frameSha256": [
+          "a481c1a24625e1c3f805ebf7383055f1a64297ebc18b6288cefeadec414e0030",
+          "c48e47ab01b645613b86271fc5bf04424146320ca818127880915b0420e1d7c2",
+          "64ab5d52a073bf194f511f2cdb83c7423028c74cc78bbde0142be94625f9d1b6",
+          "9efa255aaba5b74f14e57cfeb54a2d8cdf11cf58ae45bad4a5630b2c70c58e1f",
+          "95432f0844e496cefd737ca6c470ff3a9d28a72dc975a60eb44c2d5dc266eedf",
+          "12897a91ce5e1842d90d0af6b644d04bb6bba83e2ee5eaaa8bff3cc186c51c1c",
+          "79b94cb999d074e58dd91bb6ba7b832573c665dc02cb16da6c990e59f4238b98",
+          "2e2f36e336914dbf75b4eb290ecd18d7ee9beb198bd8e7366b2f51a988a79965"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "pirate",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/pirate.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/pirate/happy/000.png",
+          "animations/pirate/happy/001.png",
+          "animations/pirate/happy/002.png",
+          "animations/pirate/happy/003.png"
+        ],
+        "frameSha256": [
+          "63da7c1d2706dcbd291628fe0d296f2b36d51eea03b1b273c54e3e1685889260",
+          "8c43c00ef34cc184e600fab937a5ee5796dc68ad455fb3b6b18c1dc6fab22eaf",
+          "82fb7cee065a94928458a8e56aecef370f437e521504c95d9dc42cc5501b22d3",
+          "1af82b98bd19b04eb36f154c5309d5b4275ee76666cb19baa0650978846386f8"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "pirate",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/pirate.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/pirate/thinking/000.png",
+          "animations/pirate/thinking/001.png",
+          "animations/pirate/thinking/002.png",
+          "animations/pirate/thinking/003.png"
+        ],
+        "frameSha256": [
+          "8e3577d157c7f32818629d2ba419818f246b7742c96376856cc9505a63c363e2",
+          "75e011ae1e54ba394c073352d5bc94f29eb275855c0a656b80368416b666be6d",
+          "aaf04ea176fc37ad983064774b3d6bce1353da1d12ead03915510240caeb9124",
+          "77d90bc54c003e81d15dd3770f4d95a41a611e038d57d5e65a496fb8a3f4e66f"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "pirate",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/pirate.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/pirate/error/000.png",
+          "animations/pirate/error/001.png",
+          "animations/pirate/error/002.png",
+          "animations/pirate/error/003.png"
+        ],
+        "frameSha256": [
+          "83acbb96e2e9a4b3ffdc7f0af845a1a0bed269a23683654ae43dd0b26ca62da1",
+          "583c10f140bc706c4eab7fb305029c7c51b95164ad2443fa8b0a6355dbf2ab1a",
+          "21df380b703083ffdf8293e5c3e69a36424f72aa97d53fab3dc82037272f0280",
+          "4e97e6614948ca3fa2f8621dad4b449fce1993cbb3827d4c4a24a737a83a6f9d"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "pirate",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/pirate.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "samurai": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/samurai/idle/000.png",
+          "animations/samurai/idle/001.png",
+          "animations/samurai/idle/002.png",
+          "animations/samurai/idle/003.png"
+        ],
+        "frameSha256": [
+          "5cdc4d9f7a9c302f8fd652637f0fd48d2c9caed8d38955b83f1d8c2cc85bf982",
+          "3da946cce1b546dca9ea8b39d57427d3fd940c3fcbbd7fbb266b6d392fea1dfa",
+          "983772d71f3c7437d8dd4964dacb76a3ef76145a840d51c4965ab42f88927d15",
+          "7b6c1d16c53b711571c2c2ad0a937043424363ececf1bd73248c706a7104a41c"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "samurai",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/samurai.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/samurai/blink/000.png",
+          "animations/samurai/blink/001.png",
+          "animations/samurai/blink/002.png",
+          "animations/samurai/blink/003.png"
+        ],
+        "frameSha256": [
+          "54cff59de241659180fd9f4a73c0c1a3a57b486d29c3a0e34c4c154607a98522",
+          "6caea07abc86bfe9333b53f9a02ec7665e0ffcceaa45c47e9b80123931e74781",
+          "9399c7864c50114dc734ecab55ada7ca9a7af9289b5cbe8c340e4f35c11cd8a9",
+          "8facc4dab1bacfa721cf4ce480f66f855f9b9cabe860263136aff5f23212aa13"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "samurai",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/samurai.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/samurai/talk/000.png",
+          "animations/samurai/talk/001.png",
+          "animations/samurai/talk/002.png",
+          "animations/samurai/talk/003.png",
+          "animations/samurai/talk/004.png",
+          "animations/samurai/talk/005.png",
+          "animations/samurai/talk/006.png",
+          "animations/samurai/talk/007.png"
+        ],
+        "frameSha256": [
+          "46d8c9fbdc20247fbb92ea9955ec8ef9d5213efb1a2e84a4de16612d4559a2f6",
+          "d4b7acfc52467f9d3c6a8626a96e3cc931c3bbd40e2c2a654edd191c502050a7",
+          "f88eb5c5cccec98e09cffa2615ba6c43c4a7d3fa27c21cffd4f8b6861cec5bfe",
+          "79482d51bc3668f6dc8f0ba207954e6574b4ab64f67472dc3b0b6137d3a8005e",
+          "3959016703a1d7a771386043010bf43a305e3f8de85964d9854082c6e9a72652",
+          "140dd5efe07ae6bc994fdf8b1dd3659be5578f55ee0758a852736a128742e3af",
+          "a5a7309e63ab612e6546e989b232d57fa3ce7f8bee48178cd4b43324acbcb089",
+          "c73121351a0cea0978013b9aa8f209b7bbd2b768b50c525f245d7259342b41e5"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "samurai",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/samurai.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/samurai/happy/000.png",
+          "animations/samurai/happy/001.png",
+          "animations/samurai/happy/002.png",
+          "animations/samurai/happy/003.png"
+        ],
+        "frameSha256": [
+          "a13af85051049c648708d94a72a09fbe3346b2a18276c5bd73cdddaf404da690",
+          "fbea636e24754026e678b355850672fab96567c270728e7095e24f51e8726ab2",
+          "d139f065ab665da05580ee28c24b0842e5cf3301c09f143fe93b184c18aeceac",
+          "f84295abf8ee5c6dbe67da6de8dc3f6942ae232994d0cf428ddf3b6876475975"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "samurai",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/samurai.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/samurai/thinking/000.png",
+          "animations/samurai/thinking/001.png",
+          "animations/samurai/thinking/002.png",
+          "animations/samurai/thinking/003.png"
+        ],
+        "frameSha256": [
+          "52436f3d4104f943be8cdcc9e5572b483d09775487234194014e186f77d6e045",
+          "ee8f1d1f9fd7f775fe7078101059432ebcc88d3b4ff41136827c2473ef0db4c5",
+          "2b920408bbbe83e26f61df787ba0a7d88ae5e25c7b51ce02e649047ff7991ad3",
+          "3d1d5f99fb83a457398abe5151401c78ba007dab12aff7ccf0ddd77c198348ef"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "samurai",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/samurai.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/samurai/error/000.png",
+          "animations/samurai/error/001.png",
+          "animations/samurai/error/002.png",
+          "animations/samurai/error/003.png"
+        ],
+        "frameSha256": [
+          "5659084f2366ee36e705af62598bad878651912f25b35ad5d8fc8efdae283e0b",
+          "b7a2e803829946f0ecf6a6c4c527b17fda97c7e6c01d9e27dd015e559837610a",
+          "4c8879fc6490415ed1f0eeac39d6ea8a1089c34837bf91cb45c80003eff91629",
+          "eeaf0068229c30ef7a0878d4af633fca34b27dba6f750bc2f37d30e8c6107b42"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "samurai",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/samurai.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "scientist": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/scientist/idle/000.png",
+          "animations/scientist/idle/001.png",
+          "animations/scientist/idle/002.png",
+          "animations/scientist/idle/003.png"
+        ],
+        "frameSha256": [
+          "f4b7beab6c7ad2a7cfa6b69c0318e7ace2a283b502afbd57ab382b98438ab42f",
+          "7bc45900d59abba84ad1ca65055e070bb58671b72b370833e512b1a9fd0d0268",
+          "96cc5eeb5aa53d7f12b7728e49c4a421940175f70e7d9172686d5969b8756aeb",
+          "03b217eb880750025333eca53573a18756508fd9acb7d712ade987285dd4fa1e"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "scientist",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/scientist.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/scientist/blink/000.png",
+          "animations/scientist/blink/001.png",
+          "animations/scientist/blink/002.png",
+          "animations/scientist/blink/003.png"
+        ],
+        "frameSha256": [
+          "64137225208370798d37c8c5c17c189a8ab3cdc63568f81c4024a68be0fc4cf1",
+          "3e6f28a45661e91921144be40c2d5b581dd9cdd481cc5fcddb603ed29abe7421",
+          "065e958016dd6f818412762ef656380f0e38250d91a3c8d7d3b80fb2b3d37a4b",
+          "ab41db502957e45dacd75c5c35b3a6946620f0b3f4746d232c14415e22d4d791"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "scientist",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/scientist.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/scientist/talk/000.png",
+          "animations/scientist/talk/001.png",
+          "animations/scientist/talk/002.png",
+          "animations/scientist/talk/003.png",
+          "animations/scientist/talk/004.png",
+          "animations/scientist/talk/005.png",
+          "animations/scientist/talk/006.png",
+          "animations/scientist/talk/007.png"
+        ],
+        "frameSha256": [
+          "a93c43870d1bc0c8021cd3f55926a48cfb3c0110afecb9df0315984ab8b3dec5",
+          "2db7201572cd4d7d19e3b41f6f6d61da6114a65ac13af3717ca96ee23d78a579",
+          "1410f0b070840913d6dd14bf2a00e467f1b1cf6de37f7a92131c94104e15142f",
+          "ad9facf2a6e88a94024f19975753df0c85af70f90e997819790fb91c238c7c05",
+          "75868ef07340c82c2432b2d2039746b37b37f72ed2614840206e8fae703e81b7",
+          "8748b22327165447f38535c592579ba277a7854c391f36b48c460fd27be90364",
+          "d5b82911f628c8d1d4fcb7183d26a7b341c2631dda10508d4105dafdda24a571",
+          "0cd43d807c616af962fee2439782ae070396ae1c00ffd5e89837ae854cf0c2fe"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "scientist",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/scientist.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/scientist/happy/000.png",
+          "animations/scientist/happy/001.png",
+          "animations/scientist/happy/002.png",
+          "animations/scientist/happy/003.png"
+        ],
+        "frameSha256": [
+          "4f305c9db3bec9c109bf8423ab0662172a2586d9ba9b8cafea982d1fe5d76d81",
+          "30cb10839cb490713be9dc788674a83f81500c2b8ecfbbbb435407db62d5b873",
+          "c0bf1ab32ee53ef2a6c3979d9427fb3bd0f53f73c44c6337b9bda091b695ddbb",
+          "e28623130d4bb99a75595d9f8e865dbef3a3d703fa352edcaca2811877b2bebb"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "scientist",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/scientist.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/scientist/thinking/000.png",
+          "animations/scientist/thinking/001.png",
+          "animations/scientist/thinking/002.png",
+          "animations/scientist/thinking/003.png"
+        ],
+        "frameSha256": [
+          "64e079551af921cb337317e574ac113455c3b3926a1c100f39784a9e66985102",
+          "bf60aceb5d921cbfc518d2906a99c05f478b50ecb495a70f05ec0b35d7858df6",
+          "0ce6e9c863d9b16e0856cf87dc95e4a8bdfb4d9e8376293eed3fb42b3a71c3a2",
+          "b485d1d01bc7edf67bf4655b655b6ba790c2f60d943c17db3ce70869ca8d94f1"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "scientist",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/scientist.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/scientist/error/000.png",
+          "animations/scientist/error/001.png",
+          "animations/scientist/error/002.png",
+          "animations/scientist/error/003.png"
+        ],
+        "frameSha256": [
+          "8090281b6f12c65aa78212efa7e2937af28476c39bf55ac1dc7839b1702b17b5",
+          "d7c1302b2ecd6392e1fb23c536345987d5af21cebe4fa639829e92f937e1c8e3",
+          "3499e51921d3d7db578e9347170fdfd06f35fb79bcb39ab37cb46214cb4cf196",
+          "4203eeb02e29bb0bc3ed7d2f36d15f621772da92b0450a687864a0cdd02fd1f4"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "scientist",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/scientist.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "senior": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/senior/idle/000.png",
+          "animations/senior/idle/001.png",
+          "animations/senior/idle/002.png",
+          "animations/senior/idle/003.png"
+        ],
+        "frameSha256": [
+          "c83619086e956bbd75d3792e6721ad8b4e55190170f22e2d3d30c3505b374db3",
+          "36f6eaaff435c13eb37cd568e69b767a536a0310d475b0c4ae29f7946bee053b",
+          "453e5d239ede31c85acb9cd3eb6d7ff72bab7e377d507ab34e6e79efa95ab952",
+          "b7d40c5afde883e39e1b554c83583402f610133ffd39776668d291c54527b4dd"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "senior",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/senior.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/senior/blink/000.png",
+          "animations/senior/blink/001.png",
+          "animations/senior/blink/002.png",
+          "animations/senior/blink/003.png"
+        ],
+        "frameSha256": [
+          "23817e405a6763c1c6b71f662670d396e89e65fa3944ab5edd1d56e5bb1f71f8",
+          "0b9dd9fafdd94b8da062449cb2b9e8cd582d10d9b0203d036d0a970e3ff34be6",
+          "d9ce8a360df1c77ea56f1ebbe74018b88440138f718b87bc1c41dedeb142ac04",
+          "76419ec739815bc17406f673729b35c6d4cff920cfa992cd144870e5a0099b07"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "senior",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/senior.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/senior/talk/000.png",
+          "animations/senior/talk/001.png",
+          "animations/senior/talk/002.png",
+          "animations/senior/talk/003.png",
+          "animations/senior/talk/004.png",
+          "animations/senior/talk/005.png",
+          "animations/senior/talk/006.png",
+          "animations/senior/talk/007.png"
+        ],
+        "frameSha256": [
+          "dc2f6ca4abdfa14bb4dcced826e22da884adce1a9cca6634a6941aa7f158d52b",
+          "8e392295038432b072542933535dce619c3971a84707b84229369b3b39f17c92",
+          "e6717383d88da97bfb89da8a631dc6e7e42c63f5332019da937421dd3fff6e63",
+          "aea2d2c6b31c84f65200dc27ce7d59f44cf0ab0bd60c0924bf240528338f52e4",
+          "b6f958660f8e6e649f65ee609076a86b68a3d267c6203ea135222742b9a0bb54",
+          "02290e000979cd416a0adf1bcf8d6a92e84b99fcfc1600b11ded01330d20f048",
+          "1333dda8b8091970791087e57caa72cdc73a526334d19cd4172c541a7bbec4f9",
+          "a1694eefe11053d044badede5da23f3d34bf4f495bedadb707ff9cbfccd0afdd"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "senior",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/senior.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/senior/happy/000.png",
+          "animations/senior/happy/001.png",
+          "animations/senior/happy/002.png",
+          "animations/senior/happy/003.png"
+        ],
+        "frameSha256": [
+          "85a46d8248375db12f371e2363a2bae5a1b2c41a49432e79ddc6420abe3b2371",
+          "056d00488c04713246e5a0c0993ec8ff3b81ec6bc9c04cd9aaa6cb33843075d2",
+          "e29fe0693f3afbe57495a96d1eb665a631a0bf54959e957db75b4938d90942bb",
+          "7b2cddd6c23b3d1d6cca3a1456275491d4adf9dce8787824d1036352497f7d14"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "senior",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/senior.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/senior/thinking/000.png",
+          "animations/senior/thinking/001.png",
+          "animations/senior/thinking/002.png",
+          "animations/senior/thinking/003.png"
+        ],
+        "frameSha256": [
+          "b88006aa7987e27e8527a374681cfbc13856b7696a43112dfa6fbd0d1cbefb71",
+          "ebfcd45e6483d884f4bc2403ff39745d7b8c35c97619aa053738957eb584e0aa",
+          "57f663f5689d62759c75b4591569bfe8f011376bde6ce1360adacf8f369dab4c",
+          "53539b1d81b5c1076ac8c7657bd340f8de72cb13f4250545be5533703b280035"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "senior",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/senior.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/senior/error/000.png",
+          "animations/senior/error/001.png",
+          "animations/senior/error/002.png",
+          "animations/senior/error/003.png"
+        ],
+        "frameSha256": [
+          "afe82fe230e293ca652e86b02f405808ea072bbde46285012028ce99ba0d85ae",
+          "434f7535a293a385e2ad1121ab92500ed6c90c2ed00d0cb7f992950cae94fe5a",
+          "dd4f1d33e670f2821fd1e2f84da09bdfa1e04efb588c7706a50ebee76eb05b70",
+          "85bd8f60e6c7d5a85e95c33ebabed34a4a4a4f0854f53a125e7986e7306b4239"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "senior",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/senior.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "space": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/space/idle/000.png",
+          "animations/space/idle/001.png",
+          "animations/space/idle/002.png",
+          "animations/space/idle/003.png"
+        ],
+        "frameSha256": [
+          "11d29bdc5c0600c6bc07adc19e9c2ad1e6de432ec2b0365505e9e399227aae9a",
+          "ef72dc406c7d9f35752f1c5af2f52f1eb4ba5e108f5f3f8464410c7247fd6513",
+          "d74529612522639fa3e98ec2bec32e5e3b7f3a3bc565f728738c4d2875238fa5",
+          "7c54168216f63ae10c1960dcb96727e17151f9d0815c3e19751531e303ad79ea"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "space",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/space.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/space/blink/000.png",
+          "animations/space/blink/001.png",
+          "animations/space/blink/002.png",
+          "animations/space/blink/003.png"
+        ],
+        "frameSha256": [
+          "4c2115d2f3b8623ef4ed9c21f6bcda6d4addc6e8b13e05ce47b6054a5d4aa072",
+          "9b0548549a1124da1c7a74592e2b9c2bd54ff4510f0e4756574859e1c77daa6c",
+          "4809eb7a09ce43687c9ea7b568e5b4099622ae605fe1e90e1da2c9605779ddd8",
+          "91dcb2a94721c4a3da53f45152a64179849e8989f34194d99856e1f05667750a"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "space",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/space.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/space/talk/000.png",
+          "animations/space/talk/001.png",
+          "animations/space/talk/002.png",
+          "animations/space/talk/003.png",
+          "animations/space/talk/004.png",
+          "animations/space/talk/005.png",
+          "animations/space/talk/006.png",
+          "animations/space/talk/007.png"
+        ],
+        "frameSha256": [
+          "d77067fcef531f72771347bcf9cb4988cc861862f2a881f118e03d2c837130b3",
+          "9b88b41ac7ba0454f9c318cb830bb2bf7f8520bc05995419337e1610498d3c39",
+          "449306ac643a0f5eab5f763d9eac03bb9ccb02a587ef0aa147c79d797172965b",
+          "3f589a41892f1ef85aae74c3902baf39fad743a8053802ff9e0457b13c751d81",
+          "fac8877c71d66dad18a2c1b0f8c4413bdfcb243cd242f30a0c4d459990c55db5",
+          "a12bf5bf87fff0d31a8456869a3b48f0324d899a58cf26414ef44873c099eb94",
+          "1203bf7ec9c68227ddc20f24de752670d508a23984af0f612de75e2f5db44fcd",
+          "268e71d1ab033a925b282a784d5e1943beeb17a2c158d50c8cd7b6c64e59ef1b"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "space",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/space.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/space/happy/000.png",
+          "animations/space/happy/001.png",
+          "animations/space/happy/002.png",
+          "animations/space/happy/003.png"
+        ],
+        "frameSha256": [
+          "49c12628d59049dbec6d55854aaf853e76cf2e7bf265b7988baa3a69dbe69a50",
+          "f355a79abc0f5578ad773bdea18cdea1633991a26acabdffd887b9f79c71e356",
+          "392942289ae5365e50b919a0fa300659b3d97fc191e229874a28012fc255f870",
+          "513a0efd4cea43a58fdb2efd10662dc4a005e2504e8a69c95579093916b0a25d"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "space",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/space.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/space/thinking/000.png",
+          "animations/space/thinking/001.png",
+          "animations/space/thinking/002.png",
+          "animations/space/thinking/003.png"
+        ],
+        "frameSha256": [
+          "7e5e58a70e0ccb7d47743393046338e7ef522d7534b5410c9207b73dd332a5d8",
+          "6f90067aaa5393b2d35e909086e39b43bd32be2f14338fe3a66b0f2e8ac23d97",
+          "3d28e4541cbf73fc3414a70d0fb1f10e8fb77b79a0cca1932e2960f0c94d635b",
+          "8f25653c0c21aa4b9974c434a8809ff5600d4518511705d4af8e4290e32cd9ad"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "space",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/space.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/space/error/000.png",
+          "animations/space/error/001.png",
+          "animations/space/error/002.png",
+          "animations/space/error/003.png"
+        ],
+        "frameSha256": [
+          "7e6e4e6b88de0f876f44d98f847f55d8dfd7a4f3198afe2eea319a5a82847b70",
+          "637c1ce625b2cd8e14b3f1d005006380897bea0c35cb3a5c714bf8a1326202c7",
+          "cf255fa0f56dcf0747780f5d86f29e758737e923f97fe3c0c225b38fc05860f7",
+          "4e3d232f5b4ec33a89ec08db74ce0f0f0b4f8b4885bcc3d62dd5f8d9417e7b2a"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "space",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/space.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    },
+    "winter": {
+      "idle": {
+        "title": "Покой",
+        "loop": true,
+        "next": "idle",
+        "priority": 10,
+        "frames": [
+          "animations/winter/idle/000.png",
+          "animations/winter/idle/001.png",
+          "animations/winter/idle/002.png",
+          "animations/winter/idle/003.png"
+        ],
+        "frameSha256": [
+          "67aa75c6834f9037a42c72d15f117659526038dff46a83581ac9ca690d7af177",
+          "398fdea6ed900a2f482affc8d50afca71b30b35567c991902913123a70a6cf62",
+          "8f8bf0d5ebf9b089d05e3880d82458e0f0027fcbabc78cdc9610583c7069a7e2",
+          "323b91f5b38c682fd7ff8fec6377508b223aa71a5e52cd07a50ea60d4057517e"
+        ],
+        "durationsMs": [
+          350,
+          350,
+          350,
+          350
+        ],
+        "appearance": "winter",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/winter.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "blink": {
+        "title": "Моргание",
+        "loop": false,
+        "next": "idle",
+        "priority": 15,
+        "frames": [
+          "animations/winter/blink/000.png",
+          "animations/winter/blink/001.png",
+          "animations/winter/blink/002.png",
+          "animations/winter/blink/003.png"
+        ],
+        "frameSha256": [
+          "3cab1492a5ba6fc1169a80382b6c977d7251561b4853f2f7459c5195ac1a563f",
+          "9aa7f0c610c08d1c49fa60ef2a60d75a01b3305d54f4015b18e6d6af04044c56",
+          "feaccad4233ad77ba9fbe135be891b00a2a0448f0a5243e68a026d25c71a5403",
+          "21bc8085e41db5fc52d77af61cad995347bfc1e8a47a3b78966da72c8f73ec6b"
+        ],
+        "durationsMs": [
+          100,
+          60,
+          70,
+          60
+        ],
+        "appearance": "winter",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/winter.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "talk": {
+        "title": "Разговор",
+        "loop": true,
+        "next": "idle",
+        "priority": 70,
+        "frames": [
+          "animations/winter/talk/000.png",
+          "animations/winter/talk/001.png",
+          "animations/winter/talk/002.png",
+          "animations/winter/talk/003.png",
+          "animations/winter/talk/004.png",
+          "animations/winter/talk/005.png",
+          "animations/winter/talk/006.png",
+          "animations/winter/talk/007.png"
+        ],
+        "frameSha256": [
+          "7cc755d1a844d92853c7de431db81383f297d87dc0ad2ad023f556665021259b",
+          "b06146e4bfa596a54541fd960af17178906f0ab1ab10f4cf0130afbf7ac404d3",
+          "e125a75cf3fbfbd8b3a80e93e6f34938144a486068d6165446f636f2c6474df3",
+          "ee0d39d0345f2c11f1c561dadfbf644f564397df0c9d89ebafc29f90df7c792f",
+          "3b1d3a643258995327917505b59b00e28377a8c34921a080e6b096f68c24049b",
+          "fc095179e5bb9e2539eb96542234a5dbf566e72fe0240c35b5028f3c121a4284",
+          "edbda9020760eb47c46cc683bf96d8fe1ce295ef5973c162cc2d7d23f8a62ef7",
+          "d14d5e311dc0c6ccb3a3cf813f8dfecf01bd7c9cb2befbc25ed86e38b03f8c06"
+        ],
+        "durationsMs": [
+          100,
+          90,
+          110,
+          90,
+          110,
+          100,
+          100,
+          100
+        ],
+        "appearance": "winter",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/winter.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "happy": {
+        "title": "Радость",
+        "loop": false,
+        "next": "idle",
+        "priority": 60,
+        "frames": [
+          "animations/winter/happy/000.png",
+          "animations/winter/happy/001.png",
+          "animations/winter/happy/002.png",
+          "animations/winter/happy/003.png"
+        ],
+        "frameSha256": [
+          "17416adbd3b770f130492658cada0b9de7ede3c7a79a708e5c6ddff53eb62b64",
+          "5a4cde689f9dcc3bc858a6a2ef043bb2cea61eaa44290580e700eb55a0f51d0c",
+          "9c78e8958a19d521ed693693b7e9895ece0beff18c65df1d42226d1a0ebe6a00",
+          "d59f91461f43af7c71dccc3f9a0cf144b8ae4a280630d75f6818bf68876c9d0c"
+        ],
+        "durationsMs": [
+          140,
+          140,
+          180,
+          140
+        ],
+        "appearance": "winter",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/winter.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "thinking": {
+        "title": "Думает",
+        "loop": true,
+        "next": "idle",
+        "priority": 40,
+        "frames": [
+          "animations/winter/thinking/000.png",
+          "animations/winter/thinking/001.png",
+          "animations/winter/thinking/002.png",
+          "animations/winter/thinking/003.png"
+        ],
+        "frameSha256": [
+          "f7357040beebccaedab9d0ab8b33f737a2dd9a19d7a62c36f5150771ade30dfa",
+          "c8023677f1015cb74d516506199990b299a3c5c8324520fb27e4cad803421d3e",
+          "bb6ec6a6ba2eef6af0188bd303a9519506cbdc6c377bfbd32c28eca0332478b2",
+          "de8cd5334edc7eb421277f0038fb5d11e22b18121759804d3a070375e12004b2"
+        ],
+        "durationsMs": [
+          220,
+          220,
+          220,
+          220
+        ],
+        "appearance": "winter",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/winter.png",
+        "status": "generated_review",
+        "productionReady": false
+      },
+      "error": {
+        "title": "Ошибка",
+        "loop": false,
+        "next": "idle",
+        "priority": 80,
+        "frames": [
+          "animations/winter/error/000.png",
+          "animations/winter/error/001.png",
+          "animations/winter/error/002.png",
+          "animations/winter/error/003.png"
+        ],
+        "frameSha256": [
+          "ad1abd8b70f9f3a3889cc2be97cc86143762f126ba453906436e673cbe5188f6",
+          "e24b015eb373bbbd521376a6f18224019560d1af51bf0201a85c134d7aa6b9c2",
+          "c0541f798b5b7247d83fa2300b82e793f73f95acdad52108fae21e956532e2c4",
+          "3ed3a06c767f0e0f46311f8be1525f4db04573fd30d4c12c7e2c91274c6ce7bb"
+        ],
+        "durationsMs": [
+          140,
+          180,
+          200,
+          140
+        ],
+        "appearance": "winter",
+        "frameSize": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          112
+        ],
+        "sourceMaster": "assets_source/mascot_v5/appearance_animation_masters/winter.png",
+        "status": "generated_review",
+        "productionReady": false
+      }
+    }
+  },
+  "productionReady": false,
+  "notes": [
+    "Generated and visually reviewed phases; not a manual pixel-art final pass."
+  ]
+}
