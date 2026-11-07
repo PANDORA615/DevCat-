@@ -8,11 +8,11 @@ on:
       build_run:
         description: Source CI run
         required: true
-        default: '40601191818'
+        default: '42356179452'
       build_commit:
         description: Verified application source commit
         required: true
-        default: d43bb71edd260fdc83e074dad360efc13bd1039d
+        default: 2af00db8b9c0888afd93c5cdbe6ddbab1ceba0dd
 permissions:
   contents: read
   actions: read
@@ -25,8 +25,8 @@ jobs:
       matrix:
         abi: [universal]
     env:
-      SOURCE_RUN: ${{ inputs.build_run || '40601191818' }}
-      SOURCE_COMMIT: ${{ inputs.build_commit || 'd43bb71edd260fdc83e074dad360efc13bd1039d' }}
+      SOURCE_RUN: ${{ inputs.build_run || '42356179452' }}
+      SOURCE_COMMIT: ${{ inputs.build_commit || '2af00db8b9c0888afd93c5cdbe6ddbab1ceba0dd' }}
       SOURCE_ABI: ${{ matrix.abi }}
     steps:
       - uses: actions/checkout@v4
