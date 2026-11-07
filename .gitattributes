@@ -5,3 +5,5 @@ apps/devcat_flutter/assets/fonts/*-OFL.txt -whitespace
 third_party/** linguist-vendored
 docs/ANDROID_RUNTIME_NOTICES.md -whitespace
 apps/devcat_flutter/assets/content/android-runtime-notices.txt -whitespace
+# Preserve the uploaded specification byte-for-byte, including Markdown breaks.
+assets_source/mascot_v5/docs/*.md whitespace=-blank-at-eol

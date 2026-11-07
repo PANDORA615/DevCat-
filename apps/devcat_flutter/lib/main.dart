@@ -8,6 +8,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:window_manager/window_manager.dart';
 import 'core/course.dart';
+import 'core/mascot.dart';
+import 'core/updates.dart';
 import 'core/sound.dart';
 import 'core/store.dart';
 import 'core/desktop_diagnostics.dart';
@@ -44,7 +46,10 @@ Future<void> main() async {
   final store = AppStore(directory);
   await store.load();
   final courses =
-      (jsonDecode(await rootBundle.loadString('assets/content/courses.json'))
+      (jsonDecode(
+                await UpdateService.activeContent(store) ??
+                    await rootBundle.loadString('assets/content/courses.json'),
+              )
               as List)
           .map((j) => Course(j))
           .toList();
@@ -77,6 +82,7 @@ class DevCatApp extends StatefulWidget {
 
 class _DevCatAppState extends State<DevCatApp> {
   final sounds = SoftSounds();
+  late final navigationSounds = SoundNavigationObserver(sounds);
   @override
   void dispose() {
     sounds.dispose();
@@ -89,10 +95,14 @@ class _DevCatAppState extends State<DevCatApp> {
     builder: (context, _) {
       final store = widget.store;
       sounds.enabled = store.setting('sound', true);
-      sounds.volume = store.setting<num>('volume', .22).toDouble();
+      sounds.volume = store.setting<num>('volume', .15).toDouble();
       sounds.voiceEnabled = store.setting('catVoice', true);
-      sounds.voiceVolume = store.setting<num>('voiceVolume', .18).toDouble();
+      sounds.voiceVolume = store.setting<num>('voiceVolume', .20).toDouble();
       sounds.voiceStyle = store.setting('voiceStyle', 'auto');
+      sounds.achievementVolume = store
+          .setting<num>('achievementVolume', .15)
+          .toDouble();
+      if (!sounds.enabled || !sounds.voiceEnabled) sounds.stopVoice();
       final seed = Color(store.setting('seedColor', 0xff416c57));
       return DynamicColorBuilder(
         builder: (light, dark) {
@@ -169,6 +179,7 @@ class _DevCatAppState extends State<DevCatApp> {
 
           return MaterialApp(
             title: 'DevCat',
+            navigatorObservers: [navigationSounds],
             debugShowCheckedModeBanner: false,
             locale: const Locale('ru'),
             supportedLocales: const [Locale('ru'), Locale('en')],
@@ -189,9 +200,9 @@ class _DevCatAppState extends State<DevCatApp> {
                     store.setting('reducedMotion', false) ||
                     MediaQuery.of(context).disableAnimations,
               ),
-              child: SoundScope(
-                sounds: sounds,
-                child: PointerSoundLayer(sounds: sounds, child: child!),
+              child: MascotScope(
+                appearanceId: MascotCatalog.selected(store),
+                child: SoundScope(sounds: sounds, child: child!),
               ),
             ),
             home: DevCatShell(

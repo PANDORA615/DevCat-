@@ -51,6 +51,7 @@ static void my_application_activate(GApplication* application) {
   } else {
     gtk_window_set_title(window, "DevCat");
   }
+  gtk_window_set_icon_name(window, "devcat");
 
   gtk_window_set_default_size(window, 1280, 720);
 

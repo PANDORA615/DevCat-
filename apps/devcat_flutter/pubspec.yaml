@@ -1,7 +1,7 @@
 name: devcat
 description: Локальная мастерская программирования с котом-наставником.
 publish_to: none
-version: 0.7.0+8
+version: 0.9.2+5009
 environment:
   sdk: '>=3.8.0 <4.0.0'
 dependencies:
@@ -38,6 +38,42 @@ flutter:
     - assets/fonts/
     - assets/branding/
     - assets/content/
+    - assets/mascot/views/student/
+    - assets/mascot/models/evolution/
+    - assets/mascot/models/costumes/
+    - assets/mascot/manifests/
+    - assets/mascot/animations/student/walk/
+    - assets/mascot/animations/student/waiting/
+    - assets/mascot/animations/student/typing/
+    - assets/mascot/animations/student/thoughtful/
+    - assets/mascot/animations/student/thinking/
+    - assets/mascot/animations/student/text_typing/
+    - assets/mascot/animations/student/talk/
+    - assets/mascot/animations/student/surprised/
+    - assets/mascot/animations/student/success/
+    - assets/mascot/animations/student/sleepy/
+    - assets/mascot/animations/student/sleeping/
+    - assets/mascot/animations/student/shy/
+    - assets/mascot/animations/student/sad/
+    - assets/mascot/animations/student/run/
+    - assets/mascot/animations/student/reading/
+    - assets/mascot/animations/student/orientations/
+    - assets/mascot/animations/student/notification/
+    - assets/mascot/animations/student/new/
+    - assets/mascot/animations/student/loading/
+    - assets/mascot/animations/student/land/
+    - assets/mascot/animations/student/jump/
+    - assets/mascot/animations/student/idle/
+    - assets/mascot/animations/student/idea/
+    - assets/mascot/animations/student/happy/
+    - assets/mascot/animations/student/greeting/
+    - assets/mascot/animations/student/failure/
+    - assets/mascot/animations/student/explaining/
+    - assets/mascot/animations/student/excited/
+    - assets/mascot/animations/student/error/
+    - assets/mascot/animations/student/celebrating/
+    - assets/mascot/animations/student/blink/
+    - assets/mascot/animations/student/angry/
   fonts:
     - family: Nunito
       fonts:

@@ -12,6 +12,7 @@ import 'lecture.dart';
 import 'study_session.dart';
 import 'study_widgets.dart';
 import 'workspace.dart';
+import 'lesson_path_circle.dart';
 
 class StudyHub extends StatefulWidget {
   final Course course;
@@ -567,7 +568,6 @@ class _PathNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final color = unlocked ? scheme.primary : scheme.surfaceContainerHighest;
     return Semantics(
       button: true,
       label:
@@ -601,48 +601,11 @@ class _PathNode extends StatelessWidget {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        if (active || levels > 0)
-                          SizedBox(
-                            width: 90,
-                            height: 90,
-                            child: CircularProgressIndicator(
-                              value: levels / 3,
-                              strokeWidth: 5,
-                              color: scheme.primary,
-                              backgroundColor: scheme.outlineVariant,
-                            ),
-                          ),
-                        Container(
-                          width: 73,
-                          height: 73,
-                          decoration: BoxDecoration(
-                            color: color,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.lerp(color, Colors.black, .22)!,
-                                offset: const Offset(0, 7),
-                              ),
-                            ],
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              customBorder: const CircleBorder(),
-                              onTap: onTap,
-                              child: Icon(
-                                !unlocked
-                                    ? Icons.lock_rounded
-                                    : levels == 3
-                                    ? Icons.check_rounded
-                                    : Icons.star_rounded,
-                                size: 37,
-                                color: unlocked
-                                    ? scheme.onPrimary
-                                    : scheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ),
+                        LessonPathCircle(
+                          levels: levels,
+                          active: active,
+                          unlocked: unlocked,
+                          onTap: onTap,
                         ),
                         if (active)
                           Positioned(
@@ -738,6 +701,16 @@ class _PathLine extends CustomPainter {
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
+    canvas.save();
+    canvas.clipPath(
+      Path.combine(
+        PathOperation.difference,
+        Path()..addRect(Offset.zero & size),
+        Path()..addOval(
+          Rect.fromCircle(center: Offset(center + current, 65), radius: 49),
+        ),
+      ),
+    );
     for (final metric in path.computeMetrics()) {
       for (var start = 0.0; start < metric.length; start += 14) {
         canvas.drawPath(
@@ -746,6 +719,7 @@ class _PathLine extends CustomPainter {
         );
       }
     }
+    canvas.restore();
   }
 
   @override

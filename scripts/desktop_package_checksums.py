@@ -7,7 +7,7 @@ import sys
 
 repo = Path(__file__).resolve().parents[1]
 target = sys.argv[1]
-files = sorted(p for p in (repo / 'dist').glob('DevCat-0.7.0-*') if p.is_file())
+files = sorted(p for p in (repo / 'dist').glob('DevCat-0.9.2-*') if p.is_file())
 assert len(files) == (6 if target == 'linux' else 2), [p.name for p in files]
 result = {'schema': 1, 'platform': target,
           'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip(),

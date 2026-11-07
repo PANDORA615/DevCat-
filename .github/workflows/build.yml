@@ -5,6 +5,8 @@ on:
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+env:
+  DEVCAT_UPDATE_PUBLIC_KEY: ${{ vars.DEVCAT_UPDATE_PUBLIC_KEY }}
 permissions:
   contents: read
 concurrency:
@@ -32,6 +34,8 @@ jobs:
         with:
           node-version: '22'
       - run: sudo apt-get update && sudo apt-get install -y clang libsqlite3-dev
+      - name: Verify supplied mascot assets
+        run: python3 scripts/verify_mascot_assets.py
       - name: Initialize .NET before concurrent compiler tests
         run: dotnet --version
       - working-directory: apps/devcat_flutter
@@ -97,7 +101,8 @@ jobs:
       - working-directory: apps/devcat_flutter
         run: flutter pub get --enforce-lockfile
       - working-directory: apps/devcat_flutter
-        run: flutter build ${{ matrix.target }} --release --dart-define=DEVCAT_BUNDLED_DESKTOP=true
+        shell: bash
+        run: flutter build ${{ matrix.target }} --release --dart-define=DEVCAT_BUNDLED_DESKTOP=true --dart-define=DEVCAT_UPDATE_PUBLIC_KEY="$DEVCAT_UPDATE_PUBLIC_KEY"
       - name: Include the verified runtimes and audit the final desktop bundle
         shell: bash
         run: python scripts/finish_desktop_bundle.py ${{ matrix.target }}
@@ -107,7 +112,7 @@ jobs:
         shell: bash
         run: python scripts/verify_packaged_desktop.py ${{ matrix.target }}
       - if: matrix.target == 'linux'
-        run: scripts/package_linux.sh 0.7.0
+        run: scripts/package_linux.sh 0.9.2
       - if: matrix.target == 'windows'
         shell: pwsh
         run: |
@@ -117,7 +122,7 @@ jobs:
           $bundle = (Resolve-Path apps/devcat_flutter/build/windows/x64/runner/Release).Path
           $shortBundle = Join-Path $env:RUNNER_TEMP 'dc'
           New-Item -ItemType Junction -Path $shortBundle -Target $bundle
-          Compress-Archive -Path "$shortBundle/*" -DestinationPath dist/DevCat-0.7.0-windows-x64.zip
+          Compress-Archive -Path "$shortBundle/*" -DestinationPath dist/DevCat-0.9.2-windows-x64.zip
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DBundleDir=$shortBundle" scripts/windows.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - if: matrix.target == 'macos'
@@ -125,11 +130,11 @@ jobs:
           mkdir -p dist
           app=apps/devcat_flutter/build/macos/Build/Products/Release/DevCat.app
           codesign --force --deep --sign - "$app"
-          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.7.0-macos-universal.zip
+          ditto -c -k --sequesterRsrc --keepParent "$app" dist/DevCat-0.9.2-macos-universal.zip
           mkdir -p /tmp/devcat-dmg
           cp -cR "$app" /tmp/devcat-dmg/DevCat.app || ditto "$app" /tmp/devcat-dmg/DevCat.app
           ln -s /Applications /tmp/devcat-dmg/Applications
-          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.7.0-macos-universal.dmg
+          hdiutil create -volname DevCat -srcfolder /tmp/devcat-dmg -ov -format UDZO dist/DevCat-0.9.2-macos-universal.dmg
       - name: Record exact package checksums
         shell: bash
         run: python scripts/desktop_package_checksums.py ${{ matrix.target }}
@@ -242,7 +247,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           flutter pub get --enforce-lockfile
-          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=5008
+          flutter build apk --release --target-platform=android-arm,android-arm64,android-x64 --build-number=5009 --dart-define=DEVCAT_UPDATE_PUBLIC_KEY="$DEVCAT_UPDATE_PUBLIC_KEY"
       - run: |
           mkdir -p dist/android-build-inputs
           mv apps/devcat_flutter/build/app/outputs/flutter-apk/app-release.apk dist/android-build-inputs/

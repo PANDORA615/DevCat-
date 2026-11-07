@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../core/sound.dart';
 
 class StudyButton extends StatefulWidget {
   final String label;
@@ -48,7 +49,9 @@ class _StudyButtonState extends State<StudyButton> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: widget.onPressed,
+            onTap: widget.onPressed == null
+                ? null
+                : () => soundAction(context, widget.onPressed!),
             onTapDown: enabled ? (_) => setState(() => pressed = true) : null,
             onTapUp: (_) => setState(() => pressed = false),
             onTapCancel: () => setState(() => pressed = false),
@@ -135,7 +138,7 @@ class StudyOption extends StatelessWidget {
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(18),
-            onTap: enabled ? onTap : null,
+            onTap: enabled ? () => soundAction(context, onTap) : null,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
               child: Row(
