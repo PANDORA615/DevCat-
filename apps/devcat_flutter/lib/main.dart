@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:async';
 import 'dart:io';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,12 @@ import 'core/mascot.dart';
 import 'core/study.dart';
 import 'core/store.dart';
 import 'core/desktop_diagnostics.dart';
+import 'core/content_runtime.dart';
+import 'core/desktop_updates.dart';
+import 'core/learning_assets.dart';
+import 'core/mascot_activity.dart';
+import 'core/theme_presets.dart';
+import 'core/course_loader.dart';
 import 'ui/shell.dart';
 
 Future<void> main() async {
@@ -45,11 +51,6 @@ Future<void> main() async {
       : Directory(override);
   final store = AppStore(directory);
   await store.load();
-  final courses =
-      (jsonDecode(await rootBundle.loadString('assets/content/courses.json'))
-              as List)
-          .map((j) => Course(j))
-          .toList();
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
     await windowManager.ensureInitialized();
     await windowManager.waitUntilReadyToShow(
@@ -66,7 +67,85 @@ Future<void> main() async {
       },
     );
   }
-  runApp(DevCatApp(store: store, courses: courses));
+  runApp(_LearningBoot(store: store));
+}
+
+class _LearningBoot extends StatefulWidget {
+  final AppStore store;
+  const _LearningBoot({required this.store});
+  @override
+  State<_LearningBoot> createState() => _LearningBootState();
+}
+
+class _LearningBootState extends State<_LearningBoot> {
+  late final Future<List<Course>> loading = _load();
+  Future<List<Course>> _load() async {
+    await ContentRuntime.initialize(widget.store.directory);
+    await ThemePresets.load();
+    return loadCourses(LearningAssets.bundle);
+  }
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<List<Course>>(
+    future: loading,
+    builder: (_, snapshot) {
+      if (snapshot.hasData) {
+        return DefaultAssetBundle(
+          bundle: LearningAssets.bundle,
+          child: DevCatApp(store: widget.store, courses: snapshot.data!),
+        );
+      }
+      final seed = Color(widget.store.setting('seedColor', 0xff416c57));
+      return MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: seed),
+          fontFamily: 'Nunito',
+        ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: seed,
+            brightness: Brightness.dark,
+          ),
+          fontFamily: 'Nunito',
+        ),
+        themeMode: switch (widget.store.setting('theme', 'system')) {
+          'light' => ThemeMode.light,
+          'dark' => ThemeMode.dark,
+          _ => ThemeMode.system,
+        },
+        home: Scaffold(
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    'assets/branding/devcat_book.png',
+                    width: 120,
+                    height: 110,
+                  ),
+                  const SizedBox(height: 24),
+                  if (!snapshot.hasError)
+                    const SizedBox(
+                      width: 180,
+                      child: LinearProgressIndicator(),
+                    ),
+                  const SizedBox(height: 16),
+                  Text(
+                    snapshot.hasError
+                        ? 'Не удалось открыть встроенные уроки. Переустанови DevCat. Прогресс хранится отдельно.'
+                        : 'Готовлю твою мастерскую…',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
 
 class DevCatApp extends StatefulWidget {
@@ -79,8 +158,47 @@ class DevCatApp extends StatefulWidget {
 
 class _DevCatAppState extends State<DevCatApp> {
   final sounds = SoftSounds();
+  late final navigationSounds = SoundNavigationObserver(sounds);
+  Timer? updateChecks;
+  DesktopUpdates? updates;
+  bool _keyActivity(KeyEvent event) {
+    MascotActivity.touch();
+    return false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    HardwareKeyboard.instance.addHandler(_keyActivity);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final runtime = ContentRuntime.current;
+      if (runtime == null) return;
+      updates = DesktopUpdates.current = DesktopUpdates(runtime);
+      void check() {
+        if (mounted && widget.store.setting('autoCheckUpdates', true)) {
+          unawaited(
+            updates!.check(
+              beta: widget.store.setting('updateChannel', 'beta') == 'beta',
+              automatic: true,
+            ),
+          );
+        }
+      }
+
+      check();
+      updateChecks = Timer.periodic(const Duration(hours: 6), (_) => check());
+    });
+  }
+
   @override
   void dispose() {
+    HardwareKeyboard.instance.removeHandler(_keyActivity);
+    updateChecks?.cancel();
+    updates?.dispose();
+    if (identical(DesktopUpdates.current, updates)) {
+      DesktopUpdates.current = null;
+    }
     sounds.dispose();
     super.dispose();
   }
@@ -181,6 +299,7 @@ class _DevCatAppState extends State<DevCatApp> {
           }
 
           return MaterialApp(
+            navigatorObservers: [navigationSounds],
             title: 'DevCat',
             debugShowCheckedModeBanner: false,
             locale: const Locale('ru'),
@@ -202,11 +321,18 @@ class _DevCatAppState extends State<DevCatApp> {
                     store.setting('reducedMotion', false) ||
                     MediaQuery.of(context).disableAnimations,
               ),
-              child: SoundScope(
-                sounds: sounds,
-                child: MascotScope(
-                  appearance: appearance,
-                  child: PointerSoundLayer(sounds: sounds, child: child!),
+              child: MouseRegion(
+                onHover: (_) => MascotActivity.touch(),
+                child: Listener(
+                  onPointerDown: (_) => MascotActivity.touch(),
+                  onPointerMove: (_) => MascotActivity.touch(),
+                  child: SoundScope(
+                    sounds: sounds,
+                    child: MascotScope(
+                      appearance: appearance,
+                      child: PointerSoundLayer(sounds: sounds, child: child!),
+                    ),
+                  ),
                 ),
               ),
             ),

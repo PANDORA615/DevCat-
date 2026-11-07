@@ -1,4 +1,8 @@
+import '../core/theme_presets.dart';
+import 'motion.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'updates_page.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -208,13 +212,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 spacing: 12,
                 runSpacing: 10,
                 children: [
-                  for (final c in <int, String>{
-                    0xff416c57: 'Шалфей',
-                    0xff376493: 'Небо',
-                    0xffa15c35: 'Терракота',
-                    0xff8b5368: 'Роза',
-                    0xff526367: 'Нейтральная',
-                  }.entries)
+                  for (final c in ThemePresets.colors.entries)
                     ActionChip(
                       avatar: CircleAvatar(
                         backgroundColor: Color(c.key),
@@ -394,6 +392,19 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.system_update_alt_rounded),
+                  title: const Text('Обновления DevCat'),
+                  subtitle: const Text(
+                    'Новые уроки, версия приложения и откат',
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => Navigator.of(context).push(
+                    DevCatRoute(builder: (_) => UpdatesPage(store: store)),
+                  ),
+                ),
               _title(context, Icons.music_note_outlined, 'Кот и тихие звуки'),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -404,7 +415,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 trailing: const Icon(Icons.chevron_right_rounded),
                 onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
+                  DevCatRoute(
                     builder: (_) =>
                         MascotGallery(store: store, sounds: widget.sounds),
                   ),

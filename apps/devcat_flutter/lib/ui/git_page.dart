@@ -1,6 +1,7 @@
+import 'motion.dart';
+import '../core/learning_assets.dart';
 import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../core/course.dart';
 import 'lecture.dart';
@@ -91,7 +92,9 @@ class _GitPageState extends State<GitPage> {
         eyebrow: 'ОТДЕЛЬНЫЙ УЧЕБНЫЙ ТРЕК',
       ),
       FutureBuilder<String>(
-        future: rootBundle.loadString('assets/content/git_course.json'),
+        future: LearningAssets.bundle.loadString(
+          'assets/content/git_course.json',
+        ),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const LinearProgressIndicator();
           final course = Course(jsonDecode(snapshot.data!));
@@ -105,7 +108,7 @@ class _GitPageState extends State<GitPage> {
                   (lesson) => ListTile(
                     title: Text(lesson.title),
                     onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
+                      DevCatRoute(
                         builder: (_) => Scaffold(
                           appBar: AppBar(title: Text(lesson.title)),
                           body: LectureView(

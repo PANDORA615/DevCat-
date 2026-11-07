@@ -1,7 +1,7 @@
 name: devcat
 description: Локальная мастерская программирования с котом-наставником.
 publish_to: none
-version: 0.9.0+10
+version: 0.9.1+11
 environment:
   sdk: '>=3.8.0 <4.0.0'
 dependencies:
@@ -38,42 +38,8 @@ flutter:
     - assets/fonts/
     - assets/branding/
     - assets/content/
-    - assets/mascot_v5/animations/student/angry/
-    - assets/mascot_v5/animations/student/blink/
-    - assets/mascot_v5/animations/student/celebrating/
-    - assets/mascot_v5/animations/student/error/
-    - assets/mascot_v5/animations/student/excited/
-    - assets/mascot_v5/animations/student/explaining/
-    - assets/mascot_v5/animations/student/failure/
-    - assets/mascot_v5/animations/student/greeting/
-    - assets/mascot_v5/animations/student/happy/
-    - assets/mascot_v5/animations/student/idea/
-    - assets/mascot_v5/animations/student/idle/
-    - assets/mascot_v5/animations/student/jump/
-    - assets/mascot_v5/animations/student/land/
-    - assets/mascot_v5/animations/student/loading/
-    - assets/mascot_v5/animations/student/new/
-    - assets/mascot_v5/animations/student/notification/
-    - assets/mascot_v5/animations/student/orientations/
-    - assets/mascot_v5/animations/student/reading/
-    - assets/mascot_v5/animations/student/run/
-    - assets/mascot_v5/animations/student/sad/
-    - assets/mascot_v5/animations/student/shy/
-    - assets/mascot_v5/animations/student/sleeping/
-    - assets/mascot_v5/animations/student/sleepy/
-    - assets/mascot_v5/animations/student/success/
-    - assets/mascot_v5/animations/student/surprised/
-    - assets/mascot_v5/animations/student/talk/
-    - assets/mascot_v5/animations/student/text_typing/
-    - assets/mascot_v5/animations/student/thinking/
-    - assets/mascot_v5/animations/student/thoughtful/
-    - assets/mascot_v5/animations/student/typing/
-    - assets/mascot_v5/animations/student/waiting/
-    - assets/mascot_v5/animations/student/walk/
-    - assets/mascot_v5/manifests/
-    - assets/mascot_v5/models/costumes/
-    - assets/mascot_v5/models/evolution/
-    - assets/mascot_v5/views/student/
+    - assets/config/
+    - assets/mascot_pixel/
   fonts:
     - family: Nunito
       fonts:

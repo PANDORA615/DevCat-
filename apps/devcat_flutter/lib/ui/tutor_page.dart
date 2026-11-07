@@ -1,6 +1,6 @@
+import '../core/learning_assets.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../core/course.dart';
 import '../core/store.dart';
 import '../core/tutor.dart';
@@ -34,7 +34,9 @@ class _TutorPageState extends State<TutorPage> {
     super.initState();
     courses = List.of(widget.courses);
     if (!courses.any((c) => c.id == 'git')) {
-      rootBundle.loadString('assets/content/git_course.json').then((text) {
+      LearningAssets.bundle.loadString('assets/content/git_course.json').then((
+        text,
+      ) {
         if (mounted) setState(() => courses.add(Course(jsonDecode(text))));
       });
     }

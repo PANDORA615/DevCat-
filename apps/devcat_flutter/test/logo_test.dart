@@ -29,12 +29,14 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        await tester.runAsync(
-          () => precacheImage(
-            const AssetImage('assets/branding/icon.png'),
-            key.currentContext!,
-          ),
-        );
+        await tester.runAsync(() async {
+          for (final name in ['ink', 'primary', 'secondary']) {
+            await precacheImage(
+              AssetImage('assets/branding/logo_$name.png'),
+              key.currentContext!,
+            );
+          }
+        });
         await tester.pumpAndSettle();
         late List<int> result;
         await tester.runAsync(() async {
@@ -46,8 +48,8 @@ void main() {
             format: ui.ImageByteFormat.rawRgba,
           );
           final bytes = data!.buffer.asUint8List();
-          final background = (46 * image.width + 24) * 4;
-          final cat = (29 * image.width + 42) * 4;
+          final background = (8 * image.width + 8) * 4;
+          final cat = (24 * image.width + 32) * 4;
           result = [
             ...bytes.sublist(background, background + 4),
             ...bytes.sublist(cat, cat + 4),
@@ -63,7 +65,7 @@ void main() {
       expect(green.take(3).toList(), isNot(blue.take(3).toList()));
       expect(blue.take(3).toList(), isNot(dark.take(3).toList()));
       for (final colors in [green, blue, dark]) {
-        expect(colors.sublist(4), [0, 0, 0, 255]);
+        expect(colors.sublist(4), [21, 18, 32, 255]);
       }
       expect(tester.takeException(), isNull);
     },

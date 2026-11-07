@@ -1,26 +1,32 @@
 import 'dart:convert';
+import 'learning_assets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-/// Review resources retain their actual quality status and coverage.
+/// Authored pixel poses and the separately labelled original view references.
 class MascotCatalog {
   final List<Map<String, dynamic>> appearances;
-  final Map<String, dynamic> states;
-  MascotCatalog(this.appearances, this.states);
+  final Map<String, dynamic> states, clips;
+  MascotCatalog(this.appearances, this.states, this.clips);
   static Future<MascotCatalog>? _loading;
   static MascotCatalog? cached;
   static Future<MascotCatalog> load() => _loading ??= _load();
   static Future<MascotCatalog> _load() async {
-    const base = 'assets/mascot_v5/manifests/';
-    final appearances = jsonDecode(
-      await rootBundle.loadString('${base}appearance_catalog.json'),
+    final bundle = LearningAssets.bundle;
+    if (bundle is BundledLearningAssets) await bundle.frameFiles();
+    await AssetManifest.loadFromAssetBundle(bundle);
+    final data = jsonDecode(
+      await LearningAssets.bundle.loadString(
+        'assets/mascot_pixel/catalog.json',
+      ),
     );
-    final animations = jsonDecode(
-      await rootBundle.loadString('${base}animation_contract.json'),
-    );
+    if (data['schema'] != 1) {
+      throw const FormatException('Несовместимый набор кота.');
+    }
     return cached = MascotCatalog(
-      List<Map<String, dynamic>>.from(appearances['appearances']),
-      Map<String, dynamic>.from(animations['states']),
+      List<Map<String, dynamic>>.from(data['appearances']),
+      Map<String, dynamic>.from(data['states']),
+      Map<String, dynamic>.from(data['clips']),
     );
   }
 
@@ -40,8 +46,10 @@ class MascotCatalog {
     orElse: () => appearances.first,
   );
   Map<String, dynamic>? clip(String appearance, String state) =>
-      appearance == 'student' ? states[state] as Map<String, dynamic>? : null;
-  static String asset(String path) => 'assets/mascot_v5/$path';
+      (clips[appearance] as Map<String, dynamic>?)?[state]
+          as Map<String, dynamic>?;
+  static String asset(String path) =>
+      path.startsWith('assets/') ? path : 'assets/mascot_v5/$path';
 }
 
 class MascotScope extends InheritedWidget {

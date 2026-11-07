@@ -1,3 +1,4 @@
+import 'motion.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -89,7 +90,7 @@ class _NearbyPanelState extends State<NearbyPanel> {
   Future<void> _scan() async {
     final result = await Navigator.of(
       context,
-    ).push<String>(MaterialPageRoute(builder: (_) => const _Scanner()));
+    ).push<String>(DevCatRoute(builder: (_) => const _Scanner()));
     if (result != null && mounted) {
       code.text = result;
       await _connect();

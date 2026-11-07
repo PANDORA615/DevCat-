@@ -1,52 +1,41 @@
+import 'motion.dart';
 import 'package:flutter/material.dart';
 import '../core/sound.dart';
 import 'cat_actor.dart';
 import 'cat_dialogue.dart';
 
-/// Maps the original mint background to the theme while preserving black and white.
-/// The asset stays unchanged, so every palette uses the same cat silhouette.
+/// Theme colours affect accent pixels; ink and the ivory outline stay readable.
 class DevCatLogo extends StatelessWidget {
   final double size;
   const DevCatLogo({super.key, this.size = 44});
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final background = scheme.brightness == Brightness.dark
-        ? Color.lerp(scheme.primaryContainer, scheme.primary, .75)!
-        : scheme.primaryContainer;
-    List<double> channel(double component) {
-      final shift = (component * 255 - 180) / 60;
-      return [1 - shift, shift, 0, 0, 0];
-    }
-
+    Widget layer(String name, [Color? color]) => Image.asset(
+      'assets/branding/logo_$name.png',
+      width: size,
+      height: size,
+      filterQuality: FilterQuality.none,
+      color: color,
+      colorBlendMode: BlendMode.srcIn,
+      excludeFromSemantics: true,
+    );
     return Semantics(
       label: 'Логотип DevCat',
       image: true,
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(size * .28),
-          child: ColorFiltered(
-            colorFilter: ColorFilter.matrix([
-              ...channel(background.r),
-              ...channel(background.g),
-              ...channel(background.b),
-              0,
-              0,
-              0,
-              1,
-              0,
-            ]),
-            child: OverflowBox(
-              maxWidth: size,
-              maxHeight: size,
-              child: Image.asset(
-                'assets/branding/icon.png',
-                width: size,
-                height: size,
-                excludeFromSemantics: true,
-              ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size * .28),
+        child: ColoredBox(
+          color: scheme.primaryContainer,
+          child: SizedBox(
+            width: size,
+            height: size,
+            child: Stack(
+              children: [
+                layer('ink'),
+                layer('primary', scheme.primary),
+                layer('secondary', scheme.onPrimaryContainer),
+              ],
             ),
           ),
         ),
@@ -169,21 +158,28 @@ class CatMessage extends StatelessWidget {
   final String text;
   final bool reducedMotion;
   final CatMood mood;
+  final String? action;
   const CatMessage(
     this.text, {
     super.key,
     this.reducedMotion = false,
     this.mood = CatMood.explaining,
+    this.action,
   });
   @override
   Widget build(BuildContext context) => Panel(
     padding: const EdgeInsets.all(18),
-    child: CatDialogue(text, mood: mood, instant: reducedMotion),
+    child: CatDialogue(
+      text,
+      mood: mood,
+      action: action,
+      instant: reducedMotion,
+    ),
   );
 }
 
 Future<bool> confirm(BuildContext context, String title, String body) async =>
-    await showDialog<bool>(
+    await showDevCatDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),

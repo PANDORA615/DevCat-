@@ -22,7 +22,8 @@ class CompanionContext {
 class CatLine {
   final String text;
   final CatMood mood;
-  const CatLine(this.text, [this.mood = CatMood.encouragement]);
+  final String? action;
+  const CatLine(this.text, [this.mood = CatMood.encouragement, this.action]);
 }
 
 /// Shuffled offline conversation. It never pretends to have inspected user code.
@@ -78,6 +79,52 @@ class CatChatter {
 
   List<CatLine> _lines(CompanionContext context) => [
     const CatLine(
+      'Привет! Я уже устроился рядом с учебником. Начнём с того места, которое тебе удобно.',
+      CatMood.greeting,
+      'greeting',
+    ),
+    const CatLine(
+      'Поймал маленькую идею: сначала предскажи результат примера, а потом сравни с запуском.',
+      CatMood.thinking,
+      'idea',
+    ),
+    const CatLine(
+      'Ого, одну задачу часто можно решить несколькими способами! Можно выбрать самый понятный.',
+      CatMood.explaining,
+      'surprised',
+    ),
+    const CatLine(
+      'Я немножко стесняюсь показывать свои первые черновики. Они тоже были с исправлениями.',
+      CatMood.encouragement,
+      'shy',
+    ),
+    if (context.place == CompanionPlace.home ||
+        context.place == CompanionPlace.settings)
+      const CatLine(
+        'Мой любимый учебник чуть помялся. Немного грустно, но все полезные страницы на месте.',
+        CatMood.encouragement,
+        'sad',
+      ),
+    if (context.place == CompanionPlace.git)
+      const CatLine(
+        'Я сержусь на сайты, которые выманивают чужие пароли. Проверяй адрес GitHub и никому не отправляй пароль или токен.',
+        CatMood.warning,
+        'angry',
+      ),
+    if (context.place == CompanionPlace.lesson ||
+        context.place == CompanionPlace.reference)
+      const CatLine(
+        'Я перечитаю пример вместе с тобой. Посмотри на одно действие, прежде чем переходить к следующему.',
+        CatMood.explaining,
+        'reading',
+      ),
+    if (context.place == CompanionPlace.progress)
+      const CatLine(
+        'Мне так нравится собирать маленькие открытия! Можно вспомнить одну вещь, которая сегодня стала понятнее.',
+        CatMood.celebration,
+        'excited',
+      ),
+    const CatLine(
       'Мур. Я рядом — будем разбираться по одному маленькому шагу.',
     ),
     const CatLine(
@@ -101,6 +148,7 @@ class CatChatter {
     const CatLine(
       'Если устал, короткая пауза поможет вернуться со свежим взглядом.',
       CatMood.warning,
+      'sleepy',
     ),
     const CatLine(
       'У каждого хорошего решения когда-то был первый неуверенный черновик.',

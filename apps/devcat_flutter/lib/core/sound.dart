@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'learning_assets.dart';
 
 enum SoundCue {
   tap,
@@ -29,6 +30,13 @@ enum CatMood {
 
 /// One voice channel, independently controlled UI and achievement channels.
 class SoftSounds {
+  Source _source(String name) {
+    final path = LearningAssets.mediaPaths['assets/audio/$name.wav'];
+    return path == null
+        ? AssetSource('audio/$name.wav')
+        : DeviceFileSource(path);
+  }
+
   final AudioPlayer Function() _createPlayer;
   SoftSounds({AudioPlayer Function()? createPlayer})
     : _createPlayer = createPlayer ?? AudioPlayer.new;
@@ -144,10 +152,7 @@ class SoftSounds {
         _voiceCompletion = player.onPlayerComplete.listen((_) {
           if (token == _voiceEpoch) _voicePlaying = false;
         });
-        await player.play(
-          AssetSource('audio/$selected.wav'),
-          volume: voiceVolume.clamp(0, 1),
-        );
+        await player.play(_source(selected), volume: voiceVolume.clamp(0, 1));
         // The next syllable waits for native completion, including device latency.
         // Missing completion leaves speech quiet rather than overlapping samples.
       } catch (_) {
@@ -191,10 +196,7 @@ class SoftSounds {
       final player = _players.putIfAbsent(channel, _createPlayer);
       await player.stop();
       if (!_disposed && enabled) {
-        await player.play(
-          AssetSource('audio/$name.wav'),
-          volume: level.clamp(0, 1),
-        );
+        await player.play(_source(name), volume: level.clamp(0, 1));
       }
     } catch (_) {
       /* Navigation and learning work without audio. */
@@ -209,6 +211,28 @@ class SoftSounds {
       await player.dispose();
     }
     _players.clear();
+  }
+}
+
+/// Route semantics choose distinct back/close/open samples. The first app route
+/// is silent; an explicit cue from the initiating button wins over this fallback.
+class SoundNavigationObserver extends NavigatorObserver {
+  final SoftSounds sounds;
+  SoundNavigationObserver(this.sounds);
+  void _cue(SoundCue cue) {
+    if (DateTime.now().difference(sounds._last).inMilliseconds > 60) {
+      sounds.cue(cue);
+    }
+  }
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (previousRoute != null) _cue(SoundCue.open);
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    _cue(route is PopupRoute ? SoundCue.close : SoundCue.back);
   }
 }
 

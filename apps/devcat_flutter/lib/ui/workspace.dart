@@ -1,3 +1,6 @@
+import '../core/execution_feedback.dart';
+import 'motion.dart';
+import '../core/project_flush.dart';
 import 'dart:async';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -53,13 +56,26 @@ class _WorkspacePageState extends State<WorkspacePage>
   int hint = 0, tab = 1, compactPane = 0;
   bool busy = false;
   CatMood mood = CatMood.encouragement;
+  String catAction = 'waiting';
+  bool cancelRequested = false;
+  late final execution = ExecutionFeedback(() {
+    if (mounted) setState(() {});
+  });
   bool get manual => widget.seed == 0 && widget.lesson?.kind == 'review';
   String? failure;
   String get taskKey => widget.ide ? 'ide.$language' : task.id;
+  void Function()? unregisterSave;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    unregisterSave = ProjectFlush.register(() async {
+      if (!mounted) return;
+      if (busy) {
+        throw StateError('Сначала заверши или останови выполняющийся код.');
+      }
+      await widget.store.draft(taskKey, code.fullText);
+    });
     language = widget.language;
     _configure();
   }
@@ -119,6 +135,9 @@ class _WorkspacePageState extends State<WorkspacePage>
   }
 
   void _changed() {
+    if (!busy && mounted && catAction != 'typing') {
+      setState(() => catAction = 'typing');
+    }
     debounce?.cancel();
     debounce = Timer(const Duration(milliseconds: 450), _save);
   }
@@ -141,6 +160,8 @@ class _WorkspacePageState extends State<WorkspacePage>
 
   @override
   void dispose() {
+    unregisterSave?.call();
+    execution.dispose();
     WidgetsBinding.instance.removeObserver(this);
     debounce?.cancel();
     widget.store.draft(taskKey, code.fullText).catchError((_) {});
@@ -176,6 +197,8 @@ class _WorkspacePageState extends State<WorkspacePage>
     await _save();
     if (!mounted) return;
     final source = code.fullText;
+    final ticket = execution.begin();
+    cancelRequested = false;
     setState(() {
       busy = true;
       output = check ? 'Проверяю на настоящих тестах…' : 'Выполняю локально…';
@@ -187,32 +210,60 @@ class _WorkspacePageState extends State<WorkspacePage>
         if (result.evaluated) {
           await widget.store.record(task.id, language, result.passed);
         }
-        await widget.sounds.result(result.passed);
+        execution.finish(ticket, ok: result.passed, cancelled: cancelRequested);
+        if (mounted && !cancelRequested) {
+          await widget.sounds.result(result.passed);
+        }
         if (mounted) {
           setState(() {
             output = result.report;
             mood = result.passed ? CatMood.celebration : CatMood.warning;
-            cat = result.passed
+            catAction = cancelRequested
+                ? 'waiting'
+                : result.passed
+                ? 'success'
+                : result.evaluated
+                ? 'failure'
+                : 'error';
+            cat = cancelRequested
+                ? 'Запуск остановлен. Можно изменить код и попробовать снова.'
+                : result.passed
                 ? 'Получилось! Все проверки пройдены. Сможешь объяснить, почему решение работает на границе диапазона?'
                 : explainDiagnostic(result.report);
           });
         }
       } else {
         final result = await runner.run(language, source, input.text);
+        execution.finish(ticket, ok: result.ok, cancelled: cancelRequested);
         if (mounted) {
           setState(() {
             output =
                 '${result.output}${result.error.isNotEmpty ? '\n${result.error}' : ''}\n\nКод завершения: ${result.exitCode}';
             mood = result.ok ? CatMood.encouragement : CatMood.warning;
-            widget.sounds.cue(result.ok ? SoundCue.save : SoundCue.error);
-            cat = result.ok
+            catAction = cancelRequested
+                ? 'waiting'
+                : result.ok
+                ? 'success'
+                : 'error';
+            if (!cancelRequested) {
+              widget.sounds.cue(result.ok ? SoundCue.save : SoundCue.error);
+            }
+            cat = cancelRequested
+                ? 'Запуск остановлен. Можно изменить код и попробовать снова.'
+                : result.ok
                 ? 'Программа выполнилась. Теперь проверь, совпадает ли результат с условием.'
                 : explainDiagnostic(result.error);
           });
         }
       }
     } catch (e) {
-      if (mounted) setState(() => output = 'Не удалось выполнить проверку: $e');
+      execution.finish(ticket, ok: false, cancelled: cancelRequested);
+      if (mounted) {
+        setState(() {
+          output = 'Не удалось выполнить проверку: $e';
+          catAction = cancelRequested ? 'waiting' : 'error';
+        });
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }
@@ -226,7 +277,7 @@ class _WorkspacePageState extends State<WorkspacePage>
       setState(() => compactPane = 2);
       return;
     }
-    showModalBottomSheet<void>(
+    showDevCatSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -467,7 +518,10 @@ class _WorkspacePageState extends State<WorkspacePage>
               ),
             if (busy)
               OutlinedButton.icon(
-                onPressed: runner.cancel,
+                onPressed: () {
+                  cancelRequested = true;
+                  runner.cancel();
+                },
                 icon: const Icon(Icons.stop_rounded),
                 label: const Text('Стоп'),
               ),
@@ -479,6 +533,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                         setState(() {
                           widget.sounds.cue(SoundCue.hint);
                           mood = CatMood.thinking;
+                          catAction = 'idea';
                           cat = task.hints[hint.clamp(0, 2)];
                           hint = (hint + 1).clamp(0, 3);
                         });
@@ -549,7 +604,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                   const Icon(Icons.task_alt_rounded),
                 if (compact && !widget.ide)
                   IconButton(
-                    onPressed: () => showModalBottomSheet(
+                    onPressed: () => showDevCatSheet(
                       context: context,
                       isScrollControlled: true,
                       showDragHandle: true,
@@ -640,10 +695,15 @@ class _WorkspacePageState extends State<WorkspacePage>
 
   Widget _information(BuildContext context) => ListView(
     children: [
-      if (widget.store.setting('cat', true) &&
-          widget.lesson?.learning.isNotEmpty != true) ...[
+      if (widget.store.setting('cat', true)) ...[
         CatMessage(
           cat,
+          key: ValueKey('practice-${execution.generation}'),
+          action: busy
+              ? (execution.reaction == ExecutionReaction.idle
+                    ? 'thinking'
+                    : execution.animation)
+              : catAction,
           reducedMotion: MediaQuery.of(context).disableAnimations,
           mood: mood,
         ),
@@ -812,7 +872,7 @@ class _WorkspacePageState extends State<WorkspacePage>
           )) {
             if (!context.mounted) return;
             widget.sounds.speak(CatMood.explaining);
-            showDialog(
+            showDevCatDialog(
               context: context,
               builder: (context) => AlertDialog(
                 title: Text(manual ? 'Пример из лекции' : 'Эталонное решение'),

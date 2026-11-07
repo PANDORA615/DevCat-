@@ -146,4 +146,54 @@ void main() {
       expect(await ContentUpdateStore(temp, verifier).active(), isNull);
     },
   );
+  test(
+    'A damaged newest snapshot cannot evict the last working rollback',
+    () async {
+      final store = ContentUpdateStore(temp, verifier);
+      await store.install(await verifier.verify(await pack(1)));
+      await store.install(await verifier.verify(await pack(2)));
+      await File(
+        '${temp.path}/versions/2/assets/content/example.json',
+      ).writeAsString('broken');
+      await store.install(await verifier.verify(await pack(3)));
+      expect((await store.active())!.revision, 3);
+      expect(await store.rollback(), isTrue);
+      expect((await store.active())!.revision, 1);
+    },
+  );
+  test(
+    'Conflicting contents cannot silently reuse an installed revision',
+    () async {
+      final store = ContentUpdateStore(temp, verifier);
+      await store.install(await verifier.verify(await pack(1)));
+      await expectLater(
+        store.install(
+          await verifier.verify(
+            await pack(1, path: 'assets/content/other.json'),
+          ),
+        ),
+        throwsFormatException,
+      );
+      expect((await store.active())!.files.keys, [
+        'assets/content/example.json',
+      ]);
+    },
+  );
+  test(
+    'Repairing the damaged newest revision keeps the previous rollback',
+    () async {
+      final store = ContentUpdateStore(temp, verifier);
+      await store.install(await verifier.verify(await pack(1)));
+      final newest = await verifier.verify(await pack(2));
+      await store.install(newest);
+      await File(
+        '${temp.path}/versions/2/assets/content/example.json',
+      ).writeAsString('broken');
+      expect((await store.active())!.revision, 1);
+      await store.install(newest);
+      expect((await store.active())!.revision, 2);
+      expect(await store.rollback(), isTrue);
+      expect((await store.active())!.revision, 1);
+    },
+  );
 }

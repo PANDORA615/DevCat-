@@ -14,6 +14,8 @@ import subprocess
 import sys
 import tempfile
 from apk_release_patch import apply as apply_apk_patch
+from content_package import assemble as assemble_content
+from release_index import verify_index
 import urllib.request
 
 manifest = json.loads(Path(sys.argv[1]).read_text())
@@ -33,7 +35,7 @@ def api(path):
         return json.load(response)
 
 
-assert manifest['version'] in (1, 2, 3, 4)
+assert manifest['version'] in (1, 2, 3, 4, 5)
 assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', manifest['tag'])
 version = manifest['tag'][1:]
 assert isinstance(manifest['build_run'], int) and manifest['build_run'] > 0
@@ -46,7 +48,7 @@ subprocess.run(['git', 'diff', '--exit-code', manifest['build_commit'], 'HEAD', 
                 'scripts/bundle_desktop_runtimes.py', 'scripts/finish_desktop_bundle.py',
                 'scripts/desktop_package_checksums.py', 'scripts/verify_packaged_desktop.py'], check=True)
 expected_android = {f'DevCat-{version}-android-{abi}.apk' for abi in
-                    (['universal', 'arm64-v8a', 'armeabi-v7a', 'x86_64'] if manifest['version'] == 1 else ['universal'] if manifest['version'] == 4 else ['arm64-v8a', 'armeabi-v7a', 'x86_64'])}
+                    (['universal', 'arm64-v8a', 'armeabi-v7a', 'x86_64'] if manifest['version'] == 1 else ['universal'] if manifest['version'] >= 4 else ['arm64-v8a', 'armeabi-v7a', 'x86_64'])}
 if manifest['version'] == 1:
     expected_android.add(f'DevCat-{version}-android.aab')
 else:
@@ -73,7 +75,7 @@ def reconstruct(item, destination):
 for item in manifest['files']:
     assert Path(item['name']).name == item['name']
     destination = output / item['name']
-    if manifest['version'] in (3, 4) and item['name'].endswith('.apk'):
+    if manifest['version'] in (3, 4, 5) and item['name'].endswith('.apk'):
         patch = item['patch']
         assert patch['name'] == item['name'] + '.patch.json'
         assert Path(item['base']['name']).name == item['base']['name']
@@ -100,6 +102,15 @@ if manifest['version'] >= 2:
     shutil.copyfile(f'docs/releases/v{version}-Android-runtimes.json', output / f'DevCat-{version}-Android-runtimes.json')
 if manifest.get('asset_count', 20) in (19, 21):
     shutil.copyfile('docs/DevCat-lectures.zip', output / f'DevCat-{version}-lectures.zip')
+if manifest['version'] >= 5:
+    record = json.loads(Path(f'docs/releases/v{version}-content-signature.json').read_text())
+    content = assemble_content(Path('apps/devcat_flutter'), record, output / f'DevCat-{version}-content.json')
+    assert content == manifest['content_package']
+    index_file = Path(f'docs/releases/v{version}-content-index.json')
+    shutil.copyfile(index_file, output / 'content-index.json')
+    keys = json.loads(Path('apps/devcat_flutter/assets/branding/desktop_update_keys.json').read_text())['keys']
+    verify_index(index_file.read_bytes(), keys, manifest['tag'], output)
+    print('Verified signed course/media package and native update index.', flush=True)
 expected = {'SHA256SUMS'}
 for line in (output / 'SHA256SUMS').read_text().splitlines():
     checksum, name = line.split('  ', 1)
