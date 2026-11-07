@@ -18,7 +18,7 @@ class ReleaseIndexTest(unittest.TestCase):
         public = subprocess.check_output(['openssl', 'pkey', '-in', str(self.key), '-pubout', '-outform', 'DER'])[-32:]
         self.keys = {'test': base64.b64encode(public).decode()}
         self.assets = []
-        for name in ['DevCat-0.9.1-windows-x64-setup.exe', 'DevCat-0.9.1-linux-x64.AppImage', 'DevCat-0.9.1-macos-universal.dmg', 'DevCat-0.9.1-content.json']:
+        for name in ['DevCat-0.9.1-windows-x64-setup.exe', 'DevCat-0.9.1-linux-amd64.deb', 'DevCat-0.9.1-linux-fedora-x86_64.rpm', 'DevCat-0.9.1-linux-opensuse-x86_64.rpm', 'DevCat-0.9.1-linux-x86_64.AppImage', 'DevCat-0.9.1-linux-x86_64.pkg.tar.zst', 'DevCat-0.9.1-linux-x86_64.tar.gz', 'DevCat-0.9.1-macos-universal.dmg', 'DevCat-0.9.1-content.json']:
             data = name.encode()
             (self.root / name).write_bytes(data)
             self.assets.append({'name': name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
@@ -26,6 +26,7 @@ class ReleaseIndexTest(unittest.TestCase):
 
     def test_signature_binds_real_platform_packages_and_content(self):
         envelope = sign(self.data, 'test', self.key, self.keys)
+        self.assertEqual(len(self.data['platforms']['linux-x64']), 6)
         self.assertEqual(verify_index(envelope, self.keys, 'v0.9.1', self.root), self.data)
         (self.root / self.assets[0]['name']).write_bytes(b'changed')
         with self.assertRaises(ValueError):
@@ -46,7 +47,7 @@ class ReleaseIndexTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             build('0.9.1', 11, 'beta', '', bad[-1], 1, 11, bad)
         envelope = sign(self.data, 'test', self.key, self.keys)
-        (self.root / 'DevCat-0.9.1-linux-x64.tar.gz').write_bytes(b'another installer')
+        (self.root / self.assets[1]['name']).unlink()
         with self.assertRaises(ValueError):
             verify_index(envelope, self.keys, 'v0.9.1', self.root)
 

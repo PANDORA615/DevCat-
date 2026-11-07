@@ -9,9 +9,18 @@ import subprocess
 import tempfile
 from content_package import canonical, verify
 
-PLATFORMS = {'windows-x64': ('.exe', '.zip'),
-             'linux-x64': ('.deb', '.rpm', '.AppImage', '.tar.gz', '.pkg.tar.zst'),
-             'macos-universal': ('.dmg', '.zip')}
+PLATFORMS = {
+    'windows-x64': ('windows-x64-setup.exe', 'windows-x64.zip'),
+    'linux-x64': ('linux-amd64.deb', 'linux-fedora-x86_64.rpm',
+                  'linux-opensuse-x86_64.rpm', 'linux-x86_64.AppImage',
+                  'linux-x86_64.tar.gz', 'linux-x86_64.pkg.tar.zst'),
+    'macos-universal': ('macos-universal.dmg', 'macos-universal.zip'),
+}
+
+
+def installer_names(version, platform):
+    return {f'DevCat-{version}-{suffix}' for suffix in PLATFORMS[platform]}
+
 
 
 def descriptor(value):
@@ -48,8 +57,7 @@ def validate(data, tag):
             raise ValueError('Invalid platform file count')
         for item in files:
             item = descriptor(item)
-            if (not item['name'].startswith(f'DevCat-{version}-{platform}')
-                    or not item['name'].endswith(PLATFORMS[platform]) or item['name'] in names):
+            if (item['name'] not in installer_names(version, platform) or item['name'] in names):
                 raise ValueError('Invalid or duplicate platform installer')
             names.add(item['name'])
     return data
@@ -59,7 +67,7 @@ def build(version, build_number, channel, notes, content, revision, minimum, art
     platforms = {platform: [] for platform in PLATFORMS}
     for item in artifacts:
         for platform in platforms:
-            if item['name'].startswith(f'DevCat-{version}-{platform}'):
+            if item['name'] in installer_names(version, platform):
                 platforms[platform].append(descriptor(item))
     data = {'schemaVersion': 1, 'kind': 'devcat-update-index', 'version': version,
             'appBuild': build_number, 'channel': channel, 'notes': notes,
@@ -92,7 +100,7 @@ def verify_index(envelope, keys, tag, directory=None):
     if directory is not None:
         native = [item for files in data['platforms'].values() for item in files]
         expected_native = {path.name for path in directory.iterdir()
-                           if any(path.name.startswith(f'DevCat-{data["version"]}-{platform}') for platform in PLATFORMS)}
+                           if any(path.name in installer_names(data['version'], platform) for platform in PLATFORMS)}
         if {item['name'] for item in native} != expected_native:
             raise ValueError('Index does not cover every native package')
         for item in [data['content'], *native]:

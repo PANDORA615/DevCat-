@@ -52,6 +52,18 @@ class UpdatePlan {
         package.bytes > 192 * 1024 * 1024) {
       throw const FormatException('Несовместимый пакет уроков.');
     }
+    const installerSuffixes = {
+      'windows-x64': ['windows-x64-setup.exe', 'windows-x64.zip'],
+      'linux-x64': [
+        'linux-amd64.deb',
+        'linux-fedora-x86_64.rpm',
+        'linux-opensuse-x86_64.rpm',
+        'linux-x86_64.AppImage',
+        'linux-x86_64.tar.gz',
+        'linux-x86_64.pkg.tar.zst',
+      ],
+      'macos-universal': ['macos-universal.dmg', 'macos-universal.zip'],
+    };
     final platforms = <String, List<UpdateFile>>{};
     for (final entry in (data['platforms'] as Map<String, dynamic>).entries) {
       if (![
@@ -67,11 +79,9 @@ class UpdatePlan {
       if (files.isEmpty ||
           files.length > 6 ||
           files.any(
-            (f) =>
-                !f.name.startsWith('DevCat-$version-${entry.key}') ||
-                !RegExp(
-                  r'\.(exe|zip|dmg|deb|rpm|AppImage|tar\.gz|pkg\.tar\.zst)$',
-                ).hasMatch(f.name),
+            (f) => !installerSuffixes[entry.key]!.any(
+              (suffix) => f.name == 'DevCat-$version-$suffix',
+            ),
           )) {
         throw const FormatException('Недопустимый установщик.');
       }

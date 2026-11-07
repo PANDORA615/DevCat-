@@ -68,7 +68,17 @@ void main() {
           'windows-x64': [
             file(wrongPlatform ?? 'DevCat-0.9.2-windows-x64-setup.exe'),
           ],
-          'linux-x64': [file('DevCat-0.9.2-linux-x64.AppImage')],
+          'linux-x64': [
+            for (final suffix in [
+              'linux-amd64.deb',
+              'linux-fedora-x86_64.rpm',
+              'linux-opensuse-x86_64.rpm',
+              'linux-x86_64.AppImage',
+              'linux-x86_64.tar.gz',
+              'linux-x86_64.pkg.tar.zst',
+            ])
+              file('DevCat-0.9.2-$suffix'),
+          ],
           'macos-universal': [file('DevCat-0.9.2-macos-universal.dmg')],
         },
       }),
@@ -235,7 +245,9 @@ void main() {
 
   test('Signed index is bound to the release tag and platform', () async {
     final signed = await signedIndex();
-    expect((await UpdatePlan.verify(signed, runtime, 'v0.9.2')).appBuild, 12);
+    final plan = await UpdatePlan.verify(signed, runtime, 'v0.9.2');
+    expect(plan.appBuild, 12);
+    expect(plan.platforms['linux-x64'], hasLength(6));
     await expectLater(
       UpdatePlan.verify(signed, runtime, 'v9.0.0'),
       throwsFormatException,
