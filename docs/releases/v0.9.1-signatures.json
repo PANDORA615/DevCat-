@@ -1,0 +1,13 @@
+[
+  {
+    "name": "DevCat-0.9.1-android-universal.apk",
+    "abi": "universal",
+    "versionCode": 5011,
+    "bytes": 1531650383,
+    "sha256": "ded1700a14eec45cbd677b7bbf2e20e10876e38932eccbf081449d2502d347a4",
+    "certificateSHA256": "f4412cfc2567a7b33248df99777c0d104761dd2dda3ee7de8fe8bac467098bca",
+    "copiedBytes": 1531097954,
+    "literalBytes": 552429,
+    "patchBytes": 810513
+  }
+]

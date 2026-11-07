@@ -1,0 +1,254 @@
+{
+  "schema": 1,
+  "buildRun": 42356179452,
+  "buildCommit": "2af00db8b9c0888afd93c5cdbe6ddbab1ceba0dd",
+  "assetFiles": 193,
+  "nativeElf": [
+    {
+      "path": "lib/arm64-v8a/libapp.so",
+      "bits": 64,
+      "loadAlignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libbarhopper_v3.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libdartjni.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libdevcat_loader.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libdevcat_proot.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libflutter.so",
+      "bits": 64,
+      "loadAlignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libimage_processing_util_jni.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libsqlite3.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libsurface_util_jni.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libapp.so",
+      "bits": 32,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libbarhopper_v3.so",
+      "bits": 32,
+      "loadAlignments": [
+        4096,
+        4096,
+        4096
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libdartjni.so",
+      "bits": 32,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libdevcat_loader.so",
+      "bits": 32,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libdevcat_proot.so",
+      "bits": 32,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libflutter.so",
+      "bits": 32,
+      "loadAlignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libimage_processing_util_jni.so",
+      "bits": 32,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libsqlite3.so",
+      "bits": 32,
+      "loadAlignments": [
+        4096,
+        4096,
+        4096
+      ]
+    },
+    {
+      "path": "lib/armeabi-v7a/libsurface_util_jni.so",
+      "bits": 32,
+      "loadAlignments": [
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/x86_64/libapp.so",
+      "bits": 64,
+      "loadAlignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    {
+      "path": "lib/x86_64/libbarhopper_v3.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/x86_64/libdartjni.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/x86_64/libdevcat_loader.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/x86_64/libdevcat_proot.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/x86_64/libflutter.so",
+      "bits": 64,
+      "loadAlignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    {
+      "path": "lib/x86_64/libimage_processing_util_jni.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/x86_64/libsqlite3.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/x86_64/libsurface_util_jni.so",
+      "bits": 64,
+      "loadAlignments": [
+        16384,
+        16384
+      ]
+    }
+  ],
+  "directions": 11,
+  "topics": 516,
+  "sessions": 1548,
+  "originalV3Audio": 18
+}
