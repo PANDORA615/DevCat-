@@ -7,6 +7,7 @@ import '../core/content_runtime.dart';
 import '../core/desktop_updates.dart';
 import '../core/project_flush.dart';
 import '../core/store.dart';
+import '../core/sound.dart';
 import '../core/update_download.dart';
 import 'cat_actor.dart';
 import 'widgets.dart';
@@ -38,13 +39,28 @@ class _UpdatesPageState extends State<UpdatesPage> {
     return 'Переносимый архив';
   }
 
+  Future<void> _operation(Future<void> Function() action) async {
+    SoundScope.of(context)?.cue(SoundCue.tap);
+    await action();
+    if (!mounted) return;
+    final cue = switch (updates?.phase) {
+      'available' => SoundCue.notification,
+      'installed' || 'verified' => SoundCue.update,
+      'error' => SoundCue.error,
+      _ => null,
+    };
+    if (cue != null) SoundScope.of(context)?.cue(cue);
+  }
+
   Future<void> _import() async {
     final file = await openFile(
       acceptedTypeGroups: [
         const XTypeGroup(label: 'Обновление DevCat', extensions: ['json']),
       ],
     );
-    if (file != null && mounted) await updates?.importContent(File(file.path));
+    if (file != null && mounted && updates != null) {
+      await _operation(() => updates!.importContent(File(file.path)));
+    }
   }
 
   Future<void> _openInstaller(UpdateFile description) async {
@@ -83,7 +99,11 @@ class _UpdatesPageState extends State<UpdatesPage> {
           content: Text(
             native
                 ? 'Открытые проекты сохранены. Установка может попросить закрыть DevCat и подтвердить действие в системе.'
-                : 'Открытые проекты сохранены. Заверши DevCat и замени переносимую версию новым файлом. Прогресс хранится отдельно. Сохрани прежний файл для отката.',
+                : file.path.endsWith('.pkg.tar.zst')
+                ? 'Открытые проекты сохранены. Установи пакет через менеджер Arch Linux (pacman -U), затем перезапусти DevCat. Прогресс хранится отдельно.'
+                : file.path.endsWith('.AppImage')
+                ? 'Открытые проекты сохранены. Закрой DevCat и замени AppImage новым файлом. Сохрани прежний файл для отката. Прогресс хранится отдельно.'
+                : 'Открытые проекты сохранены. Распакуй новую версию в отдельную папку, закрой DevCat и запусти её оттуда. Сохрани прежнюю папку для отката. Прогресс хранится отдельно.',
           ),
           actions: [
             TextButton(
@@ -216,13 +236,15 @@ class _UpdatesPageState extends State<UpdatesPage> {
                       FilledButton.icon(
                         onPressed: busy
                             ? null
-                            : () => service.check(
-                                beta:
-                                    widget.store.setting(
-                                      'updateChannel',
+                            : () => _operation(
+                                () => service.check(
+                                  beta:
+                                      widget.store.setting(
+                                        'updateChannel',
+                                        'beta',
+                                      ) ==
                                       'beta',
-                                    ) ==
-                                    'beta',
+                                ),
                               ),
                         icon: const Icon(Icons.refresh_rounded),
                         label: const Text('Проверить обновления'),
@@ -299,7 +321,7 @@ class _UpdatesPageState extends State<UpdatesPage> {
                       FilledButton.tonal(
                         onPressed: busy || !service.hasContentUpdate
                             ? null
-                            : service.installContent,
+                            : () => _operation(service.installContent),
                         child: Text(
                           service.hasContentUpdate
                               ? 'Скачать уроки · ${_size(service.plan!.content.bytes)}'
@@ -375,7 +397,7 @@ class _UpdatesPageState extends State<UpdatesPage> {
                         FilledButton(
                           onPressed: busy
                               ? null
-                              : () async {
+                              : () => _operation(() async {
                                   final result = await service.downloadApp(
                                     chosen,
                                   );
@@ -385,7 +407,7 @@ class _UpdatesPageState extends State<UpdatesPage> {
                                       downloadedDescription = chosen;
                                     });
                                   }
-                                },
+                                }),
                           child: const Text('Скачать приложение'),
                         ),
                         OutlinedButton(

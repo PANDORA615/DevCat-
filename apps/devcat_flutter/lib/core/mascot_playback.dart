@@ -28,10 +28,12 @@ class MascotClip {
 class MascotPlayback {
   final Map<String, MascotClip> clips;
   final bool ambient, followTransitions;
+  final int sleepAfterMs;
   final Random _random;
   String state = 'idle';
   String? correlationId;
   int elapsedMs = 0, _idleMs = 0;
+  int _quietMs = 0;
   late int _blinkAfter;
   bool paused = false, disposed = false, completed = false;
   String? _pending;
@@ -40,6 +42,7 @@ class MascotPlayback {
     this.clips, {
     this.ambient = true,
     this.followTransitions = true,
+    this.sleepAfterMs = 60000,
     int seed = 0,
   }) : _random = Random(seed) {
     _blinkAfter = _nextBlink();
@@ -54,6 +57,27 @@ class MascotPlayback {
       time -= clip.durations[i];
     }
     return clip.durations.length - 1;
+  }
+
+  int get millisecondsToNextFrame {
+    final clip = clips[state];
+    if (clip == null) return 1000;
+    var boundary = 0;
+    for (final duration in clip.durations) {
+      boundary += duration;
+      if (boundary > elapsedMs) break;
+    }
+    var remaining = max(1, boundary - elapsedMs);
+    if (ambient && state == 'idle' && clips.containsKey('blink')) {
+      remaining = min(remaining, max(1, _blinkAfter - _idleMs));
+    }
+    if (ambient &&
+        {'idle', 'blink'}.contains(state) &&
+        sleepAfterMs > 0 &&
+        clips.containsKey('sleeping')) {
+      remaining = min(remaining, max(1, sleepAfterMs - _quietMs));
+    }
+    return remaining;
   }
 
   bool play(String requested, {String? correlation, bool force = false}) {
@@ -93,6 +117,7 @@ class MascotPlayback {
   }
 
   void _enter(String requested, String? correlation) {
+    if (!{'idle', 'blink'}.contains(requested)) _quietMs = 0;
     state = requested;
     correlationId = correlation;
     elapsedMs = 0;
@@ -119,6 +144,7 @@ class MascotPlayback {
     }
     _pending = null;
     _pendingCorrelation = null;
+    _quietMs = 0;
     _enter('idle', null);
     _blinkAfter = _nextBlink();
   }
@@ -132,6 +158,16 @@ class MascotPlayback {
     completed = false;
   }
 
+  /// Called by real user input; waking does not emit a voice or failure cue.
+  bool wake() {
+    if (disposed) return false;
+    _quietMs = 0;
+    if (state != 'sleeping') return false;
+    _enter('idle', null);
+    _blinkAfter = _nextBlink();
+    return true;
+  }
+
   void advance(int milliseconds) {
     if (disposed || paused || completed || milliseconds <= 0) return;
     var remaining = milliseconds;
@@ -142,8 +178,21 @@ class MascotPlayback {
       if (ambient && state == 'idle' && clips.containsKey('blink')) {
         step = min(step, _blinkAfter - _idleMs);
       }
+      final quiet =
+          ambient &&
+          {'idle', 'blink'}.contains(state) &&
+          sleepAfterMs > 0 &&
+          clips.containsKey('sleeping');
+      if (quiet) step = min(step, sleepAfterMs - _quietMs);
       elapsedMs += step;
       remaining -= step;
+      if (quiet) {
+        _quietMs += step;
+        if (_quietMs >= sleepAfterMs) {
+          _enter('sleeping', null);
+          continue;
+        }
+      }
       if (state == 'idle') {
         _idleMs += step;
         if (ambient && _idleMs >= _blinkAfter && clips.containsKey('blink')) {

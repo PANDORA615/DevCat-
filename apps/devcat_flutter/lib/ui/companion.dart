@@ -150,6 +150,7 @@ class _CompanionBarState extends State<CompanionBar>
                     line.text,
                     key: ValueKey(line.text),
                     mood: line.mood,
+                    action: line.action,
                     sounds: widget.sounds,
                     size: widget.compact ? 36 : 62,
                     maxLines: widget.compact ? 1 : 2,

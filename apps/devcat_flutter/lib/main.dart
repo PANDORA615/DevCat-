@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 import 'package:dynamic_color/dynamic_color.dart';
@@ -17,6 +16,9 @@ import 'core/desktop_diagnostics.dart';
 import 'core/content_runtime.dart';
 import 'core/desktop_updates.dart';
 import 'core/learning_assets.dart';
+import 'core/mascot_activity.dart';
+import 'core/theme_presets.dart';
+import 'core/course_loader.dart';
 import 'ui/shell.dart';
 
 Future<void> main() async {
@@ -79,14 +81,8 @@ class _LearningBootState extends State<_LearningBoot> {
   late final Future<List<Course>> loading = _load();
   Future<List<Course>> _load() async {
     await ContentRuntime.initialize(widget.store.directory);
-    final data =
-        jsonDecode(
-              await LearningAssets.bundle.loadString(
-                'assets/content/courses.json',
-              ),
-            )
-            as List;
-    return data.map((j) => Course(j)).toList();
+    await ThemePresets.load();
+    return loadCourses(LearningAssets.bundle);
   }
 
   @override
@@ -162,11 +158,18 @@ class DevCatApp extends StatefulWidget {
 
 class _DevCatAppState extends State<DevCatApp> {
   final sounds = SoftSounds();
+  late final navigationSounds = SoundNavigationObserver(sounds);
   Timer? updateChecks;
   DesktopUpdates? updates;
+  bool _keyActivity(KeyEvent event) {
+    MascotActivity.touch();
+    return false;
+  }
+
   @override
   void initState() {
     super.initState();
+    HardwareKeyboard.instance.addHandler(_keyActivity);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final runtime = ContentRuntime.current;
@@ -190,6 +193,7 @@ class _DevCatAppState extends State<DevCatApp> {
 
   @override
   void dispose() {
+    HardwareKeyboard.instance.removeHandler(_keyActivity);
     updateChecks?.cancel();
     updates?.dispose();
     if (identical(DesktopUpdates.current, updates)) {
@@ -295,6 +299,7 @@ class _DevCatAppState extends State<DevCatApp> {
           }
 
           return MaterialApp(
+            navigatorObservers: [navigationSounds],
             title: 'DevCat',
             debugShowCheckedModeBanner: false,
             locale: const Locale('ru'),
@@ -316,11 +321,18 @@ class _DevCatAppState extends State<DevCatApp> {
                     store.setting('reducedMotion', false) ||
                     MediaQuery.of(context).disableAnimations,
               ),
-              child: SoundScope(
-                sounds: sounds,
-                child: MascotScope(
-                  appearance: appearance,
-                  child: PointerSoundLayer(sounds: sounds, child: child!),
+              child: MouseRegion(
+                onHover: (_) => MascotActivity.touch(),
+                child: Listener(
+                  onPointerDown: (_) => MascotActivity.touch(),
+                  onPointerMove: (_) => MascotActivity.touch(),
+                  child: SoundScope(
+                    sounds: sounds,
+                    child: MascotScope(
+                      appearance: appearance,
+                      child: PointerSoundLayer(sounds: sounds, child: child!),
+                    ),
+                  ),
                 ),
               ),
             ),

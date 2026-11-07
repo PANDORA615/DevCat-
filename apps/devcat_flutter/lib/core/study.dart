@@ -1,5 +1,6 @@
 import 'learning_assets.dart';
 import 'dart:convert';
+import 'dart:isolate';
 import 'course.dart';
 import 'progress.dart';
 
@@ -95,7 +96,8 @@ class StudyCatalog {
   }
   static Future<StudyCatalog> load() => _loading ??= LearningAssets.bundle
       .loadString('assets/content/study_path.json')
-      .then((text) => cached = StudyCatalog.decode(text))
+      .then((text) => Isolate.run(() => StudyCatalog.decode(text)))
+      .then((catalog) => cached = catalog)
       .catchError((Object e) {
         _loading = null;
         throw e;

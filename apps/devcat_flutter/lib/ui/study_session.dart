@@ -54,6 +54,7 @@ class _StudySessionPageState extends State<StudySessionPage>
   String? problem;
   String speech = 'Разберём одну небольшую идею. Я рядом!';
   CatMood mood = CatMood.explaining;
+  String catAction = 'reading';
   DateTime actionAt = DateTime.now();
 
   void Function()? unregisterSave;
@@ -156,6 +157,9 @@ class _StudySessionPageState extends State<StudySessionPage>
 
   void _entryChanged() {
     session.entry = entry.text;
+    if (mounted && !busy && catAction != 'text_typing') {
+      setState(() => catAction = 'text_typing');
+    }
     actionAt = DateTime.now();
     saveTimer?.cancel();
     saveTimer = Timer(const Duration(milliseconds: 450), _persist);
@@ -181,11 +185,13 @@ class _StudySessionPageState extends State<StudySessionPage>
     }
   }
 
-  void _say(String text, CatMood nextMood) {
+  void _say(String text, CatMood nextMood, {String? action}) {
     if (!mounted) return;
     setState(() {
       speech = text;
       mood = nextMood;
+      catAction =
+          action ?? (nextMood == CatMood.celebration ? 'happy' : 'explaining');
     });
   }
 
@@ -265,6 +271,7 @@ class _StudySessionPageState extends State<StudySessionPage>
           ? 'Да, получилось! Пойдём дальше.'
           : 'Почти. Разберём этот шаг и попробуем его ещё раз.',
       correct ? CatMood.celebration : CatMood.encouragement,
+      action: correct ? 'happy' : 'failure',
     );
     setState(() {});
     await _persist();
@@ -298,6 +305,7 @@ class _StudySessionPageState extends State<StudySessionPage>
         _say(
           'Занятие закончено! Ты сделал ещё один настоящий шаг.',
           CatMood.celebration,
+          action: 'celebrating',
         );
         widget.sounds.cue(
           (before + earned) ~/ 200 > before ~/ 200
@@ -318,6 +326,7 @@ class _StudySessionPageState extends State<StudySessionPage>
             ? 'Небольшое объяснение — и сразу попробуем.'
             : 'Теперь твоя очередь. Если что, я помогу.',
         CatMood.explaining,
+        action: session.current.informational ? 'reading' : 'waiting',
       );
       await _persist();
       if (scroll.hasClients) scroll.jumpTo(0);
@@ -329,6 +338,7 @@ class _StudySessionPageState extends State<StudySessionPage>
     if (completed || session.complete) return;
     widget.sounds.cue(SoundCue.hint);
     final exercise = session.current;
+    setState(() => catAction = 'idea');
     showDevCatSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -569,6 +579,7 @@ class _StudySessionPageState extends State<StudySessionPage>
                     child: CatDialogue(
                       speech,
                       mood: mood,
+                      action: catAction,
                       sounds: widget.sounds,
                       size: 76,
                       style: const TextStyle(fontSize: 14, height: 1.4),
@@ -1072,7 +1083,11 @@ class _StudySessionPageState extends State<StudySessionPage>
         constraints: const BoxConstraints(maxWidth: 560),
         child: Column(
           children: [
-            const CatActor(size: 180, mood: CatMood.celebration),
+            const CatActor(
+              size: 180,
+              mood: CatMood.celebration,
+              action: 'celebrating',
+            ),
             const SizedBox(height: 20),
             Text(
               'Ещё один шаг сделан!',

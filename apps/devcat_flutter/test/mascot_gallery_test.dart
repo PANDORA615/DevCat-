@@ -37,9 +37,10 @@ void main() {
       final selectAppearance = tester
           .widget<DropdownButtonFormField<String>>(dropdowns.first)
           .onChanged!;
-      tester
+      final selectState = tester
           .widget<DropdownButtonFormField<String>>(dropdowns.at(1))
-          .onChanged!('talk');
+          .onChanged!;
+      selectState('talk');
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
         find.byTooltip('Следующий кадр'),
@@ -48,18 +49,22 @@ void main() {
       );
       await tester.tap(find.byTooltip('Следующий кадр'));
       await tester.pumpAndSettle();
-      expect(tester.widget<MascotFrames>(find.byType(MascotFrames)).frame, 1);
+      expect(
+        tester.widget<MascotFrames>(find.byType(MascotFrames).last).frame,
+        1,
+      );
+      selectState('reading');
       selectAppearance('pirate');
       await tester.pumpAndSettle();
       expect(find.textContaining('Клип не подготовлен.'), findsOneWidget);
-      final actor = tester.widget<MascotFrames>(find.byType(MascotFrames));
+      final actor = tester.widget<MascotFrames>(find.byType(MascotFrames).last);
       expect(actor.appearance, 'pirate');
       await tester.scrollUntilVisible(
-        find.text('Носить этот образ · предпросмотр'),
+        find.text('Носить этот образ'),
         160,
         scrollable: find.byType(Scrollable).first,
       );
-      await tester.tap(find.text('Носить этот образ · предпросмотр'));
+      await tester.tap(find.text('Носить этот образ'));
       await tester.pumpAndSettle();
       expect(store.setting('mascotAppearance', 'classic'), 'pirate');
       expect(store.progress.attempts, isEmpty);

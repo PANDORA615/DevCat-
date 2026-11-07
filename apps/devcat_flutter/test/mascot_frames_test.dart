@@ -34,13 +34,13 @@ void main() {
     await tester.pumpWidget(scene(state: 'happy'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 700));
-    expect(displayedFrame(tester), contains('happy/003.png'));
+    expect(displayedFrame(tester), contains('happy-003.png'));
     await tester.pumpWidget(scene(state: 'happy', playing: false));
     await tester.pumpWidget(scene(state: 'happy'));
     await tester.pump();
-    expect(displayedFrame(tester), contains('happy/000.png'));
+    expect(displayedFrame(tester), contains('happy-000.png'));
     await tester.pump(const Duration(milliseconds: 150));
-    expect(displayedFrame(tester), contains('happy/001.png'));
+    expect(displayedFrame(tester), contains('happy-001.png'));
     await tester.pumpWidget(const SizedBox());
   });
 
@@ -92,7 +92,7 @@ void main() {
       final before = displayedFrame(tester);
       await tester.pump(const Duration(seconds: 5));
       expect(displayedFrame(tester), before);
-      await tester.pumpWidget(scene(appearance: 'pirate'));
+      await tester.pumpWidget(scene(appearance: 'pirate', state: 'reading'));
       await tester.pump();
       final pirate = displayedFrame(tester);
       expect(pirate, contains('pirate'));

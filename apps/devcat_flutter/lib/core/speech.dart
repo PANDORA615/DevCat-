@@ -17,6 +17,14 @@ class SpeechTimeline extends ChangeNotifier {
   bool talking = false, _disposed = false;
   String get text => _letters.take(_visible).join();
   bool get complete => _visible >= _letters.length;
+  int get mouthShape {
+    if (_visible == 0) return 0;
+    final letter = _letters[_visible - 1].toLowerCase();
+    if ('оуoqu'.contains(letter)) return 2;
+    if ('аэяae'.contains(letter)) return 1;
+    return 0;
+  }
+
   void start(String text, {bool instant = false}) {
     _timer?.cancel();
     onStop();

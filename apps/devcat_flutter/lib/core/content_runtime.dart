@@ -53,8 +53,9 @@ class ContentRuntime {
     Directory userData, {
     AssetBundle? bundled,
   }) async {
-    final base = bundled ?? rootBundle;
+    final base = bundled ?? LearningAssets.bundled;
     LearningAssets.bundle = base;
+    LearningAssets.mediaPaths = const {};
     current = null;
     startupNotice = null;
     if (!(Platform.isWindows || Platform.isLinux || Platform.isMacOS)) return;
@@ -94,7 +95,7 @@ class ContentRuntime {
       });
       final path = '${userData.path}${Platform.pathSeparator}content-updates';
       final build = config['appBuild'] as int;
-      final snapshot = await Isolate.run(() async {
+      final resolved = await Isolate.run(() async {
         final storage = ContentUpdateStore(
           Directory(path),
           ContentVerifier(keys, appBuild: build),
@@ -103,11 +104,11 @@ class ContentRuntime {
           final candidate = await storage.active();
           if (candidate == null) return null;
           try {
-            validateLearningSnapshot(
+            final ids = validateLearningSnapshot(
               candidate.files,
               requiredLessonIds: required,
             );
-            return candidate;
+            return (content: candidate, lessonIds: ids);
           } catch (_) {
             try {
               if (!await storage.rollback()) return null;
@@ -118,8 +119,16 @@ class ContentRuntime {
         }
         return null;
       });
+      final snapshot = resolved?.content;
+      if (resolved != null) required.addAll(resolved.lessonIds);
       if (snapshot != null) {
         LearningAssets.bundle = SnapshotAssetBundle(snapshot.files, base);
+        LearningAssets.mediaPaths = Map.unmodifiable({
+          for (final name in snapshot.files.keys.where(
+            (name) => name.startsWith('assets/audio/'),
+          ))
+            name: '$path/versions/${snapshot.revision}/$name',
+        });
       }
       current = ContentRuntime._(
         Directory(path),

@@ -83,12 +83,17 @@ void main() {
     'The complete bundled curriculum passes update schema validation',
     () async {
       final files = <String, Uint8List>{};
-      await for (final file in Directory('assets/content').list()) {
-        if (file is File &&
-            (file.path.endsWith('.json') || file.path.endsWith('.png'))) {
-          files[file.path] = await file.readAsBytes();
+      for (final namespace in ['content', 'mascot_pixel', 'config']) {
+        await for (final file in Directory('assets/$namespace').list()) {
+          if (file is File &&
+              !file.path.endsWith('/frames.json') &&
+              (file.path.endsWith('.json') || file.path.endsWith('.png'))) {
+            files[file.path] = await file.readAsBytes();
+          }
         }
       }
+      files.remove('assets/mascot_pixel/frames.json');
+      files.addAll(await LearningAssets.bundled.frameFiles());
       expect(validateLearningSnapshot(files).length, 516);
     },
   );
@@ -155,6 +160,27 @@ void main() {
       await ContentRuntime.initialize(directory, bundled: bundle);
       expect(ContentRuntime.current!.revision, 1);
       final updated = fixture(title: 'Обновлённая лекция');
+      final rows =
+          jsonDecode(utf8.decode(updated['assets/content/courses.json']!))
+              as List;
+      rows.first['lessons'].add({
+        ...rows.first['lessons'].first as Map<String, dynamic>,
+        'id': 'c.second',
+      });
+      updated['assets/content/courses.json'] = Uint8List.fromList(
+        utf8.encode(jsonEncode(rows)),
+      );
+      final path = jsonDecode(
+        utf8.decode(updated['assets/content/study_path.json']!),
+      );
+      final extra = jsonDecode(
+        jsonEncode(path['topics'].first).replaceAll('c.first', 'c.second'),
+      );
+      extra['index'] = 1;
+      path['topics'].add(extra);
+      updated['assets/content/study_path.json'] = Uint8List.fromList(
+        utf8.encode(jsonEncode(path)),
+      );
       final entries = <Map<String, Object>>[];
       for (final entry in updated.entries) {
         final hash = (await Sha256().hash(
@@ -191,6 +217,14 @@ void main() {
       );
       await ContentRuntime.initialize(directory, bundled: bundle);
       expect(ContentRuntime.current!.revision, 2);
+      expect(ContentRuntime.current!.requiredLessonIds, contains('c.second'));
+      expect(
+        () => validateLearningSnapshot(
+          fixture(),
+          requiredLessonIds: ContentRuntime.current!.requiredLessonIds,
+        ),
+        throwsFormatException,
+      );
       expect(
         await LearningAssets.bundle.loadString('assets/content/courses.json'),
         contains('Обновлённая'),

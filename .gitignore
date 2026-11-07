@@ -20,3 +20,6 @@ __pycache__/
 *.pyc
 apps/devcat_flutter/android/app/src/main/assets/runtime/
 apps/devcat_flutter/android/app/src/main/jniLibs/
+
+# Rebuild editable grid masters; the portable source ZIP is versioned in docs.
+packages/cat_assets/pixel_v6/

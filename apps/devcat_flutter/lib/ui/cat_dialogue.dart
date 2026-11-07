@@ -7,6 +7,7 @@ import 'cat_actor.dart';
 class CatDialogue extends StatefulWidget {
   final String text;
   final CatMood mood;
+  final String? action;
   final SoftSounds? sounds;
   final double size;
   final int? maxLines;
@@ -16,6 +17,7 @@ class CatDialogue extends StatefulWidget {
     this.text, {
     super.key,
     this.mood = CatMood.explaining,
+    this.action,
     this.sounds,
     this.size = 66,
     this.maxLines,
@@ -123,7 +125,9 @@ class _CatDialogueState extends State<CatDialogue> with WidgetsBindingObserver {
         CatActor(
           size: widget.size,
           mood: widget.mood,
+          action: widget.action,
           talking: timeline.talking && active,
+          mouthShape: timeline.mouthShape,
         ),
         const SizedBox(width: 12),
         Expanded(

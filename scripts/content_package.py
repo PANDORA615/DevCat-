@@ -24,19 +24,52 @@ def payload(app, revision, min_build):
         raise ValueError('Invalid content revision or minimum app build')
     files = []
     total = 0
-    for source in sorted((app / 'assets/content').iterdir()):
-        if source.suffix not in ('.json', '.png', '.jpg', '.jpeg'):
+    sources = []
+    virtual = {}
+    for namespace in ('content', 'mascot_pixel', 'config'):
+        directory = app / 'assets' / namespace
+        if not directory.exists():
             continue
-        if (source.is_symlink() or not source.is_file() or '..' in source.name
-                or not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.-]*\.(json|png|jpg|jpeg)', source.name)):
-            raise ValueError(f'Unsafe content path: {source.name}')
-        data = source.read_bytes()
-        if source.suffix == '.json':
+        for source in sorted(directory.iterdir()):
+            if namespace == 'mascot_pixel' and source.name == 'frames.json':
+                if source.is_symlink() or not source.is_file():
+                    raise ValueError('Unsafe packed frame source')
+                pack = json.loads(source.read_text())
+                if pack['schema'] != 1:
+                    raise ValueError('Invalid packed frame schema')
+                for name, encoded in pack['files'].items():
+                    if not re.fullmatch(r'assets/mascot_pixel/[a-z0-9_-]+\.png', name):
+                        raise ValueError('Invalid packed frame path')
+                    virtual[name] = base64.b64decode(encoded, validate=True)
+                continue
+            if source.suffix not in ('.json', '.png', '.jpg', '.jpeg'):
+                continue
+            sources.append((source, f'assets/{namespace}/{source.name}'))
+    audio_catalog = app / 'assets/mascot_v5/manifests/audio_catalog.json'
+    if audio_catalog.exists():
+        for item in json.loads(audio_catalog.read_text())['audio']:
+            name = item['file']
+            if not re.fullmatch(r'audio/[a-zA-Z0-9_-]+\.wav', name):
+                raise ValueError('Invalid sound catalog path')
+            sources.append((app / 'assets' / name, f'assets/{name}'))
+    sources.extend((None, name) for name in virtual)
+    for source, name in sorted(sources, key=lambda item: item[1]):
+        if source is None:
+            source_name = Path(name).name
+        else:
+            source_name = source.name
+        if ((source is not None and (source.is_symlink() or not source.is_file())) or '..' in source_name
+                or not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.-]*\.(json|png|jpg|jpeg|wav)', source_name)):
+            raise ValueError(f'Unsafe content path: {source_name}')
+        if name.startswith('assets/config/') and name != 'assets/config/themes.json':
+            raise ValueError('Unsupported configuration file')
+        data = virtual[name] if source is None else source.read_bytes()
+        if name.endswith('.json'):
             json.loads(data)
         total += len(data)
         if total > 96 * 1024 * 1024:
             raise ValueError('Decoded content exceeds the client limit')
-        files.append({'path': f'assets/content/{source.name}', 'size': len(data),
+        files.append({'path': name, 'size': len(data),
                       'sha256': hashlib.sha256(data).hexdigest(),
                       'data': base64.b64encode(data).decode('ascii')})
     if not 1 <= len(files) <= 4096:

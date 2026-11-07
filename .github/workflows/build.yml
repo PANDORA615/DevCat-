@@ -40,6 +40,10 @@ jobs:
           dart format --output=none --set-exit-if-changed lib test
           flutter analyze
           DEVCAT_REQUIRE_ALL_TOOLCHAINS=true flutter test --reporter expanded --concurrency=2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install --disable-pip-version-check Pillow==11.3.0
       - run: python3 scripts/write_content.py && python3 -m unittest discover -s scripts -p 'test_*.py' -v && git diff --exit-code -- content apps/devcat_flutter/assets/content docs/textbooks docs/DevCat-lectures.zip
   desktop:
     needs: test

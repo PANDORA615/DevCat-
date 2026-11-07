@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'course.dart';
 import 'study.dart';
+import 'content_media_validation.dart';
 
 /// Validates complete course snapshots before they can become active.
 Set<String> _validateLearningSnapshot(
@@ -139,6 +140,7 @@ Set<String> _validateLearningSnapshot(
       throw FormatException('Недопустимый размер изображения: ${entry.key}');
     }
   }
+  validateContentMedia(files);
   return lessonIds;
 }
 

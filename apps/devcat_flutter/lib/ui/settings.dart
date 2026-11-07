@@ -1,3 +1,4 @@
+import '../core/theme_presets.dart';
 import 'motion.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -211,13 +212,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 spacing: 12,
                 runSpacing: 10,
                 children: [
-                  for (final c in <int, String>{
-                    0xff416c57: 'Шалфей',
-                    0xff376493: 'Небо',
-                    0xffa15c35: 'Терракота',
-                    0xff8b5368: 'Роза',
-                    0xff526367: 'Нейтральная',
-                  }.entries)
+                  for (final c in ThemePresets.colors.entries)
                     ActionChip(
                       avatar: CircleAvatar(
                         backgroundColor: Color(c.key),

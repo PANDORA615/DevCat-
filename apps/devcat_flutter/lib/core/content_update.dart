@@ -75,7 +75,7 @@ class ContentVerifier {
       final name = entry['path'] as String;
       // Flat data-only namespace. No executables, archives, symlinks or scripts.
       if (!RegExp(
-            r'^assets/content/[a-zA-Z0-9][a-zA-Z0-9_.-]*\.(json|png|jpg|jpeg)$',
+            r'^assets/(content/[a-zA-Z0-9][a-zA-Z0-9_.-]*\.(json|png|jpg|jpeg)|mascot_pixel/[a-zA-Z0-9][a-zA-Z0-9_.-]*\.(json|png)|audio/[a-zA-Z0-9][a-zA-Z0-9_.-]*\.wav|config/themes\.json)$',
           ).hasMatch(name) ||
           name.contains('..') ||
           !names.add(name.toLowerCase())) {
@@ -145,9 +145,11 @@ class ContentUpdateStore {
       File(p.join(directory.path, 'versions', '$revision', 'signed.json'));
 
   Future<VerifiedContent> _readSnapshot(int revision) async {
-    final content = await verifier.verify(
-      await _manifest(revision).readAsString(),
-    );
+    final manifest = _manifest(revision);
+    if (await manifest.length() > ContentVerifier.maxPackageBytes * 2) {
+      throw const FormatException('Снимок превышает допустимый размер.');
+    }
+    final content = await verifier.verify(await manifest.readAsString());
     if (content.revision != revision) {
       throw const FormatException('Неверная версия снимка.');
     }
@@ -228,13 +230,33 @@ class ContentUpdateStore {
           );
         }
       }
+      var damaged = await Directory(
+        p.join(versions.path, '${content.revision}'),
+      ).exists();
       if (await _manifest(content.revision).exists()) {
-        await _readSnapshot(content.revision);
-        if ((await active())?.revision != content.revision) {
-          await _activate(content.revision);
+        VerifiedContent? existing;
+        try {
+          existing = await _readSnapshot(content.revision);
+        } on FileSystemException {
+          damaged = true;
+        } on FormatException {
+          damaged = true;
+        } on TypeError {
+          damaged = true;
         }
-        await _prune();
-        return;
+        if (existing != null) {
+          if (jsonDecode(existing.envelope)['payload'] !=
+              jsonDecode(content.envelope)['payload']) {
+            throw const FormatException(
+              'Этот номер версии уже используется другим пакетом.',
+            );
+          }
+          if ((await active())?.revision != content.revision) {
+            await _activate(content.revision);
+          }
+          await _prune();
+          return;
+        }
       }
       if (await staging.exists()) await staging.delete(recursive: true);
       await staging.create();
@@ -246,9 +268,14 @@ class ContentUpdateStore {
       await File(
         p.join(staging.path, 'signed.json'),
       ).writeAsString(content.envelope, flush: true);
-      await staging.rename(p.join(versions.path, '${content.revision}'));
+      final destination = p.join(versions.path, '${content.revision}');
+      if (damaged) await Directory(destination).delete(recursive: true);
+      await staging.rename(destination);
       if ((await _pointers()).isEmpty) await _activate(0);
-      await _activate(content.revision);
+      // Repair restores an existing pointer; preserve its previous good slot.
+      if ((await active())?.revision != content.revision) {
+        await _activate(content.revision);
+      }
       await _prune();
     } finally {
       _busy = false;

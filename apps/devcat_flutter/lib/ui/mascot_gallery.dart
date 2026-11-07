@@ -4,6 +4,7 @@ import '../core/sound.dart';
 import '../core/store.dart';
 import 'mascot_frames.dart';
 import 'cat_dialogue.dart';
+import 'mascot_playground.dart';
 
 class MascotGallery extends StatefulWidget {
   final AppStore store;
@@ -53,9 +54,11 @@ class _MascotGalleryState extends State<MascotGallery> {
           padding: const EdgeInsets.all(20),
           children: [
             const Text(
-              'Художественный предпросмотр v5. У набора ещё есть дефекты прозрачности и стабильности контура. Анимации подготовлены только для образа «Ученик»; остальные образы остаются статичными. Они не отмечены готовыми для релиза.',
+              'Новые пиксельные образы: покой, моргание, речь, радость, размышление и реакция на ошибку для каждого костюма. У ученика есть дополнительные действия. Восемь ракурсов ученика можно просмотреть по кадрам.',
             ),
             const SizedBox(height: 16),
+            MascotPlayground(catalog: catalog, appearance: appearance),
+            const SizedBox(height: 24),
             DropdownButtonFormField<String>(
               initialValue: appearance,
               isExpanded: true,
@@ -136,7 +139,7 @@ class _MascotGalleryState extends State<MascotGallery> {
             Text(
               clip == null
                   ? 'Клип не подготовлен. Показан статичный образ «${catalog.appearance(appearance)['title']}».'
-                  : 'Кадр ${frame + 1}/$frames · ${clip['durationsMs']} мс · ${clip['loop'] == true ? 'цикл' : 'однократно'} · регистрация опоры ещё не принята',
+                  : 'Кадр ${frame + 1}/$frames · ${clip['durationsMs']} мс · ${clip['loop'] == true ? 'цикл' : 'однократно'} · ${clip['productionReady'] == true ? 'сетка 128 × 128, общая опора' : 'исходный референс, ещё не нормализован'}',
               textAlign: TextAlign.center,
             ),
             Wrap(
@@ -154,7 +157,7 @@ class _MascotGalleryState extends State<MascotGallery> {
                   icon: const Icon(Icons.skip_previous_rounded),
                 ),
                 FilledButton.icon(
-                  onPressed: clip == null
+                  onPressed: clip == null || clip['kind'] == 'views'
                       ? null
                       : () => setState(() => playing = !playing),
                   icon: Icon(
@@ -192,13 +195,11 @@ class _MascotGalleryState extends State<MascotGallery> {
                       );
                     }
                   },
-                  child: const Text('Носить этот образ · предпросмотр'),
+                  child: const Text('Носить этот образ'),
                 ),
                 OutlinedButton(
                   onPressed: () => widget.store.set('mascotAppearance', 'auto'),
-                  child: const Text(
-                    'Эволюция по учебному уровню · предпросмотр',
-                  ),
+                  child: const Text('Эволюция по учебному уровню'),
                 ),
                 TextButton(
                   onPressed: () =>

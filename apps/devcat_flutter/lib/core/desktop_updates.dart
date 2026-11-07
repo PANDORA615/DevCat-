@@ -133,7 +133,7 @@ class DesktopUpdates extends ChangeNotifier {
   String get mascotAction => switch (phase) {
     'checking' || 'verifying' || 'installing' => 'thinking',
     'downloading' => 'loading',
-    'available' => 'new',
+    'available' => hasAppUpdate ? 'notification' : 'new',
     'installed' || 'verified' => 'success',
     'error' => 'error',
     'cancelled' => 'waiting',
