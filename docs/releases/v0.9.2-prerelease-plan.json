@@ -1,0 +1,10 @@
+{
+  "tag": "v0.9.2",
+  "version": "0.9.2",
+  "source_sha": "79d8ee55a27b044c090bb4d57d85f5be4f96c65e",
+  "source_tree": "e2672c0d687338cc9efc76174da285926e23c497",
+  "build_run": 42373025945,
+  "source_release": "v0.9.1",
+  "source_asset": "DevCat-0.9.1-android-runtime-sources.tar",
+  "notes": "docs/RELEASE_NOTES_0.9.2.md"
+}

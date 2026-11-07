@@ -1,14 +1,11 @@
-name: Publish verified DevCat release
+name: Publish verified DevCat prerelease
 on:
-  push:
-    branches: ['release-assets/**']
-    paths: ['docs/releases/*-transfer.json']
   workflow_dispatch:
     inputs:
       manifest:
-        description: Reviewed transfer manifest
+        description: Reviewed prerelease plan
         required: true
-        default: docs/releases/v0.7.0-transfer.json
+        default: docs/releases/v0.9.2-prerelease-plan.json
 permissions:
   contents: write
   actions: read
@@ -17,91 +14,15 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Verify public APK reconstruction
-        run: python3 -m unittest discover -s scripts -p 'test_apk_release_patch.py' -v
-      - name: Read reviewed release metadata
-        id: plan
-        env:
-          INPUT_MANIFEST: ${{ inputs.manifest || 'docs/releases/v0.7.0-transfer.json' }}
-        run: |
-          python3 - <<'PY'
-          import json, os, re
-          from pathlib import Path
-          path = Path(os.environ['INPUT_MANIFEST'])
-          assert path.parent == Path('docs/releases') and path.name.endswith('-transfer.json')
-          data = json.loads(path.read_text())
-          assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', data['tag'])
-          assert isinstance(data['build_run'], int) and data['build_run'] > 0
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
-              out.write(f"manifest={path}\nbuild_run={data['build_run']}\ntag={data['tag']}\nversion={data['tag'][1:]}\ntransfer_version={data['version']}\n")
-          PY
-      - uses: actions/download-artifact@v4
-        with:
-          name: devcat-linux
-          path: dist/release
-          run-id: ${{ steps.plan.outputs.build_run }}
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        with:
-          name: devcat-windows
-          path: dist/release
-          run-id: ${{ steps.plan.outputs.build_run }}
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        with:
-          name: devcat-macos
-          path: dist/release
-          run-id: ${{ steps.plan.outputs.build_run }}
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        if: steps.plan.outputs.transfer_version == '3'
-        with:
-          name: devcat-android-build-inputs-arm64-v8a
-          path: dist/android-build-inputs
-          run-id: ${{ steps.plan.outputs.build_run }}
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        if: steps.plan.outputs.transfer_version == '3'
-        with:
-          name: devcat-android-build-inputs-armeabi-v7a
-          path: dist/android-build-inputs
-          run-id: ${{ steps.plan.outputs.build_run }}
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        if: steps.plan.outputs.transfer_version == '3'
-        with:
-          name: devcat-android-build-inputs-x86_64
-          path: dist/android-build-inputs
-          run-id: ${{ steps.plan.outputs.build_run }}
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        if: steps.plan.outputs.transfer_version == '4'
-        with:
-          name: devcat-android-build-inputs-universal
-          path: dist/android-build-inputs
-          run-id: ${{ steps.plan.outputs.build_run }}
-          github-token: ${{ github.token }}
-      - name: Reconstruct signed Android and verify every asset
+      - name: Verify candidate, publish checked assets and mark prerelease
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_MANIFEST: ${{ steps.plan.outputs.manifest }}
-        run: python3 scripts/publish_release.py "$RELEASE_MANIFEST" dist/release
-      - name: Upload verified files and publish prerelease
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ steps.plan.outputs.tag }}
-          RELEASE_VERSION: ${{ steps.plan.outputs.version }}
-        run: |
-          notes="docs/RELEASE_NOTES_${RELEASE_VERSION}.md"
-          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            gh release create "$RELEASE_TAG" --target "$GITHUB_SHA" --title "DevCat ${RELEASE_VERSION}" --draft --prerelease --notes-file "$notes"
-          fi
-          gh release edit "$RELEASE_TAG" --target "$GITHUB_SHA" --notes-file "$notes"
-          gh release upload "$RELEASE_TAG" dist/release/* --clobber
-          gh release edit "$RELEASE_TAG" --draft=false --prerelease
+          RELEASE_PLAN: ${{ inputs.manifest }}
+        run: python3 scripts/publish_prerelease.py "$RELEASE_PLAN"
