@@ -4,6 +4,8 @@ import 'package:cryptography/cryptography.dart';
 import 'app_version.dart';
 import 'course.dart';
 import 'store.dart';
+import 'update_transfer.dart';
+export 'update_transfer.dart';
 
 /// Strict semantic version ordering, including prerelease identifiers.
 class AppVersion implements Comparable<AppVersion> {
@@ -117,6 +119,8 @@ class UpdateService {
   final HttpClient client;
   UpdateService({this.publicKey = pinnedKey, HttpClient? client})
     : client = client ?? HttpClient();
+  final _operations = <UpdateCancellation>{};
+  bool _installing = false, _disposed = false;
   bool get configured => publicKey.isNotEmpty;
   Future<VerifiedUpdate> verifyEnvelope(String raw, String channel) async {
     if (!configured) {
@@ -150,6 +154,7 @@ class UpdateService {
     required String owner,
     required String repo,
     required String channel,
+    UpdateCancellation? cancellation,
   }) async {
     if (!RegExp(r'^[A-Za-z0-9_.-]+$').hasMatch(owner) ||
         !RegExp(r'^[A-Za-z0-9_.-]+$').hasMatch(repo)) {
@@ -159,37 +164,60 @@ class UpdateService {
       'github.com',
       '/$owner/$repo/releases/${channel == 'stable' ? 'latest/download' : 'download/beta'}/devcat-update.json',
     );
-    final bytes = await _read(url, 128 * 1024);
+    final bytes = await _read(url, 128 * 1024, cancellation: cancellation);
     return verifyEnvelope(utf8.decode(bytes), channel);
   }
 
-  Future<List<int>> _read(Uri url, int limit) async {
-    if (url.scheme != 'https') {
-      throw const FormatException('Обновления требуют HTTPS');
+  Future<List<int>> _read(
+    Uri url,
+    int limit, {
+    UpdateCancellation? cancellation,
+    int? expectedSize,
+    UpdateProgressCallback? onProgress,
+  }) async {
+    if (_disposed) throw StateError('Сервис обновлений закрыт');
+    final token = cancellation ?? UpdateCancellation();
+    final ownsToken = _operations.add(token);
+    try {
+      return await readUpdateBytes(
+        client,
+        url,
+        limit,
+        cancellation: token,
+        expectedSize: expectedSize,
+        onProgress: onProgress,
+      );
+    } finally {
+      if (ownsToken) _operations.remove(token);
     }
-    final request = await client
-        .getUrl(url)
-        .timeout(const Duration(seconds: 20));
-    final response = await request.close().timeout(const Duration(seconds: 20));
-    if (response.statusCode != 200) {
-      await response.drain<void>().timeout(const Duration(seconds: 10));
-      throw HttpException('HTTP ${response.statusCode}', uri: url);
-    }
-    if (response.contentLength > limit) {
-      await response.drain<void>().timeout(const Duration(seconds: 10));
-      throw const FormatException('Превышен размер загрузки');
-    }
-    final bytes = <int>[];
-    await for (final chunk in response.timeout(const Duration(seconds: 30))) {
-      if (bytes.length + chunk.length > limit) {
-        throw const FormatException('Превышен размер загрузки');
-      }
-      bytes.addAll(chunk);
-    }
-    return bytes;
   }
 
-  Future<void> installContent(VerifiedUpdate update, AppStore store) async {
+  Future<void> installContent(
+    VerifiedUpdate update,
+    AppStore store, {
+    UpdateCancellation? cancellation,
+    UpdateProgressCallback? onProgress,
+  }) async {
+    if (_disposed) throw StateError('Сервис обновлений закрыт');
+    if (_installing) throw StateError('Обновление уже загружается');
+    _installing = true;
+    final token = cancellation ?? UpdateCancellation();
+    _operations.add(token);
+    try {
+      await _installContent(update, store, token, onProgress);
+    } finally {
+      _operations.remove(token);
+      _installing = false;
+    }
+  }
+
+  Future<void> _installContent(
+    VerifiedUpdate update,
+    AppStore store,
+    UpdateCancellation token,
+    UpdateProgressCallback? onProgress,
+  ) async {
+    token.throwIfCancelled();
     final artifact = update.content;
     if (artifact == null || artifact.size > 32 * 1024 * 1024) {
       throw const FormatException('Нет допустимого обновления курсов');
@@ -200,25 +228,37 @@ class UpdateService {
         'Эта версия контента уже установлена или устарела',
       );
     }
-    final bytes = await _read(artifact.url, artifact.size);
+    final bytes = await _read(
+      artifact.url,
+      artifact.size,
+      cancellation: token,
+      expectedSize: artifact.size,
+      onProgress: onProgress,
+    );
     final digest = (await Sha256().hash(
       bytes,
     )).bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
     if (bytes.length != artifact.size || digest != artifact.sha256) {
       throw const FormatException('Размер или SHA-256 контента не совпали');
     }
+    token.throwIfCancelled();
     validateCourses(utf8.decode(bytes));
     final base = Directory('${store.directory.path}/updates');
     await base.create(recursive: true);
     // A unique staging directory keeps interrupted downloads away from active data.
+    token.throwIfCancelled();
     final staging = await base.createTemp('.staging-');
     try {
+      token.throwIfCancelled();
       await File(
         '${staging.path}/courses.json',
       ).writeAsBytes(bytes, flush: true);
+      token.throwIfCancelled();
       final target = Directory('${base.path}/${update.version}');
       if (await target.exists()) await target.delete(recursive: true);
       await staging.rename(target.path);
+      token.throwIfCancelled();
+      // Once this settings transaction starts, it either commits or reverts.
       final previous = store.setting<String?>('contentUpdateActive', null);
       await store.updateSettings({
         'contentUpdatePrevious': previous,
@@ -317,5 +357,11 @@ class UpdateService {
     });
   }
 
-  void dispose() => client.close(force: true);
+  void dispose() {
+    _disposed = true;
+    for (final token in _operations) {
+      token.cancel();
+    }
+    client.close(force: true);
+  }
 }

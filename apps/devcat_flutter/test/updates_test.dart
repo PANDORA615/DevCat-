@@ -6,6 +6,7 @@ import 'package:devcat/core/store.dart';
 import 'package:devcat/core/course.dart';
 import 'package:devcat/core/updates.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'support/update_http.dart';
 
 class ReadOnlyStore extends AppStore {
   ReadOnlyStore(super.directory);
@@ -27,6 +28,10 @@ class MemoryHttpClient implements HttpClient {
 class MemoryHttpRequest implements HttpClientRequest {
   final List<int> bytes;
   MemoryHttpRequest(this.bytes);
+  @override
+  bool followRedirects = true;
+  @override
+  void abort([Object? exception, StackTrace? stackTrace]) {}
   @override
   Future<HttpClientResponse> close() async => MemoryHttpResponse(bytes);
   @override
@@ -55,6 +60,31 @@ class MemoryHttpResponse extends Stream<List<int>>
   );
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+List<int> courseBytes() {
+  return utf8.encode(
+    jsonEncode([
+      for (final id in languageNames.keys)
+        {
+          'id': id,
+          'name': 'Python',
+          'version': 'test',
+          'subtitle': 'test',
+          'source': 'test',
+          'lessons': [
+            {
+              'id': 'intro',
+              'title': 'Intro',
+              'theory': 'Read',
+              'kind': 'theory',
+              'examples': <String>[],
+              'mistakes': <String>[],
+            },
+          ],
+        },
+    ]),
+  );
 }
 
 void main() {
@@ -179,28 +209,7 @@ void main() {
       final store = AppStore(root);
       await store.load();
       await store.record('saved-work', 'python', true);
-      final bytes = utf8.encode(
-        jsonEncode([
-          for (final id in languageNames.keys)
-            {
-              'id': id,
-              'name': 'Python',
-              'version': 'test',
-              'subtitle': 'test',
-              'source': 'test',
-              'lessons': [
-                {
-                  'id': 'intro',
-                  'title': 'Intro',
-                  'theory': 'Read',
-                  'kind': 'theory',
-                  'examples': <String>[],
-                  'mistakes': <String>[],
-                },
-              ],
-            },
-        ]),
-      );
+      final bytes = courseBytes();
       final hash = (await Sha256().hash(
         bytes,
       )).bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
@@ -248,4 +257,112 @@ void main() {
       expect(store.progress.solved, contains('saved-work'));
     },
   );
+  test(
+    'Cancelling a stalled install preserves data, unlocks service and permits retry',
+    () async {
+      final root = await Directory.systemTemp.createTemp('devcat-cancel-');
+      addTearDown(() => root.delete(recursive: true));
+      final store = AppStore(root);
+      await store.load();
+      await store.record('saved-work', 'python', true);
+      final bytes = courseBytes();
+      final digest = (await Sha256().hash(
+        bytes,
+      )).bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+      final plan = VerifiedUpdate({
+        'schemaVersion': 1,
+        'version': '0.9.3',
+        'channel': 'stable',
+        'minSupportedAppVersion': '0.9.2',
+        'content': {
+          'url': 'https://example.com/courses.json',
+          'size': bytes.length,
+          'sha256': digest,
+        },
+      }, 'stable');
+      final body = StreamController<List<int>>();
+      addTearDown(body.close);
+      var opens = 0;
+      final service = UpdateService(
+        client: TransferClient(
+          (_) async => TransferRequest(
+            TransferResponse(
+              ++opens == 1 ? body.stream : Stream.value(bytes),
+              contentLength: bytes.length,
+            ),
+          ),
+        ),
+      );
+      addTearDown(service.dispose);
+      final started = Completer<void>();
+      final token = UpdateCancellation();
+      final result = service.installContent(
+        plan,
+        store,
+        cancellation: token,
+        onProgress: (p) {
+          if (p.received > 0 && !started.isCompleted) {
+            started.complete();
+          }
+        },
+      );
+      final check = expectLater(result, throwsA(isA<UpdateCancelled>()));
+      body.add(bytes.take(10).toList());
+      await started.future;
+      await expectLater(service.installContent(plan, store), throwsStateError);
+      token.cancel();
+      await check;
+      expect(store.setting<String?>('contentUpdateActive', null), isNull);
+      expect(store.progress.solved, contains('saved-work'));
+      expect(await Directory('${root.path}/updates').exists(), false);
+      await service.installContent(
+        plan,
+        store,
+        cancellation: UpdateCancellation(),
+      );
+      expect(store.setting('contentUpdateActive', ''), '0.9.3');
+      expect(await UpdateService.activeContent(store), utf8.decode(bytes));
+      expect(store.progress.solved, contains('saved-work'));
+    },
+  );
+  test('Disposing the service cancels an active installation', () async {
+    final root = await Directory.systemTemp.createTemp('devcat-dispose-');
+    addTearDown(() => root.delete(recursive: true));
+    final store = AppStore(root);
+    await store.load();
+    final body = StreamController<List<int>>();
+    addTearDown(body.close);
+    final service = UpdateService(
+      client: TransferClient(
+        (_) async => TransferRequest(TransferResponse(body.stream)),
+      ),
+    );
+    final plan = VerifiedUpdate({
+      'schemaVersion': 1,
+      'version': '0.9.3',
+      'channel': 'stable',
+      'minSupportedAppVersion': '0.9.2',
+      'content': {
+        'url': 'https://example.com/courses.json',
+        'size': 100,
+        'sha256': '0' * 64,
+      },
+    }, 'stable');
+    final started = Completer<void>();
+    final result = service.installContent(
+      plan,
+      store,
+      onProgress: (_) {
+        if (!started.isCompleted) {
+          started.complete();
+        }
+      },
+    );
+    final check = expectLater(result, throwsA(isA<UpdateCancelled>()));
+    await started.future;
+    service.dispose();
+    await check;
+    expect(store.setting<String?>('contentUpdateActive', null), isNull);
+    await expectLater(service.installContent(plan, store), throwsStateError);
+  });
 }
