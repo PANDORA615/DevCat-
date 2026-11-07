@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 5,
+  "audio": [
+    {
+      "id": "cat_voice_concern",
+      "file": "audio/cat_voice_concern.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 240,
+      "sha256": "326581f41285958f155b2f22540134362df924ba456d3334a19ed275a906064c"
+    },
+    {
+      "id": "cat_voice_happy",
+      "file": "audio/cat_voice_happy.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 314,
+      "sha256": "882a4fd38361a2de564f1359d29db8dcd10e908282caab9c29978c26d4f4072f"
+    },
+    {
+      "id": "cat_voice_question",
+      "file": "audio/cat_voice_question.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 284,
+      "sha256": "b86237be3f05b5050fb104852b2b11cf48c13e3da8c9ae09edc32c0a08104d8a"
+    },
+    {
+      "id": "cat_voice_soft_01",
+      "file": "audio/cat_voice_soft_01.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 269,
+      "sha256": "551ce5b992d20a8bd5e53fe71a6bd3e09136bd4b320a720afc6e775664fece95"
+    },
+    {
+      "id": "cat_voice_soft_02",
+      "file": "audio/cat_voice_soft_02.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 241,
+      "sha256": "0f0e62a238b8cbfbf005150584c2950c162050ac95805fdd4fa9e0ec97d2957b"
+    },
+    {
+      "id": "cat_voice_soft_03",
+      "file": "audio/cat_voice_soft_03.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 327,
+      "sha256": "6d0536a08851015f53d232ec4219d599e6e4543f01b56328954cac6d0fe5d45c"
+    },
+    {
+      "id": "cat_voice_thinking",
+      "file": "audio/cat_voice_thinking.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 330,
+      "sha256": "2dc818cc354c70d46ae5e022fadda42aefe20208209a241bc73ad842e1d77252"
+    },
+    {
+      "id": "ui_soft_achievement",
+      "file": "audio/ui_soft_achievement.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 578,
+      "sha256": "39cf786c18e9db76e9a50994052ffa21301d153cb1341e8f4df800f2d277c3bf"
+    },
+    {
+      "id": "ui_soft_back",
+      "file": "audio/ui_soft_back.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 151,
+      "sha256": "afae44d6cf09c0d00c0b0790f081b2047f99a17f59c6c01dddc6dcff13b28eb4"
+    },
+    {
+      "id": "ui_soft_close",
+      "file": "audio/ui_soft_close.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 232,
+      "sha256": "8f2c107cbe518f013a31170250e1d7e4d3686b74749dfd389352bab3e563754f"
+    },
+    {
+      "id": "ui_soft_error",
+      "file": "audio/ui_soft_error.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 302,
+      "sha256": "7b70a8b74e7ea3896565176b0bc158447ae71bfebea0140f6ce016a11d86f063"
+    },
+    {
+      "id": "ui_soft_hint",
+      "file": "audio/ui_soft_hint.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 226,
+      "sha256": "2f0e1433d15383777342364e77a59531cfc3d269fba0149a169ce62b3a4b6874"
+    },
+    {
+      "id": "ui_soft_notification",
+      "file": "audio/ui_soft_notification.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 260,
+      "sha256": "5c18230f16d0196ef90134c7b1dddbf2f600d5286f218d176c8ac1ed033b5aa4"
+    },
+    {
+      "id": "ui_soft_open",
+      "file": "audio/ui_soft_open.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 261,
+      "sha256": "7363a2170f891f266b32875fcc0eb7e51bf1f5e0f2cf4df68ec00694065d4a20"
+    },
+    {
+      "id": "ui_soft_success",
+      "file": "audio/ui_soft_success.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 379,
+      "sha256": "24b7435cde8ffc9b4db8932f4dec17024e317ae32668e7ba76efcbd19b5695c0"
+    },
+    {
+      "id": "ui_soft_switch",
+      "file": "audio/ui_soft_switch.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 143,
+      "sha256": "452ab6c4159a5210c8be0ab9fceb8539d7993955329a1f9a21867648e1b87e71"
+    },
+    {
+      "id": "ui_soft_tap",
+      "file": "audio/ui_soft_tap.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 53,
+      "sha256": "266b0c4182d19dfe1f809d62543ca2e6ea1e10c08821f27a9876274525023830"
+    },
+    {
+      "id": "ui_soft_update",
+      "file": "audio/ui_soft_update.wav",
+      "channels": 1,
+      "sampleRate": 32000,
+      "bits": 16,
+      "durationMs": 390,
+      "sha256": "1b73119e34de19a1fd275a770e592aec2e7de9125ff9185efac75364c17f60ff"
+    }
+  ]
+}

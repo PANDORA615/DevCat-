@@ -10,6 +10,7 @@ import 'study_widgets.dart';
 import '../core/study.dart';
 import '../core/cat_chatter.dart';
 import 'companion.dart';
+import 'navigation_motion.dart';
 
 class DevCatShell extends StatefulWidget {
   final AppStore store;
@@ -27,6 +28,14 @@ class DevCatShell extends StatefulWidget {
 
 class _DevCatShellState extends State<DevCatShell> {
   int page = 1;
+  final Map<int, Widget> visited = {};
+  void selectPage(int next) {
+    if (next == page) return;
+    widget.sounds.stopVoice();
+    widget.sounds.cue(SoundCue.navigation);
+    setState(() => page = next);
+  }
+
   bool reading = true;
   late String language;
   int lesson = 0, seed = 0;
@@ -108,6 +117,7 @@ class _DevCatShellState extends State<DevCatShell> {
         onSynced: () => setState(_resume),
       ),
     };
+    visited[page] = content;
     final body = Column(
       children: [
         if (!keyboard)
@@ -148,12 +158,19 @@ class _DevCatShellState extends State<DevCatShell> {
             ],
           ),
         Expanded(
-          child: AnimatedSwitcher(
-            duration: Duration(milliseconds: reduce ? 0 : 240),
-            switchInCurve: Curves.easeOutCubic,
-            transitionBuilder: (child, animation) =>
-                FadeTransition(opacity: animation, child: child),
-            child: KeyedSubtree(key: ValueKey(page), child: content),
+          child: NavigationMotion(
+            selected: page,
+            reduced: reduce,
+            child: IndexedStack(
+              index: page,
+              children: List.generate(
+                labels.length,
+                (i) => TickerMode(
+                  enabled: i == page,
+                  child: visited[i] ?? const SizedBox.shrink(),
+                ),
+              ),
+            ),
           ),
         ),
         if (widget.store.setting('cat', true))
@@ -228,38 +245,43 @@ class _DevCatShellState extends State<DevCatShell> {
                       labels.length,
                       (i) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Material(
-                          color: page == i
-                              ? scheme.secondaryContainer
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(30),
-                          child: InkWell(
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: reduce ? 0 : 220),
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            onTap: () {
-                              widget.sounds.cue(SoundCue.navigation);
-                              setState(() => page = i);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 18,
-                                vertical: 16,
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(icons[i], size: 21),
-                                  const SizedBox(width: 14),
-                                  Expanded(
-                                    child: Text(
-                                      labels[i],
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: page == i
-                                            ? FontWeight.w600
-                                            : FontWeight.w400,
+                            color: page == i
+                                ? scheme.secondaryContainer
+                                : Colors.transparent,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(30),
+                              onTap: () {
+                                selectPage(i);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 18,
+                                  vertical: 16,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(icons[i], size: 21),
+                                    const SizedBox(width: 14),
+                                    Expanded(
+                                      child: Text(
+                                        labels[i],
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: page == i
+                                              ? FontWeight.w600
+                                              : FontWeight.w400,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -302,8 +324,7 @@ class _DevCatShellState extends State<DevCatShell> {
                 _ => 4,
               },
               onDestinationSelected: (i) {
-                widget.sounds.cue(SoundCue.navigation);
-                setState(() => page = [0, 1, 3, 5, 6][i]);
+                selectPage([0, 1, 3, 5, 6][i]);
               },
               destinations: const [
                 NavigationDestination(

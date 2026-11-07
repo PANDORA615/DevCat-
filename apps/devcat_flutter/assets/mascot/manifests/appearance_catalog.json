@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 5,
+  "appearances": [
+    {
+      "id": "beginner",
+      "title": "Новичок",
+      "kind": "evolution",
+      "minLevel": 1,
+      "maxLevel": 10,
+      "details": "Без экипировки",
+      "context": "Первое знакомство и onboarding",
+      "asset": "models/evolution/beginner.png",
+      "masterSize": [
+        1320,
+        1191
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 504551,
+      "transparentPixels": 1065795,
+      "opaquePixels": 1774
+    },
+    {
+      "id": "student",
+      "title": "Ученик",
+      "kind": "evolution",
+      "minLevel": 11,
+      "maxLevel": 25,
+      "details": "Фиолетовый шарф с кодовым знаком",
+      "context": "Карта обучения и первые уроки",
+      "asset": "models/evolution/student.png",
+      "masterSize": [
+        1329,
+        1183
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 791867,
+      "transparentPixels": 779022,
+      "opaquePixels": 1318
+    },
+    {
+      "id": "developer",
+      "title": "Разработчик",
+      "kind": "evolution",
+      "minLevel": 26,
+      "maxLevel": 50,
+      "details": "Фиолетовое худи с кодовым знаком",
+      "context": "Практика, IDE, карточки курсов",
+      "asset": "models/evolution/developer.png",
+      "masterSize": [
+        1329,
+        1183
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 776986,
+      "transparentPixels": 793078,
+      "opaquePixels": 2143
+    },
+    {
+      "id": "middle",
+      "title": "Мидл",
+      "kind": "evolution",
+      "minLevel": 51,
+      "maxLevel": 75,
+      "details": "Худи, наушники и технологичные очки",
+      "context": "Проекты и достижения",
+      "asset": "models/evolution/middle.png",
+      "masterSize": [
+        1374,
+        1145
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 713666,
+      "transparentPixels": 858368,
+      "opaquePixels": 1196
+    },
+    {
+      "id": "senior",
+      "title": "Сеньор",
+      "kind": "evolution",
+      "minLevel": 76,
+      "maxLevel": 100,
+      "details": "Белый халат и прямоугольные очки",
+      "context": "Ревью и объяснение архитектурных решений",
+      "asset": "models/evolution/senior.png",
+      "masterSize": [
+        1374,
+        1145
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 535121,
+      "transparentPixels": 1036645,
+      "opaquePixels": 1464
+    },
+    {
+      "id": "architect",
+      "title": "Архитектор",
+      "kind": "evolution",
+      "minLevel": 101,
+      "maxLevel": null,
+      "details": "Корона, плащ, брошь",
+      "context": "Высшая игровая ступень и достижения",
+      "asset": "models/evolution/architect.png",
+      "masterSize": [
+        1312,
+        1199
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 545211,
+      "transparentPixels": 1027356,
+      "opaquePixels": 521
+    },
+    {
+      "id": "space",
+      "title": "Космический",
+      "kind": "costume",
+      "details": "Скафандр, прозрачный шлем, блок управления",
+      "context": "Космическое событие и достижения",
+      "asset": "models/costumes/space.png",
+      "masterSize": [
+        1278,
+        1230
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 685730,
+      "transparentPixels": 885300,
+      "opaquePixels": 910
+    },
+    {
+      "id": "hacker",
+      "title": "Хакер",
+      "kind": "costume",
+      "details": "Капюшон, зелёные глаза, бирюзовый ноутбук",
+      "context": "Информационная безопасность",
+      "asset": "models/costumes/hacker.png",
+      "masterSize": [
+        1390,
+        1132
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 520464,
+      "transparentPixels": 1052083,
+      "opaquePixels": 933
+    },
+    {
+      "id": "samurai",
+      "title": "Самурай",
+      "kind": "costume",
+      "details": "Соломенная шляпа, кимоно, меч в ножнах",
+      "context": "Дисциплина и челленджи",
+      "asset": "models/costumes/samurai.png",
+      "masterSize": [
+        1374,
+        1145
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 614557,
+      "transparentPixels": 958667,
+      "opaquePixels": 6
+    },
+    {
+      "id": "winter",
+      "title": "Зимний",
+      "kind": "costume",
+      "details": "Вязаная шапка, помпон, шарф, снежинка",
+      "context": "Зимние события",
+      "asset": "models/costumes/winter.png",
+      "masterSize": [
+        1374,
+        1145
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 721261,
+      "transparentPixels": 851020,
+      "opaquePixels": 949
+    },
+    {
+      "id": "mage",
+      "title": "Маг",
+      "kind": "costume",
+      "details": "Остроконечная шляпа, плащ, посох со сферой",
+      "context": "Алгоритмы и поиск решения",
+      "asset": "models/costumes/mage.png",
+      "masterSize": [
+        1366,
+        1152
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 689819,
+      "transparentPixels": 882768,
+      "opaquePixels": 1045
+    },
+    {
+      "id": "engineer",
+      "title": "Инженер",
+      "kind": "costume",
+      "details": "Жёлтая каска и гаечный ключ",
+      "context": "Сборка и проекты",
+      "asset": "models/costumes/engineer.png",
+      "masterSize": [
+        1329,
+        1183
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 832332,
+      "transparentPixels": 738438,
+      "opaquePixels": 1437
+    },
+    {
+      "id": "pirate",
+      "title": "Пират",
+      "kind": "costume",
+      "details": "Треуголка, повязка, шарф",
+      "context": "Испытания и приключения",
+      "asset": "models/costumes/pirate.png",
+      "masterSize": [
+        1329,
+        1183
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 828562,
+      "transparentPixels": 741277,
+      "opaquePixels": 2368
+    },
+    {
+      "id": "cyberpunk",
+      "title": "Киберпанк",
+      "kind": "costume",
+      "details": "Неоновый визор, технологичная куртка",
+      "context": "Специальное событие",
+      "asset": "models/costumes/cyberpunk.png",
+      "masterSize": [
+        1329,
+        1183
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 769570,
+      "transparentPixels": 800776,
+      "opaquePixels": 1861
+    },
+    {
+      "id": "scientist",
+      "title": "Учёный",
+      "kind": "costume",
+      "details": "Академическая шапочка, книга",
+      "context": "Изучение теории и завершение курса",
+      "asset": "models/costumes/scientist.png",
+      "masterSize": [
+        1329,
+        1183
+      ],
+      "status": "review_generated",
+      "productionReady": false,
+      "semiTransparentPixels": 811710,
+      "transparentPixels": 758594,
+      "opaquePixels": 1903
+    }
+  ]
+}

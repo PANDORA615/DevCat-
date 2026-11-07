@@ -1,140 +1,170 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../core/mascot.dart';
 import '../core/sound.dart';
 
+/// Original v5 and exported appearance PNGs; no atlas slicing at runtime.
 class CatActor extends StatefulWidget {
   final double size;
   final CatMood mood;
-  final String? speech;
+  final String? speech, appearanceId, action;
+  final CatAnimationController? controller;
   const CatActor({
     super.key,
     required this.size,
     this.mood = CatMood.greeting,
     this.speech,
+    this.appearanceId,
+    this.action,
+    this.controller,
   });
   @override
   State<CatActor> createState() => _CatActorState();
 }
 
-class _CatActorState extends State<CatActor>
-    with SingleTickerProviderStateMixin {
-  static Future<ui.Image>? atlas;
-  late final AnimationController animation;
-  Timer? stop;
+class _CatActorState extends State<CatActor> with WidgetsBindingObserver {
+  late CatAnimationController controller;
+  Timer? timer;
+  DateTime lastTick = DateTime.now();
+  int idleMs = 0, blinkAt = 4000;
+  bool foreground = true, reduced = false, visible = true, initialized = false;
   @override
   void initState() {
     super.initState();
-    animation = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 320),
-    );
-    atlas ??= _load();
-  }
-
-  static Future<ui.Image> _load() async {
-    final data = await rootBundle.load('assets/branding/companion_sheet.png');
-    final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
-    final frame = await codec.getNextFrame();
-    codec.dispose();
-    return frame.image;
+    controller = widget.controller ?? CatAnimationController();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _talk();
+    reduced = MediaQuery.disableAnimationsOf(context);
+    visible = TickerMode.valuesOf(context).enabled;
+    final identity = widget.appearanceId ?? MascotScope.of(context);
+    final changed =
+        widget.controller == null && controller.appearanceId != identity;
+    if (widget.controller == null) controller.selectAppearance(identity);
+    if (!initialized || changed) _react();
+    initialized = true;
+    if (!visible && widget.speech != null) controller.cancel();
+    _schedule();
   }
 
   @override
-  void didUpdateWidget(CatActor old) {
-    super.didUpdateWidget(old);
-    if (old.speech != widget.speech) _talk();
+  void didUpdateWidget(CatActor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      if (oldWidget.controller == null) controller.dispose();
+      controller =
+          widget.controller ??
+          CatAnimationController(
+            appearanceId: widget.appearanceId ?? MascotScope.of(context),
+          );
+      _react();
+    }
+    if (widget.controller == null &&
+        oldWidget.appearanceId != widget.appearanceId) {
+      controller.selectAppearance(
+        widget.appearanceId ?? MascotScope.of(context),
+      );
+    }
+    if (oldWidget.speech != widget.speech ||
+        oldWidget.mood != widget.mood ||
+        oldWidget.action != widget.action) {
+      _react();
+    }
+    _schedule();
   }
 
-  void _talk() {
-    stop?.cancel();
-    animation.stop();
-    if (widget.speech == null || MediaQuery.of(context).disableAnimations) {
-      return;
-    }
-    animation.repeat(reverse: true);
-    stop = Timer(
-      Duration(milliseconds: (widget.speech!.length * 35).clamp(1600, 6500)),
-      () {
-        if (mounted) {
-          animation.stop();
-          animation.value = 0;
-        }
-      },
+  void _react() {
+    if (widget.controller != null) return;
+    idleMs = 0;
+    blinkAt = 4000;
+    controller.play(
+      widget.action ??
+          (widget.speech != null
+              ? 'talk'
+              : catStateForMood(
+                  widget.mood,
+                  appearanceId: controller.appearanceId,
+                )),
+      force: true,
     );
+  }
+
+  void _schedule() {
+    timer?.cancel();
+    if (!foreground || !visible || reduced || !controller.hasClip) return;
+    lastTick = DateTime.now();
+    timer = Timer.periodic(const Duration(milliseconds: 30), (_) {
+      final now = DateTime.now();
+      final delta = now.difference(lastTick).inMilliseconds;
+      lastTick = now;
+      controller.advance(delta);
+      if (widget.controller != null) return;
+      idleMs += delta;
+      if (widget.speech != null &&
+          controller.state == 'talk' &&
+          idleMs >= widget.speech!.characters.length * 35) {
+        controller.cancel();
+      } else if (controller.state == 'idle' && idleMs >= blinkAt) {
+        controller.play('blink');
+        blinkAt = idleMs + 3000 + (idleMs % 4001);
+      }
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    foreground = state == AppLifecycleState.resumed;
+    if (!foreground) {
+      controller.pause();
+    } else if (widget.controller != null || widget.speech == null) {
+      controller.resume();
+    } else {
+      controller.cancel();
+    }
+    _schedule();
   }
 
   @override
   void dispose() {
-    stop?.cancel();
-    animation.dispose();
+    timer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    if (widget.controller == null) controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Кот на учебнике: ${widget.mood.name}',
+    label:
+        'Кот DevCat: ${MascotCatalog.appearance(controller.appearanceId).title}',
     image: true,
-    child: SizedBox(
-      width: widget.size,
-      height: widget.size * .85,
-      child: FutureBuilder<ui.Image>(
-        future: atlas,
-        builder: (_, snapshot) => snapshot.hasData
-            ? AnimatedBuilder(
-                animation: animation,
-                builder: (_, _) => CustomPaint(
-                  painter: _CatFrame(
-                    snapshot.data!,
-                    widget.mood,
-                    animation.isAnimating && animation.value > .45,
-                  ),
-                ),
-              )
-            : Image.asset(
-                'assets/branding/devcat_book.png',
-                filterQuality: FilterQuality.none,
+    child: SizedBox.square(
+      dimension: widget.size,
+      child: ListenableBuilder(
+        listenable: controller,
+        builder: (context, _) => Image.asset(
+          reduced ? controller.restAsset : controller.asset,
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.none,
+          cacheWidth: (widget.size * MediaQuery.devicePixelRatioOf(context))
+              .ceil(),
+          gaplessPlayback: true,
+          errorBuilder: (context, error, stack) => Image.asset(
+            MascotCatalog.appearance(controller.appearanceId).asset,
+            fit: BoxFit.contain,
+            filterQuality: FilterQuality.none,
+            cacheWidth: (widget.size * MediaQuery.devicePixelRatioOf(context))
+                .ceil(),
+            errorBuilder: (_, _, _) => Center(
+              child: Text(
+                MascotCatalog.appearance(controller.appearanceId).title,
               ),
+            ),
+          ),
+        ),
       ),
     ),
   );
-}
-
-class _CatFrame extends CustomPainter {
-  final ui.Image image;
-  final CatMood mood;
-  final bool mouth;
-  _CatFrame(this.image, this.mood, this.mouth);
-  @override
-  void paint(Canvas canvas, Size size) {
-    final index = switch (mood) {
-      CatMood.greeting => 0,
-      CatMood.celebration => 1,
-      CatMood.explaining => 2,
-      CatMood.thinking => 3,
-      CatMood.warning => 4,
-      CatMood.encouragement => 5,
-    };
-    final cell = index * 2 + (mouth ? 1 : 0);
-    final w = image.width / 4, h = image.height / 3;
-    final src = Rect.fromLTWH((cell % 4) * w, (cell ~/ 4) * h, w, h);
-    final target = applyBoxFit(BoxFit.contain, Size(w, h), size).destination;
-    canvas.drawImageRect(
-      image,
-      src,
-      Alignment.center.inscribe(target, Offset.zero & size),
-      Paint()..filterQuality = FilterQuality.none,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_CatFrame old) =>
-      old.image != image || old.mood != mood || old.mouth != mouth;
 }

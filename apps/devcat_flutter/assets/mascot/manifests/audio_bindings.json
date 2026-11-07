@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 5,
+  "defaults": {
+    "mascotVolume": 0.2,
+    "uiVolume": 0.15,
+    "achievementsVolume": 0.15
+  },
+  "voice": {
+    "normal": [
+      "cat_voice_soft_01",
+      "cat_voice_soft_02",
+      "cat_voice_soft_03"
+    ],
+    "question": [
+      "cat_voice_question"
+    ],
+    "happy": [
+      "cat_voice_happy"
+    ],
+    "thinking": [
+      "cat_voice_thinking"
+    ],
+    "concern": [
+      "cat_voice_concern"
+    ]
+  },
+  "rules": {
+    "visibleCharsPerSyllable": [
+      2,
+      4
+    ],
+    "maximumStartsPerSecond": 10,
+    "allowVoiceOverlap": false,
+    "nextStart": "max(previousEnd,lastStart+100ms)",
+    "skipWhitespace": true,
+    "cancelOn": [
+      "skip",
+      "cancel",
+      "screenChanged",
+      "hidden",
+      "panelClosed"
+    ],
+    "maximumSyllablesPerMessage": 24,
+    "maximumVoiceWindowMs": 4000
+  },
+  "events": {
+    "buttonTap": {
+      "audio": "audio/ui_soft_tap.wav",
+      "animation": null,
+      "oncePerEvent": true
+    },
+    "tabChanged": {
+      "audio": "audio/ui_soft_switch.wav",
+      "animation": null,
+      "oncePerEvent": true
+    },
+    "navigateBack": {
+      "audio": "audio/ui_soft_back.wav",
+      "animation": null,
+      "oncePerEvent": true
+    },
+    "panelOpened": {
+      "audio": "audio/ui_soft_open.wav",
+      "animation": null,
+      "oncePerEvent": true
+    },
+    "panelClosed": {
+      "audio": "audio/ui_soft_close.wav",
+      "animation": null,
+      "oncePerEvent": true
+    },
+    "testPassed": {
+      "audio": "audio/ui_soft_success.wav",
+      "animation": "success",
+      "oncePerEvent": true
+    },
+    "testFailed": {
+      "audio": "audio/ui_soft_error.wav",
+      "animation": "error",
+      "oncePerEvent": true
+    },
+    "hintRequested": {
+      "audio": "audio/ui_soft_hint.wav",
+      "animation": "idea",
+      "oncePerEvent": true
+    },
+    "achievementUnlocked": {
+      "audio": "audio/ui_soft_achievement.wav",
+      "animation": "celebrating",
+      "oncePerEvent": true
+    },
+    "notificationReceived": {
+      "audio": "audio/ui_soft_notification.wav",
+      "animation": "notification",
+      "oncePerEvent": true
+    },
+    "updateVerified": {
+      "audio": "audio/ui_soft_update.wav",
+      "animation": "new",
+      "oncePerEvent": true
+    }
+  }
+}

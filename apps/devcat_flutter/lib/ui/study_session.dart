@@ -9,6 +9,7 @@ import '../core/study_runner.dart';
 import '../core/runner.dart';
 import '../core/sound.dart';
 import 'cat_actor.dart';
+import 'speech_text.dart';
 import 'lecture.dart';
 import 'study_widgets.dart';
 import 'tutor_page.dart';
@@ -172,7 +173,7 @@ class _StudySessionPageState extends State<StudySessionPage>
       speech = text;
       mood = nextMood;
     });
-    if (widget.store.setting('cat', true)) widget.sounds.speak(nextMood);
+    widget.sounds.stopVoice();
   }
 
   Future<void> _check() async {
@@ -554,8 +555,10 @@ class _StudySessionPageState extends State<StudySessionPage>
                               ),
                               borderRadius: BorderRadius.circular(18),
                             ),
-                            child: Text(
-                              speech,
+                            child: SpeechText(
+                              text: speech,
+                              mood: mood,
+                              sounds: widget.sounds,
                               style: const TextStyle(fontSize: 14, height: 1.4),
                             ),
                           ),

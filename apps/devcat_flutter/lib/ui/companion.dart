@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/cat_chatter.dart';
 import '../core/sound.dart';
 import 'widgets.dart';
+import 'speech_text.dart';
 import '../core/course.dart';
 import '../core/store.dart';
 import 'tutor_page.dart';
@@ -55,7 +56,7 @@ class _CompanionBarState extends State<CompanionBar>
     history.add(line);
     if (history.length > 30) history.removeAt(0);
     speech = speak ? line.text : null;
-    if (speak) widget.sounds.speak(line.mood);
+    widget.sounds.stopVoice();
   }
 
   void _schedule() {
@@ -75,6 +76,7 @@ class _CompanionBarState extends State<CompanionBar>
   void didUpdateWidget(CompanionBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.conversation.key != widget.conversation.key) {
+      widget.sounds.stopVoice();
       _next(speak: false);
     }
     if (oldWidget.autoTalk != widget.autoTalk ||
@@ -173,11 +175,13 @@ class _CompanionBarState extends State<CompanionBar>
                           child: Align(
                             key: ValueKey(line.text),
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              line.text,
+                            child: SpeechText(
+                              text: line.text,
+                              mood: line.mood,
+                              sounds: widget.sounds,
+                              instant: speech == null,
                               style: style,
                               maxLines: widget.compact ? 1 : 2,
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),

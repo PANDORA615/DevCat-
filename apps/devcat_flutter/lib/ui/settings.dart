@@ -9,6 +9,8 @@ import '../core/store.dart';
 import '../core/sync.dart';
 import 'transfer.dart';
 import 'widgets.dart';
+import 'mascot_gallery.dart';
+import 'update_panel.dart';
 import 'nearby_page.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -408,7 +410,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   const Icon(Icons.volume_down_outlined),
                   Expanded(
                     child: Slider(
-                      value: store.setting<num>('volume', .22).toDouble(),
+                      value: store.setting<num>('volume', .15).toDouble(),
                       min: 0,
                       max: 1,
                       onChanged: (v) => _change('volume', v),
@@ -471,9 +473,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               const SizedBox(height: 14),
+              Text('Громкость достижений'),
+              Slider(
+                value: store.setting<num>('achievementVolume', .15).toDouble(),
+                onChanged: (v) => _change('achievementVolume', v),
+                onChangeEnd: (_) => widget.sounds.cue(SoundCue.achievement),
+              ),
               Text('Громкость голоса'),
               Slider(
-                value: store.setting<num>('voiceVolume', .18).toDouble(),
+                value: store.setting<num>('voiceVolume', .20).toDouble(),
                 min: 0,
                 max: 1,
                 onChanged: (v) => _change('voiceVolume', v),
@@ -481,24 +489,29 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: store.setting('voiceStyle', 'auto'),
+                initialValue:
+                    SoftSounds.voiceDurations.containsKey(
+                      store.setting('voiceStyle', 'auto'),
+                    )
+                    ? store.setting('voiceStyle', 'auto')
+                    : 'auto',
                 decoration: const InputDecoration(labelText: 'Характер голоса'),
                 items: [
                   const DropdownMenuItem(
                     value: 'auto',
-                    child: Text('По ситуации · все шесть голосов'),
+                    child: Text('По ситуации · мягкие 8-битные слоги'),
                   ),
                   ...SoftSounds.voices.entries.map(
                     (e) => DropdownMenuItem(
                       value: e.value,
                       child: Text(
                         const {
-                          CatMood.greeting: 'Классический · приветствие',
+                          CatMood.greeting: 'Мягкий · приветствие',
                           CatMood.encouragement: 'Мягкий · поддержка',
-                          CatMood.thinking: 'Робот · размышление',
-                          CatMood.warning: 'Низкий · предупреждение',
-                          CatMood.celebration: 'Волшебный · успех',
-                          CatMood.explaining: 'Радио · объяснение',
+                          CatMood.thinking: 'Размышление',
+                          CatMood.warning: 'Сочувствие',
+                          CatMood.celebration: 'Радость',
+                          CatMood.explaining: 'Мягкий · объяснение',
                         }[e.key]!,
                       ),
                     ),
@@ -529,6 +542,11 @@ class _SettingsPageState extends State<SettingsPage> {
                             'hint': 'Подсказка',
                             'success': 'Успех',
                             'error': 'Ошибка',
+                            'back': 'Назад',
+                            'close': 'Закрытие',
+                            'achievement': 'Достижение',
+                            'notification': 'Уведомление',
+                            'update': 'Обновление',
                           }[cue.name]!,
                         ),
                       ),
@@ -537,6 +555,14 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
+        ),
+        const SizedBox(height: 18),
+        Panel(
+          child: MascotSettings(store: store, sounds: widget.sounds),
+        ),
+        const SizedBox(height: 18),
+        Panel(
+          child: UpdatePanel(store: store, sounds: widget.sounds),
         ),
         const SizedBox(height: 18),
         NearbyPanel(store: store, onSynced: widget.onSynced),
@@ -766,7 +792,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         const SizedBox(height: 20),
         const Text(
-          'DevCat 0.4.0 · Исходники приложения: MIT · Без аналитики и облачного ИИ\nКурсы с полного нуля, локальная IDE и перенос между устройствами. Ограничения — в README репозитория.',
+          'DevCat 0.9.2 · Исходники приложения: MIT · Без аналитики и облачного ИИ\nКурсы с полного нуля, локальная IDE и перенос между устройствами. Ограничения — в README репозитория.',
           style: TextStyle(fontSize: 12, height: 1.6),
         ),
       ],

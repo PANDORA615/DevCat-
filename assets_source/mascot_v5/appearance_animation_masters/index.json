@@ -1,0 +1,16 @@
+{
+  "architect": "assets_source/mascot_v5/appearance_animation_masters/architect.png",
+  "beginner": "assets_source/mascot_v5/appearance_animation_masters/beginner.png",
+  "cyberpunk": "assets_source/mascot_v5/appearance_animation_masters/cyberpunk.png",
+  "developer": "assets_source/mascot_v5/appearance_animation_masters/developer.png",
+  "engineer": "assets_source/mascot_v5/appearance_animation_masters/engineer.png",
+  "hacker": "assets_source/mascot_v5/appearance_animation_masters/hacker.png",
+  "mage": "assets_source/mascot_v5/appearance_animation_masters/mage.png",
+  "middle": "assets_source/mascot_v5/appearance_animation_masters/middle.png",
+  "pirate": "assets_source/mascot_v5/appearance_animation_masters/pirate.png",
+  "samurai": "assets_source/mascot_v5/appearance_animation_masters/samurai.png",
+  "scientist": "assets_source/mascot_v5/appearance_animation_masters/scientist.png",
+  "senior": "assets_source/mascot_v5/appearance_animation_masters/senior.png",
+  "space": "assets_source/mascot_v5/appearance_animation_masters/space.png",
+  "winter": "assets_source/mascot_v5/appearance_animation_masters/winter.png"
+}

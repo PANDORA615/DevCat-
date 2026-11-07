@@ -1,57 +1,24 @@
 import 'package:flutter/material.dart';
 import '../core/sound.dart';
 import 'cat_actor.dart';
+import 'speech_text.dart';
 
-/// Maps the original mint background to the theme while preserving black and white.
-/// The asset stays unchanged, so every palette uses the same cat silhouette.
+/// The supplied v5 application icon retains its original brand colors.
 class DevCatLogo extends StatelessWidget {
   final double size;
   const DevCatLogo({super.key, this.size = 44});
   @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final background = scheme.brightness == Brightness.dark
-        ? Color.lerp(scheme.primaryContainer, scheme.primary, .75)!
-        : scheme.primaryContainer;
-    List<double> channel(double component) {
-      final shift = (component * 255 - 180) / 60;
-      return [1 - shift, shift, 0, 0, 0];
-    }
-
-    return Semantics(
-      label: 'Логотип DevCat',
-      image: true,
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(size * .28),
-          child: ColorFiltered(
-            colorFilter: ColorFilter.matrix([
-              ...channel(background.r),
-              ...channel(background.g),
-              ...channel(background.b),
-              0,
-              0,
-              0,
-              1,
-              0,
-            ]),
-            child: OverflowBox(
-              maxWidth: size,
-              maxHeight: size,
-              child: Image.asset(
-                'assets/branding/icon.png',
-                width: size,
-                height: size,
-                excludeFromSemantics: true,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Semantics(
+    label: 'Логотип DevCat',
+    image: true,
+    child: Image.asset(
+      'assets/branding/icon.png',
+      width: size,
+      height: size,
+      filterQuality: FilterQuality.none,
+      cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).ceil(),
+    ),
+  );
 }
 
 class Panel extends StatelessWidget {
@@ -180,28 +147,15 @@ class CatMessage extends StatefulWidget {
 
 class _CatMessageState extends State<CatMessage> {
   bool skip = false;
-  String? _spoken;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _speak();
-  }
-
-  void _speak() {
-    if (_spoken == widget.text) return;
-    _spoken = widget.text;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) SoundScope.of(context)?.speak(widget.mood);
-    });
-  }
-
   @override
   void didUpdateWidget(CatMessage old) {
     super.didUpdateWidget(old);
-    if (old.text != widget.text) {
-      skip = false;
-      _speak();
-    }
+    if (old.text != widget.text) skip = false;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -210,7 +164,11 @@ class _CatMessageState extends State<CatMessage> {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CatPortrait(size: 66),
+        CatActor(
+          size: 66,
+          mood: widget.mood,
+          speech: skip ? null : widget.text,
+        ),
         const SizedBox(width: 14),
         Expanded(
           child: Semantics(
@@ -225,24 +183,10 @@ class _CatMessageState extends State<CatMessage> {
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const SizedBox(height: 6),
-                TweenAnimationBuilder<double>(
-                  key: ValueKey('${widget.text}$skip'),
-                  tween: Tween(
-                    begin: skip || widget.reducedMotion ? 1 : 0,
-                    end: 1,
-                  ),
-                  duration: Duration(
-                    milliseconds: skip || widget.reducedMotion
-                        ? 0
-                        : widget.text.length * 20,
-                  ),
-                  builder: (context, value, _) => Text(
-                    widget.text.substring(
-                      0,
-                      (widget.text.length * value).round(),
-                    ),
-                  ),
-                  onEnd: () => skip = true,
+                SpeechText(
+                  text: widget.text,
+                  mood: widget.mood,
+                  instant: skip || widget.reducedMotion,
                 ),
               ],
             ),

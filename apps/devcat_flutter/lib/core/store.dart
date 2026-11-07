@@ -57,6 +57,19 @@ class AppStore extends ChangeNotifier {
     await save();
   }
 
+  /// Persist a group of settings in one snapshot, reverting on write failure.
+  Future<void> updateSettings(Map<String, dynamic> changes) async {
+    final previous = Map<String, dynamic>.of(settings);
+    settings.addAll(changes);
+    try {
+      await save();
+    } catch (_) {
+      settings = previous;
+      rethrow;
+    }
+    notifyListeners();
+  }
+
   Future<void> save() {
     final snapshot = jsonEncode({
       'device': device,
